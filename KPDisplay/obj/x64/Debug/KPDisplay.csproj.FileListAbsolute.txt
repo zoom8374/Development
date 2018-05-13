@@ -1,0 +1,13 @@
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\obj\x64\Debug\KPDisplay.KPCogDisplayControl.resources
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\obj\x64\Debug\KPDisplay.csproj.GenerateResource.Cache
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\bin\x64\Debug\KPDisplay.dll
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\bin\x64\Debug\KPDisplay.pdb
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\obj\x64\Debug\KPDisplay.csprojResolveAssemblyReference.cache
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\obj\x64\Debug\KPDisplay.dll
+D:\[KP-Vision] Program\KPTrayTapOCRInspection Project\KPTrayTapOCRInspectionProject\KPDisplay\obj\x64\Debug\KPDisplay.pdb
+C:\Users\KP-Jun\Desktop\KVInspectionProgram Project 20170216\KPDisplay\bin\x64\Debug\KPDisplay.dll
+C:\Users\KP-Jun\Desktop\KVInspectionProgram Project 20170216\KPDisplay\bin\x64\Debug\KPDisplay.pdb
+C:\Users\KP-Jun\Desktop\KVInspectionProgram Project 20170216\KPDisplay\obj\x64\Debug\KPDisplay.KPCogDisplayControl.resources
+C:\Users\KP-Jun\Desktop\KVInspectionProgram Project 20170216\KPDisplay\obj\x64\Debug\KPDisplay.csproj.GenerateResource.Cache
+C:\Users\KP-Jun\Desktop\KVInspectionProgram Project 20170216\KPDisplay\obj\x64\Debug\KPDisplay.dll
+C:\Users\KP-Jun\Desktop\KVInspectionProgram Project 20170216\KPDisplay\obj\x64\Debug\KPDisplay.pdb

@@ -1,0 +1,5 @@
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\bin\Debug\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\bin\Debug\ParameterManager.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Debug\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Debug\ParameterManager.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Debug\ParameterManager.csprojResolveAssemblyReference.cache

@@ -1,0 +1,4 @@
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\bin\Release\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.dll
+C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.pdb
