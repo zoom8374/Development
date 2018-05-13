@@ -7,3 +7,6 @@ C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVision
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\CIPOS Lead Inspection.pdb
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe.config
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\CIPOS Lead Inspection.exe
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\CIPOS Lead Inspection.pdb

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InspectionSystemManager", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPDisplay", "..\KPDisplay\KPDisplay.csproj", "{75AB941C-2786-416B-B183-E140799EB245}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogManager", "..\LogManager\LogManager.csproj", "{635BF6D0-1B81-4B61-9F53-5E93C5335B28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,12 @@ Global
 		{75AB941C-2786-416B-B183-E140799EB245}.Release|Any CPU.Build.0 = Release|Any CPU
 		{75AB941C-2786-416B-B183-E140799EB245}.Release|x64.ActiveCfg = Release|x64
 		{75AB941C-2786-416B-B183-E140799EB245}.Release|x64.Build.0 = Release|x64
+		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
