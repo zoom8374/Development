@@ -36,6 +36,18 @@ namespace InspectionSystemManager
             btnInspection.ButtonImage = InspectionSystemManager.Properties.Resources.Inspection;
             btnInspection.ButtonImageOver = InspectionSystemManager.Properties.Resources.InspectionOver;
             btnInspection.ButtonImageDown = InspectionSystemManager.Properties.Resources.InspectionOver;
+            btnOneShot.ButtonImage = InspectionSystemManager.Properties.Resources.OneShot;
+            btnOneShot.ButtonImageOver = InspectionSystemManager.Properties.Resources.OneShotOver;
+            btnOneShot.ButtonImageDown = InspectionSystemManager.Properties.Resources.OneShotOver;
+            btnRecipe.ButtonImage = InspectionSystemManager.Properties.Resources.Recipe;
+            btnRecipe.ButtonImageOver = InspectionSystemManager.Properties.Resources.RecipeOver;
+            btnRecipe.ButtonImageDown = InspectionSystemManager.Properties.Resources.RecipeOver;
+            btnRecipeSave.ButtonImage = InspectionSystemManager.Properties.Resources.RecipeSave;
+            btnRecipeSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.RecipeSaveOver;
+            btnRecipeSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.RecipeSaveOver;
+            btnLive.ButtonImage = InspectionSystemManager.Properties.Resources.Camera;
+            btnLive.ButtonImageOver = InspectionSystemManager.Properties.Resources.CameraOver;
+            btnLive.ButtonImageDown = InspectionSystemManager.Properties.Resources.CameraOver;
             #endregion Set Button Image Resource
         }
 
@@ -136,8 +148,8 @@ namespace InspectionSystemManager
             Size _TitleSize = new Size(this.Size.Width, labelTitle.Size.Height);
             Point _Location = panelMain.Location;
 
-            labelTitle.Size = new Size(_TitleSize.Width - 8, _TitleSize.Height);
-            labelTitle.Location = new Point(4, 3);
+            labelTitle.Size = new Size(_TitleSize.Width - 6, _TitleSize.Height);
+            labelTitle.Location = new Point(3, 2);
 
             panelMain.Size = new Size(_TitleSize.Width - 6, this.Size.Height - _TitleSize.Height - 6);
             panelMain.Location = new Point(3, _Location.Y);

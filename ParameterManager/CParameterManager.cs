@@ -280,5 +280,59 @@ namespace ParameterManager
             #endregion XML Tree Add
         }
         #endregion Read & Write Inspection System Manager
+
+        public bool ReadInspectionParameters()
+        {
+            bool _Result = true;
+
+            InspParam = new InspectionParameter[SystemParam.InspSystemManagerCount];
+            for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
+            {
+                InspParam[iLoopCount] = new InspectionParameter();
+                if (false == ReadInspectionParameter(iLoopCount, SystemParam.LastRecipeName)) { _Result = false; break; }
+            }
+
+            return _Result;
+        }
+
+        public bool ReadInspectionParameter(int _ID, string _RecipeName = null)
+        {
+            bool _Result = false;
+
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
+            DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            string _InspParamFullPath = _RecipeParameterPath + @"\InspectionCondition.Rcp";
+            if (false == File.Exists(_InspParamFullPath))
+            {
+                File.Create(_InspParamFullPath).Close();
+                WriteInspectionParameter(_ID, _InspParamFullPath);
+                System.Threading.Thread.Sleep(100);
+            }
+
+            return _Result;
+        }
+
+
+
+        public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
+        {
+            if (null == _InspParamFullPath) _InspParamFullPath = InspectionDefaultPath + @"RecipeParameter\" + SystemParam.LastRecipeName + @"\Module" + (_ID + 1) + @"\InspectionCondition.Rcp";
+
+            string _InspParamPath = String.Format(@"{0}{1}\Module{2}", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
+            DirectoryInfo _DirInfo = new DirectoryInfo(_InspParamPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            //Reference folder를 지우고 다시 저장
+            string _ReferencePath = String.Format(@"{0}{1}\Module{2}\Reference", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
+            _DirInfo = new DirectoryInfo(_ReferencePath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+            Directory.Delete(_ReferencePath, true);
+
+            #region XML Element Define
+            #endregion XML Element Define
+        }
     }
 }

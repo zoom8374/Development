@@ -14,4 +14,9 @@ namespace ParameterManager
     /// Project Item
     /// </summary>
     public enum eProjectItem { NEEDLE_ALIGN = 0, LEAD_INSP };
+
+    /// <summary>
+    /// Algorithm Type
+    /// </summary>
+    public enum eAlgoType {  C_NONE = -1, C_PATTERN, C_BLOB, C_LEAD_BENT }
 }

@@ -69,10 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CInspectionSystemManager.cs" />
-    <Compile Include="InspectionWindow.cs">
+    <Compile Include="InspSysManagerWindow\InspectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InspectionWindow.Designer.cs">
+    <Compile Include="InspSysManagerWindow\InspectionWindow.Designer.cs">
       <DependentUpon>InspectionWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,10 +93,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="InspSysManagerWindow\" />
+    <None Include="Resources\RecipeSave1.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="InspectionWindow.resx">
+    <EmbeddedResource Include="InspSysManagerWindow\InspectionWindow.resx">
       <DependentUpon>InspectionWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -133,6 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SaveOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RecipeSaveOver1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

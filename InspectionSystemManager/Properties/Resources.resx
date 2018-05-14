@@ -121,23 +121,20 @@
   <data name="InspectionOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\InspectionOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Inspection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Inspection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CameraOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CameraOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="OneShot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OneShot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="OneShotOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OneShotOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Recipe" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Recipe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RecipeOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RecipeOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,7 +142,16 @@
   <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OneShot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OneShot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OneShotOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OneShotOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecipeSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecipeSave1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecipeSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecipeSaveOver1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

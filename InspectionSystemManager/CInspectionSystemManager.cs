@@ -27,7 +27,8 @@ namespace InspectionSystemManager
             IsSimulationMode = _IsSimulationMode;
 
             InspWnd = new InspectionWindow();
-            InspWndName = _SystemName + " Display";
+            //InspWndName = _SystemName + " Display";
+            InspWndName = String.Format(" {0} Inspecion Window", _SystemName);
         }
 
         //public void Initialize(Object _OwnerForm, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParameter, eProjectType _ProjectType)
