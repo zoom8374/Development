@@ -76,8 +76,6 @@ namespace KPVisionInspectionFramework
 
             ParamManager.DeInitialize();
 
-
-
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].DeInitialize();
         }

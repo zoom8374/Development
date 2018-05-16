@@ -43,6 +43,7 @@ namespace ParameterManager
             {
                 if (false == ReadSystemParameter()) break;
                 if (false == ReadISMParameters())   break;
+                if (false == ReadInspectionParameters()) break;
                 SystemParam.IsProgramUsable = true;
 
                 _Result = true;
@@ -281,6 +282,7 @@ namespace ParameterManager
         }
         #endregion Read & Write Inspection System Manager
 
+        #region Read & Write InspectionParameter
         public bool ReadInspectionParameters()
         {
             bool _Result = true;
@@ -297,7 +299,7 @@ namespace ParameterManager
 
         public bool ReadInspectionParameter(int _ID, string _RecipeName = null)
         {
-            bool _Result = false;
+            bool _Result = true;
 
             if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
             string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
@@ -312,10 +314,135 @@ namespace ParameterManager
                 System.Threading.Thread.Sleep(100);
             }
 
+            XmlNodeList _XmlNodeList = GetNodeList(_InspParamFullPath);
+            if (null == _XmlNodeList) return false;
+
+            foreach (XmlNode _Node in _XmlNodeList)
+            {
+                InspectionAreaParameter _InspAreaParamTemp = new InspectionAreaParameter();
+
+                if (null == _Node) return false;
+                GetInspectionParameterRegion(_Node, ref _InspAreaParamTemp);
+                GetInspectionParameterAlgorithm(_Node, ref _InspAreaParamTemp);
+
+                InspParam[_ID].InspAreaParam.Add(_InspAreaParamTemp);
+            }
+
             return _Result;
         }
 
+        private void GetInspectionParameterRegion(XmlNode _Nodes, ref InspectionAreaParameter _InspAreaParam)
+        {
+            if (null == _Nodes) return;
+            foreach (XmlNode _NodeChild in _Nodes.ChildNodes)
+            {
+                switch (_NodeChild.Name)
+                {
+                    case "Enable":            _InspAreaParam.Enable = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "BenchMark":         _InspAreaParam.AreaBenchMark = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "NgNumber":          _InspAreaParam.NgAreaNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "AreaRegionCenterX": _InspAreaParam.AreaRegionCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AreaRegionCenterY": _InspAreaParam.AreaRegionCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AreaRegionWidth":   _InspAreaParam.AreaRegionWidth = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AreaRegionHeight":  _InspAreaParam.AreaRegionHeight = Convert.ToDouble(_NodeChild.InnerText); break;
+                }
+            }
+        }
 
+        private void GetInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAreaParameter _InspAreaParam)
+        {
+            if (null == _Nodes) return;
+            for (int iLoopCount = 0; ; ++iLoopCount)
+            {
+                InspectionAlgorithmParameter _InspAlgoParamTemp = new InspectionAlgorithmParameter();
+
+                int _AlgoNumber = iLoopCount + 1;
+                string _AlgoNumberName = String.Format("Algo{0}", _AlgoNumber);
+
+                XmlNode _Node = _Nodes[_AlgoNumberName];
+                if (null == _Node) break;
+
+                foreach (XmlNode _NodeChild in _Node.ChildNodes)
+                {
+                    switch (_NodeChild.Name)
+                    {
+                        case "AlgoEnable":          _InspAlgoParamTemp.AlgoEnable = Convert.ToBoolean(_NodeChild.InnerText); break;
+                        case "AlgoType":            _InspAlgoParamTemp.AlgoType = Convert.ToInt32(_NodeChild.InnerText); break;
+                        case "AlgoBenchMark":       _InspAlgoParamTemp.AlgoBenchMark = Convert.ToInt32(_NodeChild.InnerText); break;
+                        case "AlgoRegionCenterX":   _InspAlgoParamTemp.AlgoRegionCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                        case "AlgoRegionCenterY":   _InspAlgoParamTemp.AlgoRegionCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                        case "AlgoRegionWidth":     _InspAlgoParamTemp.AlgoRegionWidth = Convert.ToDouble(_NodeChild.InnerText); break;
+                        case "AlgoRegionHeight":    _InspAlgoParamTemp.AlgoRegionHeight = Convert.ToDouble(_NodeChild.InnerText); break;
+                    }
+                }
+
+                if ((int)eAlgoType.C_PATTERN == _InspAlgoParamTemp.AlgoType) GetPatternInspectionparameterAlgorithm(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_BLOB == _InspAlgoParamTemp.AlgoType) GetBlobInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LEAD_BENT == _InspAlgoParamTemp.AlgoType) GetLeadBentInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
+            }
+        }
+
+        private void GetPatternInspectionparameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+
+            int _Cnt = 1;
+            CogPatternAlgo _CogPattern = new CogPatternAlgo();
+            _CogPattern.ReferenceInfoList = new References();
+            _CogPattern.ReferenceInfoList.Clear();
+            
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string ReferenceName = "Reference" + _Cnt;
+
+                if (_NodeChild.Name == "PatternCount")       _CogPattern.PatternCount = Convert.ToInt32(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "MatchingScore") _CogPattern.MatchingScore = Convert.ToDouble(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "MatchingAngle") _CogPattern.MatchingAngle = Convert.ToDouble(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "MatchingCount") _CogPattern.MatchingCount = Convert.ToInt32(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "EnableShift")   _CogPattern.IsShift = Convert.ToBoolean(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "ShiftX")        _CogPattern.AllowedShiftX = Convert.ToInt32(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "ShiftY")        _CogPattern.AllowedShiftY = Convert.ToInt32(_NodeChild.InnerText);
+
+                //Reference
+                ReferenceInformation _ReferInfo = new ReferenceInformation();
+                if (_NodeChild.Name == ReferenceName)
+                {
+                    foreach (XmlNode _Node in _NodeChild)
+                    {
+                        if (null == _Node) return;
+                        switch (_Node.Name)
+                        {
+                            case "ReferencePath":       _ReferInfo.ReferencePath = _Node.InnerText; break;
+                            case "InterActiveStartX":   _ReferInfo.InterActiveStartX = Convert.ToDouble(_Node.InnerText); break;
+                            case "InterActiveStartY":   _ReferInfo.InterActiveStartY = Convert.ToDouble(_Node.InnerText); break;
+                            case "StaticStartX":        _ReferInfo.StaticStartX = Convert.ToDouble(_Node.InnerText); break;
+                            case "StaticStartY":        _ReferInfo.StaticStartY = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginX":             _ReferInfo.CenterX = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginY":             _ReferInfo.CenterY = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginPointOffsetX":  _ReferInfo.OriginPointOffsetX = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginPointOffsetY":  _ReferInfo.OriginPointOffsetY = Convert.ToDouble(_Node.InnerText); break;
+                            case "Width":               _ReferInfo.Width = Convert.ToDouble(_Node.InnerText); break;
+                            case "Height":              _ReferInfo.Height = Convert.ToDouble(_Node.InnerText); break;
+                        }
+                    }
+                    _CogPattern.ReferenceInfoList.Add(_ReferInfo);
+                    _Cnt++;
+                }
+            }
+            _InspParam.Algorithm = _CogPattern;
+        }
+
+        private void GetBlobInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+
+        }
+
+        private void GetLeadBentInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+
+        }
 
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
         {
@@ -331,8 +458,80 @@ namespace ParameterManager
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
             Directory.Delete(_ReferencePath, true);
 
-            #region XML Element Define
-            #endregion XML Element Define
+            XmlTextWriter _XmlWriter = new XmlTextWriter(_InspParamFullPath, Encoding.Unicode);
+            _XmlWriter.Formatting = Formatting.Indented;
+            _XmlWriter.WriteStartDocument();
+            _XmlWriter.WriteStartElement("AlgoParameter");
+            {
+                for (int iLoopCount = 0; iLoopCount < InspParam[_ID].InspAreaParam.Count; ++iLoopCount)
+                {
+                    _XmlWriter.WriteStartElement("InspAlgoArea" + (iLoopCount + 1));
+                    {
+                        //검사 영역 저장
+                        _XmlWriter.WriteElementString("Enable", InspParam[_ID].InspAreaParam[iLoopCount].Enable.ToString());
+                        _XmlWriter.WriteElementString("NgNumber", InspParam[_ID].InspAreaParam[iLoopCount].NgAreaNumber.ToString());
+                        _XmlWriter.WriteElementString("BenchMark", InspParam[_ID].InspAreaParam[iLoopCount].AreaBenchMark.ToString());
+                        _XmlWriter.WriteElementString("AreaRegionCenterX", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionCenterX.ToString());
+                        _XmlWriter.WriteElementString("AreaRegionCenterY", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionCenterY.ToString());
+                        _XmlWriter.WriteElementString("AreaRegionWidth", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionWidth.ToString());
+                        _XmlWriter.WriteElementString("AreaRegionHeight", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionHeight.ToString());
+
+                        for (int jLoopCount = 0; jLoopCount < InspParam[_ID].InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                        {
+                            InspectionAlgorithmParameter _InspAlgoParamTemp = InspParam[_ID].InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount];
+                            _XmlWriter.WriteStartElement("Algo" + (jLoopCount + 1));
+                            {
+                                _XmlWriter.WriteElementString("AlgoEnable", _InspAlgoParamTemp.AlgoEnable.ToString());
+                                _XmlWriter.WriteElementString("AlgoType", _InspAlgoParamTemp.AlgoType.ToString());
+                                _XmlWriter.WriteElementString("AlgoBenchMark", _InspAlgoParamTemp.AlgoBenchMark.ToString());
+                                _XmlWriter.WriteElementString("AlgoRegionCenterX", _InspAlgoParamTemp.AlgoRegionCenterX.ToString());
+                                _XmlWriter.WriteElementString("AlgoRegionCenterY", _InspAlgoParamTemp.AlgoRegionCenterY.ToString());
+                                _XmlWriter.WriteElementString("AlgoRegionWidth", _InspAlgoParamTemp.AlgoRegionWidth.ToString());
+                                _XmlWriter.WriteElementString("AlgoRegionHeight", _InspAlgoParamTemp.AlgoRegionHeight.ToString());
+
+                                eAlgoType _AlgoType = (eAlgoType)_InspAlgoParamTemp.AlgoType;
+                                if (eAlgoType.C_PATTERN == _AlgoType)        WritePatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_BLOB == _AlgoType)      WriteBlobInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LEAD_BENT == _AlgoType) WriteLeadBentInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                            }
+                            _XmlWriter.WriteEndElement();
+                        }
+                    }
+                    _XmlWriter.WriteEndElement();
+                }
+            }
+            _XmlWriter.WriteEndElement();
+            _XmlWriter.WriteEndDocument();
+            _XmlWriter.Close();
         }
+
+        private void WritePatternInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            CogPatternAlgo _CogPatternAlgo = (CogPatternAlgo)_InspAlgoParam;
+            _XmlWriter.WriteElementString("PatternCount", _CogPatternAlgo.PatternCount.ToString());
+            _XmlWriter.WriteElementString("CatchingScore", _CogPatternAlgo.MatchingScore.ToString());
+            _XmlWriter.WriteElementString("MatchingAngle", _CogPatternAlgo.MatchingAngle.ToString());
+            _XmlWriter.WriteElementString("MatchingCount", _CogPatternAlgo.MatchingCount.ToString());
+            _XmlWriter.WriteElementString("EnableShift", _CogPatternAlgo.IsShift.ToString());
+            _XmlWriter.WriteElementString("ShiftX", _CogPatternAlgo.AllowedShiftX.ToString());
+            _XmlWriter.WriteElementString("ShiftY", _CogPatternAlgo.AllowedShiftY.ToString());
+
+            //Reference Model Save
+            for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
+            {
+
+            }
+        }
+
+        private void WriteBlobInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+
+        }
+
+        private void WriteLeadBentInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+
+        }
+        #endregion Read & Write InspectionParameter
     }
 }
