@@ -20,6 +20,9 @@ namespace ParameterManager
         private string RecipeParameterPath;
         private string SystemParameterFullPath;
 
+        private int AlgoNumber = 1;
+        private int AreaNumber = 1;
+
         #region Initialize & DeInitialize
         public CParameterManager()
         {
@@ -314,6 +317,7 @@ namespace ParameterManager
                 System.Threading.Thread.Sleep(100);
             }
 
+            AreaNumber = AlgoNumber = 1;
             XmlNodeList _XmlNodeList = GetNodeList(_InspParamFullPath);
             if (null == _XmlNodeList) return false;
 
@@ -489,6 +493,8 @@ namespace ParameterManager
                                 _XmlWriter.WriteElementString("AlgoRegionWidth", _InspAlgoParamTemp.AlgoRegionWidth.ToString());
                                 _XmlWriter.WriteElementString("AlgoRegionHeight", _InspAlgoParamTemp.AlgoRegionHeight.ToString());
 
+                                AreaNumber = iLoopCount + 1;
+                                AlgoNumber = jLoopCount + 1;
                                 eAlgoType _AlgoType = (eAlgoType)_InspAlgoParamTemp.AlgoType;
                                 if (eAlgoType.C_PATTERN == _AlgoType)        WritePatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_BLOB == _AlgoType)      WriteBlobInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
@@ -519,7 +525,30 @@ namespace ParameterManager
             //Reference Model Save
             for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
             {
+                string _Extention = ".pat";
+                string _FileName = String.Format("AR{0:D2}_AL{1:D2}_RF{2:D2}{3}", AreaNumber, AlgoNumber, iLoopCount + 1, _Extention);
+                string _RecipeName = SystemParam.LastRecipeName;
+                string _RecipeParameterPath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
 
+                if (false == Directory.Exists(_RecipeParameterPath)) Directory.CreateDirectory(_RecipeParameterPath);
+                _CogPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath = _RecipeParameterPath + _FileName;
+                //Cognex VPP Pattern Save
+
+                _XmlWriter.WriteStartElement("Reference" + (iLoopCount + 1));
+                {
+                    _XmlWriter.WriteElementString("ReferencePath", _CogPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath);
+                    _XmlWriter.WriteElementString("InterActiveStartX", _CogPatternAlgo.ReferenceInfoList[iLoopCount].InterActiveStartX.ToString());
+                    _XmlWriter.WriteElementString("InterActiveStartY", _CogPatternAlgo.ReferenceInfoList[iLoopCount].InterActiveStartY.ToString());
+                    _XmlWriter.WriteElementString("StaticStartX", _CogPatternAlgo.ReferenceInfoList[iLoopCount].StaticStartX.ToString());
+                    _XmlWriter.WriteElementString("StaticStartY", _CogPatternAlgo.ReferenceInfoList[iLoopCount].StaticStartY.ToString());
+                    _XmlWriter.WriteElementString("OriginX", _CogPatternAlgo.ReferenceInfoList[iLoopCount].CenterX.ToString());
+                    _XmlWriter.WriteElementString("OriginY", _CogPatternAlgo.ReferenceInfoList[iLoopCount].CenterY.ToString());
+                    _XmlWriter.WriteElementString("OriginPointOffsetX", _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetX.ToString());
+                    _XmlWriter.WriteElementString("OriginPointOffsetY", _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetY.ToString());
+                    _XmlWriter.WriteElementString("Width", _CogPatternAlgo.ReferenceInfoList[iLoopCount].Width.ToString());
+                    _XmlWriter.WriteElementString("Height", _CogPatternAlgo.ReferenceInfoList[iLoopCount].Height.ToString());
+                }
+                _XmlWriter.WriteEndElement();
             }
         }
 

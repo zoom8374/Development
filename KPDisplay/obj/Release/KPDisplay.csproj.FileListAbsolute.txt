@@ -1707,3 +1707,25 @@ C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPDispla
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.csproj.GenerateResource.Cache
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.dll
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\KPDisplay.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\KPDisplay.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.CorePlus.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.Display.Controls.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.ImageFile.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.ImageProcessing.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro3D.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.CorePlus.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.Display.Controls.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.ImageFile.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro.ImageProcessing.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Release\Cognex.VisionPro3D.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.KPCogDisplayControl.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Release\KPDisplay.pdb

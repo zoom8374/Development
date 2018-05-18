@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPDisplay", "..\KPDisplay\K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogManager", "..\LogManager\LogManager.csproj", "{635BF6D0-1B81-4B61-9F53-5E93C5335B28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOControlManager", "..\DIOControlManager\DIOControlManager\DIOControlManager.csproj", "{E0E5535A-0419-44F5-A201-E2F530A4B509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,12 @@ Global
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|x64.ActiveCfg = Release|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
