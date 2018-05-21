@@ -32,7 +32,7 @@ namespace DIOControlManager
 
         public void DeInitialize()
         {
-
+            return;
         }
         #endregion Initialize & DeInitialize
     }
