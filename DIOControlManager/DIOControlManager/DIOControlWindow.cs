@@ -16,6 +16,7 @@ namespace DIOControlManager
             InitializeComponent();
         }
 
+        #region Initialize & DeInitialize
         public void Initialize()
         {
 
@@ -25,5 +26,6 @@ namespace DIOControlManager
         {
 
         }
+        #endregion Initialize & DeInitialize
     }
 }
