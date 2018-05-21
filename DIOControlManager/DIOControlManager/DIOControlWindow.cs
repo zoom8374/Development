@@ -23,7 +23,7 @@ namespace DIOControlManager
 
             do
             {
-
+                _Result = false;
             } while (false);
 
             return _Result;
