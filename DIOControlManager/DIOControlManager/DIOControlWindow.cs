@@ -21,18 +21,12 @@ namespace DIOControlManager
         {
             bool _Result = false;
 
-            do
-            {
-
-                _Result = true;
-            } while (false);
-
             return _Result;
         }
 
         public void DeInitialize()
         {
-            return;
+            
         }
         #endregion Initialize & DeInitialize
     }
