@@ -48,6 +48,13 @@ namespace InspectionSystemManager
             btnLive.ButtonImage = InspectionSystemManager.Properties.Resources.Camera;
             btnLive.ButtonImageOver = InspectionSystemManager.Properties.Resources.CameraOver;
             btnLive.ButtonImageDown = InspectionSystemManager.Properties.Resources.CameraOver;
+            btnImageSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageSave;
+            btnImageSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageSaveOver;
+            btnImageSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageSaveOver;
+            btnImageLoad.ButtonImage = InspectionSystemManager.Properties.Resources.ImageLoad;
+            btnImageLoad.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageLoadOver;
+            btnImageLoad.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageLoadOver;
+
             #endregion Set Button Image Resource
         }
 
@@ -219,5 +226,54 @@ namespace InspectionSystemManager
             if (e.Alt && e.KeyCode == Keys.F4) e.Handled = true;
         }
         #endregion Control Default Event
+
+        #region Control Event
+        private void btnInspection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOneShot_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRecipe_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRecipeSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLive_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnImageLoad_Click(object sender, EventArgs e)
+        {
+            kpCogDisplayMain.ClearDisplay();
+        }
+
+        private void btnImageSave_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion Control Event
+
+        public bool LoadCogImage()
+        {
+            bool _Result = false;
+
+            return _Result;
+        }
+
+        public void SaveCogImage()
+        {
+
+        }
     }
 }

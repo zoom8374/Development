@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogManager", "..\LogManager
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOControlManager", "..\DIOControlManager\DIOControlManager\DIOControlManager.csproj", "{E0E5535A-0419-44F5-A201-E2F530A4B509}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthernetManager", "..\EthernetManager\EthernetManager.csproj", "{A34D8BA3-047B-41A3-88FA-20DC46EC5306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraManager", "..\CameraManager\CameraManager.csproj", "{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,18 @@ Global
 		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|x64.ActiveCfg = Release|Any CPU
+		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Release|x64.ActiveCfg = Release|Any CPU
+		{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,12 +31,14 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.btnImageSave = new CustomControl.ImageButton();
+            this.btnImageLoad = new CustomControl.ImageButton();
             this.btnRecipeSave = new CustomControl.ImageButton();
             this.btnRecipe = new CustomControl.ImageButton();
             this.btnOneShot = new CustomControl.ImageButton();
             this.btnInspection = new CustomControl.ImageButton();
             this.btnLive = new CustomControl.ImageButton();
-            this.labelTitle = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +69,8 @@
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.panelMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenu.Controls.Add(this.btnImageSave);
+            this.panelMenu.Controls.Add(this.btnImageLoad);
             this.panelMenu.Controls.Add(this.btnRecipeSave);
             this.panelMenu.Controls.Add(this.btnRecipe);
             this.panelMenu.Controls.Add(this.btnOneShot);
@@ -76,6 +80,58 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(616, 38);
             this.panelMenu.TabIndex = 0;
+            // 
+            // labelTitle
+            // 
+            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelTitle.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.labelTitle.Location = new System.Drawing.Point(0, 0);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(624, 30);
+            this.labelTitle.TabIndex = 1;
+            this.labelTitle.Text = " Inspection window";
+            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
+            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
+            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
+            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            // 
+            // btnImageSave
+            // 
+            this.btnImageSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ImageSave;
+            this.btnImageSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnImageSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImageSave.ForeColor = System.Drawing.Color.White;
+            this.btnImageSave.Location = new System.Drawing.Point(201, 1);
+            this.btnImageSave.Name = "btnImageSave";
+            this.btnImageSave.Size = new System.Drawing.Size(34, 34);
+            this.btnImageSave.TabIndex = 13;
+            this.btnImageSave.UseVisualStyleBackColor = false;
+            this.btnImageSave.Click += new System.EventHandler(this.btnImageSave_Click);
+            // 
+            // btnImageLoad
+            // 
+            this.btnImageLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageLoad.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ImageLoad;
+            this.btnImageLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnImageLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageLoad.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageLoad.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageLoad.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImageLoad.ForeColor = System.Drawing.Color.White;
+            this.btnImageLoad.Location = new System.Drawing.Point(169, 1);
+            this.btnImageLoad.Name = "btnImageLoad";
+            this.btnImageLoad.Size = new System.Drawing.Size(34, 34);
+            this.btnImageLoad.TabIndex = 12;
+            this.btnImageLoad.UseVisualStyleBackColor = false;
+            this.btnImageLoad.Click += new System.EventHandler(this.btnImageLoad_Click);
             // 
             // btnRecipeSave
             // 
@@ -88,11 +144,12 @@
             this.btnRecipeSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnRecipeSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRecipeSave.ForeColor = System.Drawing.Color.White;
-            this.btnRecipeSave.Location = new System.Drawing.Point(96, 1);
+            this.btnRecipeSave.Location = new System.Drawing.Point(97, 1);
             this.btnRecipeSave.Name = "btnRecipeSave";
             this.btnRecipeSave.Size = new System.Drawing.Size(34, 34);
             this.btnRecipeSave.TabIndex = 11;
             this.btnRecipeSave.UseVisualStyleBackColor = false;
+            this.btnRecipeSave.Click += new System.EventHandler(this.btnRecipeSave_Click);
             // 
             // btnRecipe
             // 
@@ -105,11 +162,12 @@
             this.btnRecipe.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnRecipe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRecipe.ForeColor = System.Drawing.Color.White;
-            this.btnRecipe.Location = new System.Drawing.Point(64, 1);
+            this.btnRecipe.Location = new System.Drawing.Point(65, 1);
             this.btnRecipe.Name = "btnRecipe";
             this.btnRecipe.Size = new System.Drawing.Size(34, 34);
             this.btnRecipe.TabIndex = 10;
             this.btnRecipe.UseVisualStyleBackColor = false;
+            this.btnRecipe.Click += new System.EventHandler(this.btnRecipe_Click);
             // 
             // btnOneShot
             // 
@@ -127,6 +185,7 @@
             this.btnOneShot.Size = new System.Drawing.Size(34, 34);
             this.btnOneShot.TabIndex = 9;
             this.btnOneShot.UseVisualStyleBackColor = false;
+            this.btnOneShot.Click += new System.EventHandler(this.btnOneShot_Click);
             // 
             // btnInspection
             // 
@@ -144,6 +203,7 @@
             this.btnInspection.Size = new System.Drawing.Size(34, 34);
             this.btnInspection.TabIndex = 8;
             this.btnInspection.UseVisualStyleBackColor = false;
+            this.btnInspection.Click += new System.EventHandler(this.btnInspection_Click);
             // 
             // btnLive
             // 
@@ -156,27 +216,12 @@
             this.btnLive.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnLive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLive.ForeColor = System.Drawing.Color.White;
-            this.btnLive.Location = new System.Drawing.Point(136, 1);
+            this.btnLive.Location = new System.Drawing.Point(137, 1);
             this.btnLive.Name = "btnLive";
             this.btnLive.Size = new System.Drawing.Size(34, 34);
             this.btnLive.TabIndex = 7;
             this.btnLive.UseVisualStyleBackColor = false;
-            // 
-            // labelTitle
-            // 
-            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelTitle.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.labelTitle.Location = new System.Drawing.Point(0, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(624, 30);
-            this.labelTitle.TabIndex = 1;
-            this.labelTitle.Text = " Inspection window";
-            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
-            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
-            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
-            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            this.btnLive.Click += new System.EventHandler(this.btnLive_Click);
             // 
             // InspectionWindow
             // 
@@ -216,5 +261,7 @@
         private CustomControl.ImageButton btnOneShot;
         private CustomControl.ImageButton btnRecipeSave;
         private System.Windows.Forms.Label labelTitle;
+        private CustomControl.ImageButton btnImageSave;
+        private CustomControl.ImageButton btnImageLoad;
     }
 }
