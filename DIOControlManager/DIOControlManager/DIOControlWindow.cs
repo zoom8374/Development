@@ -24,6 +24,7 @@ namespace DIOControlManager
             do
             {
 
+                _Result = true;
             } while (false);
 
             return _Result;
