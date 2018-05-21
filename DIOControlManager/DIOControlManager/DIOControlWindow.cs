@@ -19,7 +19,7 @@ namespace DIOControlManager
         #region Initialize & DeInitialize
         public bool Initialize()
         {
-            bool _Result = false;
+            bool _Result = true;
 
             return _Result;
         }
