@@ -12,3 +12,10 @@ D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Rel
 D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csproj.GenerateResource.Cache
 D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.exe
 D:\Program SW\CIPOS Lead Inspection2\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.exe
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\bin\Release\DIOControlManager.pdb
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csprojResolveAssemblyReference.cache
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.Properties.Resources.resources
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csproj.GenerateResource.Cache
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.exe
+D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.pdb

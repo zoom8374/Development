@@ -21,6 +21,11 @@ namespace DIOControlManager
         {
             bool _Result = true;
 
+            do
+            {
+
+            } while (false);
+
             return _Result;
         }
 

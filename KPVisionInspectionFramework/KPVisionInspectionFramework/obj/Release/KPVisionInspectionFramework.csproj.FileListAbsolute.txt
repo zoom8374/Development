@@ -25,3 +25,12 @@ D:\Program SW\CIPOS Lead Inspection2\KPVisionInspectionFramework\KPVisionInspect
 D:\Program SW\CIPOS Lead Inspection2\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.csproj.GenerateResource.Cache
 D:\Program SW\CIPOS Lead Inspection2\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
 D:\Program SW\CIPOS Lead Inspection2\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\CIPOS Lead Inspection.exe.config
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\CIPOS Lead Inspection.exe
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\CIPOS Lead Inspection.pdb
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.csprojResolveAssemblyReference.cache
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.MainForm.resources
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.Properties.Resources.resources
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.csproj.GenerateResource.Cache
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
+D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
