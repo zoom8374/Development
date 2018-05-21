@@ -31,7 +31,7 @@ namespace DIOControlManager
 
         public void DeInitialize()
         {
-            
+
         }
         #endregion Initialize & DeInitialize
     }
