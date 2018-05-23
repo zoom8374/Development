@@ -112,7 +112,6 @@ namespace ParameterManager
                         case "LastRecipeName":  SystemParam.LastRecipeName = _Node.InnerText; break;
                         case "ISMModuleCount":  SystemParam.InspSystemManagerCount = Convert.ToInt32(_Node.InnerText); break;
                         case "ProjectType":     SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
-                        case "ProjectItem":     SystemParam.ProjectItem = Convert.ToInt32(_Node.InnerText); break;
                         case "IPAddress":       SystemParam.IPAddress = _Node.InnerText; break;
                         case "PortNumber":      SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
                     }
@@ -139,7 +138,6 @@ namespace ParameterManager
             XElement _LastRecipeName         = new XElement("LastRecipeName", SystemParam.LastRecipeName);
             XElement _InspSystemManagerCount = new XElement("ISMModuleCount", SystemParam.InspSystemManagerCount.ToString());
             XElement _ProjectType            = new XElement("ProjectType", SystemParam.ProjectType.ToString());
-            XElement _ProjectItem            = new XElement("ProjectItem", SystemParam.ProjectItem.ToString());
             XElement _IPAddress              = new XElement("IPAddress", SystemParam.IPAddress);
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
             #endregion XML Element Define
@@ -150,7 +148,6 @@ namespace ParameterManager
             _SystemParameter.Add(_LastRecipeName);
             _SystemParameter.Add(_InspSystemManagerCount);
             _SystemParameter.Add(_ProjectType);
-            _SystemParameter.Add(_ProjectItem);
             _SystemParameter.Add(_IPAddress);
             _SystemParameter.Add(_PortNumber);
             _SystemParameter.Save(SystemParameterFullPath);

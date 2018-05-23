@@ -32,17 +32,17 @@
             this.ribbonMain = new System.Windows.Forms.Ribbon();
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanelOperating = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanel1 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanel2 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanel4 = new System.Windows.Forms.RibbonPanel();
-            this.panelMain = new System.Windows.Forms.Panel();
             this.rbStart = new System.Windows.Forms.RibbonButton();
             this.ribbonButton2 = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanelSetting = new System.Windows.Forms.RibbonPanel();
             this.rbEthernet = new System.Windows.Forms.RibbonButton();
             this.rbLight = new System.Windows.Forms.RibbonButton();
             this.rbDIO = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel2 = new System.Windows.Forms.RibbonPanel();
+            this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
+            this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
             this.rbExit = new System.Windows.Forms.RibbonButton();
+            this.panelMain = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // ribbonMain
@@ -73,10 +73,10 @@
             // ribbonTab1
             // 
             this.ribbonTab1.Panels.Add(this.ribbonPanelOperating);
-            this.ribbonTab1.Panels.Add(this.ribbonPanel1);
+            this.ribbonTab1.Panels.Add(this.ribbonPanelSetting);
             this.ribbonTab1.Panels.Add(this.ribbonPanel2);
             this.ribbonTab1.Panels.Add(this.ribbonPanel3);
-            this.ribbonTab1.Panels.Add(this.ribbonPanel4);
+            this.ribbonTab1.Panels.Add(this.ribbonPanelSystem);
             this.ribbonTab1.Text = "Inspection Main";
             // 
             // ribbonPanelOperating
@@ -85,34 +85,6 @@
             this.ribbonPanelOperating.Items.Add(this.rbStart);
             this.ribbonPanelOperating.Items.Add(this.ribbonButton2);
             this.ribbonPanelOperating.Text = "Inspection Operating";
-            // 
-            // ribbonPanel1
-            // 
-            this.ribbonPanel1.Items.Add(this.rbEthernet);
-            this.ribbonPanel1.Items.Add(this.rbLight);
-            this.ribbonPanel1.Items.Add(this.rbDIO);
-            this.ribbonPanel1.Text = "ribbonPanel1";
-            // 
-            // ribbonPanel2
-            // 
-            this.ribbonPanel2.Text = "ribbonPanel2";
-            // 
-            // ribbonPanel3
-            // 
-            this.ribbonPanel3.Text = "ribbonPanel3";
-            // 
-            // ribbonPanel4
-            // 
-            this.ribbonPanel4.Items.Add(this.rbExit);
-            this.ribbonPanel4.Text = "System";
-            // 
-            // panelMain
-            // 
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 140);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(1904, 901);
-            this.panelMain.TabIndex = 2;
             // 
             // rbStart
             // 
@@ -127,6 +99,13 @@
             this.ribbonButton2.MinimumSize = new System.Drawing.Size(70, 60);
             this.ribbonButton2.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton2.SmallImage")));
             this.ribbonButton2.Text = " Stop";
+            // 
+            // ribbonPanelSetting
+            // 
+            this.ribbonPanelSetting.Items.Add(this.rbEthernet);
+            this.ribbonPanelSetting.Items.Add(this.rbLight);
+            this.ribbonPanelSetting.Items.Add(this.rbDIO);
+            this.ribbonPanelSetting.Text = "Setting ";
             // 
             // rbEthernet
             // 
@@ -149,6 +128,19 @@
             this.rbDIO.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbDIO.SmallImage")));
             this.rbDIO.Text = " DIO";
             // 
+            // ribbonPanel2
+            // 
+            this.ribbonPanel2.Text = "ribbonPanel2";
+            // 
+            // ribbonPanel3
+            // 
+            this.ribbonPanel3.Text = "ribbonPanel3";
+            // 
+            // ribbonPanelSystem
+            // 
+            this.ribbonPanelSystem.Items.Add(this.rbExit);
+            this.ribbonPanelSystem.Text = "System";
+            // 
             // rbExit
             // 
             this.rbExit.Image = global::KPVisionInspectionFramework.Properties.Resources.Exit;
@@ -156,6 +148,14 @@
             this.rbExit.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbExit.SmallImage")));
             this.rbExit.Text = " Exit";
             this.rbExit.Click += new System.EventHandler(this.rbExit_Click);
+            // 
+            // panelMain
+            // 
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(0, 140);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(1904, 901);
+            this.panelMain.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -187,10 +187,10 @@
         private System.Windows.Forms.RibbonPanel ribbonPanelOperating;
         private System.Windows.Forms.RibbonButton rbStart;
         private System.Windows.Forms.RibbonButton ribbonButton2;
-        private System.Windows.Forms.RibbonPanel ribbonPanel1;
+        private System.Windows.Forms.RibbonPanel ribbonPanelSetting;
         private System.Windows.Forms.RibbonPanel ribbonPanel2;
         private System.Windows.Forms.RibbonPanel ribbonPanel3;
-        private System.Windows.Forms.RibbonPanel ribbonPanel4;
+        private System.Windows.Forms.RibbonPanel ribbonPanelSystem;
         private System.Windows.Forms.RibbonButton rbExit;
         private System.Windows.Forms.RibbonButton rbEthernet;
         private System.Windows.Forms.RibbonButton rbLight;

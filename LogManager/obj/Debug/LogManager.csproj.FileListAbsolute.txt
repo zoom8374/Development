@@ -1,0 +1,5 @@
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\LogManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\LogManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogManager.pdb

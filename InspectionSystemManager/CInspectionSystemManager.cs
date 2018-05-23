@@ -20,6 +20,9 @@ namespace InspectionSystemManager
 
         private Point WndLocation = new Point(0, 0);
 
+        public delegate void InspSysManagerHandler(eISMCMD _Command, object _Value = null);
+        public event InspSysManagerHandler InspSysManagerEvent;
+
         #region Initialize & DeInitialize
         public CInspectionSystemManager(int _ID, string _SystemName, bool _IsSimulationMode)
         {
@@ -27,21 +30,24 @@ namespace InspectionSystemManager
             IsSimulationMode = _IsSimulationMode;
 
             InspWnd = new InspectionWindow();
-            //InspWndName = _SystemName + " Display";
-            InspWndName = String.Format(" {0} Inspecion Window", _SystemName);
+            InspWndName = String.Format(" {0} Inspection Window", _SystemName);
         }
 
-        //public void Initialize(Object _OwnerForm, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParameter, eProjectType _ProjectType)
-        public void Initialize(Object _OwnerForm, InspectionSystemManagerParameter _InspSysManagerParam, eProjectType _ProjectType)
+        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam)
         {
+            ProjectType = (eProjectType)_ProjectType;
+            ProjectItem = (eProjectItem)_InspSysManagerParam.ProjectItem;
+
             SetISMParameter(_InspSysManagerParam);
 
-            InspWnd.Initialize(_OwnerForm, this, InspWndName);
+            InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
+            InspWnd.Initialize(_OwnerForm, ID, ProjectItem, InspWndName);
         }
 
         public void DeInitialize()
         {
-
+            InspWnd.InspectionWindowEvent -= new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
+            InspWnd.Deinitialize();
         }
 
         public void GetDisplayWindowInfo(out double _DisplayZoom, out double _DisplayPanX, out double _DisplayPanY)
@@ -80,5 +86,20 @@ namespace InspectionSystemManager
             WndLocation = new Point(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
         }
         #endregion Parameter Management
+
+        #region Event : Inspection Window Event & Function
+        private void InspectionWindowEventFunction(eIWCMD _Command, object _Value)
+        {
+            switch (_Command)
+            {
+                case eIWCMD.TEACHING:   Teaching(_Value);   break;
+            }
+        }
+
+        private void Teaching(object _Value)
+        {
+            InspSysManagerEvent(eISMCMD.TEACHING_STATUS, Convert.ToBoolean(_Value));
+        }
+        #endregion Event : Inspection Window Event
     }
 }

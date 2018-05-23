@@ -10,10 +10,17 @@ using System.Windows.Forms;
 using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
 
+using ParameterManager;
+
 namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
+        private TeachingWindow TeachWnd;
+
+        private int ID;
+        private eProjectType ProjectType;
+        private eProjectItem ProjectItem;
         private string FormName;
         private bool ResizingFlag = false;
         private bool IsResizing = false;
@@ -26,6 +33,11 @@ namespace InspectionSystemManager
         private double DisplayZoomValue = 1;
         private double DisplayPanXValue = 0;
         private double DisplayPanYValue = 0;
+
+
+        public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null);
+        public event InspectionWindowHandler InspectionWindowEvent;
+
 
         #region Initialize & DeInitialize
         public InspectionWindow()
@@ -58,10 +70,14 @@ namespace InspectionSystemManager
             #endregion Set Button Image Resource
         }
 
-        public void Initialize(Object _OwnerForm, Object _OwnerClass, string _FormName)
+        public void Initialize(Object _OwnerForm, int _ID, eProjectItem _ProjectItem, string _FormName)
         {
-            //InspSysManager = (CInspectionSystemManager)_OwnerClass;
-            labelTitle.Text = _FormName;
+            ID = _ID;
+            ProjectItem = _ProjectItem;
+
+            TeachWnd = new TeachingWindow();
+
+            this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
         }
 
@@ -240,7 +256,9 @@ namespace InspectionSystemManager
 
         private void btnRecipe_Click(object sender, EventArgs e)
         {
-
+            InspectionWindowEvent(eIWCMD.TEACHING, true);
+            Teaching();
+            InspectionWindowEvent(eIWCMD.TEACHING, false);
         }
 
         private void btnRecipeSave_Click(object sender, EventArgs e)
@@ -255,7 +273,8 @@ namespace InspectionSystemManager
 
         private void btnImageLoad_Click(object sender, EventArgs e)
         {
-            kpCogDisplayMain.ClearDisplay();
+            //kpCogDisplayMain.ClearDisplay();
+            LoadCogImage();
         }
 
         private void btnImageSave_Click(object sender, EventArgs e)
@@ -264,16 +283,50 @@ namespace InspectionSystemManager
         }
         #endregion Control Event
 
-        public bool LoadCogImage()
+        private string LoadCogImage()
         {
-            bool _Result = false;
+            string _ImageFileName = "";
+            string _ImageFilePath = "";
 
-            return _Result;
+            OpenFileDialog _OpenDialog = new OpenFileDialog();
+            _OpenDialog.InitialDirectory = @"D:\VisionInspectionData";
+            _OpenDialog.Filter = "BmpFile (*.bmp)|*.bmp";
+
+            try
+            {
+                if (_OpenDialog.ShowDialog() == DialogResult.OK)
+                {
+                    _ImageFileName = _OpenDialog.SafeFileName;
+                    _ImageFilePath = _OpenDialog.FileName;
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show(new Form { TopMost = true }, "Could not open image file.");
+            }
+
+            return _ImageFileName;
         }
 
-        public void SaveCogImage()
+        private void SaveCogImage()
         {
 
+        }
+
+        private void Teaching()
+        {
+            TeachWnd = new TeachingWindow();
+            TeachWnd.Initialize();
+            TeachWnd.ShowDialog();
+            
+            if (DialogResult.OK == TeachWnd.DialogResult)
+            {
+
+            }
+            TeachWnd.DeInitialize();
+            TeachWnd.Dispose();
+            GC.Collect();
         }
     }
 }

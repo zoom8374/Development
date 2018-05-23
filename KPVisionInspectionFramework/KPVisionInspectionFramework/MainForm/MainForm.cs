@@ -61,7 +61,8 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
             {
                 InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, "Vision" + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
-                InspSysManager[iLoopCount].Initialize(this, ParamManager.InspSysManagerParam[iLoopCount], (eProjectType)ParamManager.SystemParam.ProjectType);
+                InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
+                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount]);
             }
 
             TimerShowWindow.Tick += new EventHandler(TimerShowWindowTick);
@@ -75,6 +76,10 @@ namespace KPVisionInspectionFramework
 
 
             ParamManager.DeInitialize();
+
+
+            for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
+                InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].DeInitialize();
@@ -178,5 +183,33 @@ namespace KPVisionInspectionFramework
             }
         }
         #endregion Riboon Button Event
+
+        #region Event : Inspection System Manager Event & Function
+        private void InspectionSystemManagerEventFunction(eISMCMD _Command, object _Value = null)
+        {
+            switch (_Command)
+            {
+                case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value));     break;
+            }
+        }
+
+        private void TeachingStatusCheck(bool _IsTeaching)
+        {
+            //Teacing status check
+            if (_IsTeaching)
+            {
+                ribbonPanelOperating.Enabled = false;
+                ribbonPanelSetting.Enabled = false;
+                ribbonPanelSystem.Enabled = false;
+            }
+
+            else
+            {
+                ribbonPanelOperating.Enabled = true;
+                ribbonPanelSetting.Enabled = true;
+                ribbonPanelSystem.Enabled = true;
+            }
+        }
+        #endregion Event : Inspection System Manager Event & Function
     }
 }

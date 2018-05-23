@@ -114,3 +114,4 @@ D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\Inspect
 D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.csproj.GenerateResource.Cache
 D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
 D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.TeachingWindow.resources

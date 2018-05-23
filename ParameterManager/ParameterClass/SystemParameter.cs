@@ -13,11 +13,6 @@ namespace ParameterManager
         public string   LastRecipeName;
         public int      InspSystemManagerCount;
         public int      ProjectType;
-        public int      ProjectItem;
-        //public int      LightType;
-        //public int      LightCount;
-        //public int[]    LightValues;
-        //public int      LightSleep;
         public string   IPAddress;
         public int      PortNumber;
 
@@ -29,7 +24,6 @@ namespace ParameterManager
             LastRecipeName = "Default";
             InspSystemManagerCount = 1;
             ProjectType = 0;
-            ProjectItem = 0;
             //LightType = 0;
             //LightCount = 1;
             //LightSleep = 10;
