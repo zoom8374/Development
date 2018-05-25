@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InspectionSystemManager", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPDisplay", "..\KPDisplay\KPDisplay.csproj", "{75AB941C-2786-416B-B183-E140799EB245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogManager", "..\LogManager\LogManager.csproj", "{635BF6D0-1B81-4B61-9F53-5E93C5335B28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMessageManager", "..\LogManager\LogMessageManager.csproj", "{635BF6D0-1B81-4B61-9F53-5E93C5335B28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOControlManager", "..\DIOControlManager\DIOControlManager\DIOControlManager.csproj", "{E0E5535A-0419-44F5-A201-E2F530A4B509}"
 EndProject

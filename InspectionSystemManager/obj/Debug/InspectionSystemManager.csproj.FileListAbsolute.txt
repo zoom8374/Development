@@ -28,11 +28,6 @@ C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\Inspecti
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.InspectionWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.TeachingWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\InspectionSystemManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.Controls.dll
@@ -57,5 +52,13 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bi
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro3D.Core.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.CorePlus.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageProcessing.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.InspectionWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.TeachingWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\LogMessageManager.pdb

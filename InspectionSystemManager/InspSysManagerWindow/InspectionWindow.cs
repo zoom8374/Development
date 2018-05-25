@@ -9,7 +9,9 @@ using System.Windows.Forms;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
+using Cognex.VisionPro.ImageFile;
 
+using LogMessageManager;
 using ParameterManager;
 
 namespace InspectionSystemManager
@@ -26,6 +28,9 @@ namespace InspectionSystemManager
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
 
+        private CogImageFileTool OriginImageFileTool = new CogImageFileTool();
+        private CogImage8Grey    OriginImage = new CogImage8Grey();
+
         private int ImageSizeWidth = 0;
         private int ImageSizeHeight = 0;
         private bool IsCrossLine = false;
@@ -33,6 +38,8 @@ namespace InspectionSystemManager
         private double DisplayZoomValue = 1;
         private double DisplayPanXValue = 0;
         private double DisplayPanYValue = 0;
+
+        public bool IsInspectionComplete = false;
 
 
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null);
@@ -74,11 +81,12 @@ namespace InspectionSystemManager
         {
             ID = _ID;
             ProjectItem = _ProjectItem;
-
-            TeachWnd = new TeachingWindow();
-
+            FormName = _FormName;
+            
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
+
+            TeachWnd = new TeachingWindow();
         }
 
         public void Deinitialize()
@@ -246,12 +254,12 @@ namespace InspectionSystemManager
         #region Control Event
         private void btnInspection_Click(object sender, EventArgs e)
         {
-
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Inspection Run", ID + 1));
         }
 
         private void btnOneShot_Click(object sender, EventArgs e)
         {
-
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} One-Shot Inspection Run", ID + 1));
         }
 
         private void btnRecipe_Click(object sender, EventArgs e)
@@ -273,13 +281,12 @@ namespace InspectionSystemManager
 
         private void btnImageLoad_Click(object sender, EventArgs e)
         {
-            //kpCogDisplayMain.ClearDisplay();
             LoadCogImage();
         }
 
         private void btnImageSave_Click(object sender, EventArgs e)
         {
-
+            SaveCogImage();
         }
         #endregion Control Event
 
@@ -298,7 +305,12 @@ namespace InspectionSystemManager
                 {
                     _ImageFileName = _OpenDialog.SafeFileName;
                     _ImageFilePath = _OpenDialog.FileName;
-                }
+                    OriginImageFileTool.Operator.Open(_ImageFilePath, CogImageFileModeConstants.Read);
+                    OriginImageFileTool.Run();
+                    OriginImage = (CogImage8Grey)OriginImageFileTool.OutputImage;
+
+                    SetDisplayImage(OriginImage);
+                } 
             }
 
             catch
@@ -309,15 +321,18 @@ namespace InspectionSystemManager
             return _ImageFileName;
         }
 
-        private void SaveCogImage()
+        private void SaveCogImage(string _SaveDirectory = null)
         {
-
+            if (_SaveDirectory == null) _SaveDirectory = @"D:\VisionInspectionData\" + FormName;
+            kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
         }
 
         private void Teaching()
         {
             TeachWnd = new TeachingWindow();
             TeachWnd.Initialize();
+
+            TeachWnd.SetTeachingImage(OriginImage, OriginImage.Width, OriginImage.Height);
             TeachWnd.ShowDialog();
             
             if (DialogResult.OK == TeachWnd.DialogResult)
@@ -327,6 +342,50 @@ namespace InspectionSystemManager
             TeachWnd.DeInitialize();
             TeachWnd.Dispose();
             GC.Collect();
+        }
+
+        private bool Inspection()
+        {
+            bool _Result = false;
+
+            IsInspectionComplete = false;
+
+            do
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID));
+                if (false == InspectionResultClear()) break;
+                if (false == InspectionProcess()) break;
+                if (false == InspectionResultDsiplay()) break;
+
+                _Result = true;
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID));
+            } while (false);
+
+            GC.Collect();
+
+            //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Result : {1}", ID, ));
+            return _Result;
+        }
+
+        private bool InspectionResultClear()
+        {
+            bool _Result = true;
+
+            return _Result;
+        }
+
+        private bool InspectionProcess()
+        {
+            bool _Result = true;
+
+            return _Result;
+        }
+
+        private bool InspectionResultDsiplay()
+        {
+            bool _Result = true;
+
+            return _Result;
         }
     }
 }

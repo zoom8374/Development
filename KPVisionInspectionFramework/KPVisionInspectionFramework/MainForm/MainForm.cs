@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using InspectionSystemManager;
 using ParameterManager;
+using LogMessageManager;
 using LoadingManager;
 
 namespace KPVisionInspectionFramework
@@ -17,6 +18,8 @@ namespace KPVisionInspectionFramework
     {
         private CParameterManager           ParamManager;
         private CInspectionSystemManager[]  InspSysManager;
+        private CLogManager                 LogWnd;
+        private MainResultWindow            ResultWnd;
 
         private int ISMModuleCount = 1;
 
@@ -55,6 +58,20 @@ namespace KPVisionInspectionFramework
         {
             LoadDefaultRibbonTheme();
 
+            #region Log Window Initialize
+            LogWnd = new CLogManager();
+            CLogManager.LogSystemSetting(@"D:\VisionInspectionData\CIPOSLeadInspection\Log\SystemLog");
+            CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\CIPOSLeadInspection\Log\InspectionLog");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : CIPOS lead inspection program run!!");
+            #endregion Log Window Initialize
+
+            #region SubWindow 생성 및 Event 등록
+            ResultWnd = new MainResultWindow();
+            ResultWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
+            ResultWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
+            ResultWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
+            #endregion SubWindow 생성 및 Event 등록
+
             #region InspSysManager Initialize
             ISMModuleCount = ParamManager.SystemParam.InspSystemManagerCount;
             InspSysManager = new CInspectionSystemManager[ISMModuleCount];
@@ -74,6 +91,11 @@ namespace KPVisionInspectionFramework
         {
             GetISMWindowInformation();
 
+            ParamManager.SystemParam.ResultWindowLocationX = ResultWnd.Location.X;
+            ParamManager.SystemParam.ResultWindowLocationY = ResultWnd.Location.Y;
+            ParamManager.SystemParam.ResultWindowWidth = ResultWnd.Width;
+            ParamManager.SystemParam.ResultWindowHeight = ResultWnd.Height;
+            ResultWnd.DeInitialize();
 
             ParamManager.DeInitialize();
 
@@ -105,8 +127,8 @@ namespace KPVisionInspectionFramework
 
         private void GetISMWindowInformation()
         {
-            Point _DispLocation, _InspLocation;
-            Size _DispSize, _InspSize;
+            Point _InspLocation;
+            Size _InspSize;
             double _Zoom, _PanX, _PanY;
             for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; iLoopCount++)
             {
@@ -137,7 +159,7 @@ namespace KPVisionInspectionFramework
                 {
                     InspSysManager[iLoopCount].ShowWindows();
                 }
-                //ResultWnd.Show();
+                ResultWnd.Show();
                 CLoadingManager.Hide();
             }
         }
@@ -165,6 +187,41 @@ namespace KPVisionInspectionFramework
         #endregion Initialize & DeInitialize
 
         #region Riboon Button Event
+        private void rbEthernet_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbLight_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbDIO_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbRecipe_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbLog_Click(object sender, EventArgs e)
+        {
+            LogWnd.ShowLogWindow(!LogWnd.IsShowLogWindow);
+        }
+
+        private void rbHistory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbFolder_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void rbExit_Click(object sender, EventArgs e)
         {
             try
@@ -173,6 +230,8 @@ namespace KPVisionInspectionFramework
 
                 DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Do you want exit program ? ", "Exit Program", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
                 if (DialogResult.Yes != dlgResult) return;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : CIPOS lead inspection program exit!!");
+
                 DeInitialize();
                 Environment.Exit(0);
             }
@@ -200,6 +259,8 @@ namespace KPVisionInspectionFramework
             {
                 ribbonPanelOperating.Enabled = false;
                 ribbonPanelSetting.Enabled = false;
+                ribbonPanelData.Enabled = false;
+                ribbonPanelStatus.Enabled = false;
                 ribbonPanelSystem.Enabled = false;
             }
 
@@ -207,6 +268,8 @@ namespace KPVisionInspectionFramework
             {
                 ribbonPanelOperating.Enabled = true;
                 ribbonPanelSetting.Enabled = true;
+                ribbonPanelData.Enabled = true;
+                ribbonPanelStatus.Enabled = true;
                 ribbonPanelSystem.Enabled = true;
             }
         }

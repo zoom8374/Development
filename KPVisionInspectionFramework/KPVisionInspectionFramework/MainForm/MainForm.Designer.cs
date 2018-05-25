@@ -33,13 +33,18 @@
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanelOperating = new System.Windows.Forms.RibbonPanel();
             this.rbStart = new System.Windows.Forms.RibbonButton();
-            this.ribbonButton2 = new System.Windows.Forms.RibbonButton();
+            this.rbStop = new System.Windows.Forms.RibbonButton();
             this.ribbonPanelSetting = new System.Windows.Forms.RibbonPanel();
             this.rbEthernet = new System.Windows.Forms.RibbonButton();
             this.rbLight = new System.Windows.Forms.RibbonButton();
             this.rbDIO = new System.Windows.Forms.RibbonButton();
-            this.ribbonPanel2 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
+            this.ribbonPanelData = new System.Windows.Forms.RibbonPanel();
+            this.rbRecipe = new System.Windows.Forms.RibbonButton();
+            this.rbLog = new System.Windows.Forms.RibbonButton();
+            this.rbHistory = new System.Windows.Forms.RibbonButton();
+            this.rbFolder = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanelStatus = new System.Windows.Forms.RibbonPanel();
+            this.rbLabelCurrentRecipe = new System.Windows.Forms.RibbonLabel();
             this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
             this.rbExit = new System.Windows.Forms.RibbonButton();
             this.panelMain = new System.Windows.Forms.Panel();
@@ -74,8 +79,8 @@
             // 
             this.ribbonTab1.Panels.Add(this.ribbonPanelOperating);
             this.ribbonTab1.Panels.Add(this.ribbonPanelSetting);
-            this.ribbonTab1.Panels.Add(this.ribbonPanel2);
-            this.ribbonTab1.Panels.Add(this.ribbonPanel3);
+            this.ribbonTab1.Panels.Add(this.ribbonPanelData);
+            this.ribbonTab1.Panels.Add(this.ribbonPanelStatus);
             this.ribbonTab1.Panels.Add(this.ribbonPanelSystem);
             this.ribbonTab1.Text = "Inspection Main";
             // 
@@ -83,7 +88,7 @@
             // 
             this.ribbonPanelOperating.ButtonMoreVisible = false;
             this.ribbonPanelOperating.Items.Add(this.rbStart);
-            this.ribbonPanelOperating.Items.Add(this.ribbonButton2);
+            this.ribbonPanelOperating.Items.Add(this.rbStop);
             this.ribbonPanelOperating.Text = "Inspection Operating";
             // 
             // rbStart
@@ -93,12 +98,12 @@
             this.rbStart.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbStart.SmallImage")));
             this.rbStart.Text = " Auto";
             // 
-            // ribbonButton2
+            // rbStop
             // 
-            this.ribbonButton2.Image = global::KPVisionInspectionFramework.Properties.Resources.Stop;
-            this.ribbonButton2.MinimumSize = new System.Drawing.Size(70, 60);
-            this.ribbonButton2.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton2.SmallImage")));
-            this.ribbonButton2.Text = " Stop";
+            this.rbStop.Image = global::KPVisionInspectionFramework.Properties.Resources.Stop;
+            this.rbStop.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbStop.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbStop.SmallImage")));
+            this.rbStop.Text = " Stop";
             // 
             // ribbonPanelSetting
             // 
@@ -113,6 +118,7 @@
             this.rbEthernet.MinimumSize = new System.Drawing.Size(70, 60);
             this.rbEthernet.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbEthernet.SmallImage")));
             this.rbEthernet.Text = " Ethernet";
+            this.rbEthernet.Click += new System.EventHandler(this.rbEthernet_Click);
             // 
             // rbLight
             // 
@@ -120,6 +126,7 @@
             this.rbLight.MinimumSize = new System.Drawing.Size(70, 60);
             this.rbLight.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbLight.SmallImage")));
             this.rbLight.Text = " Light";
+            this.rbLight.Click += new System.EventHandler(this.rbLight_Click);
             // 
             // rbDIO
             // 
@@ -127,14 +134,56 @@
             this.rbDIO.MinimumSize = new System.Drawing.Size(70, 60);
             this.rbDIO.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbDIO.SmallImage")));
             this.rbDIO.Text = " DIO";
+            this.rbDIO.Click += new System.EventHandler(this.rbDIO_Click);
             // 
-            // ribbonPanel2
+            // ribbonPanelData
             // 
-            this.ribbonPanel2.Text = "ribbonPanel2";
+            this.ribbonPanelData.Items.Add(this.rbRecipe);
+            this.ribbonPanelData.Items.Add(this.rbLog);
+            this.ribbonPanelData.Items.Add(this.rbHistory);
+            this.ribbonPanelData.Items.Add(this.rbFolder);
+            this.ribbonPanelData.Text = "Data";
             // 
-            // ribbonPanel3
+            // rbRecipe
             // 
-            this.ribbonPanel3.Text = "ribbonPanel3";
+            this.rbRecipe.Image = global::KPVisionInspectionFramework.Properties.Resources.Recipe;
+            this.rbRecipe.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbRecipe.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbRecipe.SmallImage")));
+            this.rbRecipe.Text = "Recipe ";
+            this.rbRecipe.Click += new System.EventHandler(this.rbRecipe_Click);
+            // 
+            // rbLog
+            // 
+            this.rbLog.Image = global::KPVisionInspectionFramework.Properties.Resources.Log;
+            this.rbLog.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbLog.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbLog.SmallImage")));
+            this.rbLog.Text = "Log ";
+            this.rbLog.Click += new System.EventHandler(this.rbLog_Click);
+            // 
+            // rbHistory
+            // 
+            this.rbHistory.Image = global::KPVisionInspectionFramework.Properties.Resources.History;
+            this.rbHistory.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbHistory.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbHistory.SmallImage")));
+            this.rbHistory.Text = "History ";
+            this.rbHistory.Click += new System.EventHandler(this.rbHistory_Click);
+            // 
+            // rbFolder
+            // 
+            this.rbFolder.Image = global::KPVisionInspectionFramework.Properties.Resources.Folder;
+            this.rbFolder.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbFolder.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbFolder.SmallImage")));
+            this.rbFolder.Text = "Folder ";
+            this.rbFolder.Click += new System.EventHandler(this.rbFolder_Click);
+            // 
+            // ribbonPanelStatus
+            // 
+            this.ribbonPanelStatus.Items.Add(this.rbLabelCurrentRecipe);
+            this.ribbonPanelStatus.Text = "Status";
+            // 
+            // rbLabelCurrentRecipe
+            // 
+            this.rbLabelCurrentRecipe.Text = "Recipe : Default Recipe";
             // 
             // ribbonPanelSystem
             // 
@@ -186,15 +235,20 @@
         private System.Windows.Forms.RibbonTab ribbonTab1;
         private System.Windows.Forms.RibbonPanel ribbonPanelOperating;
         private System.Windows.Forms.RibbonButton rbStart;
-        private System.Windows.Forms.RibbonButton ribbonButton2;
+        private System.Windows.Forms.RibbonButton rbStop;
         private System.Windows.Forms.RibbonPanel ribbonPanelSetting;
-        private System.Windows.Forms.RibbonPanel ribbonPanel2;
-        private System.Windows.Forms.RibbonPanel ribbonPanel3;
+        private System.Windows.Forms.RibbonPanel ribbonPanelData;
+        private System.Windows.Forms.RibbonPanel ribbonPanelStatus;
         private System.Windows.Forms.RibbonPanel ribbonPanelSystem;
         private System.Windows.Forms.RibbonButton rbExit;
         private System.Windows.Forms.RibbonButton rbEthernet;
         private System.Windows.Forms.RibbonButton rbLight;
         private System.Windows.Forms.RibbonButton rbDIO;
+        private System.Windows.Forms.RibbonButton rbRecipe;
+        private System.Windows.Forms.RibbonButton rbLog;
+        private System.Windows.Forms.RibbonButton rbHistory;
+        private System.Windows.Forms.RibbonButton rbFolder;
+        private System.Windows.Forms.RibbonLabel rbLabelCurrentRecipe;
     }
 }
 

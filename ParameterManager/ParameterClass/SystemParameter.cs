@@ -16,6 +16,11 @@ namespace ParameterManager
         public string   IPAddress;
         public int      PortNumber;
 
+        public int ResultWindowLocationX;
+        public int ResultWindowLocationY;
+        public int ResultWindowWidth;
+        public int ResultWindowHeight;
+
         public SystemParameter()
         {
             MachineNumber = 1;
@@ -24,9 +29,11 @@ namespace ParameterManager
             LastRecipeName = "Default";
             InspSystemManagerCount = 1;
             ProjectType = 0;
-            //LightType = 0;
-            //LightCount = 1;
-            //LightSleep = 10;
+
+            ResultWindowLocationX = 1482;
+            ResultWindowLocationY = 148;
+            ResultWindowWidth = 421;
+            ResultWindowHeight = 571;
 
             IPAddress = "192.168.0.100";
             PortNumber = 5050;

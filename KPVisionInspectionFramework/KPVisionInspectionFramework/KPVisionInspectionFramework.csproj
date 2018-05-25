@@ -83,9 +83,18 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\Program.cs" />
+    <Compile Include="MainResultForm\MainResultWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainResultForm\MainResultWindow.Designer.cs">
+      <DependentUpon>MainResultWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainResultForm\MainResultWindow.resx">
+      <DependentUpon>MainResultWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -115,6 +124,10 @@
     <None Include="Resources\DIO.png" />
     <None Include="Resources\Ethernet.png" />
     <None Include="Resources\Light.png" />
+    <None Include="Resources\Folder.png" />
+    <None Include="Resources\History.png" />
+    <None Include="Resources\Log.png" />
+    <None Include="Resources\Recipe.png" />
     <Content Include="VisionInspection.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +159,10 @@
     <ProjectReference Include="..\..\InspectionSystemManager\InspectionSystemManager.csproj">
       <Project>{050e0042-7f11-4e6d-8369-6d7db086d70d}</Project>
       <Name>InspectionSystemManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LogManager\LogMessageManager.csproj">
+      <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
+      <Name>LogMessageManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ParameterManager\ParameterManager.csproj">
       <Project>{72a2c4a7-8c84-416f-a883-9cb823bc9155}</Project>

@@ -107,13 +107,17 @@ namespace ParameterManager
                     if (null == _Node) return false;
                     switch (_Node.Name)
                     {
-                        case "MachineID":       SystemParam.MachineNumber = Convert.ToInt32(_Node.InnerText); break;
-                        case "SimulationMode":  SystemParam.IsSimulationMode = Convert.ToBoolean(_Node.InnerText); break;
-                        case "LastRecipeName":  SystemParam.LastRecipeName = _Node.InnerText; break;
-                        case "ISMModuleCount":  SystemParam.InspSystemManagerCount = Convert.ToInt32(_Node.InnerText); break;
-                        case "ProjectType":     SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
-                        case "IPAddress":       SystemParam.IPAddress = _Node.InnerText; break;
-                        case "PortNumber":      SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
+                        case "MachineID":        SystemParam.MachineNumber = Convert.ToInt32(_Node.InnerText); break;
+                        case "SimulationMode":   SystemParam.IsSimulationMode = Convert.ToBoolean(_Node.InnerText); break;
+                        case "LastRecipeName":   SystemParam.LastRecipeName = _Node.InnerText; break;
+                        case "ISMModuleCount":   SystemParam.InspSystemManagerCount = Convert.ToInt32(_Node.InnerText); break;
+                        case "ResultWndLocateX": SystemParam.ResultWindowLocationX = Convert.ToInt32(_Node.InnerText); break;
+                        case "ResultWndLocateY": SystemParam.ResultWindowLocationY = Convert.ToInt32(_Node.InnerText); break;
+                        case "ResultWndWidth":   SystemParam.ResultWindowWidth = Convert.ToInt32(_Node.InnerText); break;
+                        case "ResultWndHeight":  SystemParam.ResultWindowHeight = Convert.ToInt32(_Node.InnerText); break;
+                        case "ProjectType":      SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
+                        case "IPAddress":        SystemParam.IPAddress = _Node.InnerText; break;
+                        case "PortNumber":       SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
                     }
                 }
             }
@@ -137,6 +141,10 @@ namespace ParameterManager
             XElement _SimulationMode         = new XElement("SimulationMode", SystemParam.IsSimulationMode.ToString());
             XElement _LastRecipeName         = new XElement("LastRecipeName", SystemParam.LastRecipeName);
             XElement _InspSystemManagerCount = new XElement("ISMModuleCount", SystemParam.InspSystemManagerCount.ToString());
+            XElement _ResultWndLocateX       = new XElement("ResultWndLocateX", SystemParam.ResultWindowLocationX.ToString());
+            XElement _ResultWndLocateY       = new XElement("ResultWndLocateY", SystemParam.ResultWindowLocationY.ToString());
+            XElement _ResultWndWidth         = new XElement("ResultWndWidth", SystemParam.ResultWindowWidth.ToString());
+            XElement _ResultWndHeight        = new XElement("ResultWndHeight", SystemParam.ResultWindowHeight.ToString());
             XElement _ProjectType            = new XElement("ProjectType", SystemParam.ProjectType.ToString());
             XElement _IPAddress              = new XElement("IPAddress", SystemParam.IPAddress);
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
@@ -147,6 +155,10 @@ namespace ParameterManager
             _SystemParameter.Add(_SimulationMode);
             _SystemParameter.Add(_LastRecipeName);
             _SystemParameter.Add(_InspSystemManagerCount);
+            _SystemParameter.Add(_ResultWndLocateX);
+            _SystemParameter.Add(_ResultWndLocateY);
+            _SystemParameter.Add(_ResultWndWidth);
+            _SystemParameter.Add(_ResultWndHeight);
             _SystemParameter.Add(_ProjectType);
             _SystemParameter.Add(_IPAddress);
             _SystemParameter.Add(_PortNumber);

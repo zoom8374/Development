@@ -9,6 +9,7 @@ C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVision
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainForm.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainResultWindow.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.Properties.Resources.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe.config

@@ -25,5 +25,13 @@ namespace ParameterManager
     /// </summary>
     public enum eIWCMD      { TEACHING = 1 }
 
+    /// <summary>
+    /// Inspection System Manager To Main Command
+    /// </summary>
     public enum eISMCMD     { TEACHING_STATUS = 1 }
+
+    /// <summary>
+    /// Teaching Setp
+    /// </summary>
+    public enum eTeachStep { AREA_SELECT = 0, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
 }

@@ -93,6 +93,10 @@
       <Project>{75ab941c-2786-416b-b183-e140799eb245}</Project>
       <Name>KPDisplay</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LogManager\LogMessageManager.csproj">
+      <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
+      <Name>LogMessageManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ParameterManager\ParameterManager.csproj">
       <Project>{72a2c4a7-8c84-416f-a883-9cb823bc9155}</Project>
       <Name>ParameterManager</Name>
