@@ -156,10 +156,9 @@ namespace ParameterManager
 
     public class InspectionParameter
     {
-        public static double ResolutionX = 0;
-        public static double ResolutionY = 0;
-
         public List<InspectionAreaParameter> InspAreaParam;
+        public double ResolutionX = 0.005;
+        public double ResolutionY = 0.005;
 
         public InspectionParameter()
         {

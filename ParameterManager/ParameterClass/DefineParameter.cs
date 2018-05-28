@@ -33,5 +33,7 @@ namespace ParameterManager
     /// <summary>
     /// Teaching Setp
     /// </summary>
-    public enum eTeachStep { AREA_SELECT = 0, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
+    public enum eTeachStep  { AREA_SELECT = 0, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
+
+    public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN }
 }

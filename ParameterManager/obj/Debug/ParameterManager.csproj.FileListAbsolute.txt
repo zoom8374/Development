@@ -7,3 +7,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Debug
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Debug\ParameterManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Debug\ParameterManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Debug\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Debug\ParameterManager.csprojResolveAssemblyReference.cache

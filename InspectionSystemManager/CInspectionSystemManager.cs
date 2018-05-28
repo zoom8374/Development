@@ -11,6 +11,8 @@ namespace InspectionSystemManager
 {
     public class CInspectionSystemManager
     {
+        private InspectionParameter InspParam = new InspectionParameter();
+
         private InspectionWindow InspWnd;
         private string InspWndName;
 
@@ -34,15 +36,16 @@ namespace InspectionSystemManager
             InspWndName = String.Format(" {0} Inspection Window", _SystemName);
         }
 
-        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam)
+        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParam)
         {
             ProjectType = (eProjectType)_ProjectType;
             ProjectItem = (eProjectItem)_InspSysManagerParam.ProjectItem;
 
             SetISMParameter(_InspSysManagerParam);
+            SetInspectionParameter(_InspParam);
 
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
-            InspWnd.Initialize(_OwnerForm, ID, ProjectItem, InspWndName);
+            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName);
         }
 
         public void DeInitialize()
@@ -85,6 +88,36 @@ namespace InspectionSystemManager
             InspWnd.SetWindowSize(_InspSysManagerParam.InspWndParam.Width, _InspSysManagerParam.InspWndParam.Height);
             
             WndLocation = new Point(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
+        }
+
+        /// <summary>
+        /// Set Inspection Parameter : (InspectionWindow(Teaching) -> Inspection System Manager)
+        /// </summary>
+        /// <param name="_InspParam">Inspection Parameter</param>
+        /// <param name="_IsNew">Is New Parameter</param>
+        public void SetInspectionParameter(InspectionParameter _InspParam, bool _IsNew = true)
+        {
+            if (InspParam != null) FreeInspectionParameters(ref InspParam);
+            CParameterManager.RecipeCopy(_InspParam, ref InspParam);
+
+            //Reference File(VPP) Load
+        }
+
+        public void FreeInspectionParameters(ref InspectionParameter _InspParam)
+        {
+            for (int iLoopCount = 0; iLoopCount < _InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                for (int jLoopCount = 0; jLoopCount < _InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    FreeInspectionParameter(ref _InspParam, iLoopCount, jLoopCount);
+            }
+        }
+
+        public void FreeInspectionParameter(ref InspectionParameter _InspParam, int _AreaIndex, int _AlgoIndex)
+        {
+            if (eAlgoType.C_PATTERN == (eAlgoType)_InspParam.InspAreaParam[_AreaIndex].InspAlgoParam[_AlgoIndex].AlgoType)
+            {
+
+            }
         }
         #endregion Parameter Management
 

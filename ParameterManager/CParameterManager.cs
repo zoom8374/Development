@@ -335,6 +335,7 @@ namespace ParameterManager
                 InspectionAreaParameter _InspAreaParamTemp = new InspectionAreaParameter();
 
                 if (null == _Node) return false;
+                GetInspectionParameterResolution(_Node, ref InspParam[_ID]);
                 GetInspectionParameterRegion(_Node, ref _InspAreaParamTemp);
                 GetInspectionParameterAlgorithm(_Node, ref _InspAreaParamTemp);
 
@@ -342,6 +343,16 @@ namespace ParameterManager
             }
 
             return _Result;
+        }
+
+        private void GetInspectionParameterResolution(XmlNode _Nodes, ref InspectionParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+            switch (_Nodes.Name)
+            {
+                case "ResolutionX": _InspParam.ResolutionX = Convert.ToDouble(_Nodes.InnerText); break;
+                case "ResolutionY": _InspParam.ResolutionY = Convert.ToDouble(_Nodes.InnerText); break;
+            }
         }
 
         private void GetInspectionParameterRegion(XmlNode _Nodes, ref InspectionAreaParameter _InspAreaParam)
@@ -476,6 +487,8 @@ namespace ParameterManager
             _XmlWriter.WriteStartDocument();
             _XmlWriter.WriteStartElement("AlgoParameter");
             {
+                _XmlWriter.WriteElementString("ResolutionX", InspParam[_ID].ResolutionX.ToString());
+                _XmlWriter.WriteElementString("ResolutionY", InspParam[_ID].ResolutionY.ToString());
                 for (int iLoopCount = 0; iLoopCount < InspParam[_ID].InspAreaParam.Count; ++iLoopCount)
                 {
                     _XmlWriter.WriteStartElement("InspAlgoArea" + (iLoopCount + 1));
@@ -571,5 +584,102 @@ namespace ParameterManager
 
         }
         #endregion Read & Write InspectionParameter
+
+        #region RecipeCopy
+        /// <summary>
+        /// Inspection Parameter (Recipe) 복사
+        /// </summary>
+        /// <param name="_SrcParam">원본 Recipe</param>
+        /// <param name="_DestParam">저장 할 Recipe</param>
+        public static void RecipeCopy(InspectionParameter _SrcParam, ref InspectionParameter _DestParam)
+        {
+            _DestParam.InspAreaParam.Clear();
+
+            for (int iLoopCount = 0; iLoopCount < _SrcParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
+                _InspAreaParam.Enable               = _SrcParam.InspAreaParam[iLoopCount].Enable;
+                _InspAreaParam.NgAreaNumber         = _SrcParam.InspAreaParam[iLoopCount].NgAreaNumber;
+                _InspAreaParam.AreaBenchMark        = _SrcParam.InspAreaParam[iLoopCount] .AreaBenchMark;
+                _InspAreaParam.AreaRegionCenterX    = _SrcParam.InspAreaParam[iLoopCount].AreaRegionCenterX;
+                _InspAreaParam.AreaRegionCenterY    = _SrcParam.InspAreaParam[iLoopCount].AreaRegionCenterY;
+                _InspAreaParam.AreaRegionWidth      = _SrcParam.InspAreaParam[iLoopCount].AreaRegionWidth;
+                _InspAreaParam.AreaRegionHeight     = _SrcParam.InspAreaParam[iLoopCount].AreaRegionHeight;
+
+                for (int jLoopCount = 0; jLoopCount < _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                {
+                    InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter();
+                    _InspAlgoParam.AlgoEnable           = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable;
+                    _InspAlgoParam.AlgoBenchMark        = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoBenchMark;
+                    _InspAlgoParam.AlgoType             = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoType;
+                    _InspAlgoParam.AlgoRegionCenterX    = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionCenterX;
+                    _InspAlgoParam.AlgoRegionCenterY    = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionCenterY;
+                    _InspAlgoParam.AlgoRegionWidth      = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionWidth;
+                    _InspAlgoParam.AlgoRegionHeight     = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionHeight;
+
+                    eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
+                    if (eAlgoType.C_PATTERN == _AlgoType)
+                    {
+                        #region Pattern Algorithm Copy
+                        _InspAlgoParam.Algorithm = new CogPatternAlgo();
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).PatternCount = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).PatternCount;
+
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).PatternCount     = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).PatternCount;
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingScore    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).MatchingScore;
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingAngle    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).MatchingAngle;
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingCount    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).MatchingCount;
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).IsShift          = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).IsShift;
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).AllowedShiftX    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).AllowedShiftX;
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).AllowedShiftY    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).AllowedShiftY;
+
+                        int _ReferCount = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList.Count;
+                        for (int zLoopCount = 0; zLoopCount < _ReferCount; ++zLoopCount)
+                        {
+                            ReferenceInformation _ReferInfo = new ReferenceInformation();
+                            _ReferInfo.ReferencePath = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].ReferencePath;
+
+                            _ReferInfo.ReferencePath     = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].ReferencePath;
+                            _ReferInfo.InterActiveStartX = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].InterActiveStartX;
+                            _ReferInfo.InterActiveStartY = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].InterActiveStartY;
+                            _ReferInfo.StaticStartX      = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].StaticStartX;
+                            _ReferInfo.StaticStartY      = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].StaticStartY;
+                            _ReferInfo.CenterX           = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].CenterX;
+                            _ReferInfo.CenterY           = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].CenterY;
+                            _ReferInfo.OriginPointOffsetX= ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].OriginPointOffsetX;
+                            _ReferInfo.OriginPointOffsetY= ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].OriginPointOffsetY;
+                            _ReferInfo.Width             = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].Width;
+                            _ReferInfo.Height            = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].Height;
+
+                            ((CogPatternAlgo)_InspAlgoParam.Algorithm).ReferenceInfoList.Add(_ReferInfo);
+                        }
+                        #endregion Pattern Algorithm Copy
+                    }
+
+                    else if (eAlgoType.C_BLOB == _AlgoType)
+                    {
+                        #region Blob Algorithm Copy
+                        _InspAlgoParam.Algorithm = new CogBlobAlgo();
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).ForeGround    = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ForeGround;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).ThresholdMin  = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ThresholdMin;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).ThresholdMax  = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ThresholdMax;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).BlobAreaMin   = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BlobAreaMin;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).BlobAreaMax   = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BlobAreaMax;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).WidthMin      = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).WidthMin;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).WidthMax      = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).WidthMax;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).HeightMin     = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightMin;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).HeightMax     = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightMax;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).OriginX       = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).OriginX;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).OriginY       = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).OriginY;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).BenchMarkPosition = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BenchMarkPosition;
+                        #endregion Blob Algorithm Copy
+                    }
+                    _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
+                }
+                _DestParam.InspAreaParam.Add(_InspAreaParam);
+            }
+        }
+
+
+        #endregion RecipeCopy
     }
 }

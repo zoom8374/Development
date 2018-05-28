@@ -19,6 +19,7 @@ namespace InspectionSystemManager
     public partial class InspectionWindow : Form
     {
         private TeachingWindow TeachWnd;
+        private InspectionParameter InspParam = new InspectionParameter();
 
         private int ID;
         private eProjectType ProjectType;
@@ -77,7 +78,7 @@ namespace InspectionSystemManager
             #endregion Set Button Image Resource
         }
 
-        public void Initialize(Object _OwnerForm, int _ID, eProjectItem _ProjectItem, string _FormName)
+        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName)
         {
             ID = _ID;
             ProjectItem = _ProjectItem;
@@ -330,7 +331,7 @@ namespace InspectionSystemManager
         private void Teaching()
         {
             TeachWnd = new TeachingWindow();
-            TeachWnd.Initialize();
+            TeachWnd.Initialize(ID, InspParam, ProjectItem);
 
             TeachWnd.SetTeachingImage(OriginImage, OriginImage.Width, OriginImage.Height);
             TeachWnd.ShowDialog();

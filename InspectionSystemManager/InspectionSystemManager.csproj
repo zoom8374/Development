@@ -81,6 +81,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TeachingWindowEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Teaching\TeachingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
