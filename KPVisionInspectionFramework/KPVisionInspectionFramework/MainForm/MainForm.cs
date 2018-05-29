@@ -249,6 +249,7 @@ namespace KPVisionInspectionFramework
             switch (_Command)
             {
                 case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value));     break;
+                case eISMCMD.TEACHING_SAVE:     TeachingParameterSave();                            break;
             }
         }
 
@@ -272,6 +273,11 @@ namespace KPVisionInspectionFramework
                 ribbonPanelStatus.Enabled = true;
                 ribbonPanelSystem.Enabled = true;
             }
+        }
+
+        private void TeachingParameterSave()
+        {
+
         }
         #endregion Event : Inspection System Manager Event & Function
     }

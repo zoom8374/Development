@@ -22,6 +22,8 @@ namespace InspectionSystemManager
         private CogImage8Grey InspectionImage = new CogImage8Grey();
         private int InspectionImageWidth = 0;
         private int InspectionImageHeight = 0;
+        private double InspectionAreaWidth;
+        private double InspectionAreaHeight;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -104,6 +106,11 @@ namespace InspectionSystemManager
             ResolutionX = InspParam.ResolutionX;
             ResolutionY = InspParam.ResolutionY;
         }
+
+        public InspectionParameter GetInspectionParameter()
+        {
+            return InspParam;
+        }
         #endregion Initialize & DeInitialize
 
         #region Conext Menu Function
@@ -142,7 +149,49 @@ namespace InspectionSystemManager
 
         private void btnInspectionAreaSet_Click(object sender, EventArgs e)
         {
+            if (gridViewArea.SelectedRows.Count == 0) { MessageBox.Show("Not selected inspection area."); return; }
+            int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
+            if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
+            if (InspectionImageWidth == 0 || InspectionImageHeight == 0) return;
 
+            InspAreaSelected = _SelectedAreaNum;
+            
+            //BenchMark Setting
+            DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.BENCHMARK), InspAreaSelected];
+            InspParam.InspAreaParam[InspAreaSelected].AreaBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
+
+            _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.NGNUMBER), InspAreaSelected];
+            InspParam.InspAreaParam[InspAreaSelected].NgAreaNumber = _ComboCell.Items.IndexOf(_ComboCell.Value) + 1;
+
+            DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewArea[Convert.ToInt32(eAreaList.ENABLE), InspAreaSelected];
+            InspParam.InspAreaParam[InspAreaSelected].Enable = Convert.ToBoolean(_CheckCell.Value);
+
+            CogRectangle _InspRegion = new CogRectangle();
+            CogRectangle _Boundary = new CogRectangle();
+            _Boundary.SetXYWidthHeight(0, 0, InspectionImageWidth, InspectionImageHeight);
+            if (false == GetCorrectionRectangle(kpTeachDisplay, _Boundary, ref _InspRegion)) { MessageBox.Show("The rectangle is outside the inspection area."); return; }
+            InspectionAreaWidth = Convert.ToInt32(_InspRegion.Width);
+            InspectionAreaHeight = Convert.ToInt32(_InspRegion.Height);
+
+            //Area 영역 설정 시 Area Offset 값 얻어오기
+            GetAreaResultDataOffset(InspAreaSelected);
+
+            kpTeachDisplay.ClearDisplay();
+            kpTeachDisplay.DrawStaticShape(_InspRegion, "InspRegion", CogColorConstants.Green);
+            panelTeaching.Controls.Clear();
+            panelTeaching.Controls.Add(labelTeaching);
+
+            //Area Setting
+            InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX = _InspRegion.CenterX - AreaOffsetX;
+            InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterY = _InspRegion.CenterY - AreaOffsetY;
+            InspParam.InspAreaParam[InspAreaSelected].AreaRegionWidth   = _InspRegion.Width;
+            InspParam.InspAreaParam[InspAreaSelected].AreaRegionHeight  = _InspRegion.Height;
+
+            UpdateInspectionAreaList(InspAreaSelected);
+            gridViewArea.Rows[InspAreaSelected].Selected = true;
+
+            UpdateInspectionAlgoList(InspAreaSelected);
+            UpdateTeachingStatus(eTeachStep.AREA_SET);
         }
 
         private void btnInspectionAlgoAdd_MouseUp(object sender, MouseEventArgs e)
@@ -301,7 +350,31 @@ namespace InspectionSystemManager
         #endregion Inspection Area & Algorithm Gridview Update
 
         #region Teaching Parameter Set & UI Setting
-        public void GetAreaResultDataOffset(int _Area)
+        private bool GetCorrectionRectangle(KPDisplay.KPCogDisplayControl _DisplayCtrl, CogRectangle _Boundary, ref CogRectangle _ResultRegion)
+        {
+            bool _Result = true;
+
+            double _StartX, _StartY, _EndX, _EndY, _Width, _Height;
+            CogRectangle _CurrentRegion = _DisplayCtrl.GetInterActiveRectangle();
+            _CurrentRegion.GetXYWidthHeight(out _StartX, out _StartY, out _Width, out _Height);
+            _EndX = _StartX + _Width;
+            _EndY = _StartY + _Height;
+
+            //영역이 Boundary를 완전히 벗어난 경우는 Fail
+            if ((_EndX < _Boundary.X) || (_StartX > _Boundary.X + _Boundary.Width) || (_EndY < _Boundary.Y) || (_StartY > _Boundary.Y + _Boundary.Height)) return false;
+
+            //Boundary 밖으로 벗어난 경우 Boundary 끝으로 변경
+            if (_StartX < _Boundary.X) { _Width = (_Width + (_StartX - _Boundary.X)); _StartX = _Boundary.X; }
+            if (_StartY < _Boundary.Y) { _Height = (_Height + (_StartY - _Boundary.Y)); _StartY = _Boundary.Y; }
+            if (_EndX > (_Boundary.X + _Boundary.Width)) { _Width = _Width - (_EndX - (_Boundary.X + _Boundary.Width)); }
+            if (_EndY > (_Boundary.Y + _Boundary.Height)) { _Height = _Height - (_EndY - (_Boundary.Y + _Boundary.Height)); }
+
+            _ResultRegion.SetXYWidthHeight(_StartX, _StartY, _Width, _Height);
+
+            return _Result;
+        }
+
+        private void GetAreaResultDataOffset(int _Area)
         {
             AreaOffsetX = AreaOffsetY;
 
@@ -315,7 +388,7 @@ namespace InspectionSystemManager
             }
         }
 
-        public void GetAlgoResultDataOffset(int _Area, int _Algo)
+        private void GetAlgoResultDataOffset(int _Area, int _Algo)
         {
             AlgoOffsetX = AlgoOffsetY = 0;
 

@@ -272,7 +272,7 @@ namespace InspectionSystemManager
 
         private void btnRecipeSave_Click(object sender, EventArgs e)
         {
-
+            InspectionWindowEvent(eIWCMD.TEACH_SAVE);
         }
 
         private void btnLive_Click(object sender, EventArgs e)
@@ -338,7 +338,8 @@ namespace InspectionSystemManager
             
             if (DialogResult.OK == TeachWnd.DialogResult)
             {
-
+                //Teaching 한 Recipe Update
+                InspectionWindowEvent(eIWCMD.TEACH_OK, TeachWnd.GetInspectionParameter());
             }
             TeachWnd.DeInitialize();
             TeachWnd.Dispose();

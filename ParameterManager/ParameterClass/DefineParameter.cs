@@ -23,12 +23,12 @@ namespace ParameterManager
     /// <summary>
     /// Inspection Window Command
     /// </summary>
-    public enum eIWCMD      { TEACHING = 1 }
+    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE  }
 
     /// <summary>
     /// Inspection System Manager To Main Command
     /// </summary>
-    public enum eISMCMD     { TEACHING_STATUS = 1 }
+    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE }
 
     /// <summary>
     /// Teaching Setp

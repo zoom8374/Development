@@ -126,13 +126,25 @@ namespace InspectionSystemManager
         {
             switch (_Command)
             {
-                case eIWCMD.TEACHING:   Teaching(_Value);   break;
+                case eIWCMD.TEACHING:   Teaching(_Value);           break;
+                case eIWCMD.TEACH_OK:   TeachingComplete(_Value);   break;
+                case eIWCMD.TEACH_SAVE: TeachingSave();             break;
             }
         }
 
         private void Teaching(object _Value)
         {
             InspSysManagerEvent(eISMCMD.TEACHING_STATUS, Convert.ToBoolean(_Value));
+        }
+
+        private void TeachingComplete(object _Value)
+        {
+            InspectionParameter _InspParam = (InspectionParameter)_Value;
+            SetInspectionParameter(_InspParam, false);
+        }
+        private void TeachingSave()
+        {
+            InspSysManagerEvent(eISMCMD.TEACHING_SAVE);
         }
         #endregion Event : Inspection Window Event
     }
