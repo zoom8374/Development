@@ -293,7 +293,7 @@
             this.gridAreaName.HeaderText = "Name";
             this.gridAreaName.Name = "gridAreaName";
             this.gridAreaName.ReadOnly = true;
-            this.gridAreaName.Width = 198;
+            this.gridAreaName.Width = 400;
             // 
             // gridAreaBenchMark
             // 
@@ -301,7 +301,7 @@
             this.gridAreaBenchMark.Name = "gridAreaBenchMark";
             this.gridAreaBenchMark.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.gridAreaBenchMark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.gridAreaBenchMark.Width = 120;
+            this.gridAreaBenchMark.Width = 150;
             // 
             // gridAreaEnable
             // 
@@ -309,7 +309,6 @@
             this.gridAreaEnable.Name = "gridAreaEnable";
             this.gridAreaEnable.ReadOnly = true;
             this.gridAreaEnable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridAreaEnable.Width = 60;
             // 
             // gridAreaNgNum
             // 
@@ -324,7 +323,7 @@
             "7",
             "8"});
             this.gridAreaNgNum.Name = "gridAreaNgNum";
-            this.gridAreaNgNum.Width = 65;
+            this.gridAreaNgNum.Width = 85;
             // 
             // tabPage2
             // 
@@ -429,6 +428,8 @@
             this.gridViewAlgo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridViewAlgo.Size = new System.Drawing.Size(785, 341);
             this.gridViewAlgo.TabIndex = 3;
+            this.gridViewAlgo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewAlgo_CellClick);
+            this.gridViewAlgo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewAlgo_CellContentClick);
             // 
             // gridAlgoID
             // 
@@ -441,7 +442,7 @@
             this.gridAlgoName.HeaderText = "Name";
             this.gridAlgoName.Name = "gridAlgoName";
             this.gridAlgoName.ReadOnly = true;
-            this.gridAlgoName.Width = 198;
+            this.gridAlgoName.Width = 400;
             // 
             // gridAlgoBenchMark
             // 
@@ -449,14 +450,13 @@
             this.gridAlgoBenchMark.Name = "gridAlgoBenchMark";
             this.gridAlgoBenchMark.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.gridAlgoBenchMark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.gridAlgoBenchMark.Width = 120;
+            this.gridAlgoBenchMark.Width = 150;
             // 
             // gridAlgoEnable
             // 
             this.gridAlgoEnable.HeaderText = "Enable";
             this.gridAlgoEnable.Name = "gridAlgoEnable";
             this.gridAlgoEnable.ReadOnly = true;
-            this.gridAlgoEnable.Width = 60;
             // 
             // btnInspectionAlgoDel
             // 
@@ -565,11 +565,6 @@
         private System.Windows.Forms.Button btnInspectionAreaDel;
         private System.Windows.Forms.Button btnInspectionAreaAdd;
         private System.Windows.Forms.DataGridView gridViewArea;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridAreaID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridAreaName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn gridAreaBenchMark;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn gridAreaEnable;
-        private System.Windows.Forms.DataGridViewComboBoxColumn gridAreaNgNum;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnAlgorithmIndexMoveDown;
@@ -577,13 +572,18 @@
         private System.Windows.Forms.Button btnInspectionAlgoCopy;
         private System.Windows.Forms.Button btnInspectionAlgoSet;
         private System.Windows.Forms.DataGridView gridViewAlgo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridAlgoID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridAlgoName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn gridAlgoBenchMark;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn gridAlgoEnable;
         private System.Windows.Forms.Button btnInspectionAlgoDel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnInspectionAlgoAdd;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridAreaID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridAreaName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn gridAreaBenchMark;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn gridAreaEnable;
+        private System.Windows.Forms.DataGridViewComboBoxColumn gridAreaNgNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridAlgoID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridAlgoName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn gridAlgoBenchMark;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn gridAlgoEnable;
     }
 }

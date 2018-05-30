@@ -25,6 +25,10 @@ namespace InspectionSystemManager
         private double InspectionAreaWidth;
         private double InspectionAreaHeight;
 
+        private ucCogPattern        ucCogPatternWnd;
+        private ucCogBlobReference  ucCogBlobReferWnd;
+        private ucCogBlob           ucCogBlobWnd;
+
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
         private eProjectItem    ProjectItem;
@@ -32,6 +36,7 @@ namespace InspectionSystemManager
         private InspectionParameter InspParam;
         private int InspAreaSelected = -1;
         private int InspAlgoSelected = -1;
+        private eAlgoType CurrentAlgoType;
 
         private AreaResultParameterList AreaResParamList;   //검사 결과를 Teaching시에 적용하기 위해
         private AlgoResultParameterList AlgoResParamList;   //검사 결과를 Teaching시에 적용하기 위해
@@ -61,6 +66,10 @@ namespace InspectionSystemManager
             SetInspectionParameter(_InspParam);
             SetResolution();
 
+            ucCogPatternWnd = new ucCogPattern();
+            ucCogBlobWnd = new ucCogBlob();
+            ucCogBlobReferWnd = new ucCogBlobReference();
+
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
 
@@ -82,7 +91,9 @@ namespace InspectionSystemManager
 
         public void DeInitialize()
         {
-
+            ucCogPatternWnd.Dispose();
+            ucCogBlobWnd.Dispose();
+            ucCogBlobReferWnd.Dispose();
         }
 
         private void InitializeContextMenu()
@@ -91,6 +102,8 @@ namespace InspectionSystemManager
             ContextMenuAlgo.MenuItems.Clear();
 
             ContextMenuAlgo.MenuItems.Add("Search a reference", new EventHandler(PatternFindAlgorithm));
+            ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+            ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
         }
 
         private void SetInspectionParameter(InspectionParameter _InspParam = null)
@@ -102,7 +115,7 @@ namespace InspectionSystemManager
         }
 
         private void SetResolution()
-        {
+        {   
             ResolutionX = InspParam.ResolutionX;
             ResolutionY = InspParam.ResolutionY;
         }
@@ -116,6 +129,26 @@ namespace InspectionSystemManager
         #region Conext Menu Function
         private void PatternFindAlgorithm(object sender, EventArgs e)
         {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_PATTERN);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_PATTERN);
+        }
+
+        private void BlobReferenceAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_BLOB_REFER);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_BLOB_REFER);
+        }
+
+        private void BlobAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_BLOB);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_BLOB);
         }
         #endregion Conext Menu Function
 
@@ -178,6 +211,7 @@ namespace InspectionSystemManager
 
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawStaticShape(_InspRegion, "InspRegion", CogColorConstants.Green);
+            kpTeachDisplay.DrawText("InspRegion", _InspRegion.X, _InspRegion.Y - 35, CogColorConstants.Green, 12);
             panelTeaching.Controls.Clear();
             panelTeaching.Controls.Add(labelTeaching);
 
@@ -217,7 +251,61 @@ namespace InspectionSystemManager
 
         private void btnInspectionAlgoSet_Click(object sender, EventArgs e)
         {
+            if (gridViewArea.SelectedRows.Count == 0) { MessageBox.Show("Not selected inspection area."); return; }
+            int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
+            if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
 
+            if (gridViewAlgo.SelectedRows.Count == 0) { MessageBox.Show("Not Selected Inspection Algorithm."); return; }
+            int _SelectedAlgoNum = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
+            if (_SelectedAlgoNum < 0) { MessageBox.Show("Not Selected Inspection Algorithm."); return; }
+
+            InspAreaSelected = _SelectedAreaNum;
+            InspAlgoSelected = _SelectedAlgoNum;
+
+            if (-1 == InspAreaSelected) { MessageBox.Show("Select Inspection Area"); return; }
+            if (-1 == InspAlgoSelected) { MessageBox.Show("Select Algorithm Area"); return; }
+            if (eTeachStep.ALGO_SET == CurrentTeachStep) return;
+
+            //Benchmark Setting
+            DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.BENCHMARK), InspAlgoSelected];
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
+
+            DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.ENABLE), InspAlgoSelected];
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoEnable = Convert.ToBoolean(_CheckCell.Value);
+
+
+            CogRectangle _AlgoRegion = new CogRectangle();
+            CogRectangle _Boundary = new CogRectangle();
+            //_Boundary.SetXYWidthHeight(0, 0, InspectionAreaWidth, InspectionAreaHeight);
+            _Boundary.SetCenterWidthHeight(InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX, InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterY,
+                                            InspParam.InspAreaParam[InspAreaSelected].AreaRegionWidth, InspParam.InspAreaParam[InspAreaSelected].AreaRegionHeight);
+            if (false == GetCorrectionRectangle(kpTeachDisplay, _Boundary, ref _AlgoRegion)) { MessageBox.Show("The rectangle is outside the inspection area."); return; }
+
+            kpTeachDisplay.ClearDisplay();
+            kpTeachDisplay.DrawStaticShape(_Boundary, "InspRegion", CogColorConstants.Green, 2);
+            kpTeachDisplay.DrawText("InspRegion", _Boundary.X, _Boundary.Y - 35, CogColorConstants.Green, 12);
+            kpTeachDisplay.DrawStaticShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange, 2);
+            kpTeachDisplay.DrawText("AlgoRegion", _AlgoRegion.X, _AlgoRegion.Y - 35, CogColorConstants.Orange, 12);
+
+
+            //Algorithm 영역 설정 시 Algorithm offset 값 얻어오기
+            //GetAlgoResultDataOffset(InspAreaSelected, InspAlgoSelected);
+            //AlgorithmAreaStartX = _AlgoRegion.X;
+            //AlgorithmAreaStartY = _AlgoRegion.Y;
+            //AlgorithmAreaWidth = _AlgoRegion.Width;
+            //AlgorithmAreaHeight = _AlgoRegion.Height;
+
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX = _AlgoRegion.CenterX + AreaOffsetX;
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterY = _AlgoRegion.CenterY + AreaOffsetY;
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionWidth = _AlgoRegion.Width;
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionHeight = _AlgoRegion.Height;
+
+            if (InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX < 0 || InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterY < 0)
+                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX;
+
+            //Algorithm Area Crop Set
+            //AlgoCropStartX = _AlgoRegion.X;
+            //AlgoCropStartY = _AlgoRegion.Y;
         }
         private void btnConfirm_Click(object sender, EventArgs e)
         {
@@ -308,8 +396,9 @@ namespace InspectionSystemManager
                 string _Name = "Algo" + _Index;
                 bool _Enable = InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoEnable;
 
-                if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)    _Name = "Search a reference";   //"Pattern - Reference"
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)  _Name = "Defect detection";     //"Blob - Defect"
+                if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)         _Name = "Search a reference";      //"Pattern - Reference"
+                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER) _Name = "Search a body reference"; //"Blob - Reference"
+                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)       _Name = "Defect detection";        //"Blob - Defect"
 
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
@@ -346,6 +435,46 @@ namespace InspectionSystemManager
             DataGridViewRow _GridRow = new DataGridViewRow();
             _GridRow.Cells.AddRange(_GridCell);
             gridViewAlgo.Rows.Add(_GridRow);
+        }
+
+        private void UpdateInspectionAlgoTeachingWindow(int _ID, bool _IsNew = false)
+        {
+            InspAlgoSelected = _ID;
+
+            eAlgoType _AlgoType = (eAlgoType)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoType;
+            switch (_AlgoType)
+            {
+                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe();    break;
+                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe();  break;
+                case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
+            }
+            if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
+            CurrentAlgoType = _AlgoType;
+        }
+
+        private void UpdateAlgoResultListAddAlgorithm(eAlgoType _AlgoType)
+        {
+            //ADD Algorithm
+            int _ResultIndex = 0;
+            for (int iLoopCount = 0; iLoopCount <= InspAreaSelected; ++iLoopCount)
+            {
+                if (InspParam.InspAreaParam[iLoopCount].Enable == true)
+                {
+                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    {
+                        if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                            _ResultIndex++;
+                    }
+                }
+            }
+
+            //ADD ResultList
+            if (AlgoResParamList.Count >= (_ResultIndex - 1))
+            {
+                AlgoResultParameter _AlgoResTemp = new AlgoResultParameter();
+                _AlgoResTemp.ResultAlgoType = _AlgoType;
+                AlgoResParamList.Insert(_ResultIndex - 1, _AlgoResTemp);
+            }
         }
         #endregion Inspection Area & Algorithm Gridview Update
 
@@ -420,6 +549,20 @@ namespace InspectionSystemManager
             }
         }
 
+        public void SetResultData(AreaResultParameterList _AreaResParamList, AlgoResultParameterList _AlgoResParamList)
+        {
+            AreaOffsetX = AreaOffsetY = 0;
+            AlgoOffsetX = AlgoOffsetY = 0;
+
+            AreaResParamList = new AreaResultParameterList();
+            AreaResParamList.Clear();
+            AreaResParamList = _AreaResParamList;
+
+            AlgoResParamList = new AlgoResultParameterList();
+            AlgoResParamList.Clear();
+            AlgoResParamList = _AlgoResParamList;
+        }
+
         public void SetTeachingImage(CogImage8Grey _InspectionImage, int _Width, int _Height)
         {
             InspectionImage = _InspectionImage;
@@ -462,6 +605,19 @@ namespace InspectionSystemManager
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawInterActiveShape(_InspRegion, "InspRegion", CogColorConstants.Green);
         }
+
+        private void UpdateInspectionAlgorithmAreaDraw(int _ID)
+        {
+            double _CenterX = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoRegionCenterX + AlgoOffsetX - AreaOffsetX;
+            double _CenterY = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoRegionCenterY + AlgoOffsetY - AreaOffsetY;
+            double _Width = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoRegionWidth;
+            double _Height = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoRegionHeight;
+
+            CogRectangle _AlgoRegion = new CogRectangle();
+            _AlgoRegion.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
+
+            kpTeachDisplay.DrawInterActiveShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange);
+        }
         #endregion Teaching Parameter Set & UI Setting
 
         private void gridViewArea_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -494,6 +650,34 @@ namespace InspectionSystemManager
             InspAreaSelected = _ID;
 
             UpdateTeachingStatus(eTeachStep.AREA_SELECT);
+        }
+
+        private void gridViewAlgo_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != 2 && e.ColumnIndex != 3)
+            {
+                if (gridViewAlgo.RowCount <= 0) return;
+                if (gridViewAlgo.SelectedRows.Count == 0) return;
+
+                int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
+                GetAlgoResultDataOffset(InspAreaSelected, _ID);
+
+                UpdateInspectionAlgoTeachingWindow(_ID);
+                UpdateInspectionAlgorithmAreaDraw(_ID);
+                InspAlgoSelected = _ID;
+
+                UpdateTeachingStatus(eTeachStep.ALGO_SELECT);
+            }
+        }
+
+        private void gridViewAlgo_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 3)
+            {
+                int _Index = (int)eAlgoList.ENABLE;
+                bool _Flag = Convert.ToBoolean(gridViewAlgo.SelectedRows[0].Cells[_Index].Value);
+                gridViewAlgo.SelectedRows[0].Cells[_Index].Value = !_Flag;
+            }
         }
     }
 }

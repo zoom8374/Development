@@ -59,6 +59,45 @@ namespace ParameterManager
     }
 
     /// <summary>
+    /// Blob Reference Algorithm
+    /// </summary>
+    public class CogBlobReferenceAlgo
+    {
+        //Condition Parameter
+        public int ForeGround;
+        public int ThresholdMin;
+        public int ThresholdMax;
+        public double BlobAreaMin;
+        public double BlobAreaMax;
+        public double WidthMin;
+        public double WidthMax;
+        public double HeightMin;
+        public double HeightMax;
+        public double OriginX;
+        public double OriginY;
+
+        public double OrigionPointX;
+        public double OrigionPointY;
+
+        public int BenchMarkPosition;
+
+        public CogBlobReferenceAlgo()
+        {
+            ForeGround = 1;
+            ThresholdMin = 80;
+            ThresholdMax = 200;
+            BlobAreaMin = 1000;
+            BlobAreaMax = 9000000;
+            WidthMin = 5;
+            WidthMax = 200;
+            HeightMin = 5;
+            HeightMax = 200;
+
+            BenchMarkPosition = 4;
+        }
+    }
+
+    /// <summary>
     /// Blob 검사 알고리즘
     /// </summary>
     public class CogBlobAlgo
@@ -127,12 +166,10 @@ namespace ParameterManager
             AlgoBenchMark = 0;
             AlgoEnable = true;
 
-            //if (_AlgoType == eAlgoType.M_PATTERN) Algorithm = new MPatternAlgo();
-            //else if (_AlgoType == eAlgoType.M_BLOB) Algorithm = new MBlobAlgo();
-
-            if (_AlgoType == eAlgoType.C_PATTERN)        Algorithm = new CogPatternAlgo();
-            else if (_AlgoType == eAlgoType.C_BLOB)      Algorithm = new CogBlobAlgo();
-            else if (_AlgoType == eAlgoType.C_LEAD_BENT) Algorithm = new CogLeadBent();
+            if (_AlgoType == eAlgoType.C_PATTERN)           Algorithm = new CogPatternAlgo();
+            else if (_AlgoType == eAlgoType.C_BLOB)         Algorithm = new CogBlobAlgo();
+            else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo();
+            else if (_AlgoType == eAlgoType.C_LEAD_BENT)    Algorithm = new CogLeadBent();
         }
     }
 

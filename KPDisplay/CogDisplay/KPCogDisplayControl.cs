@@ -214,6 +214,7 @@ namespace KPDisplay
             StaticRectGraphic = _cogRect;
             StaticRectGraphic.Color = _color;
             StaticRectGraphic.LineWidthInScreenPixels = _LineSize;
+            StaticRectGraphic.LineStyle = CogGraphicLineStyleConstants.Dash;
             StaticRectGraphic.Selected = false;
             kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.StaticGraphics.Add(StaticRectGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);

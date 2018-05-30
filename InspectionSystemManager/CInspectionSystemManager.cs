@@ -119,6 +119,25 @@ namespace InspectionSystemManager
 
             }
         }
+
+        public void GetInspectionParameterRef(ref InspectionParameter _InspParamDest)
+        {
+            if (_InspParamDest != null) FreeInspectionParameters(ref _InspParamDest);
+            CParameterManager.RecipeCopy(InspParam, ref _InspParamDest);
+
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                {
+                    eAlgoType _AlgoType = (eAlgoType)InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoType;
+
+                    if (eAlgoType.C_PATTERN == _AlgoType)
+                    {
+
+                    }
+                }
+            }
+        }
         #endregion Parameter Management
 
         #region Event : Inspection Window Event & Function
@@ -128,7 +147,7 @@ namespace InspectionSystemManager
             {
                 case eIWCMD.TEACHING:   Teaching(_Value);           break;
                 case eIWCMD.TEACH_OK:   TeachingComplete(_Value);   break;
-                case eIWCMD.TEACH_SAVE: TeachingSave();             break;
+                case eIWCMD.TEACH_SAVE: TeachingSave(_Value);       break;
             }
         }
 
@@ -142,9 +161,9 @@ namespace InspectionSystemManager
             InspectionParameter _InspParam = (InspectionParameter)_Value;
             SetInspectionParameter(_InspParam, false);
         }
-        private void TeachingSave()
+        private void TeachingSave(object _Value)
         {
-            InspSysManagerEvent(eISMCMD.TEACHING_SAVE);
+            InspSysManagerEvent(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
         }
         #endregion Event : Inspection Window Event
     }

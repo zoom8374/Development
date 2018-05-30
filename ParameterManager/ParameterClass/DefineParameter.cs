@@ -18,7 +18,7 @@ namespace ParameterManager
     /// <summary>
     /// Algorithm Type
     /// </summary>
-    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB, C_LEAD_BENT }
+    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD_BENT }
 
     /// <summary>
     /// Inspection Window Command

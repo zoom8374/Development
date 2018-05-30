@@ -90,6 +90,24 @@
     <Compile Include="Teaching\TeachingWindow.Designer.cs">
       <DependentUpon>TeachingWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\ucCogBlob.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogBlob.Designer.cs">
+      <DependentUpon>ucCogBlob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithm\ucCogPattern.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogPattern.Designer.cs">
+      <DependentUpon>ucCogPattern.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithm\ucCogBlobReference.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogBlobReference.Designer.cs">
+      <DependentUpon>ucCogBlobReference.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KPDisplay\KPDisplay.csproj">
@@ -109,6 +127,15 @@
     <None Include="Resources\RecipeSave1.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Algorithm\ucCogBlob.resx">
+      <DependentUpon>ucCogBlob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogBlobReference.resx">
+      <DependentUpon>ucCogBlobReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogPattern.resx">
+      <DependentUpon>ucCogPattern.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InspSysManagerWindow\InspectionWindow.resx">
       <DependentUpon>InspectionWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +192,7 @@
   <ItemGroup>
     <None Include="Resources\ImageSaveOver.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

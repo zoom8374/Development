@@ -20,6 +20,8 @@ namespace InspectionSystemManager
     {
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
+        public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
+        public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
 
         private int ID;
         private eProjectType ProjectType;
@@ -31,6 +33,11 @@ namespace InspectionSystemManager
 
         private CogImageFileTool OriginImageFileTool = new CogImageFileTool();
         private CogImage8Grey    OriginImage = new CogImage8Grey();
+
+        //검사 시 Area 별 Offset 값을 적용할 변수
+        private double AreaBenchMarkOffsetX;
+        private double AreaBenchMarkOffsetY;
+        private int AreaAlgoCount;
 
         private int ImageSizeWidth = 0;
         private int ImageSizeHeight = 0;
@@ -83,11 +90,15 @@ namespace InspectionSystemManager
             ID = _ID;
             ProjectItem = _ProjectItem;
             FormName = _FormName;
-            
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
+            AreaResultParamList = new AreaResultParameterList();
+            AlgoResultParamList = new AlgoResultParameterList();
+
             TeachWnd = new TeachingWindow();
+
+            SetInspectionParameter(_InspParam);
         }
 
         public void Deinitialize()
@@ -117,6 +128,31 @@ namespace InspectionSystemManager
             _Zoom = DisplayZoomValue;
             _PanX = DisplayPanXValue;
             _PanY = DisplayPanYValue;
+        }
+
+        public void SetInspectionParameter(InspectionParameter _InspParam, bool _IsNew = true)
+        {
+            if (InspParam != null) FreeInspectionParameters(ref InspParam);
+            CParameterManager.RecipeCopy(_InspParam, ref InspParam);
+
+            //Reference File(VPP) Load
+        }
+
+        public void FreeInspectionParameters(ref InspectionParameter _InspParam)
+        {
+            for (int iLoopCount = 0; iLoopCount < _InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                for (int jLoopCount = 0; jLoopCount < _InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    FreeInspectionParameter(ref _InspParam, iLoopCount, jLoopCount);
+            }
+        }
+
+        public void FreeInspectionParameter(ref InspectionParameter _InspParam, int _AreaIndex, int _AlgoIndex)
+        {
+            if (eAlgoType.C_PATTERN == (eAlgoType)_InspParam.InspAreaParam[_AreaIndex].InspAlgoParam[_AlgoIndex].AlgoType)
+            {
+
+            }
         }
         #endregion Initialize & DeInitialize
 
@@ -272,7 +308,7 @@ namespace InspectionSystemManager
 
         private void btnRecipeSave_Click(object sender, EventArgs e)
         {
-            InspectionWindowEvent(eIWCMD.TEACH_SAVE);
+            InspectionWindowEvent(eIWCMD.TEACH_SAVE, ID);
         }
 
         private void btnLive_Click(object sender, EventArgs e)
@@ -333,12 +369,14 @@ namespace InspectionSystemManager
             TeachWnd = new TeachingWindow();
             TeachWnd.Initialize(ID, InspParam, ProjectItem);
 
+            TeachWnd.SetResultData(AreaResultParamList, AlgoResultParamList);
             TeachWnd.SetTeachingImage(OriginImage, OriginImage.Width, OriginImage.Height);
             TeachWnd.ShowDialog();
             
             if (DialogResult.OK == TeachWnd.DialogResult)
             {
                 //Teaching 한 Recipe Update
+                SetInspectionParameter(TeachWnd.GetInspectionParameter());
                 InspectionWindowEvent(eIWCMD.TEACH_OK, TeachWnd.GetInspectionParameter());
             }
             TeachWnd.DeInitialize();
@@ -372,7 +410,9 @@ namespace InspectionSystemManager
         private bool InspectionResultClear()
         {
             bool _Result = true;
-
+            AreaAlgoCount = 0;
+            AreaResultParamList.Clear();
+            AlgoResultParamList.Clear();
             return _Result;
         }
 

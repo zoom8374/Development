@@ -249,7 +249,7 @@ namespace KPVisionInspectionFramework
             switch (_Command)
             {
                 case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value));     break;
-                case eISMCMD.TEACHING_SAVE:     TeachingParameterSave();                            break;
+                case eISMCMD.TEACHING_SAVE:     TeachingParameterSave(Convert.ToInt32(_Value));     break;
             }
         }
 
@@ -275,9 +275,11 @@ namespace KPVisionInspectionFramework
             }
         }
 
-        private void TeachingParameterSave()
+        private void TeachingParameterSave(int _ID)
         {
+            InspSysManager[_ID].GetInspectionParameterRef(ref ParamManager.InspParam[_ID]);
 
+            ParamManager.WriteInspectionParameter(_ID);
         }
         #endregion Event : Inspection System Manager Event & Function
     }
