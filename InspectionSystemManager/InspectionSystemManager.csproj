@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Cognex\VisionPro\ReferencedAssemblies\Cognex.VisionPro.dll</HintPath>
     </Reference>
+    <Reference Include="Cognex.VisionPro.Blob, Version=53.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Cognex\VisionPro\ReferencedAssemblies\Cognex.VisionPro.Blob.dll</HintPath>
+    </Reference>
     <Reference Include="Cognex.VisionPro.Controls, Version=53.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Cognex\VisionPro\ReferencedAssemblies\Cognex.VisionPro.Controls.dll</HintPath>
@@ -54,9 +58,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Cognex\VisionPro\ReferencedAssemblies\Cognex.VisionPro.ImageFile.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="CustomControl">
-      <HintPath>..\KPVisionInspectionFramework\CustomControl.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -68,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CCogBlob.cs" />
     <Compile Include="CInspectionSystemManager.cs" />
     <Compile Include="InspSysManagerWindow\InspectionWindow.cs">
       <SubType>Form</SubType>
@@ -81,13 +83,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TeachingWindowEvent.cs">
+    <Compile Include="TeachingForm\TeachingWindowEvent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Teaching\TeachingWindow.cs">
+    <Compile Include="TeachingForm\TeachingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Teaching\TeachingWindow.Designer.cs">
+    <Compile Include="TeachingForm\TeachingWindow.Designer.cs">
       <DependentUpon>TeachingWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithm\ucCogBlob.cs">
@@ -110,6 +112,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CustomControl\CustomControl.csproj">
+      <Project>{fe56e73e-490f-436e-885d-8be182b74794}</Project>
+      <Name>CustomControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KPDisplay\KPDisplay.csproj">
       <Project>{75ab941c-2786-416b-b183-e140799eb245}</Project>
       <Name>KPDisplay</Name>
@@ -143,7 +149,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Teaching\TeachingWindow.resx">
+    <EmbeddedResource Include="TeachingForm\TeachingWindow.resx">
       <DependentUpon>TeachingWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

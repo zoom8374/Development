@@ -44,6 +44,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bi
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro3D.Core.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.CorePlus.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageProcessing.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\CustomControl.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\KPDisplay.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\LogMessageManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\ParameterManager.pdb
@@ -51,7 +52,6 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bi
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.Core.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.Display.Controls.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageFile.xml
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\CustomControl.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro3D.Core.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.CorePlus.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageProcessing.xml
@@ -65,3 +65,5 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\ob
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.Blob.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.Blob.xml

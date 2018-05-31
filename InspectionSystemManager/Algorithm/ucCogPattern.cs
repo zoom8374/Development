@@ -30,5 +30,10 @@ namespace InspectionSystemManager
         {
 
         }
+
+        public void SaveTeachingParameter()
+        {
+
+        }
     }
 }

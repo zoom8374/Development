@@ -52,10 +52,6 @@
     <ApplicationIcon>VisionInspection.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CustomControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomControl.dll</HintPath>
-    </Reference>
     <Reference Include="LoadingManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\LoadingManager.dll</HintPath>
@@ -156,6 +152,10 @@
     <Folder Include="Form\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CustomControl\CustomControl.csproj">
+      <Project>{fe56e73e-490f-436e-885d-8be182b74794}</Project>
+      <Name>CustomControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\InspectionSystemManager\InspectionSystemManager.csproj">
       <Project>{050e0042-7f11-4e6d-8369-6d7db086d70d}</Project>
       <Name>InspectionSystemManager</Name>

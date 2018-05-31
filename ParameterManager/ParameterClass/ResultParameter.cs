@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Cognex.VisionPro;
+
 namespace ParameterManager
 {
     #region AreaResultParameterList
@@ -65,7 +67,33 @@ namespace ParameterManager
     }
     #endregion AlgoResultParameterList
 
-    class ResultParameter
+    #region Inspection Result Parameter
+    public class Result
     {
+        public bool     IsGood;
+        public eNgType  NgType;
     }
+
+    public class CogBlobReferenceResult : Result
+    {
+        public int      BlobCount;
+        public double[] BlobBoundCenterX;
+        public double[] BlobBoundCenterY;
+        public double[] BlobCenterX;
+        public double[] BlobCenterY;
+        public double[] BlobMinX;
+        public double[] BlobMinY;
+        public double[] BlobMaxX;
+        public double[] BlobMaxY;
+        public double[] Width;
+        public double[] Height;
+        public double[] BlobRatio;
+        public double[] Angle;
+        public double[] BlobXMinYMax;
+        public double[] BlobXMaxYMin;
+        public double[] BlobArea;
+        public CogCompositeShape[] ResultGraphic;
+    }
+    #endregion Inspection Result Parameter
+
 }

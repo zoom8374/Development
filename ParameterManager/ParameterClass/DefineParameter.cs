@@ -36,4 +36,6 @@ namespace ParameterManager
     public enum eTeachStep  { AREA_SELECT = 0, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
 
     public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN }
+
+    public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
 }
