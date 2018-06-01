@@ -166,5 +166,10 @@ namespace InspectionSystemManager
             InspSysManagerEvent(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
         }
         #endregion Event : Inspection Window Event
+
+        public void TriggerOn()
+        {
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Vision : ISM{0} Trigger ON!", ID + 1));
+        }
     }
 }

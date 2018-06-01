@@ -38,4 +38,8 @@ namespace ParameterManager
     public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
+
+    public enum eBenchMarkPosition { TL = 0, TC, TR, ML, MC, MR, BL, BC, BR, GC };
+
+    public enum eForeColor          { BLACK = 0, WHITE = 1 };
 }

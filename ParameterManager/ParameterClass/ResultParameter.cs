@@ -77,8 +77,8 @@ namespace ParameterManager
     public class CogBlobReferenceResult : Result
     {
         public int      BlobCount;
-        public double[] BlobBoundCenterX;
-        public double[] BlobBoundCenterY;
+        public double[] BlobMessCenterX;
+        public double[] BlobMessCenterY;
         public double[] BlobCenterX;
         public double[] BlobCenterY;
         public double[] BlobMinX;

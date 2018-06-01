@@ -214,7 +214,9 @@ namespace KPDisplay
             StaticRectGraphic = _cogRect;
             StaticRectGraphic.Color = _color;
             StaticRectGraphic.LineWidthInScreenPixels = _LineSize;
-            StaticRectGraphic.LineStyle = CogGraphicLineStyleConstants.Dash;
+            if (_groupName == "InspRegion" || _groupName == "AlgoRegion")
+                StaticRectGraphic.LineStyle = CogGraphicLineStyleConstants.Dash;
+
             StaticRectGraphic.Selected = false;
             kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.StaticGraphics.Add(StaticRectGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);
@@ -380,6 +382,13 @@ namespace KPDisplay
 
             else
                 DrawText(_DistanceValueName, _StartX + 10, _StartY + 50, _Color);
+        }
+
+        public void DrawBlobResult(CogCompositeShape ResGraphic, string GroupName)
+        {
+            ResGraphic.Color = CogColorConstants.Blue;
+            ResGraphic.LineWidthInScreenPixels = 2;
+            kCogDisplay.StaticGraphics.Add(ResGraphic, GroupName);
         }
 
         public CogRectangleAffine GetStaticRectangleAffine()

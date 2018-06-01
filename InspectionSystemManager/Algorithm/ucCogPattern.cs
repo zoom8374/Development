@@ -31,7 +31,7 @@ namespace InspectionSystemManager
 
         }
 
-        public void SaveTeachingParameter()
+        public void SaveAlgoRecipe()
         {
 
         }

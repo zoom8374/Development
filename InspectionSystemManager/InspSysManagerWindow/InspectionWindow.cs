@@ -368,7 +368,6 @@ namespace InspectionSystemManager
         {
             TeachWnd = new TeachingWindow();
             TeachWnd.Initialize(ID, InspParam, ProjectItem);
-
             TeachWnd.SetResultData(AreaResultParamList, AlgoResultParamList);
             TeachWnd.SetTeachingImage(OriginImage, OriginImage.Width, OriginImage.Height);
             TeachWnd.ShowDialog();

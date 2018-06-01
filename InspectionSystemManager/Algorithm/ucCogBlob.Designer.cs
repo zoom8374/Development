@@ -28,27 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelTitle = new System.Windows.Forms.Label();
+            this.gradientLabel1 = new CustomControl.GradientLabel();
             this.SuspendLayout();
             // 
-            // labelTitle
+            // gradientLabel1
             // 
-            this.labelTitle.BackColor = System.Drawing.Color.White;
-            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelTitle.ForeColor = System.Drawing.Color.Black;
-            this.labelTitle.Location = new System.Drawing.Point(2, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(950, 30);
-            this.labelTitle.TabIndex = 10;
-            this.labelTitle.Text = " Defect Teaching Window";
-            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.gradientLabel1.BackColor = System.Drawing.Color.White;
+            this.gradientLabel1.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabel1.ColorTop = System.Drawing.Color.SteelBlue;
+            this.gradientLabel1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel1.Location = new System.Drawing.Point(2, 0);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(950, 30);
+            this.gradientLabel1.TabIndex = 13;
+            this.gradientLabel1.Text = " Defect Teaching Window";
+            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ucCogBlob
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.Controls.Add(this.labelTitle);
+            this.Controls.Add(this.gradientLabel1);
             this.Name = "ucCogBlob";
             this.Size = new System.Drawing.Size(953, 420);
             this.ResumeLayout(false);
@@ -57,6 +60,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelTitle;
+        private CustomControl.GradientLabel gradientLabel1;
+
     }
 }

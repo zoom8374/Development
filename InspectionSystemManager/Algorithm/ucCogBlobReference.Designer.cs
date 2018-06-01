@@ -32,6 +32,12 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBoxBodyHeight = new System.Windows.Forms.TextBox();
+            this.textBoxBodyWidth = new System.Windows.Forms.TextBox();
+            this.textBoxBodyArea = new System.Windows.Forms.TextBox();
+            this.gradientLabel5 = new CustomControl.GradientLabel();
+            this.gradientLabel4 = new CustomControl.GradientLabel();
+            this.gradientLabel3 = new CustomControl.GradientLabel();
             this.label19 = new CustomControl.GradientLabel();
             this.label20 = new CustomControl.GradientLabel();
             this.label21 = new CustomControl.GradientLabel();
@@ -54,16 +60,35 @@
             this.textBoxWidthSizeMax = new System.Windows.Forms.TextBox();
             this.textBoxWidthSizeMin = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel6 = new CustomControl.GradientLabel();
+            this.rbForegroundWhite = new System.Windows.Forms.RadioButton();
+            this.rbForegroundBlack = new System.Windows.Forms.RadioButton();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.gradientLabel1 = new CustomControl.GradientLabel();
-            this.graLabelThresholdValue = new CustomControl.GradientLabel();
             this.rbRangeUpper = new System.Windows.Forms.RadioButton();
             this.hScrollBarThreshold = new System.Windows.Forms.HScrollBar();
             this.gradientLabel2 = new CustomControl.GradientLabel();
-            this.btnSetting = new System.Windows.Forms.Button();
+            this.graLabelThresholdValue = new CustomControl.GradientLabel();
+            this.graLabelForeground = new CustomControl.GradientLabel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rbBenchMarkGravityCenter = new System.Windows.Forms.RadioButton();
+            this.textBoxBenchMarkPosition = new System.Windows.Forms.TextBox();
+            this.rbBenchMarkBottomRight = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkBottomCenter = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkBottomLeft = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkMiddleRight = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkMiddleCenter = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkMiddleLeft = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkTopCenter = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkTopRight = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkTopLeft = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -84,6 +109,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.tabControl1.Location = new System.Drawing.Point(2, 33);
             this.tabControl1.Name = "tabControl1";
@@ -106,7 +132,12 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnSetting);
+            this.groupBox2.Controls.Add(this.textBoxBodyHeight);
+            this.groupBox2.Controls.Add(this.textBoxBodyWidth);
+            this.groupBox2.Controls.Add(this.textBoxBodyArea);
+            this.groupBox2.Controls.Add(this.gradientLabel5);
+            this.groupBox2.Controls.Add(this.gradientLabel4);
+            this.groupBox2.Controls.Add(this.gradientLabel3);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.label21);
@@ -136,6 +167,84 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Inspection Condition ";
             // 
+            // textBoxBodyHeight
+            // 
+            this.textBoxBodyHeight.Location = new System.Drawing.Point(124, 174);
+            this.textBoxBodyHeight.Name = "textBoxBodyHeight";
+            this.textBoxBodyHeight.ReadOnly = true;
+            this.textBoxBodyHeight.Size = new System.Drawing.Size(131, 21);
+            this.textBoxBodyHeight.TabIndex = 54;
+            this.textBoxBodyHeight.Text = "0";
+            this.textBoxBodyHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxBodyWidth
+            // 
+            this.textBoxBodyWidth.Location = new System.Drawing.Point(124, 145);
+            this.textBoxBodyWidth.Name = "textBoxBodyWidth";
+            this.textBoxBodyWidth.ReadOnly = true;
+            this.textBoxBodyWidth.Size = new System.Drawing.Size(131, 21);
+            this.textBoxBodyWidth.TabIndex = 53;
+            this.textBoxBodyWidth.Text = "0";
+            this.textBoxBodyWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxBodyArea
+            // 
+            this.textBoxBodyArea.Location = new System.Drawing.Point(124, 117);
+            this.textBoxBodyArea.Name = "textBoxBodyArea";
+            this.textBoxBodyArea.ReadOnly = true;
+            this.textBoxBodyArea.Size = new System.Drawing.Size(131, 21);
+            this.textBoxBodyArea.TabIndex = 52;
+            this.textBoxBodyArea.Text = "0";
+            this.textBoxBodyArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel5
+            // 
+            this.gradientLabel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel5.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel5.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel5.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel5.Location = new System.Drawing.Point(11, 171);
+            this.gradientLabel5.Name = "gradientLabel5";
+            this.gradientLabel5.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel5.TabIndex = 51;
+            this.gradientLabel5.Text = "Body Height";
+            this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel4
+            // 
+            this.gradientLabel4.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel4.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel4.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel4.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel4.Location = new System.Drawing.Point(11, 143);
+            this.gradientLabel4.Name = "gradientLabel4";
+            this.gradientLabel4.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel4.TabIndex = 50;
+            this.gradientLabel4.Text = "Body Width";
+            this.gradientLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel3
+            // 
+            this.gradientLabel3.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel3.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel3.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel3.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel3.Location = new System.Drawing.Point(11, 115);
+            this.gradientLabel3.Name = "gradientLabel3";
+            this.gradientLabel3.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel3.TabIndex = 50;
+            this.gradientLabel3.Text = "Body Area";
+            this.gradientLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -144,7 +253,7 @@
             this.label19.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label19.ForeColor = System.Drawing.Color.White;
             this.label19.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label19.Location = new System.Drawing.Point(456, 85);
+            this.label19.Location = new System.Drawing.Point(456, 77);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(29, 14);
             this.label19.TabIndex = 49;
@@ -158,7 +267,7 @@
             this.label20.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label20.ForeColor = System.Drawing.Color.White;
             this.label20.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label20.Location = new System.Drawing.Point(456, 54);
+            this.label20.Location = new System.Drawing.Point(456, 50);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(29, 14);
             this.label20.TabIndex = 48;
@@ -186,7 +295,7 @@
             this.label18.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label18.ForeColor = System.Drawing.Color.White;
             this.label18.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label18.Location = new System.Drawing.Point(211, 85);
+            this.label18.Location = new System.Drawing.Point(211, 77);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(29, 14);
             this.label18.TabIndex = 46;
@@ -200,7 +309,7 @@
             this.label17.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label17.ForeColor = System.Drawing.Color.White;
             this.label17.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label17.Location = new System.Drawing.Point(211, 55);
+            this.label17.Location = new System.Drawing.Point(211, 51);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(29, 14);
             this.label17.TabIndex = 45;
@@ -226,7 +335,7 @@
             this.label14.ColorBottom = System.Drawing.Color.Empty;
             this.label14.ColorTop = System.Drawing.Color.Empty;
             this.label14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label14.Location = new System.Drawing.Point(240, 86);
+            this.label14.Location = new System.Drawing.Point(240, 78);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(15, 14);
             this.label14.TabIndex = 43;
@@ -238,7 +347,7 @@
             this.label13.ColorBottom = System.Drawing.Color.Empty;
             this.label13.ColorTop = System.Drawing.Color.Empty;
             this.label13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label13.Location = new System.Drawing.Point(240, 54);
+            this.label13.Location = new System.Drawing.Point(240, 50);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(15, 14);
             this.label13.TabIndex = 41;
@@ -297,7 +406,7 @@
             this.label6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label6.Location = new System.Drawing.Point(11, 48);
+            this.label6.Location = new System.Drawing.Point(11, 44);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(108, 26);
             this.label6.TabIndex = 36;
@@ -313,7 +422,7 @@
             this.label7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label7.Location = new System.Drawing.Point(257, 48);
+            this.label7.Location = new System.Drawing.Point(257, 44);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(108, 26);
             this.label7.TabIndex = 38;
@@ -329,7 +438,7 @@
             this.label8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label8.Location = new System.Drawing.Point(11, 79);
+            this.label8.Location = new System.Drawing.Point(11, 71);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(108, 26);
             this.label8.TabIndex = 39;
@@ -345,7 +454,7 @@
             this.label9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label9.ForeColor = System.Drawing.Color.White;
             this.label9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label9.Location = new System.Drawing.Point(257, 80);
+            this.label9.Location = new System.Drawing.Point(257, 72);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(108, 26);
             this.label9.TabIndex = 40;
@@ -354,7 +463,7 @@
             // 
             // textBoxHeightSizeMax
             // 
-            this.textBoxHeightSizeMax.Location = new System.Drawing.Point(371, 82);
+            this.textBoxHeightSizeMax.Location = new System.Drawing.Point(371, 74);
             this.textBoxHeightSizeMax.Name = "textBoxHeightSizeMax";
             this.textBoxHeightSizeMax.Size = new System.Drawing.Size(84, 21);
             this.textBoxHeightSizeMax.TabIndex = 37;
@@ -367,12 +476,12 @@
             this.textBoxBlobAreaMin.Name = "textBoxBlobAreaMin";
             this.textBoxBlobAreaMin.Size = new System.Drawing.Size(84, 21);
             this.textBoxBlobAreaMin.TabIndex = 29;
-            this.textBoxBlobAreaMin.Text = "0";
+            this.textBoxBlobAreaMin.Text = "10000";
             this.textBoxBlobAreaMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxHeightSizeMin
             // 
-            this.textBoxHeightSizeMin.Location = new System.Drawing.Point(125, 81);
+            this.textBoxHeightSizeMin.Location = new System.Drawing.Point(125, 73);
             this.textBoxHeightSizeMin.Name = "textBoxHeightSizeMin";
             this.textBoxHeightSizeMin.Size = new System.Drawing.Size(84, 21);
             this.textBoxHeightSizeMin.TabIndex = 34;
@@ -385,12 +494,12 @@
             this.textBoxBlobAreaMax.Name = "textBoxBlobAreaMax";
             this.textBoxBlobAreaMax.Size = new System.Drawing.Size(84, 21);
             this.textBoxBlobAreaMax.TabIndex = 30;
-            this.textBoxBlobAreaMax.Text = "0";
+            this.textBoxBlobAreaMax.Text = "500000";
             this.textBoxBlobAreaMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxWidthSizeMax
             // 
-            this.textBoxWidthSizeMax.Location = new System.Drawing.Point(371, 50);
+            this.textBoxWidthSizeMax.Location = new System.Drawing.Point(371, 46);
             this.textBoxWidthSizeMax.Name = "textBoxWidthSizeMax";
             this.textBoxWidthSizeMax.Size = new System.Drawing.Size(84, 21);
             this.textBoxWidthSizeMax.TabIndex = 32;
@@ -399,7 +508,7 @@
             // 
             // textBoxWidthSizeMin
             // 
-            this.textBoxWidthSizeMin.Location = new System.Drawing.Point(125, 51);
+            this.textBoxWidthSizeMin.Location = new System.Drawing.Point(125, 47);
             this.textBoxWidthSizeMin.Name = "textBoxWidthSizeMin";
             this.textBoxWidthSizeMin.Size = new System.Drawing.Size(84, 21);
             this.textBoxWidthSizeMin.TabIndex = 31;
@@ -408,11 +517,16 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.gradientLabel6);
+            this.groupBox1.Controls.Add(this.rbForegroundWhite);
+            this.groupBox1.Controls.Add(this.rbForegroundBlack);
+            this.groupBox1.Controls.Add(this.btnSetting);
             this.groupBox1.Controls.Add(this.gradientLabel1);
-            this.groupBox1.Controls.Add(this.graLabelThresholdValue);
             this.groupBox1.Controls.Add(this.rbRangeUpper);
             this.groupBox1.Controls.Add(this.hScrollBarThreshold);
             this.groupBox1.Controls.Add(this.gradientLabel2);
+            this.groupBox1.Controls.Add(this.graLabelThresholdValue);
+            this.groupBox1.Controls.Add(this.graLabelForeground);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(6, 8);
             this.groupBox1.Name = "groupBox1";
@@ -420,6 +534,60 @@
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Threshold Condition ";
+            // 
+            // gradientLabel6
+            // 
+            this.gradientLabel6.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel6.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel6.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel6.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel6.Location = new System.Drawing.Point(224, 22);
+            this.gradientLabel6.Name = "gradientLabel6";
+            this.gradientLabel6.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel6.TabIndex = 54;
+            this.gradientLabel6.Text = "Foreground";
+            this.gradientLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // rbForegroundWhite
+            // 
+            this.rbForegroundWhite.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbForegroundWhite.ForeColor = System.Drawing.Color.Black;
+            this.rbForegroundWhite.Location = new System.Drawing.Point(336, 21);
+            this.rbForegroundWhite.Name = "rbForegroundWhite";
+            this.rbForegroundWhite.Size = new System.Drawing.Size(51, 28);
+            this.rbForegroundWhite.TabIndex = 53;
+            this.rbForegroundWhite.Tag = "1";
+            this.rbForegroundWhite.Text = "W";
+            this.rbForegroundWhite.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbForegroundWhite.UseVisualStyleBackColor = true;
+            this.rbForegroundWhite.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbForeground_MouseUp);
+            // 
+            // rbForegroundBlack
+            // 
+            this.rbForegroundBlack.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbForegroundBlack.ForeColor = System.Drawing.Color.Black;
+            this.rbForegroundBlack.Location = new System.Drawing.Point(389, 21);
+            this.rbForegroundBlack.Name = "rbForegroundBlack";
+            this.rbForegroundBlack.Size = new System.Drawing.Size(51, 28);
+            this.rbForegroundBlack.TabIndex = 52;
+            this.rbForegroundBlack.Tag = "0";
+            this.rbForegroundBlack.Text = "B";
+            this.rbForegroundBlack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbForegroundBlack.UseVisualStyleBackColor = true;
+            this.rbForegroundBlack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbForeground_MouseUp);
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSetting.ForeColor = System.Drawing.Color.Black;
+            this.btnSetting.Location = new System.Drawing.Point(686, 47);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(100, 37);
+            this.btnSetting.TabIndex = 50;
+            this.btnSetting.Text = "Setting";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // gradientLabel1
             // 
@@ -435,23 +603,11 @@
             this.gradientLabel1.Text = "Range Mode";
             this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // graLabelThresholdValue
-            // 
-            this.graLabelThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.graLabelThresholdValue.ColorBottom = System.Drawing.Color.Empty;
-            this.graLabelThresholdValue.ColorTop = System.Drawing.Color.Empty;
-            this.graLabelThresholdValue.ForeColor = System.Drawing.Color.White;
-            this.graLabelThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelThresholdValue.Location = new System.Drawing.Point(343, 52);
-            this.graLabelThresholdValue.Name = "graLabelThresholdValue";
-            this.graLabelThresholdValue.Size = new System.Drawing.Size(39, 26);
-            this.graLabelThresholdValue.TabIndex = 19;
-            this.graLabelThresholdValue.Text = "128";
-            this.graLabelThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // rbRangeUpper
             // 
             this.rbRangeUpper.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbRangeUpper.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Rang_Upper;
+            this.rbRangeUpper.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.rbRangeUpper.Location = new System.Drawing.Point(124, 21);
             this.rbRangeUpper.Name = "rbRangeUpper";
             this.rbRangeUpper.Size = new System.Drawing.Size(84, 28);
@@ -465,9 +621,10 @@
             this.hScrollBarThreshold.Location = new System.Drawing.Point(126, 52);
             this.hScrollBarThreshold.Maximum = 255;
             this.hScrollBarThreshold.Name = "hScrollBarThreshold";
-            this.hScrollBarThreshold.Size = new System.Drawing.Size(214, 26);
+            this.hScrollBarThreshold.Size = new System.Drawing.Size(314, 26);
             this.hScrollBarThreshold.TabIndex = 18;
             this.hScrollBarThreshold.Value = 128;
+            this.hScrollBarThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarThreshold_Scroll);
             // 
             // gradientLabel2
             // 
@@ -483,17 +640,217 @@
             this.gradientLabel2.Text = "Threshold";
             this.gradientLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnSetting
+            // graLabelThresholdValue
             // 
-            this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(686, 163);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(100, 37);
-            this.btnSetting.TabIndex = 50;
-            this.btnSetting.Text = "Setting";
-            this.btnSetting.UseVisualStyleBackColor = true;
-            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
+            this.graLabelThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelThresholdValue.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelThresholdValue.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelThresholdValue.ForeColor = System.Drawing.Color.White;
+            this.graLabelThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelThresholdValue.Location = new System.Drawing.Point(436, 52);
+            this.graLabelThresholdValue.Name = "graLabelThresholdValue";
+            this.graLabelThresholdValue.Size = new System.Drawing.Size(39, 26);
+            this.graLabelThresholdValue.TabIndex = 19;
+            this.graLabelThresholdValue.Text = "128";
+            this.graLabelThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // graLabelForeground
+            // 
+            this.graLabelForeground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelForeground.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelForeground.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelForeground.ForeColor = System.Drawing.Color.White;
+            this.graLabelForeground.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelForeground.Location = new System.Drawing.Point(436, 23);
+            this.graLabelForeground.Name = "graLabelForeground";
+            this.graLabelForeground.Size = new System.Drawing.Size(39, 26);
+            this.graLabelForeground.TabIndex = 55;
+            this.graLabelForeground.Text = "0";
+            this.graLabelForeground.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.graLabelForeground.Visible = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.tabPage2.Controls.Add(this.groupBox4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 23);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(804, 325);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Properties";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.rbBenchMarkGravityCenter);
+            this.groupBox4.Controls.Add(this.textBoxBenchMarkPosition);
+            this.groupBox4.Controls.Add(this.rbBenchMarkBottomRight);
+            this.groupBox4.Controls.Add(this.rbBenchMarkBottomCenter);
+            this.groupBox4.Controls.Add(this.rbBenchMarkBottomLeft);
+            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleRight);
+            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleCenter);
+            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleLeft);
+            this.groupBox4.Controls.Add(this.rbBenchMarkTopCenter);
+            this.groupBox4.Controls.Add(this.rbBenchMarkTopRight);
+            this.groupBox4.Controls.Add(this.rbBenchMarkTopLeft);
+            this.groupBox4.ForeColor = System.Drawing.Color.White;
+            this.groupBox4.Location = new System.Drawing.Point(6, 8);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(792, 175);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = " BenchMark Position ";
+            // 
+            // rbBenchMarkGravityCenter
+            // 
+            this.rbBenchMarkGravityCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkGravityCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkGravityCenter.Location = new System.Drawing.Point(144, 70);
+            this.rbBenchMarkGravityCenter.Name = "rbBenchMarkGravityCenter";
+            this.rbBenchMarkGravityCenter.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkGravityCenter.TabIndex = 32;
+            this.rbBenchMarkGravityCenter.Tag = "9";
+            this.rbBenchMarkGravityCenter.Text = "MC";
+            this.rbBenchMarkGravityCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkGravityCenter.UseVisualStyleBackColor = true;
+            // 
+            // textBoxBenchMarkPosition
+            // 
+            this.textBoxBenchMarkPosition.Location = new System.Drawing.Point(209, 83);
+            this.textBoxBenchMarkPosition.Name = "textBoxBenchMarkPosition";
+            this.textBoxBenchMarkPosition.Size = new System.Drawing.Size(30, 21);
+            this.textBoxBenchMarkPosition.TabIndex = 23;
+            this.textBoxBenchMarkPosition.Text = "0";
+            this.textBoxBenchMarkPosition.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBenchMarkPosition.Visible = false;
+            // 
+            // rbBenchMarkBottomRight
+            // 
+            this.rbBenchMarkBottomRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkBottomRight.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkBottomRight.Location = new System.Drawing.Point(98, 118);
+            this.rbBenchMarkBottomRight.Name = "rbBenchMarkBottomRight";
+            this.rbBenchMarkBottomRight.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkBottomRight.TabIndex = 31;
+            this.rbBenchMarkBottomRight.Tag = "8";
+            this.rbBenchMarkBottomRight.Text = "BR";
+            this.rbBenchMarkBottomRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkBottomRight.UseVisualStyleBackColor = true;
+            this.rbBenchMarkBottomRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkBottomCenter
+            // 
+            this.rbBenchMarkBottomCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkBottomCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkBottomCenter.Location = new System.Drawing.Point(57, 118);
+            this.rbBenchMarkBottomCenter.Name = "rbBenchMarkBottomCenter";
+            this.rbBenchMarkBottomCenter.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkBottomCenter.TabIndex = 30;
+            this.rbBenchMarkBottomCenter.Tag = "7";
+            this.rbBenchMarkBottomCenter.Text = "BC";
+            this.rbBenchMarkBottomCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkBottomCenter.UseVisualStyleBackColor = true;
+            this.rbBenchMarkBottomCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkBottomLeft
+            // 
+            this.rbBenchMarkBottomLeft.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkBottomLeft.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkBottomLeft.Location = new System.Drawing.Point(16, 118);
+            this.rbBenchMarkBottomLeft.Name = "rbBenchMarkBottomLeft";
+            this.rbBenchMarkBottomLeft.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkBottomLeft.TabIndex = 29;
+            this.rbBenchMarkBottomLeft.Tag = "6";
+            this.rbBenchMarkBottomLeft.Text = "BL";
+            this.rbBenchMarkBottomLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkBottomLeft.UseVisualStyleBackColor = true;
+            this.rbBenchMarkBottomLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkMiddleRight
+            // 
+            this.rbBenchMarkMiddleRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkMiddleRight.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkMiddleRight.Location = new System.Drawing.Point(98, 70);
+            this.rbBenchMarkMiddleRight.Name = "rbBenchMarkMiddleRight";
+            this.rbBenchMarkMiddleRight.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkMiddleRight.TabIndex = 28;
+            this.rbBenchMarkMiddleRight.Tag = "5";
+            this.rbBenchMarkMiddleRight.Text = "MR";
+            this.rbBenchMarkMiddleRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkMiddleRight.UseVisualStyleBackColor = true;
+            this.rbBenchMarkMiddleRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkMiddleCenter
+            // 
+            this.rbBenchMarkMiddleCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkMiddleCenter.Checked = true;
+            this.rbBenchMarkMiddleCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkMiddleCenter.Location = new System.Drawing.Point(57, 70);
+            this.rbBenchMarkMiddleCenter.Name = "rbBenchMarkMiddleCenter";
+            this.rbBenchMarkMiddleCenter.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkMiddleCenter.TabIndex = 27;
+            this.rbBenchMarkMiddleCenter.TabStop = true;
+            this.rbBenchMarkMiddleCenter.Tag = "4";
+            this.rbBenchMarkMiddleCenter.Text = "MC";
+            this.rbBenchMarkMiddleCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkMiddleCenter.UseVisualStyleBackColor = true;
+            this.rbBenchMarkMiddleCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkMiddleLeft
+            // 
+            this.rbBenchMarkMiddleLeft.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkMiddleLeft.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkMiddleLeft.Location = new System.Drawing.Point(16, 70);
+            this.rbBenchMarkMiddleLeft.Name = "rbBenchMarkMiddleLeft";
+            this.rbBenchMarkMiddleLeft.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkMiddleLeft.TabIndex = 26;
+            this.rbBenchMarkMiddleLeft.Tag = "3";
+            this.rbBenchMarkMiddleLeft.Text = "ML";
+            this.rbBenchMarkMiddleLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkMiddleLeft.UseVisualStyleBackColor = true;
+            this.rbBenchMarkMiddleLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkTopCenter
+            // 
+            this.rbBenchMarkTopCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkTopCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkTopCenter.Location = new System.Drawing.Point(57, 22);
+            this.rbBenchMarkTopCenter.Name = "rbBenchMarkTopCenter";
+            this.rbBenchMarkTopCenter.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkTopCenter.TabIndex = 25;
+            this.rbBenchMarkTopCenter.Tag = "1";
+            this.rbBenchMarkTopCenter.Text = "TC";
+            this.rbBenchMarkTopCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkTopCenter.UseVisualStyleBackColor = true;
+            this.rbBenchMarkTopCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkTopRight
+            // 
+            this.rbBenchMarkTopRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkTopRight.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkTopRight.Location = new System.Drawing.Point(98, 22);
+            this.rbBenchMarkTopRight.Name = "rbBenchMarkTopRight";
+            this.rbBenchMarkTopRight.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkTopRight.TabIndex = 24;
+            this.rbBenchMarkTopRight.Tag = "2";
+            this.rbBenchMarkTopRight.Text = "TR";
+            this.rbBenchMarkTopRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkTopRight.UseVisualStyleBackColor = true;
+            this.rbBenchMarkTopRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkTopLeft
+            // 
+            this.rbBenchMarkTopLeft.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkTopLeft.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkTopLeft.Location = new System.Drawing.Point(16, 22);
+            this.rbBenchMarkTopLeft.Name = "rbBenchMarkTopLeft";
+            this.rbBenchMarkTopLeft.Size = new System.Drawing.Size(40, 47);
+            this.rbBenchMarkTopLeft.TabIndex = 23;
+            this.rbBenchMarkTopLeft.Tag = "0";
+            this.rbBenchMarkTopLeft.Text = "TL";
+            this.rbBenchMarkTopLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkTopLeft.UseVisualStyleBackColor = true;
+            this.rbBenchMarkTopLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
             // 
             // ucCogBlobReference
             // 
@@ -509,6 +866,9 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -547,5 +907,28 @@
         private System.Windows.Forms.TextBox textBoxWidthSizeMax;
         private System.Windows.Forms.TextBox textBoxWidthSizeMin;
         private System.Windows.Forms.Button btnSetting;
+        private System.Windows.Forms.TextBox textBoxBodyHeight;
+        private System.Windows.Forms.TextBox textBoxBodyWidth;
+        private System.Windows.Forms.TextBox textBoxBodyArea;
+        private CustomControl.GradientLabel gradientLabel5;
+        private CustomControl.GradientLabel gradientLabel4;
+        private CustomControl.GradientLabel gradientLabel3;
+        private CustomControl.GradientLabel gradientLabel6;
+        private System.Windows.Forms.RadioButton rbForegroundWhite;
+        private System.Windows.Forms.RadioButton rbForegroundBlack;
+        private CustomControl.GradientLabel graLabelForeground;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RadioButton rbBenchMarkGravityCenter;
+        private System.Windows.Forms.TextBox textBoxBenchMarkPosition;
+        private System.Windows.Forms.RadioButton rbBenchMarkBottomRight;
+        private System.Windows.Forms.RadioButton rbBenchMarkBottomCenter;
+        private System.Windows.Forms.RadioButton rbBenchMarkBottomLeft;
+        private System.Windows.Forms.RadioButton rbBenchMarkMiddleRight;
+        private System.Windows.Forms.RadioButton rbBenchMarkMiddleCenter;
+        private System.Windows.Forms.RadioButton rbBenchMarkMiddleLeft;
+        private System.Windows.Forms.RadioButton rbBenchMarkTopCenter;
+        private System.Windows.Forms.RadioButton rbBenchMarkTopRight;
+        private System.Windows.Forms.RadioButton rbBenchMarkTopLeft;
     }
 }

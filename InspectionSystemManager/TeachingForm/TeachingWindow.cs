@@ -17,7 +17,7 @@ namespace InspectionSystemManager
     {
         private enum eAreaList  { ID = 0, NAME, BENCHMARK, ENABLE, NGNUMBER };
         private enum eAlgoList  { ID = 0, NAME, BENCHMARK, ENABLE };
-        private enum eTeachStep { AREA_SELECT = 0, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
+        private enum eTeachStep { NONE = 0, AREA_SELECT = 1, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
 
         private CogImage8Grey InspectionImage = new CogImage8Grey();
         private int InspectionImageWidth = 0;
@@ -78,6 +78,7 @@ namespace InspectionSystemManager
 
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
+            CurrentTeachStep = eTeachStep.NONE;
 
             foreach (DataGridViewColumn _dataGridView in gridViewArea.Columns)
                 _dataGridView.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -109,7 +110,7 @@ namespace InspectionSystemManager
             ContextMenuAlgo = new ContextMenu();
             ContextMenuAlgo.MenuItems.Clear();
 
-            ContextMenuAlgo.MenuItems.Add("Search a reference", new EventHandler(PatternFindAlgorithm));
+            ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
         }
@@ -165,7 +166,7 @@ namespace InspectionSystemManager
         {
             kpTeachDisplay.ClearDisplay();
             panelTeaching.Controls.Clear();
-            panelTeaching.Controls.Add(labelTeaching);
+            panelTeaching.Controls.Add(gradientLabelTeaching);
 
             InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
             InspParam.InspAreaParam.Add(_InspAreaParam);
@@ -190,6 +191,7 @@ namespace InspectionSystemManager
 
         private void btnInspectionAreaSet_Click(object sender, EventArgs e)
         {
+            if (CurrentTeachStep == eTeachStep.NONE) return;
             if (gridViewArea.SelectedRows.Count == 0) { MessageBox.Show("Not selected inspection area."); return; }
             int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
             if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
@@ -220,8 +222,9 @@ namespace InspectionSystemManager
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawStaticShape(_InspRegion, "InspRegion", CogColorConstants.Green);
             kpTeachDisplay.DrawText("InspRegion", _InspRegion.X, _InspRegion.Y - 35, CogColorConstants.Green, 12);
+            AreaRegionRectangle = new CogRectangle(_InspRegion);
             panelTeaching.Controls.Clear();
-            panelTeaching.Controls.Add(labelTeaching);
+            panelTeaching.Controls.Add(gradientLabelTeaching);
 
             //Area Setting
             InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX = _InspRegion.CenterX - AreaOffsetX;
@@ -284,7 +287,6 @@ namespace InspectionSystemManager
 
             CogRectangle _AlgoRegion = new CogRectangle();
             CogRectangle _Boundary = new CogRectangle();
-            //_Boundary.SetXYWidthHeight(0, 0, InspectionAreaWidth, InspectionAreaHeight);
             _Boundary.SetCenterWidthHeight(InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX, InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterY,
                                             InspParam.InspAreaParam[InspAreaSelected].AreaRegionWidth, InspParam.InspAreaParam[InspAreaSelected].AreaRegionHeight);
             if (false == GetCorrectionRectangle(kpTeachDisplay, _Boundary, ref _AlgoRegion)) { MessageBox.Show("The rectangle is outside the inspection area."); return; }
@@ -317,6 +319,8 @@ namespace InspectionSystemManager
 
             AreaRegionRectangle = new CogRectangle(_Boundary);
             AlgoRegionRectangle = new CogRectangle(_AlgoRegion);
+
+            UpdateTeachingStatus(eTeachStep.ALGO_SET);
         }
 
         private void gridViewArea_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -339,7 +343,7 @@ namespace InspectionSystemManager
 
             kpTeachDisplay.ClearDisplay();
             panelTeaching.Controls.Clear();
-            panelTeaching.Controls.Add(labelTeaching);
+            panelTeaching.Controls.Add(gradientLabelTeaching);
             gridViewAlgo.Rows.Clear();
 
             GetAreaResultDataOffset(_ID);
@@ -348,6 +352,7 @@ namespace InspectionSystemManager
             gridViewAlgo.ClearSelection();
             InspAreaSelected = _ID;
 
+            AreaRegionRectangle = null;
             UpdateTeachingStatus(eTeachStep.AREA_SELECT);
         }
 
@@ -365,6 +370,7 @@ namespace InspectionSystemManager
                 UpdateInspectionAlgorithmAreaDraw(_ID);
                 InspAlgoSelected = _ID;
 
+                AlgoRegionRectangle = null;
                 UpdateTeachingStatus(eTeachStep.ALGO_SELECT);
             }
         }
@@ -395,9 +401,10 @@ namespace InspectionSystemManager
         {
             switch (CurrentAlgoType)
             {
-                case eAlgoType.C_PATTERN:       ucCogPatternWnd.SaveTeachingParameter();    break;
-                case eAlgoType.C_BLOB:          ucCogBlobWnd.SaveTeachingParameter();       break;
-                case eAlgoType.C_BLOB_REFER:    ucCogBlobReferWnd.SaveTeachingParameter();  break;
+                case eAlgoType.C_PATTERN:       ucCogPatternWnd.SaveAlgoRecipe();   break;
+                case eAlgoType.C_BLOB_REFER:    ucCogBlobReferWnd.SaveAlgoRecipe(); break;
+                case eAlgoType.C_BLOB:          ucCogBlobWnd.SaveAlgoRecipe();      break;
+                
             }
         }
         #endregion Button Event
@@ -527,7 +534,7 @@ namespace InspectionSystemManager
             switch (_AlgoType)
             {
                 case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe();    break;
-                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe();  break;
+                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
@@ -561,7 +568,21 @@ namespace InspectionSystemManager
 
         private void AlgorithmAreaDisplayRefresh()
         {
+            int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
+            //GetAlgoResultDataOffset(InspAreaSelected, _ID);
+            UpdateInspectionAlgorithmAreaDraw(_ID);
 
+            CogRectangle _AlgoRegion = new CogRectangle();
+            CogRectangle _Boundary = new CogRectangle();
+            _Boundary.SetCenterWidthHeight(InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX, InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterY,
+                                            InspParam.InspAreaParam[InspAreaSelected].AreaRegionWidth, InspParam.InspAreaParam[InspAreaSelected].AreaRegionHeight);
+            if (false == GetCorrectionRectangle(kpTeachDisplay, _Boundary, ref _AlgoRegion)) { MessageBox.Show("The rectangle is outside the inspection area."); return; }
+
+            kpTeachDisplay.ClearDisplay();
+            kpTeachDisplay.DrawStaticShape(_Boundary, "InspRegion", CogColorConstants.Green, 2);
+            kpTeachDisplay.DrawText("InspRegion", _Boundary.X, _Boundary.Y - 35, CogColorConstants.Green, 12);
+            kpTeachDisplay.DrawStaticShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange, 2);
+            kpTeachDisplay.DrawText("AlgoRegion", _AlgoRegion.X, _AlgoRegion.Y - 35, CogColorConstants.Orange, 12);
         }
         #endregion Inspection Area & Algorithm Gridview Update
 
@@ -703,6 +724,9 @@ namespace InspectionSystemManager
             CogRectangle _AlgoRegion = new CogRectangle();
             _AlgoRegion.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
 
+            kpTeachDisplay.ClearDisplay();
+            kpTeachDisplay.DrawStaticShape(AreaRegionRectangle, "InspRegion", CogColorConstants.Green, 2);
+            kpTeachDisplay.DrawText("InspRegion", AreaRegionRectangle.X, AreaRegionRectangle.Y - 35, CogColorConstants.Green, 12);
             kpTeachDisplay.DrawInterActiveShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange);
         }
         #endregion Teaching Parameter Set & UI Setting

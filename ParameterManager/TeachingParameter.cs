@@ -20,21 +20,27 @@ namespace ParameterManager
             public double BlobHeightMin;
             public double BlobHeightMax;
             public int BenchMarkPosition;
+
+            public BlobReferTeachParam()
+            {
+
+            }
         }
 
         public class BlobReferTeachReturnParam
         {
-            public double OriginX;
-            public double OriginY;
-            public double Width;
-            public double Height;
+            public int BlobCount;
+            public double[] Area;
+            public double[] OriginX;
+            public double[] OriginY;
+            public double[] CenterX;
+            public double[] CenterY;
+            public double[] Width;
+            public double[] Height;
 
             public BlobReferTeachReturnParam()
             {
-                OriginX = 0;
-                OriginY = 0;
-                Width = 0;
-                Height = 0;
+
             }
         }
     }

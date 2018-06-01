@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 using InspectionSystemManager;
 using ParameterManager;
@@ -282,5 +283,15 @@ namespace KPVisionInspectionFramework
             ParamManager.WriteInspectionParameter(_ID);
         }
         #endregion Event : Inspection System Manager Event & Function
+
+        #region Main Process
+        private void EventInspectionTriggerOn(object _Value)
+        {
+            int _ID = Convert.ToInt32(_Value);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
+
+            InspSysManager[_ID].TriggerOn();
+        }
+        #endregion Main Process
     }
 }

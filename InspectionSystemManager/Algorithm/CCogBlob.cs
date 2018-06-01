@@ -86,34 +86,36 @@ namespace InspectionSystemManager
 
             if (null == BlobResults || BlobResults.GetBlobs().Count < 0) return false;
             InspResults.BlobCount = BlobResults.GetBlobs().Count;
-            
-            //InspResults.Width = new double[BlobResults.GetBlobs().Count];
-            //InspResults.Height = new double[BlobResults.GetBlobs().Count];
-            //InspResults.BlobCenterX = new double[BlobResults.GetBlobs().Count];
-            //InspResults.BlobCenterY = new double[BlobResults.GetBlobs().Count];
-            //InspResults.BlobMinX = new double[BlobResults.GetBlobs().Count];
-            //InspResults.BlobMinY = new double[BlobResults.GetBlobs().Count];
-            //InspResults.BlobMaxX = new double[BlobResults.GetBlobs().Count];
-            //InspResults.BlobMaxY = new double[BlobResults.GetBlobs().Count];
-
+            InspResults.BlobArea = new double[BlobResults.GetBlobs().Count];
+            InspResults.Width = new double[BlobResults.GetBlobs().Count];
+            InspResults.Height = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobMinX = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobMinY = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobMaxX = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobMaxY = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobCenterX = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobCenterY = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobMessCenterX = new double[BlobResults.GetBlobs().Count];
+            InspResults.BlobMessCenterY = new double[BlobResults.GetBlobs().Count];
             if (_IsGraphicResult) InspResults.ResultGraphic = new CogCompositeShape[InspResults.BlobCount];
-
-            int[] _BlobIDs = new int[InspResults.BlobCount];
-            for (int iLoopCount = 0; iLoopCount < InspResults.BlobCount; ++iLoopCount) _BlobIDs[iLoopCount] = iLoopCount;
-
-            InspResults.Width            = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.BoundingBoxPrincipalAxisWidth, _BlobIDs);
-            InspResults.Height           = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.BoundingBoxPrincipalAxisHeight, _BlobIDs);
-            InspResults.BlobBoundCenterX = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.CenterMassX, _BlobIDs);
-            InspResults.BlobBoundCenterY = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.CenterMassY, _BlobIDs);
-            InspResults.BlobMinX         = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.BoundingBoxExtremaAngleMinX, _BlobIDs);
-            InspResults.BlobMinY         = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.BoundingBoxExtremaAngleMinY, _BlobIDs);
-            InspResults.BlobMaxX         = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.BoundingBoxExtremaAngleMaxX, _BlobIDs);
-            InspResults.BlobMaxY         = BlobResults.GetBlobMeasures(CogBlobMeasureConstants.BoundingBoxExtremaAngleMaxY, _BlobIDs);
 
             for (int iLoopCount = 0; iLoopCount < InspResults.BlobCount; ++iLoopCount)
             {
                 BlobResult = BlobResults.GetBlobByID(iLoopCount);
-                InspResults.ResultGraphic[iLoopCount] = BlobResult.CreateResultGraphics(CogBlobResultGraphicConstants.Boundary);
+
+                InspResults.BlobArea[iLoopCount]         = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.Area, iLoopCount);
+                InspResults.Width[iLoopCount]            = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeWidth, iLoopCount);
+                InspResults.Height[iLoopCount]           = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeHeight, iLoopCount);
+                InspResults.BlobMinX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinX, iLoopCount);
+                InspResults.BlobMinY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMinY, iLoopCount);
+                InspResults.BlobMaxX[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxX, iLoopCount);
+                InspResults.BlobMaxY[iLoopCount] = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.BoundingBoxPixelAlignedNoExcludeMaxY, iLoopCount);
+                InspResults.BlobCenterX[iLoopCount]      = (InspResults.BlobMaxX[iLoopCount] + InspResults.BlobMinX[iLoopCount]) / 2;
+                InspResults.BlobCenterY[iLoopCount]      = (InspResults.BlobMaxY[iLoopCount] + InspResults.BlobMinY[iLoopCount]) / 2;
+                InspResults.BlobMessCenterX[iLoopCount]  = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassX, iLoopCount);
+                InspResults.BlobMessCenterY[iLoopCount]  = BlobResults.GetBlobMeasure(CogBlobMeasureConstants.CenterMassY, iLoopCount);
+
+                if (_IsGraphicResult) InspResults.ResultGraphic[iLoopCount] = BlobResult.CreateResultGraphics(CogBlobResultGraphicConstants.Boundary);
             }
 
             return _Result;
