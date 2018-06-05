@@ -76,6 +76,17 @@ namespace ParameterManager
         public double OriginX;
         public double OriginY;
 
+        public double BodyArea;
+        public double BodyWidth;
+        public double BodyHeight;
+        public double BodyAreaPermitPercent;
+        public double BodyWidthPermitPercent;
+        public double BodyHeightPermitPercent;
+        public bool UseBodyArea;
+        public bool UseBodyWidth;
+        public bool UseBodyHeight;
+        
+
         public double OrigionPointX;
         public double OrigionPointY;
 
@@ -135,9 +146,17 @@ namespace ParameterManager
     /// <summary>
     /// Lead - Bent 검사 알고리즘
     /// </summary>
-    public class CogLeadBent
+    public class CogLeadBentAlgo
     {
-        public CogLeadBent()
+        public CogLeadBentAlgo()
+        {
+
+        }
+    }
+
+    public class CogNeedleFindAlgo
+    {
+        public CogNeedleFindAlgo()
         {
 
         }
@@ -169,7 +188,8 @@ namespace ParameterManager
             if (_AlgoType == eAlgoType.C_PATTERN)           Algorithm = new CogPatternAlgo();
             else if (_AlgoType == eAlgoType.C_BLOB)         Algorithm = new CogBlobAlgo();
             else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo();
-            else if (_AlgoType == eAlgoType.C_LEAD_BENT)    Algorithm = new CogLeadBent();
+            else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadBentAlgo();
+            else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)  Algorithm = new CogNeedleFindAlgo();
         }
     }
 

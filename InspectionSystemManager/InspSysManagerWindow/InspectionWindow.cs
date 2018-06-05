@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
@@ -18,6 +19,8 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
+        private InspectionBlobReference InspBlobReferProc;
+
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
         public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
@@ -34,6 +37,9 @@ namespace InspectionSystemManager
         private CogImageFileTool OriginImageFileTool = new CogImageFileTool();
         private CogImage8Grey    OriginImage = new CogImage8Grey();
 
+        private double ResolutionX = 0.005;
+        private double ResolutionY = 0.005;
+
         //검사 시 Area 별 Offset 값을 적용할 변수
         private double AreaBenchMarkOffsetX;
         private double AreaBenchMarkOffsetY;
@@ -47,7 +53,14 @@ namespace InspectionSystemManager
         private double DisplayPanXValue = 0;
         private double DisplayPanYValue = 0;
 
+        private Thread ThreadInspectionProcess;
+        private bool IsThreadInspectionProcessExit = false;
+        public bool IsThreadInspectionProcessTrigger = false;
         public bool IsInspectionComplete = false;
+        private bool InspectionPassFlag = false;
+
+        private Thread ThreadLiveCheck;
+        private bool IsThreadLiveCheckExit = false;
 
 
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null);
@@ -93,8 +106,21 @@ namespace InspectionSystemManager
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
+            InspBlobReferProc = new InspectionBlobReference();
+            InspBlobReferProc.Initialize();
+
             AreaResultParamList = new AreaResultParameterList();
             AlgoResultParamList = new AlgoResultParameterList();
+
+            ThreadInspectionProcess = new Thread(ThreadInspectionProcessFunction);
+            IsThreadInspectionProcessExit = false;
+            IsThreadInspectionProcessTrigger = false;
+            ThreadInspectionProcess.Start();
+
+            ThreadLiveCheck = new Thread(ThreadLiveCheckFunction);
+            ThreadLiveCheck.IsBackground = true;
+            IsThreadLiveCheckExit = false;
+            ThreadLiveCheck.Start();
 
             TeachWnd = new TeachingWindow();
 
@@ -103,7 +129,7 @@ namespace InspectionSystemManager
 
         public void Deinitialize()
         {
-
+            InspBlobReferProc.DeInitialize();
         }
 
         public void SetLocation(int _StartX, int _StartY)
@@ -291,12 +317,14 @@ namespace InspectionSystemManager
         #region Control Event
         private void btnInspection_Click(object sender, EventArgs e)
         {
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Inspection Run", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single Inspection Run", ID + 1));
+            Inspection();
         }
 
         private void btnOneShot_Click(object sender, EventArgs e)
         {
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} One-Shot Inspection Run", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1));
+            InspectionWindowEvent(eIWCMD.ONESHOT_INSP);
         }
 
         private void btnRecipe_Click(object sender, EventArgs e)
@@ -383,6 +411,7 @@ namespace InspectionSystemManager
             GC.Collect();
         }
 
+        #region Inspection Process 
         private bool Inspection()
         {
             bool _Result = false;
@@ -391,13 +420,14 @@ namespace InspectionSystemManager
 
             do
             {
-                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID));
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID + 1));
                 if (false == InspectionResultClear()) break;
                 if (false == InspectionProcess()) break;
+                if (false == InspectionDataSend()) break;
                 if (false == InspectionResultDsiplay()) break;
 
                 _Result = true;
-                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID));
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID + 1));
             } while (false);
 
             GC.Collect();
@@ -412,21 +442,367 @@ namespace InspectionSystemManager
             AreaAlgoCount = 0;
             AreaResultParamList.Clear();
             AlgoResultParamList.Clear();
+            DisplayClear(true, true);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Resut Clear", ID + 1));
             return _Result;
         }
 
         private bool InspectionProcess()
         {
             bool _Result = true;
+            System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
+            _ProcessWatch.Reset(); _ProcessWatch.Start();
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess Start", ID + 1));
+
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                if (iLoopCount > 0 && InspParam.InspAreaParam[iLoopCount - 1].Enable == true)
+                {
+                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount - 1].InspAlgoParam.Count; ++jLoopCount)
+                    {
+                        if (InspParam.InspAreaParam[iLoopCount - 1].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                            AreaAlgoCount++;
+                    }   
+                }
+
+                //Area 단위로 검사. Return은 Area 단위별 결과
+                AreaStepInspection(InspParam.InspAreaParam[iLoopCount]);
+            }
+
+            IsInspectionComplete = true;
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess End", ID + 1));
+
+            _ProcessWatch.Stop();
+            string _ProcessTime = String.Format("ISM {0} - InspectionProcess Time : {1} ms", ID + 1, _ProcessWatch.Elapsed.TotalSeconds.ToString());
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _ProcessTime);
 
             return _Result;
         }
 
-        private bool InspectionResultDsiplay()
+        private void AreaStepInspection(InspectionAreaParameter _InspAreaParam)
+        {
+            if (false == _InspAreaParam.Enable) return; //검사 Enable 확인
+            bool _InspectionResult = true;
+
+            
+            for (int iLoopCount = 0; iLoopCount < _InspAreaParam.InspAlgoParam.Count; ++iLoopCount)
+            {
+                int _BenchMark = _InspAreaParam.AreaBenchMark - 1;
+                AreaBenchMarkOffsetX = AreaBenchMarkOffsetY = 0;
+
+                //한 Area 에서 Algorithm NG가 발생했을 시 Algorithm Pass를 하면 비어있는 Result를 채워 준다
+                if (false == _InspectionResult && true == InspectionPassFlag)
+                {
+                    AlgoResultParameter _AlgoResultParam = new AlgoResultParameter();
+                    AlgoResultParamList.Add(_AlgoResultParam);
+                    continue;
+                }
+
+                //Area 단위로 Benchmark가 있는 경우 Offset 값 계산. (각 Area의 첫번째 알고리즘의 Offset 값이 적용 됨)
+                if (_InspAreaParam.AreaBenchMark > 0 && AreaResultParamList.Count > _BenchMark)
+                {
+                    AreaBenchMarkOffsetX = AreaResultParamList[_BenchMark].OffsetX;
+                    AreaBenchMarkOffsetY = AreaResultParamList[_BenchMark].OffsetY;
+                }
+
+                //Algorithm 단위로 검사. Return은 Algorithm 단위의 결과
+                double _StartX = _InspAreaParam.AreaRegionCenterX - (_InspAreaParam.AreaRegionWidth / 2) + AreaBenchMarkOffsetX;
+                double _StartY = _InspAreaParam.AreaRegionCenterY - (_InspAreaParam.AreaRegionHeight / 2) + AreaBenchMarkOffsetY;
+                double _Width = _InspAreaParam.AreaRegionWidth;
+                double _Height = _InspAreaParam.AreaRegionHeight;
+
+                _InspectionResult = AlgorithmStepInspection(_InspAreaParam.InspAlgoParam[iLoopCount], _StartX, _StartY, _Width, _Height, _InspAreaParam.NgAreaNumber);
+
+                //각 Area의 첫번째 알고리즘의 Offset 값이 Area 검사 Offset에 적용 됨
+                if (iLoopCount == 0)
+                {
+                    AreaResultParameter _AreaResParam = new AreaResultParameter();
+                    int _Index = AlgoResultParamList.Count - 1;
+                    if (AlgoResultParamList.Count < _Index)
+                    {
+                        _AreaResParam.OffsetX = AlgoResultParamList[_Index].OffsetX;
+                        _AreaResParam.OffsetY = AlgoResultParamList[_Index].OffsetY;
+                        AreaResultParamList.Add(_AreaResParam);
+                    }
+
+                    else
+                    {
+                        _AreaResParam.OffsetX = 0;
+                        _AreaResParam.OffsetY = 0;
+                        AreaResultParamList.Add(_AreaResParam);
+                    }
+                }
+            }
+         }
+
+        #region Algorithm 별 Inspection Step
+        private bool AlgorithmStepInspection(InspectionAlgorithmParameter _InspAlgoParam, double _AreaStartX, double _AreaStartY, double _AreaWidth, double _AreaHeight, int _NgAreaNumber)
         {
             bool _Result = true;
 
+            if (false == _InspAlgoParam.AlgoEnable) return true;
+            double _BenchMarkOffsetX = 0, _BenchMarkOffsetY = 0;
+
+            #region Buffer Area Calculate
+            int _BenchMark = AreaAlgoCount + (_InspAlgoParam.AlgoBenchMark - 1);
+            if (_InspAlgoParam.AlgoBenchMark > 0 && AlgoResultParamList.Count > _BenchMark)
+            {
+                if (AlgoResultParamList[_BenchMark].ResultParam != null)
+                {
+                    _BenchMarkOffsetX = AlgoResultParamList[_BenchMark].OffsetX - AreaBenchMarkOffsetX;
+                    _BenchMarkOffsetY = AlgoResultParamList[_BenchMark].OffsetY - AreaBenchMarkOffsetY;
+                }
+            }
+
+            double _CenterX = _InspAlgoParam.AlgoRegionCenterX + _BenchMarkOffsetX;
+            double _CenterY = _InspAlgoParam .AlgoRegionCenterY + _BenchMarkOffsetY;
+            double _Width = _InspAlgoParam.AlgoRegionWidth;
+            double _Height = _InspAlgoParam.AlgoRegionHeight;
+            CogRectangle _InspRegion = new CogRectangle();
+            _InspRegion.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
+            #endregion Buffer Area Calculate
+
+            eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
+            if (eAlgoType.C_PATTERN == _AlgoType)           _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB == _AlgoType)         _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+
             return _Result;
         }
+
+        private bool CogPatternAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+
+            return true;
+        }
+
+        private bool CogBlobReferenceAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            CogBlobReferenceAlgo    _CogBlobReferAlgo = (CogBlobReferenceAlgo)_Algorithm;
+            CogBlobReferenceResult  _CogBlobReferResult = new CogBlobReferenceResult();
+
+            bool _Result = InspBlobReferProc.Run(OriginImage, _InspRegion, _CogBlobReferAlgo, ref _CogBlobReferResult, _NgAreaNumber);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_BLOB_REFER, _CogBlobReferResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogBlobReferResult.IsGood;
+        }
+
+        private bool CogBlobAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+
+            return true;
+        }
+
+        private bool CogLeadAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+
+            return true;
+        }
+
+        private bool CogNeedleCircleFindAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+
+            return true;
+        }
+        #endregion Algorithm 별 Inspection Step
+
+        #region Algorithm 별 Display
+        private bool InspectionResultDsiplay()
+        {
+            bool _IsLastGood = true, _IsGood = false;
+
+            for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
+            {
+                eAlgoType _AlgoType = (eAlgoType)AlgoResultParamList[iLoopCount].ResultAlgoType;
+                if (eAlgoType.C_PATTERN == _AlgoType)           _IsGood = DisplayResultPatternMatching(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _IsGood = DisplayResultBlobReference(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount); 
+                else if (eAlgoType.C_BLOB == _AlgoType)         _IsGood = DisplayResultBlob(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_LEAD == _AlgoType)         _IsGood = DisplayResultLeadMeasure(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _IsGood = DisplayResultNeedleFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+
+                if (true == _IsLastGood) _IsLastGood = _IsGood;
+            }
+            DisplayLastResultMessage(_IsLastGood);
+
+            return _IsLastGood;
+        }
+
+        public void DisplayClear(bool _StaticClear, bool _InteractiveClear)
+        {
+            //DisplayClear(_StaticClear, _InteractiveClear);
+            kpCogDisplayMain.ClearDisplay(_StaticClear, _InteractiveClear);
+        }
+
+        private bool DisplayResultPatternMatching(Object _ResultParam, int _Index)
+        {
+            bool _IsGood = true;
+
+            return _IsGood;
+        }
+
+        private bool DisplayResultBlobReference(Object _ResultParam, int _Index)
+        {
+            bool _IsGood = false;
+            CogBlobReferenceResult _BlobReferResult = (CogBlobReferenceResult)_ResultParam;
+
+            CogRectangle _Region = new CogRectangle();
+            CogPointMarker _Point = new CogPointMarker();
+            if (_BlobReferResult.BlobCount > 0)
+            {
+                for (int iLoopCount = 0; iLoopCount < _BlobReferResult.BlobCount; ++iLoopCount)
+                {
+                    _IsGood = _BlobReferResult.IsGood;
+
+                    string _DrawName = String.Format("BlobReference_{0}_{1}", _Index, iLoopCount);
+                    _Region.SetCenterWidthHeight(_BlobReferResult.BlobCenterX[iLoopCount], _BlobReferResult.BlobCenterY[iLoopCount], _BlobReferResult.Width[iLoopCount], _BlobReferResult.Height[iLoopCount]);
+                    _Point.SetCenterRotationSize(_BlobReferResult.OriginX[iLoopCount], _BlobReferResult.OriginY[iLoopCount], 0, 10);
+                    ResultDisplay(_Region, _Point, _DrawName, _IsGood);
+
+                    double _WidthSize = _BlobReferResult.Width[iLoopCount] * ResolutionX;
+                    double _HeightSize = _BlobReferResult.Height[iLoopCount] * ResolutionY;
+                    string _RstName = String.Format("BlobResult_{0}_{1}", _Index, iLoopCount);
+                    string _Message = String.Format("W : {0:F3}, H : {1:F3}", _WidthSize, _HeightSize);
+                    ResultDisplayMessage(_BlobReferResult.BlobMinX[iLoopCount], _BlobReferResult.BlobMaxY[iLoopCount] + 4, _Message, _IsGood);
+                }
+            }
+
+            else
+            {
+                _IsGood = _BlobReferResult.IsGood;
+
+                string _DrawName = String.Format("BlobReference_{0}_{1}", _Index, 0);
+                _Region.SetCenterWidthHeight(_BlobReferResult.BlobCenterX[0], _BlobReferResult.BlobCenterY[0], _BlobReferResult.Width[0], _BlobReferResult.Height[0]);
+                _Point.SetCenterRotationSize(_BlobReferResult.OriginX[0], _BlobReferResult.OriginY[0], 0, 10);
+                ResultDisplay(_Region, _Point, _DrawName, _IsGood);
+                
+                string _Message = String.Format("BlobReference_{0} NG", _Index);
+                ResultDisplayMessage(_BlobReferResult.BlobMinX[0], _BlobReferResult.BlobMaxY[0] + 4, _Message, _IsGood);
+            }
+
+            return _IsGood;
+        }
+
+        private bool DisplayResultBlob(Object _ResultParam, int _Index)
+        {
+            bool _IsGood = true;
+
+            return _IsGood;
+        }
+
+        private bool DisplayResultLeadMeasure(Object _ResultParam, int _Index)
+        {
+            bool _IsGood = true;
+
+            return _IsGood;
+        }
+
+        private bool DisplayResultNeedleFind(Object _ResultParam, int _Index)
+        {
+            bool _IsGood = true;
+
+            return _IsGood;
+        }
+        #endregion Algorithm 별 Display
+
+        #region Display Result function
+        public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood)
+        {
+            //CogRectangle _Rect = new CogRectangle();
+            //_Rect.SetCenterWidthHeight(_PositionX, _PositionY, _Width, _Height);
+            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
+            else                    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Red);
+
+            if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
+            else                 kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+        }
+
+        public void ResultDisplayMessage(double _StartX, double _StartY, string _Message, bool _IsGood = true)
+        {
+            if (true == _IsGood)    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Green, 8);
+            else                    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Red, 8);
+        }
+
+        private void DisplayLastResultMessage(bool _IsGood)
+        {
+            if (_IsGood)    kpCogDisplayMain.DrawText("Result : Good", 50, 50, CogColorConstants.Green);
+            else            kpCogDisplayMain.DrawText("Result : NG", 50, 50, CogColorConstants.Red);
+        }
+        #endregion
+
+        private bool InspectionDataSend()
+        {
+            bool _Result = true;
+
+            InspectionWindowEvent(eIWCMD.SEND_DATA);
+
+            return _Result;
+        }
+        #endregion Inspection Process
+
+        #region Thread Funtion
+        private void ThreadInspectionProcessFunction()
+        {
+            try
+            {
+                while (false == IsThreadInspectionProcessExit)
+                {
+                    if (true == IsThreadInspectionProcessTrigger)
+                    {
+                        IsThreadInspectionProcessTrigger = false;
+                        Inspection();
+                    }
+                    Thread.Sleep(10);
+                }
+            }
+
+            catch
+            {
+
+            }
+        }
+
+        private void ThreadLiveCheckFunction()
+        {
+            try
+            {
+                while (false == IsThreadLiveCheckExit)
+                {
+                    Thread.Sleep(50);
+                    CheckInspectionProcessThreadAlive();
+                }
+            }
+
+            catch
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadLiveCheckFunction Exception", ID + 1));
+
+            }
+        }
+
+        private void CheckInspectionProcessThreadAlive()
+        {
+            try
+            {
+                if (ThreadLiveCheck == null) return;
+                if (ThreadLiveCheck.IsAlive == false)
+                {
+                    ThreadInspectionProcess = null;
+                    ThreadInspectionProcess = new Thread(ThreadInspectionProcessFunction);
+                    IsThreadInspectionProcessTrigger = false;
+                    ThreadInspectionProcess.Start();
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.WARN, String.Format("ISM {0} - ThreadInspectionProcess Re-Start!!", ID + 1));
+                }
+            }
+
+            catch
+            {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - CheckInspectionProcessThreadAlive Exception", ID + 1));
+            }
+        }
+        #endregion Thread Funtion
     }
 }

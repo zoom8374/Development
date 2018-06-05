@@ -12,6 +12,7 @@ using InspectionSystemManager;
 using ParameterManager;
 using LogMessageManager;
 using LoadingManager;
+using DIOControlManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -21,6 +22,7 @@ namespace KPVisionInspectionFramework
         private CInspectionSystemManager[]  InspSysManager;
         private CLogManager                 LogWnd;
         private MainResultWindow            ResultWnd;
+        private DIOControlWindow            DIOWnd;
 
         private int ISMModuleCount = 1;
 
@@ -71,6 +73,11 @@ namespace KPVisionInspectionFramework
             ResultWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
+
+
+            DIOWnd = new DIOControlWindow();
+            DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
+            DIOWnd.Initialize();
             #endregion SubWindow 생성 및 Event 등록
 
             #region InspSysManager Initialize
@@ -200,7 +207,17 @@ namespace KPVisionInspectionFramework
 
         private void rbDIO_Click(object sender, EventArgs e)
         {
+            if (false == DIOWnd.IsShowWindow)
+            {
+                DIOWnd.ShowDIOWindow();
+            }
 
+            else
+            {
+                DIOWnd.TopMost = true;
+            }
+
+            DIOWnd.TopMost = false;
         }
 
         private void rbRecipe_Click(object sender, EventArgs e)
@@ -251,6 +268,7 @@ namespace KPVisionInspectionFramework
             {
                 case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value));     break;
                 case eISMCMD.TEACHING_SAVE:     TeachingParameterSave(Convert.ToInt32(_Value));     break;
+                case eISMCMD.SEND_DATA:         SendResultData(_Value);                             break;
             }
         }
 
@@ -284,13 +302,27 @@ namespace KPVisionInspectionFramework
         }
         #endregion Event : Inspection System Manager Event & Function
 
+        #region Event : I/O Event & Function
+        private void InputChangeEventFunction(short _BitNum, bool _Signal)
+        {
+            if ((short)DIOMAP.IN_TRG1 == _BitNum) EventInspectionTriggerOn(_Signal);
+        }
+        #endregion Event : I/O Event & Function
+
         #region Main Process
         private void EventInspectionTriggerOn(object _Value)
         {
-            int _ID = Convert.ToInt32(_Value);
+            if (false == Convert.ToBoolean(_Value)) return;
+            //int _ID = Convert.ToInt32(_Value);
+            int _ID = 2;
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
 
             InspSysManager[_ID].TriggerOn();
+        }
+
+        private void SendResultData(object _Result)
+        {
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
         }
         #endregion Main Process
     }

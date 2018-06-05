@@ -19,3 +19,10 @@ D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Rel
 D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.csproj.GenerateResource.Cache
 D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.exe
 D:\Program SW\CIPOS Lead Inspection3\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\ParameterManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.Core.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Release\DIOControlManager.DIOControlWindow.resources

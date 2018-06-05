@@ -38,6 +38,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\Cognex\VisionPro\ReferencedAssemblies\Cognex.VisionPro.Blob.dll</HintPath>
     </Reference>
+    <Reference Include="Cognex.VisionPro.Caliper, Version=53.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.Controls, Version=53.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Cognex\VisionPro\ReferencedAssemblies\Cognex.VisionPro.Controls.dll</HintPath>
@@ -69,8 +70,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\CCogBlob.cs" />
+    <Compile Include="Algorithm\ucCogNeedleCircleFind.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogNeedleCircleFind.Designer.cs">
+      <DependentUpon>ucCogNeedleCircleFind.cs</DependentUpon>
+    </Compile>
     <Compile Include="CInspectionSystemManager.cs" />
+    <Compile Include="Algorithm\InspectionClass\InspectionBlobReference.cs" />
+    <Compile Include="Algorithm\InspectionClass\InspectionBlob.cs" />
+    <Compile Include="Algorithm\InspectionClass\InspectionNeedleCircleFind.cs" />
     <Compile Include="InspSysManagerWindow\InspectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogBlobReference.resx">
       <DependentUpon>ucCogBlobReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogNeedleCircleFind.resx">
+      <DependentUpon>ucCogNeedleCircleFind.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogPattern.resx">
       <DependentUpon>ucCogPattern.cs</DependentUpon>

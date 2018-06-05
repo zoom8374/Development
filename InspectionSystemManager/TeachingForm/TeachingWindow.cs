@@ -25,11 +25,15 @@ namespace InspectionSystemManager
         private double InspectionAreaWidth;
         private double InspectionAreaHeight;
 
-        private ucCogPattern        ucCogPatternWnd;
-        private ucCogBlobReference  ucCogBlobReferWnd;
-        private ucCogBlob           ucCogBlobWnd;
+        //검사 Algorithm Class
+        private InspectionBlobReference     InspBlobReferProcess;
+        private InspectionNeedleCircleFind  InspNeedleCircleFindProcess;
 
-        private CCogBlob            CogBlobProcess;
+        //검사 Algorithm Teaching UI
+        private ucCogPattern            ucCogPatternWnd;
+        private ucCogBlobReference      ucCogBlobReferWnd;
+        private ucCogBlob               ucCogBlobWnd;
+        private ucCogNeedleCircleFind   ucCogNeedleFindWnd;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -73,8 +77,10 @@ namespace InspectionSystemManager
             ucCogPatternWnd = new ucCogPattern();
             ucCogBlobWnd = new ucCogBlob();
             ucCogBlobReferWnd = new ucCogBlobReference();
+            ucCogNeedleFindWnd = new ucCogNeedleCircleFind();
 
-            CogBlobProcess = new CCogBlob();
+            InspBlobReferProcess = new InspectionBlobReference();
+            InspNeedleCircleFindProcess = new InspectionNeedleCircleFind();
 
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
@@ -101,8 +107,10 @@ namespace InspectionSystemManager
             ucCogPatternWnd.Dispose();
             ucCogBlobWnd.Dispose();
             ucCogBlobReferWnd.Dispose();
+            ucCogNeedleFindWnd.Dispose();
 
-            CogBlobProcess.DeInitialize();
+            InspBlobReferProcess.DeInitialize();
+            InspNeedleCircleFindProcess.DeInitialize();
         }
 
         private void InitializeContextMenu()
@@ -113,6 +121,7 @@ namespace InspectionSystemManager
             ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
+            ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
         }
 
         private void SetInspectionParameter(InspectionParameter _InspParam = null)
@@ -158,6 +167,14 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_BLOB);
+        }
+
+        private void NeedleCircleFindAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_NEEDLE_FIND);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_NEEDLE_FIND);
         }
         #endregion Conext Menu Function
 
@@ -401,10 +418,10 @@ namespace InspectionSystemManager
         {
             switch (CurrentAlgoType)
             {
-                case eAlgoType.C_PATTERN:       ucCogPatternWnd.SaveAlgoRecipe();   break;
-                case eAlgoType.C_BLOB_REFER:    ucCogBlobReferWnd.SaveAlgoRecipe(); break;
-                case eAlgoType.C_BLOB:          ucCogBlobWnd.SaveAlgoRecipe();      break;
-                
+                case eAlgoType.C_PATTERN:       ucCogPatternWnd.SaveAlgoRecipe();    break;
+                case eAlgoType.C_BLOB_REFER:    ucCogBlobReferWnd.SaveAlgoRecipe();  break;
+                case eAlgoType.C_BLOB:          ucCogBlobWnd.SaveAlgoRecipe();       break;
+                case eAlgoType.C_NEEDLE_FIND:   ucCogNeedleFindWnd.SaveAlgoRecipe(); break;
             }
         }
         #endregion Button Event
@@ -488,6 +505,7 @@ namespace InspectionSystemManager
                 if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)         _Name = "Search a reference";      //"Pattern - Reference"
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER) _Name = "Search a body reference"; //"Blob - Reference"
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)       _Name = "Defect detection";        //"Blob - Defect"
+                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_NEEDLE_FIND)_Name = "Search a needle circle";
 
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
@@ -536,6 +554,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe();    break;
                 case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
+                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SaveAlgoRecipe(); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

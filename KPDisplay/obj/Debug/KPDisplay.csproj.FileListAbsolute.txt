@@ -1659,3 +1659,5 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Debug\KPDisp
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Debug\KPDisplay.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Debug\KPDisplay.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\Debug\KPDisplay.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Debug\Cognex.VisionPro.Caliper.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\Debug\Cognex.VisionPro.Caliper.xml

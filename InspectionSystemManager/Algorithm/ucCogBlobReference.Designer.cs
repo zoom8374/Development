@@ -83,12 +83,27 @@
             this.rbBenchMarkTopCenter = new System.Windows.Forms.RadioButton();
             this.rbBenchMarkTopRight = new System.Windows.Forms.RadioButton();
             this.rbBenchMarkTopLeft = new System.Windows.Forms.RadioButton();
+            this.gradientLabel7 = new CustomControl.GradientLabel();
+            this.ckBodyArea = new System.Windows.Forms.CheckBox();
+            this.ckBodyWidth = new System.Windows.Forms.CheckBox();
+            this.gradientLabel8 = new CustomControl.GradientLabel();
+            this.ckBodyHeight = new System.Windows.Forms.CheckBox();
+            this.gradientLabel9 = new CustomControl.GradientLabel();
+            this.numUpDownBodyArea = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel10 = new CustomControl.GradientLabel();
+            this.gradientLabel11 = new CustomControl.GradientLabel();
+            this.numUpDownBodyWidth = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel12 = new CustomControl.GradientLabel();
+            this.numUpDownBodyHeight = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyArea)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -101,7 +116,7 @@
             this.labelTitle.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.labelTitle.Location = new System.Drawing.Point(2, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(950, 30);
+            this.labelTitle.Size = new System.Drawing.Size(818, 30);
             this.labelTitle.TabIndex = 11;
             this.labelTitle.Text = " Body Reference Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -132,15 +147,27 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.numUpDownBodyHeight);
+            this.groupBox2.Controls.Add(this.numUpDownBodyWidth);
+            this.groupBox2.Controls.Add(this.numUpDownBodyArea);
+            this.groupBox2.Controls.Add(this.ckBodyHeight);
+            this.groupBox2.Controls.Add(this.gradientLabel9);
+            this.groupBox2.Controls.Add(this.ckBodyWidth);
+            this.groupBox2.Controls.Add(this.gradientLabel8);
+            this.groupBox2.Controls.Add(this.ckBodyArea);
             this.groupBox2.Controls.Add(this.textBoxBodyHeight);
             this.groupBox2.Controls.Add(this.textBoxBodyWidth);
             this.groupBox2.Controls.Add(this.textBoxBodyArea);
             this.groupBox2.Controls.Add(this.gradientLabel5);
             this.groupBox2.Controls.Add(this.gradientLabel4);
+            this.groupBox2.Controls.Add(this.gradientLabel7);
             this.groupBox2.Controls.Add(this.gradientLabel3);
             this.groupBox2.Controls.Add(this.label19);
+            this.groupBox2.Controls.Add(this.gradientLabel12);
             this.groupBox2.Controls.Add(this.label20);
+            this.groupBox2.Controls.Add(this.gradientLabel11);
             this.groupBox2.Controls.Add(this.label21);
+            this.groupBox2.Controls.Add(this.gradientLabel10);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.label16);
@@ -169,30 +196,30 @@
             // 
             // textBoxBodyHeight
             // 
-            this.textBoxBodyHeight.Location = new System.Drawing.Point(124, 174);
+            this.textBoxBodyHeight.Location = new System.Drawing.Point(614, 123);
             this.textBoxBodyHeight.Name = "textBoxBodyHeight";
             this.textBoxBodyHeight.ReadOnly = true;
-            this.textBoxBodyHeight.Size = new System.Drawing.Size(131, 21);
+            this.textBoxBodyHeight.Size = new System.Drawing.Size(116, 21);
             this.textBoxBodyHeight.TabIndex = 54;
             this.textBoxBodyHeight.Text = "0";
             this.textBoxBodyHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxBodyWidth
             // 
-            this.textBoxBodyWidth.Location = new System.Drawing.Point(124, 145);
+            this.textBoxBodyWidth.Location = new System.Drawing.Point(370, 123);
             this.textBoxBodyWidth.Name = "textBoxBodyWidth";
             this.textBoxBodyWidth.ReadOnly = true;
-            this.textBoxBodyWidth.Size = new System.Drawing.Size(131, 21);
+            this.textBoxBodyWidth.Size = new System.Drawing.Size(116, 21);
             this.textBoxBodyWidth.TabIndex = 53;
             this.textBoxBodyWidth.Text = "0";
             this.textBoxBodyWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxBodyArea
             // 
-            this.textBoxBodyArea.Location = new System.Drawing.Point(124, 117);
+            this.textBoxBodyArea.Location = new System.Drawing.Point(124, 123);
             this.textBoxBodyArea.Name = "textBoxBodyArea";
             this.textBoxBodyArea.ReadOnly = true;
-            this.textBoxBodyArea.Size = new System.Drawing.Size(131, 21);
+            this.textBoxBodyArea.Size = new System.Drawing.Size(116, 21);
             this.textBoxBodyArea.TabIndex = 52;
             this.textBoxBodyArea.Text = "0";
             this.textBoxBodyArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -206,7 +233,7 @@
             this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel5.ForeColor = System.Drawing.Color.White;
             this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel5.Location = new System.Drawing.Point(11, 171);
+            this.gradientLabel5.Location = new System.Drawing.Point(501, 121);
             this.gradientLabel5.Name = "gradientLabel5";
             this.gradientLabel5.Size = new System.Drawing.Size(108, 26);
             this.gradientLabel5.TabIndex = 51;
@@ -222,7 +249,7 @@
             this.gradientLabel4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel4.ForeColor = System.Drawing.Color.White;
             this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel4.Location = new System.Drawing.Point(11, 143);
+            this.gradientLabel4.Location = new System.Drawing.Point(257, 121);
             this.gradientLabel4.Name = "gradientLabel4";
             this.gradientLabel4.Size = new System.Drawing.Size(108, 26);
             this.gradientLabel4.TabIndex = 50;
@@ -238,7 +265,7 @@
             this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel3.ForeColor = System.Drawing.Color.White;
             this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel3.Location = new System.Drawing.Point(11, 115);
+            this.gradientLabel3.Location = new System.Drawing.Point(11, 121);
             this.gradientLabel3.Name = "gradientLabel3";
             this.gradientLabel3.Size = new System.Drawing.Size(108, 26);
             this.gradientLabel3.TabIndex = 50;
@@ -852,6 +879,153 @@
             this.rbBenchMarkTopLeft.UseVisualStyleBackColor = true;
             this.rbBenchMarkTopLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
             // 
+            // gradientLabel7
+            // 
+            this.gradientLabel7.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel7.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel7.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel7.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel7.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel7.Location = new System.Drawing.Point(11, 151);
+            this.gradientLabel7.Name = "gradientLabel7";
+            this.gradientLabel7.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel7.TabIndex = 50;
+            this.gradientLabel7.Text = "Body Area";
+            this.gradientLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ckBodyArea
+            // 
+            this.ckBodyArea.AutoSize = true;
+            this.ckBodyArea.BackColor = System.Drawing.Color.SteelBlue;
+            this.ckBodyArea.Location = new System.Drawing.Point(16, 156);
+            this.ckBodyArea.Name = "ckBodyArea";
+            this.ckBodyArea.Size = new System.Drawing.Size(15, 14);
+            this.ckBodyArea.TabIndex = 0;
+            this.ckBodyArea.UseVisualStyleBackColor = false;
+            this.ckBodyArea.CheckedChanged += new System.EventHandler(this.ckBodyArea_CheckedChanged);
+            // 
+            // ckBodyWidth
+            // 
+            this.ckBodyWidth.AutoSize = true;
+            this.ckBodyWidth.BackColor = System.Drawing.Color.SteelBlue;
+            this.ckBodyWidth.Location = new System.Drawing.Point(262, 157);
+            this.ckBodyWidth.Name = "ckBodyWidth";
+            this.ckBodyWidth.Size = new System.Drawing.Size(15, 14);
+            this.ckBodyWidth.TabIndex = 55;
+            this.ckBodyWidth.UseVisualStyleBackColor = false;
+            this.ckBodyWidth.CheckedChanged += new System.EventHandler(this.ckBodyWidth_CheckedChanged);
+            // 
+            // gradientLabel8
+            // 
+            this.gradientLabel8.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel8.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel8.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel8.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel8.Location = new System.Drawing.Point(257, 152);
+            this.gradientLabel8.Name = "gradientLabel8";
+            this.gradientLabel8.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel8.TabIndex = 56;
+            this.gradientLabel8.Text = "Body Width    ";
+            this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ckBodyHeight
+            // 
+            this.ckBodyHeight.AutoSize = true;
+            this.ckBodyHeight.BackColor = System.Drawing.Color.SteelBlue;
+            this.ckBodyHeight.Location = new System.Drawing.Point(506, 156);
+            this.ckBodyHeight.Name = "ckBodyHeight";
+            this.ckBodyHeight.Size = new System.Drawing.Size(15, 14);
+            this.ckBodyHeight.TabIndex = 57;
+            this.ckBodyHeight.UseVisualStyleBackColor = false;
+            this.ckBodyHeight.CheckedChanged += new System.EventHandler(this.ckBodyHeight_CheckedChanged);
+            // 
+            // gradientLabel9
+            // 
+            this.gradientLabel9.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel9.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel9.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel9.Location = new System.Drawing.Point(501, 151);
+            this.gradientLabel9.Name = "gradientLabel9";
+            this.gradientLabel9.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel9.TabIndex = 58;
+            this.gradientLabel9.Text = "Body Height    ";
+            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // numUpDownBodyArea
+            // 
+            this.numUpDownBodyArea.Location = new System.Drawing.Point(124, 154);
+            this.numUpDownBodyArea.Name = "numUpDownBodyArea";
+            this.numUpDownBodyArea.Size = new System.Drawing.Size(116, 21);
+            this.numUpDownBodyArea.TabIndex = 59;
+            this.numUpDownBodyArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel10
+            // 
+            this.gradientLabel10.AutoSize = true;
+            this.gradientLabel10.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel10.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel10.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel10.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel10.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel10.Location = new System.Drawing.Point(239, 157);
+            this.gradientLabel10.Name = "gradientLabel10";
+            this.gradientLabel10.Size = new System.Drawing.Size(18, 14);
+            this.gradientLabel10.TabIndex = 46;
+            this.gradientLabel10.Text = "%";
+            // 
+            // gradientLabel11
+            // 
+            this.gradientLabel11.AutoSize = true;
+            this.gradientLabel11.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel11.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel11.Location = new System.Drawing.Point(485, 157);
+            this.gradientLabel11.Name = "gradientLabel11";
+            this.gradientLabel11.Size = new System.Drawing.Size(18, 14);
+            this.gradientLabel11.TabIndex = 46;
+            this.gradientLabel11.Text = "%";
+            // 
+            // numUpDownBodyWidth
+            // 
+            this.numUpDownBodyWidth.Location = new System.Drawing.Point(370, 154);
+            this.numUpDownBodyWidth.Name = "numUpDownBodyWidth";
+            this.numUpDownBodyWidth.Size = new System.Drawing.Size(115, 21);
+            this.numUpDownBodyWidth.TabIndex = 59;
+            this.numUpDownBodyWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel12
+            // 
+            this.gradientLabel12.AutoSize = true;
+            this.gradientLabel12.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel12.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel12.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel12.Location = new System.Drawing.Point(730, 158);
+            this.gradientLabel12.Name = "gradientLabel12";
+            this.gradientLabel12.Size = new System.Drawing.Size(18, 14);
+            this.gradientLabel12.TabIndex = 46;
+            this.gradientLabel12.Text = "%";
+            // 
+            // numUpDownBodyHeight
+            // 
+            this.numUpDownBodyHeight.Location = new System.Drawing.Point(615, 154);
+            this.numUpDownBodyHeight.Name = "numUpDownBodyHeight";
+            this.numUpDownBodyHeight.Size = new System.Drawing.Size(115, 21);
+            this.numUpDownBodyHeight.TabIndex = 59;
+            this.numUpDownBodyHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // ucCogBlobReference
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -869,6 +1043,9 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyArea)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyHeight)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -930,5 +1107,17 @@
         private System.Windows.Forms.RadioButton rbBenchMarkTopCenter;
         private System.Windows.Forms.RadioButton rbBenchMarkTopRight;
         private System.Windows.Forms.RadioButton rbBenchMarkTopLeft;
+        private System.Windows.Forms.NumericUpDown numUpDownBodyHeight;
+        private System.Windows.Forms.NumericUpDown numUpDownBodyWidth;
+        private System.Windows.Forms.NumericUpDown numUpDownBodyArea;
+        private System.Windows.Forms.CheckBox ckBodyHeight;
+        private CustomControl.GradientLabel gradientLabel9;
+        private System.Windows.Forms.CheckBox ckBodyWidth;
+        private CustomControl.GradientLabel gradientLabel8;
+        private System.Windows.Forms.CheckBox ckBodyArea;
+        private CustomControl.GradientLabel gradientLabel7;
+        private CustomControl.GradientLabel gradientLabel12;
+        private CustomControl.GradientLabel gradientLabel11;
+        private CustomControl.GradientLabel gradientLabel10;
     }
 }

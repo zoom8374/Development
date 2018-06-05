@@ -28,12 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnTrigger = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnTrigger
+            // 
+            this.btnTrigger.Location = new System.Drawing.Point(12, 273);
+            this.btnTrigger.Name = "btnTrigger";
+            this.btnTrigger.Size = new System.Drawing.Size(75, 23);
+            this.btnTrigger.TabIndex = 0;
+            this.btnTrigger.Text = "Trigger";
+            this.btnTrigger.UseVisualStyleBackColor = true;
+            this.btnTrigger.Click += new System.EventHandler(this.btnTrigger_Click);
+            // 
+            // DIOControlWindow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(551, 308);
+            this.Controls.Add(this.btnTrigger);
+            this.Name = "DIOControlWindow";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnTrigger;
     }
 }
 

@@ -115,3 +115,11 @@ D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\Inspect
 D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
 D:\Program SW\CIPOS Lead Inspection3\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.TeachingWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Blob.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.Blob.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogBlob.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogBlobReference.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.ucCogPattern.resources

@@ -34,3 +34,4 @@ D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspect
 D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.csproj.GenerateResource.Cache
 D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
 D:\Program SW\CIPOS Lead Inspection3\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.MainResultWindow.resources

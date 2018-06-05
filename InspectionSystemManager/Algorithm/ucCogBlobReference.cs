@@ -14,14 +14,13 @@ namespace InspectionSystemManager
     public partial class ucCogBlobReference : UserControl
     {
         private CogBlobReferenceAlgo CogBlobReferAlgoRcp = new CogBlobReferenceAlgo();
-        private TeachParam.BlobReferTeachReturnParam TeachingReturnParam = new TeachParam.BlobReferTeachReturnParam();
 
         private double OriginX = 0;
         private double OriginY = 0;
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
 
-        public delegate void ApplyBlobReferValueHandler(TeachParam.BlobReferTeachParam _ApplyParam, ref TeachParam.BlobReferTeachReturnParam _ReturnParam);
+        public delegate void ApplyBlobReferValueHandler(CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult);
         public event ApplyBlobReferValueHandler ApplyBlobReferValueEvent;
 
         #region Initialize & DeInitialize
@@ -75,6 +74,21 @@ namespace InspectionSystemManager
             graLabelThresholdValue.Text = hScrollBarThreshold.Value.ToString();
             ApplySettingValue();
         }
+
+        private void ckBodyArea_CheckedChanged(object sender, EventArgs e)
+        {
+            numUpDownBodyArea.Enabled = ckBodyArea.Checked;
+        }
+
+        private void ckBodyWidth_CheckedChanged(object sender, EventArgs e)
+        {
+            numUpDownBodyWidth.Enabled = ckBodyWidth.Checked;
+        }
+
+        private void ckBodyHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            numUpDownBodyHeight.Enabled = ckBodyHeight.Checked;
+        }
         #endregion Control Event
 
         public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
@@ -94,7 +108,19 @@ namespace InspectionSystemManager
             textBoxHeightSizeMin.Text = CogBlobReferAlgoRcp.HeightMin.ToString();
             textBoxHeightSizeMax.Text = CogBlobReferAlgoRcp.HeightMax.ToString();
             textBoxBenchMarkPosition.Text = CogBlobReferAlgoRcp.BenchMarkPosition.ToString();
-
+            textBoxBodyArea.Text = CogBlobReferAlgoRcp.BodyArea.ToString("F2");
+            textBoxBodyWidth.Text = CogBlobReferAlgoRcp.BodyWidth.ToString("F2");
+            textBoxBodyHeight.Text = CogBlobReferAlgoRcp.BodyHeight.ToString("F2");
+            numUpDownBodyArea.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyAreaPermitPercent);
+            numUpDownBodyWidth.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyWidthPermitPercent);
+            numUpDownBodyHeight.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyHeightPermitPercent);
+            ckBodyArea.Checked = CogBlobReferAlgoRcp.UseBodyArea;
+            ckBodyWidth.Checked = CogBlobReferAlgoRcp.UseBodyWidth;
+            ckBodyHeight.Checked = CogBlobReferAlgoRcp.UseBodyHeight;
+            numUpDownBodyArea.Enabled = CogBlobReferAlgoRcp.UseBodyArea;
+            numUpDownBodyWidth.Enabled = CogBlobReferAlgoRcp.UseBodyWidth;
+            numUpDownBodyHeight.Enabled = CogBlobReferAlgoRcp.UseBodyHeight;
+            
             SetForegroundComboBox(CogBlobReferAlgoRcp.ForeGround);
             SetBenchMarkPositionComboBox(CogBlobReferAlgoRcp.BenchMarkPosition);
         }
@@ -110,8 +136,17 @@ namespace InspectionSystemManager
             CogBlobReferAlgoRcp.HeightMin = Convert.ToDouble(textBoxHeightSizeMin.Text);
             CogBlobReferAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
             CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
-            CogBlobReferAlgoRcp.OriginX = 0;
-            CogBlobReferAlgoRcp.OriginY = 0;
+            CogBlobReferAlgoRcp.BodyArea = Convert.ToDouble(textBoxBodyArea.Text);
+            CogBlobReferAlgoRcp.BodyWidth = Convert.ToDouble(textBoxBodyWidth.Text);
+            CogBlobReferAlgoRcp.BodyHeight = Convert.ToDouble(textBoxBodyHeight.Text);
+            CogBlobReferAlgoRcp.BodyAreaPermitPercent = Convert.ToDouble(numUpDownBodyArea.Value);
+            CogBlobReferAlgoRcp.BodyWidthPermitPercent = Convert.ToDouble(numUpDownBodyWidth.Value);
+            CogBlobReferAlgoRcp.BodyHeightPermitPercent = Convert.ToDouble(numUpDownBodyHeight.Value);
+            CogBlobReferAlgoRcp.UseBodyArea = ckBodyArea.Checked;
+            CogBlobReferAlgoRcp.UseBodyWidth = ckBodyWidth.Checked;
+            CogBlobReferAlgoRcp.UseBodyHeight = ckBodyHeight.Checked;
+            CogBlobReferAlgoRcp.OriginX = OriginX;
+            CogBlobReferAlgoRcp.OriginY = OriginY;
         }
 
         private void SetForegroundComboBox(int _RangeType)
@@ -153,29 +188,43 @@ namespace InspectionSystemManager
             }
         }
 
-        public void ApplySettingValue()
+        private void ApplySettingValue()
         {
-            TeachParam.BlobReferTeachParam _BlobReferTeachingValue = new TeachParam.BlobReferTeachParam();
-            _BlobReferTeachingValue.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
-            _BlobReferTeachingValue.BlobAreaMin = Convert.ToInt32(textBoxBlobAreaMin.Text);
-            _BlobReferTeachingValue.BlobAreaMax = Convert.ToInt32(textBoxBlobAreaMax.Text);
-            _BlobReferTeachingValue.BlobWidthMin = Convert.ToInt32(textBoxWidthSizeMin.Text);
-            _BlobReferTeachingValue.BlobWidthMax = Convert.ToInt32(textBoxWidthSizeMax.Text);
-            _BlobReferTeachingValue.BlobHeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
-            _BlobReferTeachingValue.BlobHeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
-            _BlobReferTeachingValue.Foreground = Convert.ToInt32(graLabelForeground.Text);
-            _BlobReferTeachingValue.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
+            CogBlobReferenceAlgo _CogBlobReferAlgoRcp = new CogBlobReferenceAlgo();
+            _CogBlobReferAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
+            _CogBlobReferAlgoRcp.BlobAreaMin = Convert.ToInt32(textBoxBlobAreaMin.Text);
+            _CogBlobReferAlgoRcp.BlobAreaMax = Convert.ToInt32(textBoxBlobAreaMax.Text);
+            _CogBlobReferAlgoRcp.WidthMin = Convert.ToInt32(textBoxWidthSizeMin.Text);
+            _CogBlobReferAlgoRcp.WidthMax = Convert.ToInt32(textBoxWidthSizeMax.Text);
+            _CogBlobReferAlgoRcp.HeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
+            _CogBlobReferAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
+            _CogBlobReferAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
+            _CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
 
-            ApplyBlobReferValueEvent(_BlobReferTeachingValue, ref TeachingReturnParam);
+            CogBlobReferenceResult _CogBlobReferResult = new CogBlobReferenceResult();
+            ApplyBlobReferValueEvent(_CogBlobReferAlgoRcp, ref _CogBlobReferResult);
 
-            double _MaxArea = TeachingReturnParam.Area.Max();
-            int _MaxIndex = Array.IndexOf(TeachingReturnParam.Area, _MaxArea);
-            textBoxBodyArea.Text    = TeachingReturnParam.Area[_MaxIndex].ToString("F2");
-            textBoxBodyWidth.Text   = TeachingReturnParam.Width[_MaxIndex].ToString("F2");
-            textBoxBodyHeight.Text  = TeachingReturnParam.Height[_MaxIndex].ToString("F2");
+            if (_CogBlobReferResult.BlobArea != null)
+            {
+                double _MaxArea = _CogBlobReferResult.BlobArea.Max();
+                int _MaxIndex = Array.IndexOf(_CogBlobReferResult.BlobArea, _MaxArea);
+                textBoxBodyArea.Text = _CogBlobReferResult.BlobArea[_MaxIndex].ToString("F2");
+                textBoxBodyWidth.Text = _CogBlobReferResult.Width[_MaxIndex].ToString("F2");
+                textBoxBodyHeight.Text = _CogBlobReferResult.Height[_MaxIndex].ToString("F2");
 
-            OriginX = TeachingReturnParam.OriginX[_MaxIndex];
-            OriginY = TeachingReturnParam.OriginY[_MaxIndex];
+                OriginX = _CogBlobReferResult.OriginX[_MaxIndex];
+                OriginY = _CogBlobReferResult.OriginY[_MaxIndex];
+            }
+
+            else
+            {
+                textBoxBodyArea.Text = "0";
+                textBoxBodyWidth.Text = "0";
+                textBoxBodyHeight.Text = "0";
+
+                OriginX = 0;
+                OriginY = 0;
+            }
         }
     }
 }

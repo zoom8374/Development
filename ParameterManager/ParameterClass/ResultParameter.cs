@@ -92,7 +92,16 @@ namespace ParameterManager
         public double[] BlobXMinYMax;
         public double[] BlobXMaxYMin;
         public double[] BlobArea;
+        public double[] OriginX;
+        public double[] OriginY;
         public CogCompositeShape[] ResultGraphic;
+    }
+
+    public class CogNeedleFindResult : Result
+    {
+        public double CenterX;
+        public double CenterY;
+        public double Radius;
     }
     #endregion Inspection Result Parameter
 

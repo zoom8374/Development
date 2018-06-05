@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 
 using Cognex.VisionPro;
+using Cognex.VisionPro.Caliper;
 using Cognex.VisionPro.Display;
 using System.Drawing.Imaging;
 using Cognex.VisionPro.ImageFile;
@@ -391,6 +392,27 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(ResGraphic, GroupName);
         }
 
+        public void DrawFindCircleCaliper(int _num = 10)
+        {
+            ICogRecord _Record;
+            CogCircularArc _Arc;
+            CogGraphicCollection _Region;
+            CogFindCircleTool _CircleCaliperTool = new CogFindCircleTool();
+            _CircleCaliperTool.InputImage = (CogImage8Grey)kCogDisplay.Image;
+
+            _CircleCaliperTool.RunParams.NumCalipers = _num;
+
+            _Record = _CircleCaliperTool.CreateCurrentRecord();
+            _Arc = (CogCircularArc)_Record.SubRecords["InputImage"].SubRecords["ExpectedShapeSegment"].Content;
+            _Region = (CogGraphicCollection)_Record.SubRecords["InputImage"].SubRecords["CaliperRegions"].Content;
+
+
+            kCogDisplay.InteractiveGraphics.Add(_Arc, "", false);
+            foreach (ICogGraphic _ICogGra in _Region)
+                kCogDisplay.InteractiveGraphics.Add((ICogGraphicInteractive)_ICogGra, "", false);
+            GC.Collect();
+        }
+
         public CogRectangleAffine GetStaticRectangleAffine()
         {
             CogRectangleAffine cogRectangleAffine = new CogRectangleAffine();
@@ -433,11 +455,10 @@ namespace KPDisplay
             return MousePoint;
         }
 
-        public void DrawText(string _Message, double _StartX, double _StartY, CogColorConstants _Color, int _FontSize = 12)
+        public void DrawText(string _Message, double _StartX, double _StartY, CogColorConstants _Color, int _FontSize = 9)
         {
-            System.Drawing.Font _Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            System.Drawing.Font _Font = new System.Drawing.Font("나눔바른고딕", _FontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
 
-            //cogDisplayScanImage.StaticGraphics.Clear();
             cogLabel.Color = _Color;
             cogLabel.Font = _Font;
             cogLabel.Alignment = Cognex.VisionPro.CogGraphicLabelAlignmentConstants.TopLeft;

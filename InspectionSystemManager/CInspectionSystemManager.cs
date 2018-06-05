@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Threading;
 
 using LogMessageManager;
 using ParameterManager;
@@ -14,12 +15,17 @@ namespace InspectionSystemManager
         private InspectionParameter InspParam = new InspectionParameter();
 
         private InspectionWindow InspWnd;
-        private string InspWndName;
+        private string           InspWndName;
+
+        private Thread ThreadInspection;
+        private bool IsThreadInspectionExit = false;
+        private bool IsThreadInspectionTrigger = false;
 
         public int ID = 0;
         public bool IsSimulationMode = false;
         public eProjectType ProjectType = 0;
         public eProjectItem ProjectItem = 0;
+        private string      CameraType;
 
         private Point WndLocation = new Point(0, 0);
 
@@ -34,6 +40,11 @@ namespace InspectionSystemManager
 
             InspWnd = new InspectionWindow();
             InspWndName = String.Format(" {0} Inspection Window", _SystemName);
+
+            ThreadInspection = new Thread(ThreadInspectionFunction);
+            IsThreadInspectionExit = false;
+            IsThreadInspectionTrigger = false;
+            ThreadInspection.Start();
         }
 
         public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParam)
@@ -140,14 +151,50 @@ namespace InspectionSystemManager
         }
         #endregion Parameter Management
 
+        #region Vision Management
+        private void ImageGrab()
+        {
+            ImageGrabSnap();
+        }
+
+        private void ImageGrabStop()
+        {
+
+        }
+
+        private void ImageGrabSnap()
+        {
+            //Camera 모듈 Check
+
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} ImageGrabSnap Complete", ID + 1));
+
+
+            InspWnd.IsThreadInspectionProcessTrigger = true;
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ISM{0} IsThreadInspectionProcessTrigger = true");
+        }
+
+        private void ImageGrabLive()
+        {
+
+        }
+
+        private void ImageGrabLiveStop()
+        {
+
+        }
+        #endregion Vision Management
+
         #region Event : Inspection Window Event & Function
         private void InspectionWindowEventFunction(eIWCMD _Command, object _Value)
         {
             switch (_Command)
             {
-                case eIWCMD.TEACHING:   Teaching(_Value);           break;
-                case eIWCMD.TEACH_OK:   TeachingComplete(_Value);   break;
-                case eIWCMD.TEACH_SAVE: TeachingSave(_Value);       break;
+                case eIWCMD.TEACHING:       Teaching(_Value);           break;
+                case eIWCMD.TEACH_OK:       TeachingComplete(_Value);   break;
+                case eIWCMD.TEACH_SAVE:     TeachingSave(_Value);       break;
+                case eIWCMD.ONESHOT_INSP:   OneShotInspection();        break;
+                case eIWCMD.SEND_DATA:      SendResultData(_Value);     break;
             }
         }
 
@@ -161,15 +208,60 @@ namespace InspectionSystemManager
             InspectionParameter _InspParam = (InspectionParameter)_Value;
             SetInspectionParameter(_InspParam, false);
         }
+
         private void TeachingSave(object _Value)
         {
             InspSysManagerEvent(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
+        }
+
+        private void OneShotInspection()
+        {
+            if ("Basler" == CameraType)
+            {
+                //Light ON
+                ImageGrab();
+                //Light OFF
+            }
+        }
+
+        private void SendResultData(object _Value)
+        {
+            InspSysManagerEvent(eISMCMD.SEND_DATA, _Value);
         }
         #endregion Event : Inspection Window Event
 
         public void TriggerOn()
         {
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Vision : ISM{0} Trigger ON!", ID + 1));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} Trigger ON!", ID + 1));
+
+            InspWnd.IsInspectionComplete = false;
+            IsThreadInspectionTrigger = true;
+        }
+
+        private void ThreadInspectionFunction()
+        {
+            try
+            {
+                while (false == IsThreadInspectionExit)
+                {
+                    if (true == IsThreadInspectionTrigger)
+                    {
+                        IsThreadInspectionTrigger = false;
+                        InspWnd.IsInspectionComplete = false;
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Vision : ISM{0} IsInspectionComplete false", ID + 1));
+
+                        if (!IsSimulationMode)  ImageGrabSnap();
+                        else                    InspWnd.IsThreadInspectionProcessTrigger = true;
+                    }
+
+                    Thread.Sleep(10);
+                }
+            }
+
+            catch
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, String.Format("Vision : ThreadInspectionFunction Exception!!"));
+            }
         }
     }
 }

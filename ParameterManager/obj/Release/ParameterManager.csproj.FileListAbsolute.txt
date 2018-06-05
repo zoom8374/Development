@@ -7,3 +7,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Relea
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.Core.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\Cognex.VisionPro.Core.xml
