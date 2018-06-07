@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Cognex.VisionPro;
+using Cognex.VisionPro.Caliper;
 
 using ParameterManager;
 
@@ -17,15 +18,41 @@ namespace InspectionSystemManager
         {
             ucCogBlobReferWnd.ApplyBlobReferValueEvent += new ucCogBlobReference.ApplyBlobReferValueHandler(ApplyBlobReferenceValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent += new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
+            ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent += new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
+            kpTeachDisplay.CogDisplayMouseUpEvent += new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
         }
 
         private void DeInitializeEvent()
         {
             ucCogBlobReferWnd.ApplyBlobReferValueEvent -= new ucCogBlobReference.ApplyBlobReferValueHandler(ApplyBlobReferenceValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent -= new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
+            ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent -= new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
+            kpTeachDisplay.CogDisplayMouseUpEvent -= new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
         }
         #endregion InitializeEvent & DeInitializeEvent
 
+
+        #region KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
+        private void TeachDisplayMouseUpEvent(CogFindCircleTool _CircleCaliperTool)
+        {
+            if (CurrentAlgoType != eAlgoType.C_NEEDLE_FIND) return;
+            if (CurrentTeachStep != eTeachStep.ALGO_SET)    return;
+
+            double _CenterX = 0, _CenterY = 0, _Radius = 0, _AngleStart = 0, _AngleSpan = 0;
+            _CircleCaliperTool.RunParams.ExpectedCircularArc.GetCenterRadiusAngleStartAngleSpan(out _CenterX, out _CenterY, out _Radius, out _AngleStart, out _AngleSpan);
+
+            int _CaliperNumber = 0;
+            double _CaliperSearchLength = 0, _CaliperProjectionLength = 0;
+            eSearchDirection _CaliperSearchDir = eSearchDirection.IN_WARD;
+            _CaliperNumber = _CircleCaliperTool.RunParams.NumCalipers;
+            _CaliperSearchLength = _CircleCaliperTool.RunParams.CaliperSearchLength;
+            _CaliperProjectionLength = _CircleCaliperTool.RunParams.CaliperProjectionLength;
+            _CaliperSearchDir = (eSearchDirection)_CircleCaliperTool.RunParams.CaliperSearchDirection;
+
+            ucCogNeedleFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir);
+            ucCogNeedleFindWnd.SetCircularArc(_CenterX, _CenterY, _Radius, _AngleStart, _AngleSpan);
+        }
+        #endregion KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
 
         #region Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
         private void ApplyBlobReferenceValueFunction(CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult)
@@ -48,11 +75,40 @@ namespace InspectionSystemManager
                 kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Green, 3);
             }
         }
+        #endregion Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
 
+        #region Needle Circle Find Window Event : ucCogNeedleCircleFind -> TeachingWindow
         private void ApplyNeedleCircleFindValueFunction(CogNeedleFindAlgo _CogNeedleFindAlgo, ref CogNeedleFindResult _CogNeedleFindResult)
         {
-            kpTeachDisplay.DrawFindCircleCaliper();
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            bool _Result = InspNeedleCircleFindProcess.Run(InspectionImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult);
+
+            CogCircle _CogCircle = new CogCircle();
+            _CogCircle.SetCenterRadius(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, _CogNeedleFindResult.Radius);
+            kpTeachDisplay.DrawStaticShape(_CogCircle, "Circle", CogColorConstants.Green);
         }
-        #endregion Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
+
+        private void DrawNeedleCircleFindCaliperFunction(CogNeedleFindAlgo _CogNeedleFindAlgo)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            CogFindCircle _CogFindCircle = new CogFindCircle();
+            _CogFindCircle.NumCalipers = _CogNeedleFindAlgo.CaliperNumber;
+            _CogFindCircle.CaliperSearchLength = _CogNeedleFindAlgo.CaliperSearchLength;
+            _CogFindCircle.CaliperProjectionLength = _CogNeedleFindAlgo.CaliperProjectionLength;
+            _CogFindCircle.CaliperSearchDirection = (CogFindCircleSearchDirectionConstants)_CogNeedleFindAlgo.CaliperSearchDirection;
+
+            _CogFindCircle.ExpectedCircularArc.CenterX = _CogNeedleFindAlgo.ArcCenterX;
+            _CogFindCircle.ExpectedCircularArc.CenterY = _CogNeedleFindAlgo.ArcCenterY;
+            _CogFindCircle.ExpectedCircularArc.Radius = _CogNeedleFindAlgo.ArcRadius;
+            _CogFindCircle.ExpectedCircularArc.AngleStart = _CogNeedleFindAlgo.ArcAngleStart;
+            _CogFindCircle.ExpectedCircularArc.AngleSpan = _CogNeedleFindAlgo.ArcAngleSpan;
+
+            kpTeachDisplay.DrawFindCircleCaliper(_CogFindCircle);
+        }
+        #endregion Needle Circle Find Window Event : ucCogNeedleCircleFind -> TeachingWindow
     }
 }

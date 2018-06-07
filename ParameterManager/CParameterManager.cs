@@ -539,7 +539,27 @@ namespace ParameterManager
 
         private void GetNeedleFindInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
-
+            if (null == _Nodes) return;
+            CogNeedleFindAlgo _CogNeedleFind = new CogNeedleFindAlgo();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch (_NodeChild.Name)
+                {
+                    case "CaliperNumber": _CogNeedleFind.CaliperNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperSearchLength": _CogNeedleFind.CaliperSearchLength = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperProjectionLength": _CogNeedleFind.CaliperProjectionLength = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperSearchDirection": _CogNeedleFind.CaliperSearchDirection = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ArcCenterX": _CogNeedleFind.ArcCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcCenterY": _CogNeedleFind.ArcCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcRadius": _CogNeedleFind.ArcRadius = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcAngleStart": _CogNeedleFind.ArcAngleStart = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ArcAngleSpan": _CogNeedleFind.ArcAngleSpan = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginX": _CogNeedleFind.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginY": _CogNeedleFind.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                }
+            }
+            _InspParam.Algorithm = _CogNeedleFind;
         }
 
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
@@ -700,7 +720,18 @@ namespace ParameterManager
 
         private void WriteNeedleFindInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
-
+            var _CogNeedleFindAlgo = _InspAlgoParam as CogNeedleFindAlgo;
+            _XmlWriter.WriteElementString("CaliperNumber", _CogNeedleFindAlgo.CaliperNumber.ToString());
+            _XmlWriter.WriteElementString("CaliperSearchLength", _CogNeedleFindAlgo.CaliperSearchLength.ToString());
+            _XmlWriter.WriteElementString("CaliperProjectionLength", _CogNeedleFindAlgo.CaliperProjectionLength.ToString());
+            _XmlWriter.WriteElementString("CaliperSearchDirection", _CogNeedleFindAlgo.CaliperSearchDirection.ToString());
+            _XmlWriter.WriteElementString("ArcCenterX", _CogNeedleFindAlgo.ArcCenterX.ToString());
+            _XmlWriter.WriteElementString("ArcCenterY", _CogNeedleFindAlgo.ArcCenterY.ToString());
+            _XmlWriter.WriteElementString("ArcRadius", _CogNeedleFindAlgo.ArcRadius.ToString());
+            _XmlWriter.WriteElementString("ArcAngleStart", _CogNeedleFindAlgo.ArcAngleStart.ToString());
+            _XmlWriter.WriteElementString("ArcAngleSpan", _CogNeedleFindAlgo.ArcAngleSpan.ToString());
+            _XmlWriter.WriteElementString("OriginX", _CogNeedleFindAlgo.OriginX.ToString());
+            _XmlWriter.WriteElementString("OriginY", _CogNeedleFindAlgo.OriginY.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -823,7 +854,23 @@ namespace ParameterManager
 
                     else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)
                     {
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogNeedleFindAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogNeedleFindAlgo;
 
+                        _Algorithm = new CogNeedleFindAlgo();
+                        _Algorithm.CaliperNumber            = _SrcAlgorithm.CaliperNumber;
+                        _Algorithm.CaliperSearchLength      = _SrcAlgorithm.CaliperSearchLength;
+                        _Algorithm.CaliperProjectionLength  = _SrcAlgorithm.CaliperProjectionLength;
+                        _Algorithm.CaliperSearchDirection   = _SrcAlgorithm.CaliperSearchDirection;
+                        _Algorithm.ArcCenterX       = _SrcAlgorithm.ArcCenterX;
+                        _Algorithm.ArcCenterY       = _SrcAlgorithm.ArcCenterY;
+                        _Algorithm.ArcRadius        = _SrcAlgorithm.ArcRadius;
+                        _Algorithm.ArcAngleStart    = _SrcAlgorithm.ArcAngleStart;
+                        _Algorithm.ArcAngleSpan     = _SrcAlgorithm.ArcAngleSpan;
+                        _Algorithm.OriginX          = _SrcAlgorithm.OriginX;
+                        _Algorithm.OriginY          = _SrcAlgorithm.OriginY;
+                        
+                        _InspAlgoParam.Algorithm = _Algorithm;
                     }
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
                 }

@@ -30,9 +30,16 @@ namespace KPDisplay
         CogLineSegment staticGraphicHor = new CogLineSegment();
         CogLineSegment staticGraphicVer = new CogLineSegment();
         CogLineSegment staticGraphicDistance = new CogLineSegment();
+        CogCircle StaticCircleGraphic = new CogCircle();
 
         CogLineSegment StaticArrow = new CogLineSegment();
         CogLineSegment StaticLineSegment = new CogLineSegment();
+
+        CogFindCircleTool CircleCaliperTool = new CogFindCircleTool();
+        CogCircularArc InteractiveCircularArc = new CogCircularArc();
+
+        public delegate void CogDisplayMouseUpHandler(CogFindCircleTool _CircleCaliperTool);
+        public event CogDisplayMouseUpHandler CogDisplayMouseUpEvent;
 
         [Category("UseStatusBar"), Browsable(true)]
         public bool UseStatusBar
@@ -281,6 +288,17 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(StaticPointMarker, _groupName);
         }
 
+        public void DrawStaticShape(CogCircle _CogCircle, string _groupName, CogColorConstants _color, int _LineSize = 2)
+        {
+            StaticCircleGraphic = new CogCircle();
+            StaticCircleGraphic = _CogCircle;
+            StaticCircleGraphic.Color = _color;
+            StaticCircleGraphic.LineWidthInScreenPixels = _LineSize;
+            StaticCircleGraphic.GraphicDOFEnable = CogCircleDOFConstants.All;
+            kCogDisplay.ClearDisplay(_groupName);
+            kCogDisplay.StaticGraphics.Add(StaticCircleGraphic, _groupName);
+        }
+
         public void DrawStaticArrow(int _StartX, int _StartY, int _Length, double _Rotate, int _Tickness, string _GroupName, CogColorConstants _Color)
         {
             StaticArrow.Color = _Color;
@@ -392,22 +410,19 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(ResGraphic, GroupName);
         }
 
-        public void DrawFindCircleCaliper(int _num = 10)
+        public void DrawFindCircleCaliper(CogFindCircle _CogFindCircle = null)
         {
             ICogRecord _Record;
-            CogCircularArc _Arc;
             CogGraphicCollection _Region;
-            CogFindCircleTool _CircleCaliperTool = new CogFindCircleTool();
-            _CircleCaliperTool.InputImage = (CogImage8Grey)kCogDisplay.Image;
+            
+            CircleCaliperTool.InputImage = (CogImage8Grey)kCogDisplay.Image;
+            CircleCaliperTool.RunParams = _CogFindCircle;
 
-            _CircleCaliperTool.RunParams.NumCalipers = _num;
-
-            _Record = _CircleCaliperTool.CreateCurrentRecord();
-            _Arc = (CogCircularArc)_Record.SubRecords["InputImage"].SubRecords["ExpectedShapeSegment"].Content;
+            _Record = CircleCaliperTool.CreateCurrentRecord();
+            InteractiveCircularArc = (CogCircularArc)_Record.SubRecords["InputImage"].SubRecords["ExpectedShapeSegment"].Content;
             _Region = (CogGraphicCollection)_Record.SubRecords["InputImage"].SubRecords["CaliperRegions"].Content;
 
-
-            kCogDisplay.InteractiveGraphics.Add(_Arc, "", false);
+            kCogDisplay.InteractiveGraphics.Add(InteractiveCircularArc, "CircleArc", false);
             foreach (ICogGraphic _ICogGra in _Region)
                 kCogDisplay.InteractiveGraphics.Add((ICogGraphicInteractive)_ICogGra, "", false);
             GC.Collect();
@@ -701,7 +716,18 @@ namespace KPDisplay
             MousePoint.X = Convert.ToInt32(MousePointX);
             MousePoint.Y = Convert.ToInt32(MousePointY);
 
-            if (MousePointEvent != null)    MousePointEvent(MousePoint);
+            var _MousePointEvent = MousePointEvent;
+            if (_MousePointEvent != null) _MousePointEvent(MousePoint);
+        }
+
+        private void kCogDisplay_MouseUp(object sender, MouseEventArgs e)
+        {
+            var _CogDisplayMouseUpEvent = CogDisplayMouseUpEvent;
+            if (_CogDisplayMouseUpEvent != null)
+            {
+                CircleCaliperTool.CreateCurrentRecord();
+                CogDisplayMouseUpEvent(CircleCaliperTool);
+            }
         }
     }
 }

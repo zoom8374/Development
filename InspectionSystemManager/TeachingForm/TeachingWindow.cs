@@ -86,11 +86,8 @@ namespace InspectionSystemManager
             InspAlgoSelected = -1;
             CurrentTeachStep = eTeachStep.NONE;
 
-            foreach (DataGridViewColumn _dataGridView in gridViewArea.Columns)
-                _dataGridView.SortMode = DataGridViewColumnSortMode.NotSortable;
-
-            foreach (DataGridViewColumn _dataGridView in gridViewAlgo.Columns)
-                _dataGridView.SortMode = DataGridViewColumnSortMode.NotSortable;
+            foreach (DataGridViewColumn _dataGridView in gridViewArea.Columns)  _dataGridView.SortMode = DataGridViewColumnSortMode.NotSortable;
+            foreach (DataGridViewColumn _dataGridView in gridViewAlgo.Columns)  _dataGridView.SortMode = DataGridViewColumnSortMode.NotSortable;            
 
             InitializeEvent();
             GridViewAreaAndAlgoClear();
@@ -208,7 +205,9 @@ namespace InspectionSystemManager
 
         private void btnInspectionAreaSet_Click(object sender, EventArgs e)
         {
-            if (CurrentTeachStep == eTeachStep.NONE) return;
+            if (CurrentTeachStep == eTeachStep.NONE)        return;
+            if (CurrentTeachStep == eTeachStep.ALGO_SET)    return;
+            if (CurrentTeachStep == eTeachStep.ALGO_SELECT) return;
             if (gridViewArea.SelectedRows.Count == 0) { MessageBox.Show("Not selected inspection area."); return; }
             int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
             if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
@@ -238,7 +237,7 @@ namespace InspectionSystemManager
 
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawStaticShape(_InspRegion, "InspRegion", CogColorConstants.Green);
-            kpTeachDisplay.DrawText("InspRegion", _InspRegion.X, _InspRegion.Y - 35, CogColorConstants.Green, 12);
+            kpTeachDisplay.DrawText("InspRegion", _InspRegion.X, _InspRegion.Y - 35, CogColorConstants.Green, 10);
             AreaRegionRectangle = new CogRectangle(_InspRegion);
             panelTeaching.Controls.Clear();
             panelTeaching.Controls.Add(gradientLabelTeaching);
@@ -310,9 +309,9 @@ namespace InspectionSystemManager
 
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawStaticShape(_Boundary, "InspRegion", CogColorConstants.Green, 2);
-            kpTeachDisplay.DrawText("InspRegion", _Boundary.X, _Boundary.Y - 35, CogColorConstants.Green, 12);
+            kpTeachDisplay.DrawText("InspRegion", _Boundary.X, _Boundary.Y - 35, CogColorConstants.Green, 10);
             kpTeachDisplay.DrawStaticShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange, 2);
-            kpTeachDisplay.DrawText("AlgoRegion", _AlgoRegion.X, _AlgoRegion.Y - 35, CogColorConstants.Orange, 12);
+            kpTeachDisplay.DrawText("AlgoRegion", _AlgoRegion.X, _AlgoRegion.Y - 35, CogColorConstants.Orange, 10);
 
 
             //Algorithm 영역 설정 시 Algorithm offset 값 얻어오기
@@ -449,7 +448,8 @@ namespace InspectionSystemManager
 
             if (_Selected != -1)
             {
-                gridViewArea.CurrentCell = gridViewArea.Rows[_Selected].Cells[0];
+                //LJH 2018.06.07 CellChanged event 때문에 막아놓음
+                //gridViewArea.CurrentCell = gridViewArea.Rows[_Selected].Cells[0];
                 gridViewArea.Rows[_Selected].Selected = true;
 
                 UpdateInspectionAlgoList(_Selected, true);
@@ -554,7 +554,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe();    break;
                 case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
-                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SaveAlgoRecipe(); break;
+                case eAlgoType.C_NEEDLE_FIND: panelTeaching.Controls.Add(ucCogNeedleFindWnd);   ucCogNeedleFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;
@@ -599,9 +599,9 @@ namespace InspectionSystemManager
 
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawStaticShape(_Boundary, "InspRegion", CogColorConstants.Green, 2);
-            kpTeachDisplay.DrawText("InspRegion", _Boundary.X, _Boundary.Y - 35, CogColorConstants.Green, 12);
+            kpTeachDisplay.DrawText("InspRegion", _Boundary.X, _Boundary.Y - 35, CogColorConstants.Green, 10);
             kpTeachDisplay.DrawStaticShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange, 2);
-            kpTeachDisplay.DrawText("AlgoRegion", _AlgoRegion.X, _AlgoRegion.Y - 35, CogColorConstants.Orange, 12);
+            kpTeachDisplay.DrawText("AlgoRegion", _AlgoRegion.X, _AlgoRegion.Y - 35, CogColorConstants.Orange, 10);
         }
         #endregion Inspection Area & Algorithm Gridview Update
 
@@ -745,7 +745,7 @@ namespace InspectionSystemManager
 
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawStaticShape(AreaRegionRectangle, "InspRegion", CogColorConstants.Green, 2);
-            kpTeachDisplay.DrawText("InspRegion", AreaRegionRectangle.X, AreaRegionRectangle.Y - 35, CogColorConstants.Green, 12);
+            kpTeachDisplay.DrawText("InspRegion", AreaRegionRectangle.X, AreaRegionRectangle.Y - 35, CogColorConstants.Green, 10);
             kpTeachDisplay.DrawInterActiveShape(_AlgoRegion, "AlgoRegion", CogColorConstants.Orange);
         }
         #endregion Teaching Parameter Set & UI Setting

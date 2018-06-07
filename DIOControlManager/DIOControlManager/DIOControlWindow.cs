@@ -40,7 +40,12 @@ namespace DIOControlManager
 
         private void btnTrigger_Click(object sender, EventArgs e)
         {
-            InputChangedEvent(DIOMAP.IN_TRG1, true);
+            //InputChangedEvent?.Invoke(DIOMAP.IN_TRG1, true); // 6.0부터
+
+            //이렇게 쓰는것 보다는 아래와 같이 쓰는게 안정적
+            //InputChangedEvent(DIOMAP.IN_TRG1, true);
+            var _InputChangedEvent = InputChangedEvent;
+            if (_InputChangedEvent != null) _InputChangedEvent(DIOMAP.IN_TRG1, true);
         }
 
 

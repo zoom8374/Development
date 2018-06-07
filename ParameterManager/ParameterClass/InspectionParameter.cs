@@ -150,15 +150,40 @@ namespace ParameterManager
     {
         public CogLeadBentAlgo()
         {
-
         }
     }
 
     public class CogNeedleFindAlgo
     {
+        public int CaliperNumber;
+        public double CaliperSearchLength;
+        public double CaliperProjectionLength;
+        public int CaliperSearchDirection;
+
+        public double ArcCenterX;
+        public double ArcCenterY;
+        public double ArcRadius;
+        public double ArcAngleStart;
+        public double ArcAngleSpan;
+
+        public double OriginX;
+        public double OriginY;
+
         public CogNeedleFindAlgo()
         {
+            CaliperNumber = 6;
+            CaliperSearchLength = 30;
+            CaliperProjectionLength = 10;
+            CaliperSearchDirection = 1;
 
+            ArcCenterX = 150;
+            ArcCenterY = 50;
+            ArcRadius = 100;
+            ArcAngleStart = 0;
+            ArcAngleSpan = 360;
+
+            OriginX = 0;
+            OriginY = 0;
         }
     }
     #endregion Cog Algorithm Class

@@ -43,6 +43,8 @@ namespace ParameterManager
 
     public enum eForeColor          { BLACK = 0, WHITE = 1 };
 
+    public enum eSearchDirection    { IN_WARD = 0, OUT_WARD = 1 };
+
 
 
 

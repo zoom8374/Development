@@ -77,6 +77,8 @@ namespace KPVisionInspectionFramework
 
             DIOWnd = new DIOControlWindow();
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
+            //DIOWnd.InputChangedEvent += delegate(short _BitNum, bool _Signal) {if ((short)DIOMAP.IN_TRG1 == _BitNum) EventInspectionTriggerOn(_Signal);}
+            //DIOWnd.InputChangedEvent += (_BitNum, _Signal) => { if ((short)DIOMAP.IN_TRG1 == _BitNum) EventInspectionTriggerOn(_Signal); };
             DIOWnd.Initialize();
             #endregion SubWindow 생성 및 Event 등록
 

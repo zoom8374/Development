@@ -101,6 +101,9 @@ namespace ParameterManager
     {
         public double CenterX;
         public double CenterY;
+        public double OriginX;
+        public double OriginY;
+
         public double Radius;
     }
     #endregion Inspection Result Parameter

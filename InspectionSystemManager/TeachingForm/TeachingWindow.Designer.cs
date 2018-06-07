@@ -244,7 +244,7 @@
             this.gridViewArea.RowHeadersVisible = false;
             this.gridViewArea.RowTemplate.Height = 23;
             this.gridViewArea.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridViewArea.Size = new System.Drawing.Size(785, 341);
+            this.gridViewArea.Size = new System.Drawing.Size(785, 313);
             this.gridViewArea.TabIndex = 3;
             this.gridViewArea.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewArea_CellContentClick);
             this.gridViewArea.CurrentCellChanged += new System.EventHandler(this.gridViewArea_CurrentCellChanged);
@@ -394,7 +394,7 @@
             this.gridViewAlgo.RowHeadersVisible = false;
             this.gridViewAlgo.RowTemplate.Height = 23;
             this.gridViewAlgo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridViewAlgo.Size = new System.Drawing.Size(785, 341);
+            this.gridViewAlgo.Size = new System.Drawing.Size(785, 313);
             this.gridViewAlgo.TabIndex = 3;
             this.gridViewAlgo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewAlgo_CellClick);
             this.gridViewAlgo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewAlgo_CellContentClick);

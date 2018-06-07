@@ -59,6 +59,7 @@
             this.kCogDisplay.Size = new System.Drawing.Size(498, 500);
             this.kCogDisplay.TabIndex = 0;
             this.kCogDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.kCogDisplay_MouseDown);
+            this.kCogDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.kCogDisplay_MouseUp);
             // 
             // KPCogDisplayControl
             // 
