@@ -732,7 +732,7 @@
             this.rbForegroundWhite.Text = "W";
             this.rbForegroundWhite.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.rbForegroundWhite.UseVisualStyleBackColor = true;
-            this.rbForegroundWhite.CheckedChanged += new System.EventHandler(this.rbForeground_MouseUp);
+            this.rbForegroundWhite.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbForeground_MouseUp);
             // 
             // rbForegroundBlack
             // 
@@ -746,7 +746,7 @@
             this.rbForegroundBlack.Text = "B";
             this.rbForegroundBlack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.rbForegroundBlack.UseVisualStyleBackColor = true;
-            this.rbForegroundBlack.CheckedChanged += new System.EventHandler(this.rbForeground_MouseUp);
+            this.rbForegroundBlack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbForeground_MouseUp);
             // 
             // btnSetting
             // 
