@@ -51,10 +51,11 @@
     <Compile Include="ParameterClass\InspectionParameter.cs" />
     <Compile Include="ParameterClass\DefineParameter.cs" />
     <Compile Include="ParameterClass\InspectionSystemManagerParameter.cs" />
+    <Compile Include="ParameterClass\ProjectConditionParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParameterClass\SystemParameter.cs" />
     <Compile Include="ParameterClass\ResultParameter.cs" />
-    <Compile Include="TeachingParameter.cs" />
+    <Compile Include="ParameterClass\TeachingParameter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -222,6 +222,11 @@ namespace KPVisionInspectionFramework
             DIOWnd.TopMost = false;
         }
 
+        private void rbConfig_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void rbRecipe_Click(object sender, EventArgs e)
         {
 

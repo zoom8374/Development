@@ -146,9 +146,9 @@ namespace ParameterManager
     /// <summary>
     /// Lead - Bent 검사 알고리즘
     /// </summary>
-    public class CogLeadBentAlgo
+    public class CogLeadAlgo
     {
-        public CogLeadBentAlgo()
+        public CogLeadAlgo()
         {
         }
     }
@@ -168,6 +168,7 @@ namespace ParameterManager
 
         public double OriginX;
         public double OriginY;
+        public double OriginRadius;
 
         public CogNeedleFindAlgo()
         {
@@ -184,6 +185,7 @@ namespace ParameterManager
 
             OriginX = 0;
             OriginY = 0;
+            OriginRadius = 0;
         }
     }
     #endregion Cog Algorithm Class
@@ -213,7 +215,7 @@ namespace ParameterManager
             if (_AlgoType == eAlgoType.C_PATTERN)           Algorithm = new CogPatternAlgo();
             else if (_AlgoType == eAlgoType.C_BLOB)         Algorithm = new CogBlobAlgo();
             else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo();
-            else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadBentAlgo();
+            else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadAlgo();
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)  Algorithm = new CogNeedleFindAlgo();
         }
     }

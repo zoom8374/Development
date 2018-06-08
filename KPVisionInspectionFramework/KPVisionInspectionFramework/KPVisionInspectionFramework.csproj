@@ -124,6 +124,8 @@
     <None Include="Resources\History.png" />
     <None Include="Resources\Log.png" />
     <None Include="Resources\Recipe.png" />
+    <None Include="Resources\Config.png" />
+    <None Include="Resources\Align.png" />
     <Content Include="VisionInspection.ico" />
   </ItemGroup>
   <ItemGroup>

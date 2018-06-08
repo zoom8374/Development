@@ -8,6 +8,9 @@ namespace ParameterManager
     public class InspectionSystemManagerParameter
     {
         public InspectionWindowParameter    InspWndParam;
+        
+        public object   ProjectItemParam;
+        public int      ProjectItem;
 
         public int      CameraCount;
         public string   CameraType;
@@ -23,8 +26,6 @@ namespace ParameterManager
 
         public double   ResolutionX;
         public double   ResolutionY;
-
-        public int      ProjectItem;
 
         public InspectionSystemManagerParameter()
         {

@@ -20,6 +20,8 @@ namespace InspectionSystemManager
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
 
+        private bool AlgoInitFlag = false;
+
         public delegate void ApplyNeedleCircleFindValueHandler(CogNeedleFindAlgo _CogNeedleFindAlgo, ref CogNeedleFindResult _CogNeedleFindResult);
         public event ApplyNeedleCircleFindValueHandler ApplyNeedleCircleFindValueEvent;
 
@@ -58,16 +60,66 @@ namespace InspectionSystemManager
         {
             DrawCircleFindCapliper();
         }
-        #endregion Control Event
 
+        private void rbSearchDirection_MouseUp(object sender, MouseEventArgs e)
+        {
+            RadioButton _RadioDirection = (RadioButton)sender;
+            int _Direction = Convert.ToInt32(_RadioDirection.Tag);
+            SetSearchDirection(_Direction);
+            graLabelSearchDirection.Text = _Direction.ToString();
+            //ApplySettingValue();
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownCaliperNumber_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownSearchLength_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownProjectionLength_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownArcCenterX_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownArcCenterY_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownArcRadius_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownAngleStart_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+
+        private void numUpDownAngleSpan_ValueChanged(object sender, EventArgs e)
+        {
+            DrawCircleFindCapliper();
+        }
+        #endregion Control Event
 
         public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
         {
+            AlgoInitFlag = false;
+
             CogNeedleFindAlgoRcp = _Algorithm as CogNeedleFindAlgo;
 
-            ResolutionX = _ResolutionX;
-            ResolutionY = _ResolutionY;
-
+            ResolutionX                     = _ResolutionX;
+            ResolutionY                     = _ResolutionY;
             numUpDownCaliperNumber.Value    = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperNumber);
             numUpDownSearchLength.Value     = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperSearchLength);
             numUpDownProjectionLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperProjectionLength);
@@ -76,8 +128,13 @@ namespace InspectionSystemManager
             numUpDownArcRadius.Value        = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcRadius);
             numUpDownAngleStart.Value       = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleStart);
             numUpDownAngleSpan.Value        = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleSpan);
+            textBoxCenterX.Text             = CogNeedleFindAlgoRcp.OriginX.ToString("F3");
+            textBoxCenterY.Text             = CogNeedleFindAlgoRcp.OriginY.ToString("F3");
+            textBoxRadius.Text              = CogNeedleFindAlgoRcp.OriginRadius.ToString("F3");
 
             SetSearchDirection(CogNeedleFindAlgoRcp.CaliperSearchDirection);
+            
+            AlgoInitFlag = true;
         }
 
         public void SaveAlgoRecipe()
@@ -91,6 +148,9 @@ namespace InspectionSystemManager
             CogNeedleFindAlgoRcp.ArcRadius      = Convert.ToDouble(numUpDownArcRadius.Value);
             CogNeedleFindAlgoRcp.ArcAngleStart  = Convert.ToDouble(numUpDownAngleStart.Value);
             CogNeedleFindAlgoRcp.ArcAngleSpan   = Convert.ToDouble(numUpDownAngleSpan.Value);
+            CogNeedleFindAlgoRcp.OriginX        = Convert.ToDouble(textBoxCenterX.Text);
+            CogNeedleFindAlgoRcp.OriginY        = Convert.ToDouble(textBoxCenterY.Text);
+            CogNeedleFindAlgoRcp.OriginRadius   = Convert.ToDouble(textBoxRadius.Text);
         }
 
         public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, eSearchDirection _eSearchDir)
@@ -139,10 +199,19 @@ namespace InspectionSystemManager
             var _ApplyNeedleCircleFindValueEvent = ApplyNeedleCircleFindValueEvent;
             if (_ApplyNeedleCircleFindValueEvent != null)
                 _ApplyNeedleCircleFindValueEvent(_CogNeedleFindAlgoRcp, ref _CogNeedleFindResult);
+
+            if (_CogNeedleFindResult.IsGood)
+            {
+                textBoxCenterX.Text = (_CogNeedleFindResult.CenterX * ResolutionX).ToString("F3");
+                textBoxCenterY.Text = (_CogNeedleFindResult.CenterY * ResolutionY).ToString("F3");
+                textBoxRadius.Text = (_CogNeedleFindResult.Radius * ResolutionX).ToString("F3");
+            }
         }
 
         private void DrawCircleFindCapliper()
         {
+            if (!AlgoInitFlag) return;
+
             CogNeedleFindAlgo _CogNeedleFindAlgoRcp = new CogNeedleFindAlgo();
             _CogNeedleFindAlgoRcp.CaliperNumber = Convert.ToInt32(numUpDownCaliperNumber.Value);
             _CogNeedleFindAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
@@ -157,15 +226,6 @@ namespace InspectionSystemManager
             var _DrawNeedleCircleFindCaliperEvent = DrawNeedleCircleFindCaliperEvent;
             if (_DrawNeedleCircleFindCaliperEvent != null)
                 _DrawNeedleCircleFindCaliperEvent(_CogNeedleFindAlgoRcp);
-        }
-
-        private void rbSearchDirection_MouseUp(object sender, MouseEventArgs e)
-        {
-            RadioButton _RadioDirection = (RadioButton)sender;
-            int _Direction = Convert.ToInt32(_RadioDirection.Tag);
-            SetSearchDirection(_Direction);
-            graLabelSearchDirection.Text = _Direction.ToString();
-            ApplySettingValue();
         }
     }
 }

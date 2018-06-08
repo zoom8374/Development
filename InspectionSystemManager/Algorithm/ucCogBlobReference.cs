@@ -93,7 +93,7 @@ namespace InspectionSystemManager
 
         public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
         {
-            CogBlobReferAlgoRcp = (CogBlobReferenceAlgo)_Algorithm;
+            CogBlobReferAlgoRcp = _Algorithm as CogBlobReferenceAlgo;
 
             ResolutionX = _ResolutionX;
             ResolutionY = _ResolutionY;

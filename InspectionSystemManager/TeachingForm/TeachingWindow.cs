@@ -28,12 +28,14 @@ namespace InspectionSystemManager
         //검사 Algorithm Class
         private InspectionBlobReference     InspBlobReferProcess;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProcess;
+        private InspectionLead              InspLeadProcess;
 
         //검사 Algorithm Teaching UI
         private ucCogPattern            ucCogPatternWnd;
         private ucCogBlobReference      ucCogBlobReferWnd;
         private ucCogBlob               ucCogBlobWnd;
         private ucCogNeedleCircleFind   ucCogNeedleFindWnd;
+        private ucCogLeadInspection     ucCogLeadInspWnd;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -78,10 +80,12 @@ namespace InspectionSystemManager
             ucCogBlobWnd = new ucCogBlob();
             ucCogBlobReferWnd = new ucCogBlobReference();
             ucCogNeedleFindWnd = new ucCogNeedleCircleFind();
+            ucCogLeadInspWnd = new ucCogLeadInspection();
 
             InspBlobReferProcess = new InspectionBlobReference();
             InspNeedleCircleFindProcess = new InspectionNeedleCircleFind();
-
+            InspLeadProcess = new InspectionLead();
+            
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
             CurrentTeachStep = eTeachStep.NONE;
@@ -105,9 +109,11 @@ namespace InspectionSystemManager
             ucCogBlobWnd.Dispose();
             ucCogBlobReferWnd.Dispose();
             ucCogNeedleFindWnd.Dispose();
+            ucCogLeadInspWnd.Dispose();
 
             InspBlobReferProcess.DeInitialize();
             InspNeedleCircleFindProcess.DeInitialize();
+            InspLeadProcess.DeInitialize();
         }
 
         private void InitializeContextMenu()
@@ -119,6 +125,7 @@ namespace InspectionSystemManager
             ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
+            ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
         }
 
         private void SetInspectionParameter(InspectionParameter _InspParam = null)
@@ -173,6 +180,14 @@ namespace InspectionSystemManager
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_NEEDLE_FIND);
         }
+
+        private void LeadInspectionAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LEAD);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD);
+        }
         #endregion Conext Menu Function
 
         #region Button Event
@@ -195,7 +210,86 @@ namespace InspectionSystemManager
 
         private void btnInspectionAreaDel_Click(object sender, EventArgs e)
         {
+            if (gridViewArea.SelectedRows.Count == 0) { MessageBox.Show("Not selected inspection area."); return; }
+            int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
+            if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
+            InspAreaSelected = _SelectedAreaNum;
 
+            kpTeachDisplay.ClearDisplay();
+            panelTeaching.Controls.Clear();
+            panelTeaching.Controls.Add(gradientLabelTeaching);
+            gridViewAlgo.Rows.Clear();
+
+            ////연결되어 있는 BenchMark가 있는 경우 삭제 금지
+            bool _IsDeleteContinue = true;
+            int _BenchMark = InspAreaSelected + 1;
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                int _DeleteAlgoBenchMark = InspParam.InspAreaParam[iLoopCount].AreaBenchMark;
+                if (_BenchMark == _DeleteAlgoBenchMark) { _IsDeleteContinue = false; break; }
+            }
+
+            if (false == _IsDeleteContinue)
+            {
+                string _Message = "Select area can not be deleted due to the \"BenchMark\" setting.";
+                MessageBox.Show(_Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
+
+
+            int _RowNextSelect = 0;
+            int _RowCount = gridViewArea.RowCount;
+            int _RowSelect = gridViewArea.CurrentCell.RowIndex;
+
+            GridViewAreaAndAlgoClear();
+
+            //Remove algorithms
+            int _EndAlgorithm = 0;
+            for (int iLoopCount = 0; iLoopCount < InspAreaSelected; ++iLoopCount)
+            {
+                if (InspParam.InspAreaParam[iLoopCount].Enable == true)
+                {
+                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    {
+                        if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                            _EndAlgorithm++;
+                    }
+                }
+            }
+
+            int _StartAlgorithm = 0;
+            for (int iLoopCount = 0; iLoopCount <= InspAreaSelected; ++iLoopCount)
+            {
+                if (InspParam.InspAreaParam[iLoopCount].Enable == true)
+                {
+                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    {
+                        if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                            _StartAlgorithm++;
+                    }
+                }
+            }
+
+            for (int iLoopCount = _StartAlgorithm - 1; iLoopCount > _EndAlgorithm - 1; --iLoopCount)
+            {
+                if (AlgoResParamList.Count > iLoopCount)
+                    AlgoResParamList.RemoveAt(iLoopCount);
+            }
+
+            //for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam[_RowSelect].InspAlgoParam.Count; ++iLoopCount)
+                //FreeReferenceEvent(ref InspParam, _RowSelect, iLoopCount);
+            InspParam.InspAreaParam.RemoveAt(_RowSelect);
+
+            if (_RowSelect == 0 && _RowCount > 1) _RowNextSelect = 0;
+            if (_RowSelect > 1) _RowNextSelect = _RowSelect - 1;
+            if (_RowCount == 1) _RowSelect = -1;
+            if (_RowSelect != -1) UpdateInspectionAreaList(_RowNextSelect);
+
+            InspAreaSelected = -1;
+            UpdateTeachingStatus(eTeachStep.AREA_CLEAR);
+            gridViewAlgo.ClearSelection();
+            gridViewAlgo.Rows.Clear();
         }
 
         private void btnInspectionAreaCopy_Click(object sender, EventArgs e)
@@ -212,7 +306,6 @@ namespace InspectionSystemManager
             int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
             if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
             if (InspectionImageWidth == 0 || InspectionImageHeight == 0) return;
-
             InspAreaSelected = _SelectedAreaNum;
             
             //BenchMark Setting
@@ -421,6 +514,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_BLOB_REFER:    ucCogBlobReferWnd.SaveAlgoRecipe();  break;
                 case eAlgoType.C_BLOB:          ucCogBlobWnd.SaveAlgoRecipe();       break;
                 case eAlgoType.C_NEEDLE_FIND:   ucCogNeedleFindWnd.SaveAlgoRecipe(); break;
+                case eAlgoType.C_LEAD:          ucCogLeadInspWnd.SaveAlgoRecipe();   break;
             }
         }
         #endregion Button Event
@@ -506,6 +600,7 @@ namespace InspectionSystemManager
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER) _Name = "Search a body reference"; //"Blob - Reference"
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)       _Name = "Defect detection";        //"Blob - Defect"
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_NEEDLE_FIND)_Name = "Search a needle circle";
+                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD)       _Name = "Lead status inspection";
 
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
@@ -554,7 +649,8 @@ namespace InspectionSystemManager
                 case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe();    break;
                 case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
-                case eAlgoType.C_NEEDLE_FIND: panelTeaching.Controls.Add(ucCogNeedleFindWnd);   ucCogNeedleFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);   ucCogLeadInspWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

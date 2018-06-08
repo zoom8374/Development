@@ -1,4 +1,0 @@
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\bin\Debug\CameraManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\bin\Debug\CameraManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\obj\Debug\CameraManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\obj\Debug\CameraManager.pdb

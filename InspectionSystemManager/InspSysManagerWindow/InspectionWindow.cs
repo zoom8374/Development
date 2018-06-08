@@ -19,7 +19,8 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
-        private InspectionBlobReference InspBlobReferProc;
+        private InspectionBlobReference     InspBlobReferProc;
+        private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
 
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
@@ -109,6 +110,9 @@ namespace InspectionSystemManager
             InspBlobReferProc = new InspectionBlobReference();
             InspBlobReferProc.Initialize();
 
+            InspNeedleCircleFindProc = new InspectionNeedleCircleFind();
+            InspNeedleCircleFindProc.Initialize();
+
             AreaResultParamList = new AreaResultParameterList();
             AlgoResultParamList = new AlgoResultParameterList();
 
@@ -130,6 +134,7 @@ namespace InspectionSystemManager
         public void Deinitialize()
         {
             InspBlobReferProc.DeInitialize();
+            InspNeedleCircleFindProc.DeInitialize();
         }
 
         public void SetLocation(int _StartX, int _StartY)
@@ -605,8 +610,15 @@ namespace InspectionSystemManager
 
         private bool CogNeedleCircleFindAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
+            CogNeedleFindAlgo   _CogNeedleFindAlgo = _Algorithm as CogNeedleFindAlgo;
+            CogNeedleFindResult _CogNeedleFindResult = new CogNeedleFindResult();
 
-            return true;
+            bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogNeedleFindResult.IsGood;
         }
         #endregion Algorithm 별 Inspection Step
 
@@ -617,7 +629,7 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
-                eAlgoType _AlgoType = (eAlgoType)AlgoResultParamList[iLoopCount].ResultAlgoType;
+                eAlgoType _AlgoType = AlgoResultParamList[iLoopCount].ResultAlgoType;
                 if (eAlgoType.C_PATTERN == _AlgoType)           _IsGood = DisplayResultPatternMatching(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _IsGood = DisplayResultBlobReference(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount); 
                 else if (eAlgoType.C_BLOB == _AlgoType)         _IsGood = DisplayResultBlob(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
@@ -702,28 +714,54 @@ namespace InspectionSystemManager
 
         private bool DisplayResultNeedleFind(Object _ResultParam, int _Index)
         {
-            bool _IsGood = true;
+            CogNeedleFindResult _CogNeedleFindResult = _ResultParam as CogNeedleFindResult;
 
-            return _IsGood;
+            CogCircle _Circle = new CogCircle();
+            CogPointMarker _CirclePoint = new CogPointMarker();
+
+            if (_CogNeedleFindResult != null)// && _CogNeedleFindResult.IsGood)
+            {
+
+                _Circle.SetCenterRadius(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, _CogNeedleFindResult.Radius);
+                _CirclePoint.SetCenterRotationSize(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, 0, 1);
+                ResultDisplay(_Circle, _CirclePoint, "NeedleCircle", _CogNeedleFindResult.IsGood);
+
+                string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionY);
+                ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 30, _CenterPointName, _CogNeedleFindResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+
+            else
+            {
+                //LOG
+            }
+
+            return _CogNeedleFindResult.IsGood;
         }
         #endregion Algorithm 별 Display
 
         #region Display Result function
         public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood)
         {
-            //CogRectangle _Rect = new CogRectangle();
-            //_Rect.SetCenterWidthHeight(_PositionX, _PositionY, _Width, _Height);
             if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
             else                    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Red);
 
-            if (true == _IsGood) kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
-            else                 kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
+            else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
         }
 
-        public void ResultDisplayMessage(double _StartX, double _StartY, string _Message, bool _IsGood = true)
+        public void ResultDisplay(CogCircle _Circle, CogPointMarker _Point, string _Name, bool _IsGood)
         {
-            if (true == _IsGood)    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Green, 8);
-            else                    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Red, 8);
+            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Circle, "Circle", CogColorConstants.Green, 3);
+            else                    kpCogDisplayMain.DrawStaticShape(_Circle, "Circle", CogColorConstants.Red, 3);
+
+            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
+            else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+        }
+
+        public void ResultDisplayMessage(double _StartX, double _StartY, string _Message, bool _IsGood = true, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)
+        {
+            if (true == _IsGood)    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Green, 8, _Align);
+            else                    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Red, 8, _Align);
         }
 
         private void DisplayLastResultMessage(bool _IsGood)
@@ -731,7 +769,7 @@ namespace InspectionSystemManager
             if (_IsGood)    kpCogDisplayMain.DrawText("Result : Good", 50, 50, CogColorConstants.Green);
             else            kpCogDisplayMain.DrawText("Result : NG", 50, 50, CogColorConstants.Red);
         }
-        #endregion
+        #endregion Display Result function
 
         private bool InspectionDataSend()
         {

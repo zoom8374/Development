@@ -18,6 +18,7 @@ namespace ParameterManager
         private string ProjectName;
         private string InspectionDefaultPath;
         private string ISMParameterFullPath;
+        private string ProjectItemParameterFullPath;
         private string RecipeParameterPath;
         private string SystemParameterFullPath;
 
@@ -47,6 +48,7 @@ namespace ParameterManager
             {
                 if (false == ReadSystemParameter()) break;
                 if (false == ReadISMParameters())   break;
+                if (false == ReadProjectItemParameters()) break;
                 if (false == ReadInspectionParameters()) break;
                 SystemParam.IsProgramUsable = true;
 
@@ -62,6 +64,9 @@ namespace ParameterManager
 
             for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
                 WriteISMParameter(iLoopCount);
+
+            for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
+                WriteProjectItemParameter(iLoopCount);
         }
         #endregion Initialize & DeInitialize
 
@@ -219,7 +224,6 @@ namespace ParameterManager
                         case "ImageSizeHeight":  InspSysManagerParam[_ID].ImageSizeHeight = Convert.ToInt32(_Node.InnerText); break;
                         case "ResolutionX":      InspSysManagerParam[_ID].ResolutionX = Convert.ToDouble(_Node.InnerText); break;
                         case "ResolutionY":      InspSysManagerParam[_ID].ResolutionY = Convert.ToDouble(_Node.InnerText); break;
-
                         case "DispWindowZoom":      InspSysManagerParam[_ID].InspWndParam.DisplayZoomValue = Convert.ToDouble(_Node.InnerText); break;
                         case "DispWindowPanX":      InspSysManagerParam[_ID].InspWndParam.DisplayPanXValue = Convert.ToDouble(_Node.InnerText); break;
                         case "DispWindowPanY":      InspSysManagerParam[_ID].InspWndParam.DisplayPanYValue = Convert.ToDouble(_Node.InnerText); break;
@@ -246,54 +250,133 @@ namespace ParameterManager
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
             ISMParameterFullPath = String.Format(@"{0}{1}\ISMParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
-
-            #region XML Element Define
-            XElement _ISMParameter      = new XElement("ISMParameter");
-            XElement _ProjectItem       = new XElement("ProjectItem", InspSysManagerParam[_ID].ProjectItem);
-            XElement _CameraCount       = new XElement("CameraCount", InspSysManagerParam[_ID].CameraCount);
-            XElement _CameraType        = new XElement("CameraType", InspSysManagerParam[_ID].CameraType);
-            XElement _CameraName        = new XElement("CameraName", InspSysManagerParam[_ID].CameraName);
-            XElement _CameraConfigInfo  = new XElement("CameraConfigInfo", InspSysManagerParam[_ID].CameraConfigInfo);
-            XElement _CameraRotate      = new XElement("CameraRotate", InspSysManagerParam[_ID].CameraRotate);
-            XElement _CameraVerFlip     = new XElement("CameraVerFlip", InspSysManagerParam[_ID].IsCameraVerFlip);
-            XElement _CameraHorFlip     = new XElement("CameraHorFlip", InspSysManagerParam[_ID].IsCameraVerFlip);
-            XElement _ImageSizeWidth    = new XElement("ImageSizeWidth", InspSysManagerParam[_ID].ImageSizeWidth);
-            XElement _ImageSizeHeight   = new XElement("ImageSizeHeight", InspSysManagerParam[_ID].ImageSizeHeight);
-            XElement _ResolutionX       = new XElement("ResolutionX", InspSysManagerParam[_ID].ResolutionX);
-            XElement _ResolutionY       = new XElement("ResolutionY", InspSysManagerParam[_ID].ResolutionY);
-            XElement _InspWndZoom           = new XElement("InspWindowZoom", InspSysManagerParam[_ID].InspWndParam.DisplayZoomValue);
-            XElement _InspWindowPanX        = new XElement("InspWindowPanX", InspSysManagerParam[_ID].InspWndParam.DisplayPanXValue);
-            XElement _InspWindowPanY        = new XElement("InspWindowPanY", InspSysManagerParam[_ID].InspWndParam.DisplayPanYValue);
-            XElement _InspWindowLocationX   = new XElement("InspWindowLocationX", InspSysManagerParam[_ID].InspWndParam.LocationX);
-            XElement _InspWindowLocationY   = new XElement("InspWindowLocationY", InspSysManagerParam[_ID].InspWndParam.LocationY);
-            XElement _InspWindowWidth       = new XElement("InspWindowWidth", InspSysManagerParam[_ID].InspWndParam.Width);
-            XElement _InspWindowHeight      = new XElement("InspWindowHeight", InspSysManagerParam[_ID].InspWndParam.Height);
-            #endregion XML Element Define
-
-            #region XML Tree Add
-            _ISMParameter.Add(_ProjectItem);
-            _ISMParameter.Add(_CameraCount);
-            _ISMParameter.Add(_CameraType);
-            _ISMParameter.Add(_CameraName);
-            _ISMParameter.Add(_CameraConfigInfo);
-            _ISMParameter.Add(_CameraRotate);
-            _ISMParameter.Add(_CameraVerFlip);
-            _ISMParameter.Add(_CameraHorFlip);
-            _ISMParameter.Add(_ImageSizeWidth);
-            _ISMParameter.Add(_ImageSizeHeight);
-            _ISMParameter.Add(_ResolutionX);
-            _ISMParameter.Add(_ResolutionY);
-            _ISMParameter.Add(_InspWndZoom);
-            _ISMParameter.Add(_InspWindowPanX);
-            _ISMParameter.Add(_InspWindowPanY);
-            _ISMParameter.Add(_InspWindowLocationX);
-            _ISMParameter.Add(_InspWindowLocationY);
-            _ISMParameter.Add(_InspWindowWidth);
-            _ISMParameter.Add(_InspWindowHeight);
-            _ISMParameter.Save(ISMParameterFullPath);
-            #endregion XML Tree Add
+            XmlTextWriter _XmlWriter = new XmlTextWriter(ISMParameterFullPath, Encoding.Unicode);
+            _XmlWriter.Formatting = Formatting.Indented;
+            _XmlWriter.WriteStartDocument();
+            _XmlWriter.WriteStartElement("ISMParameter");
+            {
+                _XmlWriter.WriteElementString("ProjectItem", InspSysManagerParam[_ID].ProjectItem.ToString());
+                _XmlWriter.WriteElementString("CameraCount", InspSysManagerParam[_ID].CameraCount.ToString());
+                _XmlWriter.WriteElementString("CameraType", InspSysManagerParam[_ID].CameraType.ToString());
+                _XmlWriter.WriteElementString("CameraName", InspSysManagerParam[_ID].CameraName);
+                _XmlWriter.WriteElementString("CameraConfigInfo", InspSysManagerParam[_ID].CameraConfigInfo);
+                _XmlWriter.WriteElementString("CameraRotate", InspSysManagerParam[_ID].CameraRotate.ToString());
+                _XmlWriter.WriteElementString("CameraVerFlip", InspSysManagerParam[_ID].IsCameraVerFlip.ToString());
+                _XmlWriter.WriteElementString("CameraHorFlip", InspSysManagerParam[_ID].IsCameraHorFlip.ToString());
+                _XmlWriter.WriteElementString("ImageSizeWidth", InspSysManagerParam[_ID].ImageSizeWidth.ToString());
+                _XmlWriter.WriteElementString("ImageSizeHeight", InspSysManagerParam[_ID].ImageSizeHeight.ToString());
+                _XmlWriter.WriteElementString("ResolutionX", InspSysManagerParam[_ID].ResolutionX.ToString());
+                _XmlWriter.WriteElementString("ResolutionY", InspSysManagerParam[_ID].ResolutionY.ToString());
+                _XmlWriter.WriteElementString("InspWindowZoom", InspSysManagerParam[_ID].InspWndParam.DisplayZoomValue.ToString());
+                _XmlWriter.WriteElementString("InspWindowPanX", InspSysManagerParam[_ID].InspWndParam.DisplayPanXValue.ToString());
+                _XmlWriter.WriteElementString("InspWindowPanY", InspSysManagerParam[_ID].InspWndParam.DisplayPanYValue.ToString());
+                _XmlWriter.WriteElementString("InspWindowLocationX", InspSysManagerParam[_ID].InspWndParam.LocationX.ToString());
+                _XmlWriter.WriteElementString("InspWindowLocationY", InspSysManagerParam[_ID].InspWndParam.LocationY.ToString());
+                _XmlWriter.WriteElementString("InspWindowWidth", InspSysManagerParam[_ID].InspWndParam.Width.ToString());
+                _XmlWriter.WriteElementString("InspWindowHeight", InspSysManagerParam[_ID].InspWndParam.Height.ToString());
+            }
+            _XmlWriter.WriteEndElement();
+            _XmlWriter.WriteEndDocument();
+            _XmlWriter.Close();
         }
         #endregion Read & Write Inspection System Manager
+
+        public bool ReadProjectItemParameters()
+        {
+            bool _Result = true;
+
+            for (int iLoopCount = 0; iLoopCount < InspSysManagerParam.Length; ++iLoopCount)
+            {
+                if (false == ReadProjectItemParameter(iLoopCount)) { _Result = false; break; }
+            }
+
+            return _Result;
+        }
+
+        public bool ReadProjectItemParameter(int _ID)
+        {
+            bool _Result = true;
+
+            try
+            {
+                ProjectItemParameterFullPath = String.Format(@"{0}{1}\ProjectItemParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
+
+                DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath + SystemParam.LastRecipeName);
+                if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+                if (false == File.Exists(ProjectItemParameterFullPath))
+                {
+                    File.Create(ProjectItemParameterFullPath).Close();
+                    WriteProjectItemParameter(_ID);
+                    System.Threading.Thread.Sleep(100);
+                }
+
+                XmlNodeList _XmlNodeList = GetNodeList(ISMParameterFullPath);
+                if (null == _XmlNodeList) return false;
+                foreach (XmlNode _Node in _XmlNodeList)
+                {
+                    if (null == _Node) return false;
+                    if (InspSysManagerParam[_ID].ProjectItem == (int)eProjectItem.NEEDLE_ALIGN)
+                    {
+                        AlignProjectParameter _AlignParam = InspSysManagerParam[_ID].ProjectItemParam as AlignProjectParameter;
+                        switch (_Node.Name)
+                        {
+                            case "OriginX":      _AlignParam.OriginX = Convert.ToDouble(_Node.InnerText);       break;
+                            case "OriginY":      _AlignParam.OriginY = Convert.ToDouble(_Node.InnerText);       break;
+                            case "OriginRadius": _AlignParam.OriginRadius = Convert.ToDouble(_Node.InnerText);  break;
+                        }
+                    }
+
+                    else if (InspSysManagerParam[_ID].ProjectItem == (int)eProjectItem.NEEDLE_ALIGN)
+                    {
+                        LeadProjectParameter _LeadParam = InspSysManagerParam[_ID].ProjectItemParam as LeadProjectParameter;
+                        switch (_Node.Name)
+                        {
+                            case "LeadCount": _LeadParam.LeadCount = Convert.ToInt32(_Node.InnerText); break;
+                        }
+                    }
+                }
+            }
+
+            catch
+            {
+                _Result = false;
+            }
+
+            return _Result;
+        }
+
+        public void WriteProjectItemParameter(int _ID, string _RecipeName = null)
+        {
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            ProjectItemParameterFullPath = String.Format(@"{0}{1}\ProjectItemParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
+            XmlTextWriter _XmlWriter = new XmlTextWriter(ProjectItemParameterFullPath, Encoding.Unicode);
+            _XmlWriter.Formatting = Formatting.Indented;
+            _XmlWriter.WriteStartDocument();
+            _XmlWriter.WriteStartElement("ProjectItemParameter");
+            {
+                if (InspSysManagerParam[_ID].ProjectItem == (int)eProjectItem.NEEDLE_ALIGN)
+                {
+                    if (null == InspSysManagerParam[_ID].ProjectItemParam) InspSysManagerParam[_ID].ProjectItemParam = new AlignProjectParameter();
+                    AlignProjectParameter _AlignParam = InspSysManagerParam[_ID].ProjectItemParam as AlignProjectParameter;
+                    _XmlWriter.WriteElementString("OriginX", _AlignParam.OriginX.ToString());
+                    _XmlWriter.WriteElementString("OriginY", _AlignParam.OriginY.ToString());
+                    _XmlWriter.WriteElementString("OriginRadius", _AlignParam.OriginRadius.ToString());
+                }
+
+                else if (InspSysManagerParam[_ID].ProjectItem == (int)eProjectItem.LEAD_INSP)
+                {
+                    if (null == InspSysManagerParam[_ID].ProjectItemParam) InspSysManagerParam[_ID].ProjectItemParam = new LeadProjectParameter();
+                    LeadProjectParameter _LeadParam = InspSysManagerParam[_ID].ProjectItemParam as LeadProjectParameter;
+                    _XmlWriter.WriteElementString("LeadCount", _LeadParam.LeadCount.ToString());
+                }
+            }
+            _XmlWriter.WriteEndElement();
+            _XmlWriter.WriteEndDocument();
+            _XmlWriter.Close();
+        }
 
         #region Read & Write InspectionParameter
         public bool ReadInspectionParameters()
@@ -557,6 +640,7 @@ namespace ParameterManager
                     case "ArcAngleSpan": _CogNeedleFind.ArcAngleSpan = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginX": _CogNeedleFind.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginY": _CogNeedleFind.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginRadius": _CogNeedleFind.OriginRadius = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogNeedleFind;
@@ -732,6 +816,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("ArcAngleSpan", _CogNeedleFindAlgo.ArcAngleSpan.ToString());
             _XmlWriter.WriteElementString("OriginX", _CogNeedleFindAlgo.OriginX.ToString());
             _XmlWriter.WriteElementString("OriginY", _CogNeedleFindAlgo.OriginY.ToString());
+            _XmlWriter.WriteElementString("OriginRadius", _CogNeedleFindAlgo.OriginRadius.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -869,6 +954,7 @@ namespace ParameterManager
                         _Algorithm.ArcAngleSpan     = _SrcAlgorithm.ArcAngleSpan;
                         _Algorithm.OriginX          = _SrcAlgorithm.OriginX;
                         _Algorithm.OriginY          = _SrcAlgorithm.OriginY;
+                        _Algorithm.OriginRadius     = _SrcAlgorithm.OriginRadius;
                         
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

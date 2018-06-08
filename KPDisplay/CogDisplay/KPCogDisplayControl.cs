@@ -282,7 +282,7 @@ namespace KPDisplay
             StaticPointMarker = _cogPointMarker;
             StaticPointMarker.Color = _color;
             StaticPointMarker.LineWidthInScreenPixels = _LineSize;
-            StaticPointMarker.SizeInScreenPixels = 8;
+            StaticPointMarker.SizeInScreenPixels = 12;
             StaticPointMarker.GraphicType = CogPointMarkerGraphicTypeConstants.Cross;
             if(ClearFlag == true) kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.StaticGraphics.Add(StaticPointMarker, _groupName);
@@ -470,13 +470,13 @@ namespace KPDisplay
             return MousePoint;
         }
 
-        public void DrawText(string _Message, double _StartX, double _StartY, CogColorConstants _Color, int _FontSize = 9)
+        public void DrawText(string _Message, double _StartX, double _StartY, CogColorConstants _Color, int _FontSize = 9, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)
         {
             System.Drawing.Font _Font = new System.Drawing.Font("나눔바른고딕", _FontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
 
             cogLabel.Color = _Color;
             cogLabel.Font = _Font;
-            cogLabel.Alignment = Cognex.VisionPro.CogGraphicLabelAlignmentConstants.TopLeft;
+            cogLabel.Alignment = _Align;
             cogLabel.SetXYText(_StartX, _StartY, _Message);
             kCogDisplay.StaticGraphics.Add(cogLabel, "Message");
         }

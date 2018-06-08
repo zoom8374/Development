@@ -80,6 +80,7 @@
     <Compile Include="Algorithm\InspectionClass\InspectionBlobReference.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionBlob.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionNeedleCircleFind.cs" />
+    <Compile Include="Algorithm\InspectionClass\InspectionLead.cs" />
     <Compile Include="InspSysManagerWindow\InspectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +120,12 @@
     <Compile Include="Algorithm\ucCogBlobReference.Designer.cs">
       <DependentUpon>ucCogBlobReference.cs</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\ucCogLeadInspection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogLeadInspection.Designer.cs">
+      <DependentUpon>ucCogLeadInspection.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CustomControl\CustomControl.csproj">
@@ -147,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogBlobReference.resx">
       <DependentUpon>ucCogBlobReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogLeadInspection.resx">
+      <DependentUpon>ucCogLeadInspection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogNeedleCircleFind.resx">
       <DependentUpon>ucCogNeedleCircleFind.cs</DependentUpon>
