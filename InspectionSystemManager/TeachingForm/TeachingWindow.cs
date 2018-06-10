@@ -562,7 +562,8 @@ namespace InspectionSystemManager
 
             //BenchMark ComboBox Setting
             DataGridViewComboBoxCell _DataGridComboCell = new DataGridViewComboBoxCell();
-            _DataGridComboCell = (DataGridViewComboBoxCell)this.gridAreaBenchMark.CellTemplate.Clone();
+            //_DataGridComboCell = (DataGridViewComboBoxCell)this.gridAreaBenchMark.CellTemplate.Clone();
+            _DataGridComboCell = this.gridAreaBenchMark.CellTemplate.Clone() as DataGridViewComboBoxCell;
             _DataGridComboCell.Items.Add("None");
             
             for (int iLoopCount = 0; iLoopCount < Convert.ToInt32(_Index) - 1; ++iLoopCount)
@@ -617,7 +618,8 @@ namespace InspectionSystemManager
 
             //BenchMark ComboBox Setting
             DataGridViewComboBoxCell _DataGridComboCell = new DataGridViewComboBoxCell();
-            _DataGridComboCell = (DataGridViewComboBoxCell)this.gridAlgoBenchMark.CellTemplate.Clone();
+            //_DataGridComboCell = (DataGridViewComboBoxCell)this.gridAlgoBenchMark.CellTemplate.Clone();
+            _DataGridComboCell = this.gridAlgoBenchMark.CellTemplate.Clone() as DataGridViewComboBoxCell;
             _DataGridComboCell.Items.Add("None");
 
             for (int iLoopCount = 0; iLoopCount < Convert.ToInt32(_Index) - 1; ++iLoopCount)

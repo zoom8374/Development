@@ -281,6 +281,7 @@ namespace ParameterManager
         }
         #endregion Read & Write Inspection System Manager
 
+        #region Read & Write Project Item Parameter
         public bool ReadProjectItemParameters()
         {
             bool _Result = true;
@@ -377,6 +378,7 @@ namespace ParameterManager
             _XmlWriter.WriteEndDocument();
             _XmlWriter.Close();
         }
+        #endregion Read & Write Project Item Parameter
 
         #region Read & Write InspectionParameter
         public bool ReadInspectionParameters()
@@ -857,8 +859,7 @@ namespace ParameterManager
                     {
                         #region Pattern Algorithm Copy
                         _InspAlgoParam.Algorithm = new CogPatternAlgo();
-                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).PatternCount = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).PatternCount;
-
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).PatternCount     = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).PatternCount;
                         ((CogPatternAlgo)_InspAlgoParam.Algorithm).PatternCount     = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).PatternCount;
                         ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingScore    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).MatchingScore;
                         ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingAngle    = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).MatchingAngle;
@@ -963,8 +964,6 @@ namespace ParameterManager
                 _DestParam.InspAreaParam.Add(_InspAreaParam);
             }
         }
-
-
         #endregion RecipeCopy
     }
 }

@@ -31,7 +31,6 @@ namespace InspectionSystemManager
         }
         #endregion InitializeEvent & DeInitializeEvent
 
-
         #region KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
         private void TeachDisplayMouseUpEvent(CogFindCircleTool _CircleCaliperTool)
         {

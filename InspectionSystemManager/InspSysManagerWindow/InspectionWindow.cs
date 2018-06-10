@@ -95,7 +95,6 @@ namespace InspectionSystemManager
             btnImageLoad.ButtonImage = InspectionSystemManager.Properties.Resources.ImageLoad;
             btnImageLoad.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageLoadOver;
             btnImageLoad.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageLoadOver;
-
             #endregion Set Button Image Resource
         }
 
@@ -585,7 +584,8 @@ namespace InspectionSystemManager
 
         private bool CogBlobReferenceAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
-            CogBlobReferenceAlgo    _CogBlobReferAlgo = (CogBlobReferenceAlgo)_Algorithm;
+            //CogBlobReferenceAlgo    _CogBlobReferAlgo = (CogBlobReferenceAlgo)_Algorithm;
+            var _CogBlobReferAlgo = _Algorithm as CogBlobReferenceAlgo;
             CogBlobReferenceResult  _CogBlobReferResult = new CogBlobReferenceResult();
 
             bool _Result = InspBlobReferProc.Run(OriginImage, _InspRegion, _CogBlobReferAlgo, ref _CogBlobReferResult, _NgAreaNumber);
@@ -659,7 +659,8 @@ namespace InspectionSystemManager
         private bool DisplayResultBlobReference(Object _ResultParam, int _Index)
         {
             bool _IsGood = false;
-            CogBlobReferenceResult _BlobReferResult = (CogBlobReferenceResult)_ResultParam;
+            //CogBlobReferenceResult _BlobReferResult = (CogBlobReferenceResult)_ResultParam;
+            var _BlobReferResult = _ResultParam as CogBlobReferenceResult;
 
             CogRectangle _Region = new CogRectangle();
             CogPointMarker _Point = new CogPointMarker();

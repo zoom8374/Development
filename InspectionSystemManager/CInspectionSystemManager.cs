@@ -205,7 +205,8 @@ namespace InspectionSystemManager
 
         private void TeachingComplete(object _Value)
         {
-            InspectionParameter _InspParam = (InspectionParameter)_Value;
+            //InspectionParameter _InspParam = (InspectionParameter)_Value;
+            var _InspParam = _Value as InspectionParameter;
             SetInspectionParameter(_InspParam, false);
         }
 
