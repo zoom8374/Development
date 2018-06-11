@@ -79,6 +79,7 @@ namespace ParameterManager
         public int      BlobCount;
         public double[] BlobMessCenterX;
         public double[] BlobMessCenterY;
+        
         public double[] BlobCenterX;
         public double[] BlobCenterY;
         public double[] BlobMinX;
@@ -105,6 +106,38 @@ namespace ParameterManager
         public double OriginY;
 
         public double Radius;
+    }
+
+    public class CogLeadResult : Result
+    {
+        public int BlobCount;
+        public double[] BlobArea;
+        public double[] BlobCenterX;
+        public double[] BlobCenterY;
+        public double[] BlobMinX;
+        public double[] BlobMinY;
+        public double[] BlobMaxX;
+        public double[] BlobMaxY;
+        public double[] Width;
+        public double[] Height;
+
+        public double[] BlobMessCenterX;
+        public double[] BlobMessCenterY;
+        public double[] PrincipalWidth;
+        public double[] PrincipalHeight;
+        public double[] Angle;
+        public double[] Degree;
+
+        public CogCompositeShape[] ResultGraphic;
+
+        public double OriginX;
+        public double OriginY;
+
+
+
+        //Lead 검사에 필요한 Parameter
+        public double[] LeadPitchTopX;
+        public double[] LeadPitchTopY;
     }
     #endregion Inspection Result Parameter
 

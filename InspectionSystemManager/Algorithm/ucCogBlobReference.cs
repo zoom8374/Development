@@ -93,36 +93,44 @@ namespace InspectionSystemManager
 
         public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
         {
-            CogBlobReferAlgoRcp = _Algorithm as CogBlobReferenceAlgo;
+            if (_Algorithm != null)
+            {
+                CogBlobReferAlgoRcp = _Algorithm as CogBlobReferenceAlgo;
 
-            ResolutionX = _ResolutionX;
-            ResolutionY = _ResolutionY;
+                ResolutionX = _ResolutionX;
+                ResolutionY = _ResolutionY;
 
-            graLabelForeground.Text = CogBlobReferAlgoRcp.ForeGround.ToString();
-            graLabelThresholdValue.Text = CogBlobReferAlgoRcp.ThresholdMin.ToString();
-            hScrollBarThreshold.Value = CogBlobReferAlgoRcp.ThresholdMin;
-            textBoxBlobAreaMin.Text = CogBlobReferAlgoRcp.BlobAreaMin.ToString();
-            textBoxBlobAreaMax.Text = CogBlobReferAlgoRcp.BlobAreaMax.ToString();
-            textBoxWidthSizeMin.Text = CogBlobReferAlgoRcp.WidthMin.ToString();
-            textBoxWidthSizeMax.Text = CogBlobReferAlgoRcp.WidthMax.ToString();
-            textBoxHeightSizeMin.Text = CogBlobReferAlgoRcp.HeightMin.ToString();
-            textBoxHeightSizeMax.Text = CogBlobReferAlgoRcp.HeightMax.ToString();
-            textBoxBenchMarkPosition.Text = CogBlobReferAlgoRcp.BenchMarkPosition.ToString();
-            textBoxBodyArea.Text = CogBlobReferAlgoRcp.BodyArea.ToString("F2");
-            textBoxBodyWidth.Text = CogBlobReferAlgoRcp.BodyWidth.ToString("F2");
-            textBoxBodyHeight.Text = CogBlobReferAlgoRcp.BodyHeight.ToString("F2");
-            numUpDownBodyArea.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyAreaPermitPercent);
-            numUpDownBodyWidth.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyWidthPermitPercent);
-            numUpDownBodyHeight.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyHeightPermitPercent);
-            ckBodyArea.Checked = CogBlobReferAlgoRcp.UseBodyArea;
-            ckBodyWidth.Checked = CogBlobReferAlgoRcp.UseBodyWidth;
-            ckBodyHeight.Checked = CogBlobReferAlgoRcp.UseBodyHeight;
-            numUpDownBodyArea.Enabled = CogBlobReferAlgoRcp.UseBodyArea;
-            numUpDownBodyWidth.Enabled = CogBlobReferAlgoRcp.UseBodyWidth;
-            numUpDownBodyHeight.Enabled = CogBlobReferAlgoRcp.UseBodyHeight;
-            
-            SetForegroundComboBox(CogBlobReferAlgoRcp.ForeGround);
-            SetBenchMarkPositionComboBox(CogBlobReferAlgoRcp.BenchMarkPosition);
+                graLabelForeground.Text = CogBlobReferAlgoRcp.ForeGround.ToString();
+                graLabelThresholdValue.Text = CogBlobReferAlgoRcp.ThresholdMin.ToString();
+                hScrollBarThreshold.Value = CogBlobReferAlgoRcp.ThresholdMin;
+                textBoxBlobAreaMin.Text = CogBlobReferAlgoRcp.BlobAreaMin.ToString();
+                textBoxBlobAreaMax.Text = CogBlobReferAlgoRcp.BlobAreaMax.ToString();
+                textBoxWidthSizeMin.Text = CogBlobReferAlgoRcp.WidthMin.ToString();
+                textBoxWidthSizeMax.Text = CogBlobReferAlgoRcp.WidthMax.ToString();
+                textBoxHeightSizeMin.Text = CogBlobReferAlgoRcp.HeightMin.ToString();
+                textBoxHeightSizeMax.Text = CogBlobReferAlgoRcp.HeightMax.ToString();
+                textBoxBenchMarkPosition.Text = CogBlobReferAlgoRcp.BenchMarkPosition.ToString();
+                textBoxBodyArea.Text = CogBlobReferAlgoRcp.BodyArea.ToString("F2");
+                textBoxBodyWidth.Text = CogBlobReferAlgoRcp.BodyWidth.ToString("F2");
+                textBoxBodyHeight.Text = CogBlobReferAlgoRcp.BodyHeight.ToString("F2");
+                numUpDownBodyArea.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyAreaPermitPercent);
+                numUpDownBodyWidth.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyWidthPermitPercent);
+                numUpDownBodyHeight.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyHeightPermitPercent);
+                ckBodyArea.Checked = CogBlobReferAlgoRcp.UseBodyArea;
+                ckBodyWidth.Checked = CogBlobReferAlgoRcp.UseBodyWidth;
+                ckBodyHeight.Checked = CogBlobReferAlgoRcp.UseBodyHeight;
+                numUpDownBodyArea.Enabled = CogBlobReferAlgoRcp.UseBodyArea;
+                numUpDownBodyWidth.Enabled = CogBlobReferAlgoRcp.UseBodyWidth;
+                numUpDownBodyHeight.Enabled = CogBlobReferAlgoRcp.UseBodyHeight;
+
+                SetForegroundComboBox(CogBlobReferAlgoRcp.ForeGround);
+                SetBenchMarkPositionComboBox(CogBlobReferAlgoRcp.BenchMarkPosition);
+            }
+
+            else
+            {
+                //LOG
+            }
         }
 
         public void SaveAlgoRecipe()
@@ -190,6 +198,7 @@ namespace InspectionSystemManager
 
         private void ApplySettingValue()
         {
+            CogBlobReferenceResult _CogBlobReferResult = new CogBlobReferenceResult();
             CogBlobReferenceAlgo _CogBlobReferAlgoRcp = new CogBlobReferenceAlgo();
             _CogBlobReferAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
             _CogBlobReferAlgoRcp.BlobAreaMin = Convert.ToInt32(textBoxBlobAreaMin.Text);
@@ -200,9 +209,10 @@ namespace InspectionSystemManager
             _CogBlobReferAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
             _CogBlobReferAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             _CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
-
-            CogBlobReferenceResult _CogBlobReferResult = new CogBlobReferenceResult();
-            ApplyBlobReferValueEvent(_CogBlobReferAlgoRcp, ref _CogBlobReferResult);
+            
+            var _ApplyBlobReferValueEvent = ApplyBlobReferValueEvent;
+            if (_ApplyBlobReferValueEvent != null)
+                _ApplyBlobReferValueEvent(_CogBlobReferAlgoRcp, ref _CogBlobReferResult);
 
             if (_CogBlobReferResult.BlobArea != null)
             {

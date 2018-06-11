@@ -310,17 +310,17 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(StaticArrow, _GroupName);
         }
 
-        public void DrawStaticLine(double _StartX, double _StartY, double _EndX, double _EndY, int _Tickness, string _GroupName, CogColorConstants _Color)
-        {
-            StaticLineSegment.Color = _Color;
-            StaticLineSegment.Interactive = false;
-            StaticLineSegment.LineStyle = CogGraphicLineStyleConstants.Solid;
-            StaticLineSegment.LineWidthInScreenPixels = _Tickness;
-            StaticLineSegment.SetStartEnd(_StartX, _StartY, _EndX, _EndY);
-            kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);
-        }
+        //public void DrawStaticLine(double _StartX, double _StartY, double _EndX, double _EndY, int _Tickness, string _GroupName, CogColorConstants _Color)
+        //{
+        //    StaticLineSegment.Color = _Color;
+        //    StaticLineSegment.Interactive = false;
+        //    StaticLineSegment.LineStyle = CogGraphicLineStyleConstants.Solid;
+        //    StaticLineSegment.LineWidthInScreenPixels = _Tickness;
+        //    StaticLineSegment.SetStartEnd(_StartX, _StartY, _EndX, _EndY);
+        //    kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);
+        //}
 
-        public void DrawStaticLine(int _StartX, int _StartY, int _Length, double _Rotate, int _Tickness, string _GroupName, CogColorConstants _Color)
+        public void DrawStaticLine(double _StartX, double _StartY, double _Length, double _Rotate, int _Tickness, string _GroupName, CogColorConstants _Color)
         {
             StaticLineSegment.Color = _Color;
             StaticLineSegment.Interactive = false;

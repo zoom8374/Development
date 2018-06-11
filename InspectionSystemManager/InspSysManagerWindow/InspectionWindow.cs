@@ -21,6 +21,7 @@ namespace InspectionSystemManager
     {
         private InspectionBlobReference     InspBlobReferProc;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
+        private InspectionLead              InspLeadProc;
 
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
@@ -63,10 +64,8 @@ namespace InspectionSystemManager
         private Thread ThreadLiveCheck;
         private bool IsThreadLiveCheckExit = false;
 
-
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null);
         public event InspectionWindowHandler InspectionWindowEvent;
-
 
         #region Initialize & DeInitialize
         public InspectionWindow()
@@ -112,6 +111,9 @@ namespace InspectionSystemManager
             InspNeedleCircleFindProc = new InspectionNeedleCircleFind();
             InspNeedleCircleFindProc.Initialize();
 
+            InspLeadProc = new InspectionLead();
+            InspLeadProc.Initialize();
+
             AreaResultParamList = new AreaResultParameterList();
             AlgoResultParamList = new AlgoResultParameterList();
 
@@ -134,6 +136,7 @@ namespace InspectionSystemManager
         {
             InspBlobReferProc.DeInitialize();
             InspNeedleCircleFindProc.DeInitialize();
+            InspLeadProc.DeInitialize();
         }
 
         public void SetLocation(int _StartX, int _StartY)
@@ -359,6 +362,7 @@ namespace InspectionSystemManager
         }
         #endregion Control Event
 
+        #region Image Load & Save
         private string LoadCogImage()
         {
             string _ImageFileName = "";
@@ -395,7 +399,9 @@ namespace InspectionSystemManager
             if (_SaveDirectory == null) _SaveDirectory = @"D:\VisionInspectionData\" + FormName;
             kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
         }
+        #endregion Image Load & Save
 
+        #region Call Teaching  Window & Parameter Set
         private void Teaching()
         {
             TeachWnd = new TeachingWindow();
@@ -414,8 +420,9 @@ namespace InspectionSystemManager
             TeachWnd.Dispose();
             GC.Collect();
         }
+        #endregion Call Teaching  Window & Parameter Set
 
-        #region Inspection Process 
+        #region Inspection Process
         private bool Inspection()
         {
             bool _Result = false;
@@ -604,8 +611,14 @@ namespace InspectionSystemManager
 
         private bool CogLeadAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
+            CogLeadAlgo _CogLeadAlgo = _Algorithm as CogLeadAlgo;
+            CogLeadResult _CogLeadResult = new CogLeadResult();
 
-            return true;
+            bool _Result = InspLeadProc.Run(OriginImage, _InspRegion, _CogLeadAlgo, ref _CogLeadResult);
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LEAD, _CogLeadResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogLeadResult.IsGood;
         }
 
         private bool CogNeedleCircleFindAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
@@ -708,9 +721,42 @@ namespace InspectionSystemManager
 
         private bool DisplayResultLeadMeasure(Object _ResultParam, int _Index)
         {
-            bool _IsGood = true;
+            CogLeadResult _CogLeadResult = _ResultParam as CogLeadResult;
 
-            return _IsGood;
+            for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount; ++iLoopCount)
+            {
+                CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
+                _BlobRectAffine.SetCenterLengthsRotationSkew(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
+                                                            _CogLeadResult.PrincipalWidth[iLoopCount], _CogLeadResult.PrincipalHeight[iLoopCount], _CogLeadResult.Angle[iLoopCount], 0);
+                kpCogDisplayMain.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Green);
+                kpCogDisplayMain.DrawBlobResult(_CogLeadResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+
+                //CogPointMarker _Point = new CogPointMarker();
+                //_Point.SetCenterRotationSize(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], 0, 1);
+                //kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint" + (iLoopCount + 1), CogColorConstants.Green, 2);
+
+                CogLineSegment _CenterLineStart = new CogLineSegment();
+                _CenterLineStart.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
+                                                    _CogLeadResult.PrincipalWidth[iLoopCount] / 2, _CogLeadResult.Angle[iLoopCount]);
+                CogLineSegment _CenterLineEnd = new CogLineSegment();
+                _CenterLineEnd.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
+                                                    _CogLeadResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadResult.Angle[iLoopCount]);
+
+                kpCogDisplayMain.DrawStaticLine(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
+                                            _CogLeadResult.PrincipalWidth[iLoopCount] / 2 + 20, _CogLeadResult.Angle[iLoopCount], 2, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Green);
+                kpCogDisplayMain.DrawStaticLine(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
+                                            _CogLeadResult.PrincipalWidth[iLoopCount] / 2 + 20, (Math.PI) + _CogLeadResult.Angle[iLoopCount], 2, "CenterLine-_" + (iLoopCount + 1), CogColorConstants.Green);
+
+                CogPointMarker _PointStart = new CogPointMarker();
+                _PointStart.SetCenterRotationSize(_CenterLineStart.EndX, _CenterLineStart.EndY, 0, 1);
+                kpCogDisplayMain.DrawStaticShape(_PointStart, "PointStart" + (iLoopCount + 1), CogColorConstants.Red, 2);
+
+                CogPointMarker _PointEnd = new CogPointMarker();
+                _PointEnd.SetCenterRotationSize(_CenterLineEnd.EndX, _CenterLineEnd.EndY, 0, 1);
+                kpCogDisplayMain.DrawStaticShape(_PointEnd, "PointEnd" + (iLoopCount + 1), CogColorConstants.Yellow, 2);
+            }
+
+            return _CogLeadResult.IsGood;
         }
 
         private bool DisplayResultNeedleFind(Object _ResultParam, int _Index)

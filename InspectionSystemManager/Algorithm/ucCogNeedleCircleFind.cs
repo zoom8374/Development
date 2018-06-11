@@ -114,27 +114,35 @@ namespace InspectionSystemManager
 
         public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
         {
-            AlgoInitFlag = false;
+            if (_Algorithm != null)
+            {
+                AlgoInitFlag = false;
 
-            CogNeedleFindAlgoRcp = _Algorithm as CogNeedleFindAlgo;
+                CogNeedleFindAlgoRcp = _Algorithm as CogNeedleFindAlgo;
 
-            ResolutionX                     = _ResolutionX;
-            ResolutionY                     = _ResolutionY;
-            numUpDownCaliperNumber.Value    = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperNumber);
-            numUpDownSearchLength.Value     = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperSearchLength);
-            numUpDownProjectionLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperProjectionLength);
-            numUpDownArcCenterX.Value       = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterX);
-            numUpDownArcCenterY.Value       = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterY);
-            numUpDownArcRadius.Value        = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcRadius);
-            numUpDownAngleStart.Value       = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleStart);
-            numUpDownAngleSpan.Value        = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleSpan);
-            textBoxCenterX.Text             = CogNeedleFindAlgoRcp.OriginX.ToString("F3");
-            textBoxCenterY.Text             = CogNeedleFindAlgoRcp.OriginY.ToString("F3");
-            textBoxRadius.Text              = CogNeedleFindAlgoRcp.OriginRadius.ToString("F3");
+                ResolutionX = _ResolutionX;
+                ResolutionY = _ResolutionY;
+                numUpDownCaliperNumber.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperNumber);
+                numUpDownSearchLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperSearchLength);
+                numUpDownProjectionLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperProjectionLength);
+                numUpDownArcCenterX.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterX);
+                numUpDownArcCenterY.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterY);
+                numUpDownArcRadius.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcRadius);
+                numUpDownAngleStart.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleStart);
+                numUpDownAngleSpan.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleSpan);
+                textBoxCenterX.Text = CogNeedleFindAlgoRcp.OriginX.ToString("F3");
+                textBoxCenterY.Text = CogNeedleFindAlgoRcp.OriginY.ToString("F3");
+                textBoxRadius.Text = CogNeedleFindAlgoRcp.OriginRadius.ToString("F3");
 
-            SetSearchDirection(CogNeedleFindAlgoRcp.CaliperSearchDirection);
-            
-            AlgoInitFlag = true;
+                SetSearchDirection(CogNeedleFindAlgoRcp.CaliperSearchDirection);
+
+                AlgoInitFlag = true;
+            }
+
+            else
+            {
+                //LOG
+            }
         }
 
         public void SaveAlgoRecipe()

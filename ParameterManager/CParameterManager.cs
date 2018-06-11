@@ -496,7 +496,7 @@ namespace ParameterManager
                 if ((int)eAlgoType.C_PATTERN == _InspAlgoParamTemp.AlgoType)         GetPatternInspectionparameterAlgorithm(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_BLOB == _InspAlgoParamTemp.AlgoType)       GetBlobInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_BLOB_REFER == _InspAlgoParamTemp.AlgoType) GetBlobReferInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)       GetLeadBentInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)       GetLeadInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_NEEDLE_FIND == _InspAlgoParamTemp.AlgoType)GetNeedleFindInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
              
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
@@ -617,9 +617,29 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogBlob;
         }
 
-        private void GetLeadBentInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetLeadInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
-
+            if (null == _Nodes) return;
+            CogLeadAlgo _CogLeadAlgo = new CogLeadAlgo();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch (_NodeChild.Name)
+                {
+                    case "Foreground":      _CogLeadAlgo.ForeGround = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ThresholdMin":    _CogLeadAlgo.ThresholdMin = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "ThresholdMax":    _CogLeadAlgo.ThresholdMax = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "BlobAreaMin":     _CogLeadAlgo.BlobAreaMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BlobAreaMax":     _CogLeadAlgo.BlobAreaMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "WidthMin":        _CogLeadAlgo.WidthMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "WidthMax":        _CogLeadAlgo.WidthMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "HeightMin":       _CogLeadAlgo.HeightMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "HeightMax":       _CogLeadAlgo.HeightMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginX":         _CogLeadAlgo.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginY":         _CogLeadAlgo.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                }
+            }
+            _InspParam.Algorithm = _CogLeadAlgo;
         }
 
         private void GetNeedleFindInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
@@ -701,7 +721,7 @@ namespace ParameterManager
                                 if (eAlgoType.C_PATTERN == _AlgoType)           WritePatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_BLOB == _AlgoType)         WriteBlobInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_BLOB_REFER == _AlgoType)   WriteBlobReferInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_LEAD == _AlgoType)         WriteLeadBentInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LEAD == _AlgoType)         WriteLeadInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  WriteNeedleFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
@@ -799,9 +819,21 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("BenchMarkPosition", _CogBlobAlgo.BenchMarkPosition.ToString());
         }
 
-        private void WriteLeadBentInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteLeadInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
-
+            //CogLeadAlgo _CogLeadAlgo = (CogLeadAlgo)_InspAlgoParam
+            var _CogLeadAlgo = _InspAlgoParam as CogLeadAlgo;
+            _XmlWriter.WriteElementString("Foreground", _CogLeadAlgo.ForeGround.ToString());
+            _XmlWriter.WriteElementString("ThresholdMin", _CogLeadAlgo.ThresholdMin.ToString());
+            _XmlWriter.WriteElementString("ThresholdMax", _CogLeadAlgo.ThresholdMax.ToString());
+            _XmlWriter.WriteElementString("BlobAreaMin", _CogLeadAlgo.BlobAreaMin.ToString());
+            _XmlWriter.WriteElementString("BlobAreaMax", _CogLeadAlgo.BlobAreaMax.ToString());
+            _XmlWriter.WriteElementString("WidthMin", _CogLeadAlgo.WidthMin.ToString());
+            _XmlWriter.WriteElementString("WidthMax", _CogLeadAlgo.WidthMax.ToString());
+            _XmlWriter.WriteElementString("HeightMin", _CogLeadAlgo.HeightMin.ToString());
+            _XmlWriter.WriteElementString("HeightMax", _CogLeadAlgo.HeightMax.ToString());
+            _XmlWriter.WriteElementString("OriginX", _CogLeadAlgo.OriginX.ToString());
+            _XmlWriter.WriteElementString("OriginY", _CogLeadAlgo.OriginY.ToString());
         }
 
         private void WriteNeedleFindInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
@@ -957,6 +989,28 @@ namespace ParameterManager
                         _Algorithm.OriginY          = _SrcAlgorithm.OriginY;
                         _Algorithm.OriginRadius     = _SrcAlgorithm.OriginRadius;
                         
+                        _InspAlgoParam.Algorithm = _Algorithm;
+                    }
+
+                    else if (eAlgoType.C_LEAD == _AlgoType)
+                    {
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogLeadAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogLeadAlgo;
+
+                        _Algorithm = new CogLeadAlgo();
+                        _Algorithm.ForeGround   = _SrcAlgorithm.ForeGround;
+                        _Algorithm.ThresholdMin = _SrcAlgorithm.ThresholdMin;
+                        _Algorithm.ThresholdMax = _SrcAlgorithm.ThresholdMax;
+                        _Algorithm.BlobAreaMin  = _SrcAlgorithm.BlobAreaMin;
+                        _Algorithm.BlobAreaMax  = _SrcAlgorithm.BlobAreaMax;
+                        _Algorithm.WidthMin     = _SrcAlgorithm.WidthMin;
+                        _Algorithm.WidthMax     = _SrcAlgorithm.WidthMax;
+                        _Algorithm.HeightMin    = _SrcAlgorithm.HeightMin;
+                        _Algorithm.HeightMax    = _SrcAlgorithm.HeightMax;
+                        _Algorithm.OriginX      = _SrcAlgorithm.OriginX;
+                        _Algorithm.OriginY      = _SrcAlgorithm.OriginY;
+                        _Algorithm.IsShowwBoundary = _SrcAlgorithm.IsShowwBoundary;
+
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);

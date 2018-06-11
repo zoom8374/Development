@@ -361,7 +361,69 @@ namespace InspectionSystemManager
 
         private void btnInspectionAlgoDel_Click(object sender, EventArgs e)
         {
+            if (-1 == InspAlgoSelected) { MessageBox.Show("Not selected algorithm area."); return; }
+            if (null == gridViewAlgo.CurrentCell) return;
 
+            int _RowNextSelect = 0;
+            int _RowCount = gridViewAlgo.RowCount;
+            int _RowSelect = gridViewAlgo.CurrentCell.RowIndex;
+
+            //연결되어 있는 BenchMark가 있는 경우 삭제 금지
+            bool _IsDeleteContinue = true;
+            int _BenchMark = InspAlgoSelected + 1;
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Count; ++iLoopCount)
+            {
+                int _DeleteAlgoBenchMark = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark;
+                if (_BenchMark == _DeleteAlgoBenchMark) { _IsDeleteContinue = false; break; }
+            }
+
+            if (false == _IsDeleteContinue)
+            {
+                string _Message = "Select algorithm can not be deleted due to the \"BenchMark\" setting.";
+                MessageBox.Show(_Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
+            kpTeachDisplay.ClearDisplay();
+            panelTeaching.Controls.Clear();
+            panelTeaching.Controls.Add(gradientLabelTeaching);
+            gridViewAlgo.Rows.Clear();
+
+
+            //FreeReferenceEvent(ref InspParam, InspAreaSelected, _RowSelect);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.RemoveAt(_RowSelect);
+
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Count; ++iLoopCount)
+            {
+                int BenchMark = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark;
+                if (BenchMark != 0 && BenchMark > _RowSelect) InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark = BenchMark - 1;
+            }
+
+            if (_RowSelect == 0 && _RowCount > 1) _RowNextSelect = 0;
+            if (_RowSelect > 1) _RowNextSelect = _RowSelect - 1;
+            if (_RowCount == 1) _RowSelect = -1;
+            if (_RowSelect != -1) UpdateInspectionAlgoList(InspAreaSelected, true);
+
+            InspAlgoSelected = -1;
+            UpdateTeachingStatus(eTeachStep.ALGO_CLEAR);
+
+            //Remove Algorithm
+            int _ResultIndex = 0;
+            for (int iLoopCount = 0; iLoopCount < InspAreaSelected; ++iLoopCount)
+            {
+                if (InspParam.InspAreaParam[iLoopCount].Enable == true)
+                {
+                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    {
+                        if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                            _ResultIndex++;
+                    }
+                }
+            }
+
+            _ResultIndex = _ResultIndex + InspAlgoSelected - 1;
+            if (AlgoResParamList.Count > _ResultIndex && _ResultIndex >= 0)
+                AlgoResParamList.RemoveAt(_ResultIndex);
         }
 
         private void btnInspectionAlgoCopy_Click(object sender, EventArgs e)

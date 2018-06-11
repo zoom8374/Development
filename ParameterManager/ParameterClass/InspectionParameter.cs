@@ -85,10 +85,6 @@ namespace ParameterManager
         public bool UseBodyArea;
         public bool UseBodyWidth;
         public bool UseBodyHeight;
-        
-
-        public double OrigionPointX;
-        public double OrigionPointY;
 
         public int BenchMarkPosition;
 
@@ -148,8 +144,31 @@ namespace ParameterManager
     /// </summary>
     public class CogLeadAlgo
     {
+        //Condition Parameter
+        public int ForeGround;
+        public int ThresholdMin;
+        public int ThresholdMax;
+        public double BlobAreaMin;
+        public double BlobAreaMax;
+        public double WidthMin;
+        public double WidthMax;
+        public double HeightMin;
+        public double HeightMax;
+        public double OriginX;
+        public double OriginY;
+        public bool IsShowwBoundary;
+
         public CogLeadAlgo()
         {
+            ForeGround = 1;
+            ThresholdMin = 80;
+            ThresholdMax = 200;
+            BlobAreaMin = 1000;
+            BlobAreaMax = 9000000;
+            WidthMin = 5;
+            WidthMax = 200;
+            HeightMin = 5;
+            HeightMax = 200;
         }
     }
 
