@@ -14,17 +14,26 @@ namespace InspectionSystemManager
     public partial class ucCogLeadInspection : UserControl
     {
         private CogLeadAlgo CogLeadAlgoRcp = new CogLeadAlgo();
+        private Panel[] LeadPanelArray;
+
+        private int LeadCount = 26;
 
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
 
-        public delegate void ApplyLeadInspValueHandler(CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult);
+        private double LeadPitchAverage = 0;
+        private double LeadAngleAverage = 0;
+
+        private bool AlgoInitFlag = false;
+
+        public delegate void ApplyLeadInspValueHandler(CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult, bool _IsDisplay = true);
         public event ApplyLeadInspValueHandler ApplyLeadInspValueEvent;
 
         #region Initialize & DeInitialize
         public ucCogLeadInspection()
         {
             InitializeComponent();
+            InitializeControl();
         }
 
         public void Initialize()
@@ -34,6 +43,14 @@ namespace InspectionSystemManager
 
         private void InitializeControl()
         {
+            LeadPanelArray = new Panel[26] { panelLead1,  panelLead2,  panelLead3,  panelLead4,  panelLead5,  panelLead6,  panelLead7,  panelLead8,  panelLead9,  panelLead10, panelLead11, panelLead12, panelLead13,
+                                             panelLead14, panelLead15, panelLead16, panelLead17, panelLead18, panelLead19, panelLead20, panelLead21, panelLead22, panelLead23, panelLead24, panelLead25, panelLead26 };
+
+            for (int iLoopCount = 0; iLoopCount < LeadCount; ++iLoopCount)
+            {
+                LeadPanelArray[iLoopCount].BackColor = Color.White;
+                LeadPanelArray[iLoopCount].Tag = iLoopCount;
+            }
 
         }
 
@@ -58,10 +75,29 @@ namespace InspectionSystemManager
             ApplySettingValue();
         }
 
-        private void hScrollBarThreshold_Scroll(object sender, ScrollEventArgs e)
+        private void hScrollBarThreshold_ValueChanged(object sender, EventArgs e)
         {
             graLabelThresholdValue.Text = hScrollBarThreshold.Value.ToString();
             ApplySettingValue();
+        }
+
+        private void panelLead_MouseUp(object sender, MouseEventArgs e)
+        {
+            DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Lead 검사 여부를 변경하시겠습니까 ? ", "Lead inspection status change", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (DialogResult.Yes != dlgResult) return;
+
+            short _Tag = Convert.ToInt16(((Panel)sender).Tag);
+            ChangeLeadPanelStatus(_Tag);
+        }
+
+        private void btnGetLeadInfo_Click(object sender, EventArgs e)
+        {
+            ApplySettingValue(false);
+            textBoxLeadPitch.Text = (LeadPitchAverage * ResolutionX).ToString("F3");
+
+            if (LeadAngleAverage > 0)   textBoxLeadBentAngle.Text = (90 - (LeadAngleAverage * 180 / Math.PI)).ToString("F3");
+            else                        textBoxLeadBentAngle.Text = (-(90 + (LeadAngleAverage * 180 / Math.PI))).ToString("F3");
+            
         }
         #endregion Control Event
 
@@ -69,10 +105,14 @@ namespace InspectionSystemManager
         {
             if (_Algorithm != null)
             {
+                AlgoInitFlag = false;
+                
                 CogLeadAlgoRcp = _Algorithm as CogLeadAlgo;
 
                 ResolutionX = _ResolutionX;
                 ResolutionY = _ResolutionY;
+
+                LeadCount = CogLeadAlgoRcp.LeadCount;
 
                 graLabelForeground.Text = CogLeadAlgoRcp.ForeGround.ToString();
                 graLabelThresholdValue.Text = CogLeadAlgoRcp.ThresholdMin.ToString();
@@ -85,6 +125,9 @@ namespace InspectionSystemManager
                 textBoxHeightSizeMax.Text = CogLeadAlgoRcp.HeightMax.ToString();
 
                 SetForegroundComboBox(CogLeadAlgoRcp.ForeGround);
+                SetLeadPanelAllStatus();
+
+                AlgoInitFlag = true;
             }
 
             else
@@ -104,6 +147,7 @@ namespace InspectionSystemManager
             CogLeadAlgoRcp.HeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
             CogLeadAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
         }
+
         private void SetForegroundComboBox(int _RangeType)
         {
             rbForegroundWhite.Checked = false;
@@ -116,8 +160,34 @@ namespace InspectionSystemManager
             }
         }
 
-        private void ApplySettingValue()
+        private void SetLeadPanelAllStatus()
         {
+            for (int iLoopCount = 0; iLoopCount < CogLeadAlgoRcp.LeadCount; ++iLoopCount)   SetLeadPanelStatus(iLoopCount);
+        }
+
+        private void SetLeadPanelStatus(int _Index)
+        {
+            if (CogLeadAlgoRcp.LeadUsable.Substring(_Index, 1) == "0")
+                LeadPanelArray[_Index].BackColor = Color.FromArgb(83, 83, 83);
+            else
+                LeadPanelArray[_Index].BackColor = Color.White;
+        }
+
+        private void ChangeLeadPanelStatus(int _Index)
+        {
+            char[] _CharArray = CogLeadAlgoRcp.LeadUsable.ToCharArray();
+
+            if (_CharArray[_Index] == '0')  _CharArray[_Index] = '1';
+            else                            _CharArray[_Index] = '0';
+
+            CogLeadAlgoRcp.LeadUsable = new string(_CharArray);
+            SetLeadPanelStatus(_Index);
+        }
+
+        private void ApplySettingValue(bool _IsDisplay = true)
+        {
+            if (!AlgoInitFlag) return;
+
             CogLeadResult _CogLeadResult = new CogLeadResult();
             CogLeadAlgo _CogLeadAlgoRcp = new CogLeadAlgo();
             _CogLeadAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
@@ -130,8 +200,11 @@ namespace InspectionSystemManager
             _CogLeadAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             
             var _ApplyLeadInspValueEvent = ApplyLeadInspValueEvent;
-            if (ApplyLeadInspValueEvent != null)
-                ApplyLeadInspValueEvent(_CogLeadAlgoRcp, ref _CogLeadResult);
+            if (_ApplyLeadInspValueEvent != null)
+                _ApplyLeadInspValueEvent(_CogLeadAlgoRcp, ref _CogLeadResult, _IsDisplay);
+
+            LeadPitchAverage = _CogLeadResult.LeadPitchAvg;
+            LeadAngleAverage = _CogLeadResult.LeadAngleAvg;
         }
     }
 }

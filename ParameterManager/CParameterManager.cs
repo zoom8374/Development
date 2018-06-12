@@ -626,6 +626,8 @@ namespace ParameterManager
                 if (null == _NodeChild) return;
                 switch (_NodeChild.Name)
                 {
+                    case"LeadCount":        _CogLeadAlgo.LeadCount = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "LeadUsable":      _CogLeadAlgo.LeadUsable = _NodeChild.InnerText; break;
                     case "Foreground":      _CogLeadAlgo.ForeGround = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "ThresholdMin":    _CogLeadAlgo.ThresholdMin = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "ThresholdMax":    _CogLeadAlgo.ThresholdMax = Convert.ToInt32(_NodeChild.InnerText); break;
@@ -823,6 +825,8 @@ namespace ParameterManager
         {
             //CogLeadAlgo _CogLeadAlgo = (CogLeadAlgo)_InspAlgoParam
             var _CogLeadAlgo = _InspAlgoParam as CogLeadAlgo;
+            _XmlWriter.WriteElementString("LeadCount", _CogLeadAlgo.LeadCount.ToString());
+            _XmlWriter.WriteElementString("LeadUsable", _CogLeadAlgo.LeadUsable);
             _XmlWriter.WriteElementString("Foreground", _CogLeadAlgo.ForeGround.ToString());
             _XmlWriter.WriteElementString("ThresholdMin", _CogLeadAlgo.ThresholdMin.ToString());
             _XmlWriter.WriteElementString("ThresholdMax", _CogLeadAlgo.ThresholdMax.ToString());
@@ -998,6 +1002,8 @@ namespace ParameterManager
                         var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogLeadAlgo;
 
                         _Algorithm = new CogLeadAlgo();
+                        _Algorithm.LeadCount    = _SrcAlgorithm.LeadCount;
+                        _Algorithm.LeadUsable   = _SrcAlgorithm.LeadUsable;
                         _Algorithm.ForeGround   = _SrcAlgorithm.ForeGround;
                         _Algorithm.ThresholdMin = _SrcAlgorithm.ThresholdMin;
                         _Algorithm.ThresholdMax = _SrcAlgorithm.ThresholdMax;

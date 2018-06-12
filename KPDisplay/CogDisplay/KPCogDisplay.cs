@@ -16,6 +16,7 @@ namespace KPDisplay
         public KPCogDisplay()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
         }
 
         #region Initialize

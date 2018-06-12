@@ -144,6 +144,10 @@ namespace ParameterManager
     /// </summary>
     public class CogLeadAlgo
     {
+        public int LeadCount;
+        public double LeadPitch;
+        public string LeadUsable;
+
         //Condition Parameter
         public int ForeGround;
         public int ThresholdMin;
@@ -160,6 +164,9 @@ namespace ParameterManager
 
         public CogLeadAlgo()
         {
+            LeadCount = 26;
+            LeadUsable = "11111111111111111111111111";
+
             ForeGround = 1;
             ThresholdMin = 80;
             ThresholdMax = 200;

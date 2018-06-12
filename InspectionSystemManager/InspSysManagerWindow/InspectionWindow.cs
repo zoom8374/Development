@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
@@ -724,37 +725,31 @@ namespace InspectionSystemManager
             CogLeadResult _CogLeadResult = _ResultParam as CogLeadResult;
 
             for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount; ++iLoopCount)
+            //Parallel.For(0, _CogLeadResult.BlobCount, (iLoopCount) =>
             {
+                //Draw Boundary
                 CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
-                _BlobRectAffine.SetCenterLengthsRotationSkew(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
-                                                            _CogLeadResult.PrincipalWidth[iLoopCount], _CogLeadResult.PrincipalHeight[iLoopCount], _CogLeadResult.Angle[iLoopCount], 0);
-                kpCogDisplayMain.DrawStaticShape(_BlobRectAffine, "BlobRectAffine" + (iLoopCount + 1), CogColorConstants.Green);
-                kpCogDisplayMain.DrawBlobResult(_CogLeadResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+                CogPointMarker _CenterPoint = new CogPointMarker();
+                _BlobRectAffine.SetCenterLengthsRotationSkew(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount], _CogLeadResult.PrincipalHeight[iLoopCount], _CogLeadResult.Angle[iLoopCount], 0);
+                _CenterPoint.SetCenterRotationSize(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], 0, 2);
+                ResultDisplay(_BlobRectAffine, _CenterPoint, "Lead" + (iLoopCount + 1), _CogLeadResult.IsGood);
 
-                //CogPointMarker _Point = new CogPointMarker();
-                //_Point.SetCenterRotationSize(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], 0, 1);
-                //kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint" + (iLoopCount + 1), CogColorConstants.Green, 2);
-
+                //Draw Center Line
                 CogLineSegment _CenterLineStart = new CogLineSegment();
-                _CenterLineStart.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
-                                                    _CogLeadResult.PrincipalWidth[iLoopCount] / 2, _CogLeadResult.Angle[iLoopCount]);
                 CogLineSegment _CenterLineEnd = new CogLineSegment();
-                _CenterLineEnd.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
-                                                    _CogLeadResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadResult.Angle[iLoopCount]);
+                _CenterLineStart.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount] / 2 + 20, _CogLeadResult.Angle[iLoopCount]);
+                _CenterLineEnd.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount] / 2 + 20, (Math.PI) + _CogLeadResult.Angle[iLoopCount]);
+                ResultDisplay(_CenterLineStart, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Cyan);
+                ResultDisplay(_CenterLineEnd, "CenterLine-_" + (iLoopCount + 1), CogColorConstants.Cyan);
 
-                kpCogDisplayMain.DrawStaticLine(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
-                                            _CogLeadResult.PrincipalWidth[iLoopCount] / 2 + 20, _CogLeadResult.Angle[iLoopCount], 2, "CenterLine+_" + (iLoopCount + 1), CogColorConstants.Green);
-                kpCogDisplayMain.DrawStaticLine(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount],
-                                            _CogLeadResult.PrincipalWidth[iLoopCount] / 2 + 20, (Math.PI) + _CogLeadResult.Angle[iLoopCount], 2, "CenterLine-_" + (iLoopCount + 1), CogColorConstants.Green);
-
-                CogPointMarker _PointStart = new CogPointMarker();
-                _PointStart.SetCenterRotationSize(_CenterLineStart.EndX, _CenterLineStart.EndY, 0, 1);
-                kpCogDisplayMain.DrawStaticShape(_PointStart, "PointStart" + (iLoopCount + 1), CogColorConstants.Red, 2);
-
-                CogPointMarker _PointEnd = new CogPointMarker();
-                _PointEnd.SetCenterRotationSize(_CenterLineEnd.EndX, _CenterLineEnd.EndY, 0, 1);
-                kpCogDisplayMain.DrawStaticShape(_PointEnd, "PointEnd" + (iLoopCount + 1), CogColorConstants.Yellow, 2);
+                //Draw Pitch Point
+                CogPointMarker _PitchPoint = new CogPointMarker();
+                _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchTopX[iLoopCount], _CogLeadResult.LeadPitchTopY[iLoopCount], 0, 1);
+                ResultDisplay(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Red);
+                _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchBottomX[iLoopCount], _CogLeadResult.LeadPitchBottomY[iLoopCount], 0, 1);
+                ResultDisplay(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Yellow);
             }
+            //});
 
             return _CogLeadResult.IsGood;
         }
@@ -803,6 +798,25 @@ namespace InspectionSystemManager
 
             if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
             else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+        }
+
+        public void ResultDisplay(CogRectangleAffine _Region, CogPointMarker _Point, string _Name, bool _IsGood)
+        {
+            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
+            else                    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Red);
+
+            if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
+            else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+        }
+
+        public void ResultDisplay(CogLineSegment _Line, string _Name, CogColorConstants _Color)
+        {
+            kpCogDisplayMain.DrawStaticLine(_Line, _Name, _Color);
+        }
+
+        public void ResultDisplay(CogPointMarker _Point, string _Name, CogColorConstants _Color)
+        {
+            kpCogDisplayMain.DrawStaticShape(_Point, _Name, _Color, 2);
         }
 
         public void ResultDisplayMessage(double _StartX, double _StartY, string _Message, bool _IsGood = true, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)

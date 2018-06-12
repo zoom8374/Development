@@ -133,12 +133,16 @@ namespace ParameterManager
         public double OriginX;
         public double OriginY;
 
-
-
         //Lead 검사에 필요한 Parameter
+        public double LeadPitchAvg;
+        public double LeadAngleAvg;
+        public bool[] IsLeadGood;
         public double[] LeadPitchTopX;
         public double[] LeadPitchTopY;
+        public double[] LeadPitchBottomX;
+        public double[] LeadPitchBottomY;
     }
     #endregion Inspection Result Parameter
 
 }
+    

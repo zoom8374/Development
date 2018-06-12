@@ -60,10 +60,34 @@ namespace InspectionSystemManager
             {
                 _CogLeadResult = GetResults();
 
+                #region Lead Pitch Point Get
                 for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount; ++iLoopCount)
                 {
+                    if (_CogLeadResult.Angle[iLoopCount] > 0)
+                    {
+                        CogLineSegment _CenterLine = new CogLineSegment();
+                        _CenterLine.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadResult.Angle[iLoopCount]);
+                        _CogLeadResult.LeadPitchTopX[iLoopCount] = _CenterLine.EndX;
+                        _CogLeadResult.LeadPitchTopY[iLoopCount] = _CenterLine.EndY;
 
+                        _CenterLine.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount] / 2, _CogLeadResult.Angle[iLoopCount]);
+                        _CogLeadResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
+                        _CogLeadResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
+                    }
+
+                    else
+                    {
+                        CogLineSegment _CenterLine = new CogLineSegment();
+                        _CenterLine.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount] / 2, _CogLeadResult.Angle[iLoopCount]);
+                        _CogLeadResult.LeadPitchTopX[iLoopCount] = _CenterLine.EndX;
+                        _CogLeadResult.LeadPitchTopY[iLoopCount] = _CenterLine.EndY;
+
+                        _CenterLine.SetStartLengthRotation(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount] / 2, (Math.PI) + _CogLeadResult.Angle[iLoopCount]);
+                        _CogLeadResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
+                        _CogLeadResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
+                    }
                 }
+                #endregion Lead Pitch Point Get
 
                 _CogLeadResult.IsGood = true;
             }
@@ -132,6 +156,13 @@ namespace InspectionSystemManager
             InspResults.PrincipalHeight = new double[BlobResults.GetBlobs().Count];
             InspResults.Angle = new double[BlobResults.GetBlobs().Count];
             InspResults.Degree = new double[BlobResults.GetBlobs().Count];
+
+            InspResults.IsLeadGood = new bool[BlobResults.GetBlobs().Count];
+            InspResults.LeadPitchTopX = new double[BlobResults.GetBlobs().Count];
+            InspResults.LeadPitchTopY = new double[BlobResults.GetBlobs().Count];
+            InspResults.LeadPitchBottomX = new double[BlobResults.GetBlobs().Count];
+            InspResults.LeadPitchBottomY = new double[BlobResults.GetBlobs().Count];
+
             if (_IsGraphicResult) InspResults.ResultGraphic = new CogCompositeShape[InspResults.BlobCount];
 
             for (int iLoopCount = 0; iLoopCount < InspResults.BlobCount; ++iLoopCount)
