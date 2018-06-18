@@ -235,6 +235,7 @@ namespace InspectionSystemManager
         {
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} Trigger ON!", ID + 1));
 
+            InspWnd.InspMode = eInspMode.TRI_INSP;
             InspWnd.IsInspectionComplete = false;
             IsThreadInspectionTrigger = true;
         }

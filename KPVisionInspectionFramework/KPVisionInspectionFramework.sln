@@ -11,13 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPDisplay", "..\KPDisplay\K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMessageManager", "..\LogManager\LogMessageManager.csproj", "{635BF6D0-1B81-4B61-9F53-5E93C5335B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOControlManager", "..\DIOControlManager\DIOControlManager\DIOControlManager.csproj", "{E0E5535A-0419-44F5-A201-E2F530A4B509}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthernetManager", "..\EthernetManager\EthernetManager.csproj", "{A34D8BA3-047B-41A3-88FA-20DC46EC5306}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraManager", "..\CameraManager\CameraManager.csproj", "{6DA2ADBE-A1AC-444C-B2FB-C303C6C50976}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControl", "..\CustomControl\CustomControl.csproj", "{FE56E73E-490F-436E-885D-8BE182B74794}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIOControlManager", "..\DIOControlManager\DIOControlManager\DIOControlManager.csproj", "{E0E5535A-0419-44F5-A201-E2F530A4B509}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,12 +59,6 @@ Global
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Release|x64.ActiveCfg = Release|Any CPU
-		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|x64.ActiveCfg = Release|Any CPU
 		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A34D8BA3-047B-41A3-88FA-20DC46EC5306}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -83,6 +77,12 @@ Global
 		{FE56E73E-490F-436E-885D-8BE182B74794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE56E73E-490F-436E-885D-8BE182B74794}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE56E73E-490F-436E-885D-8BE182B74794}.Release|x64.ActiveCfg = Release|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0E5535A-0419-44F5-A201-E2F530A4B509}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

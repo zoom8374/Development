@@ -35,6 +35,9 @@ namespace ParameterManager
     /// </summary>
     public enum eTeachStep  { AREA_SELECT = 0, AREA_SET, AREA_CLEAR, ALGO_SELECT, ALGO_SET, ALGO_CLEAR };
 
+    /// <summary>
+    /// NG Type
+    /// </summary>
     public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
@@ -45,8 +48,7 @@ namespace ParameterManager
 
     public enum eSearchDirection    { IN_WARD = 0, OUT_WARD = 1 };
 
-
-
+    public enum eInspMode           { TRI_INSP = 0, ONE_INSP, SINGLE_INSP, SIMUL_INSP };
 
     public static class DIOMAP
     {

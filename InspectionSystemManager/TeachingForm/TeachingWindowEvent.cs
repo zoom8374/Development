@@ -121,7 +121,7 @@ namespace InspectionSystemManager
         private void ApplyLeadInspValueFunction(CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult, bool _IsDisplay = true)
         {
             if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
-            AlgorithmAreaDisplayRefresh();
+            if (_IsDisplay) AlgorithmAreaDisplayRefresh();
 
             bool _Result = InspLeadProcess.Run(InspectionImage, AlgoRegionRectangle, _CogLeadAlgo, ref _CogLeadResult);
 
@@ -142,9 +142,9 @@ namespace InspectionSystemManager
 
                     CogPointMarker _PitchPoint = new CogPointMarker();
                     _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchTopX[iLoopCount], _CogLeadResult.LeadPitchTopY[iLoopCount], 0, 1);
-                    kpTeachDisplay.DrawStaticShape(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Red, 2);
+                    kpTeachDisplay.DrawStaticShape(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Yellow, 2);
                     _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchBottomX[iLoopCount], _CogLeadResult.LeadPitchBottomY[iLoopCount], 0, 1);
-                    kpTeachDisplay.DrawStaticShape(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Yellow, 2);
+                    kpTeachDisplay.DrawStaticShape(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Orange, 2);
                 }
             }
             #endregion Result Display

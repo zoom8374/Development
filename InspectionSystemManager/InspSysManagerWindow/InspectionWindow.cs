@@ -32,6 +32,7 @@ namespace InspectionSystemManager
         private int ID;
         private eProjectType ProjectType;
         private eProjectItem ProjectItem;
+        public  eInspMode    InspMode= eInspMode.TRI_INSP;
         private string FormName;
         private bool ResizingFlag = false;
         private bool IsResizing = false;
@@ -745,9 +746,9 @@ namespace InspectionSystemManager
                 //Draw Pitch Point
                 CogPointMarker _PitchPoint = new CogPointMarker();
                 _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchTopX[iLoopCount], _CogLeadResult.LeadPitchTopY[iLoopCount], 0, 1);
-                ResultDisplay(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Red);
+                ResultDisplay(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Yellow);
                 _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchBottomX[iLoopCount], _CogLeadResult.LeadPitchBottomY[iLoopCount], 0, 1);
-                ResultDisplay(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Yellow);
+                ResultDisplay(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Orange);
             }
             //});
 
@@ -832,14 +833,65 @@ namespace InspectionSystemManager
         }
         #endregion Display Result function
 
+        #region Result Data Send
         private bool InspectionDataSend()
         {
             bool _Result = true;
 
-            InspectionWindowEvent(eIWCMD.SEND_DATA);
+            SendResultParameter _SendResParam = new SendResultParameter();
+            _SendResParam.ID = ID;
+            _SendResParam.IsGood = true;
+            _SendResParam.ProjectItem = ProjectItem;
+
+            if (ProjectItem == eProjectItem.LEAD_INSP)          _SendResParam = GetLeadInspectionResultAnalysys();
+            else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  _SendResParam = GetNeedleFindResultAnalysis();
+
+            var _InspectionWindowEvent = InspectionWindowEvent;
+            if (InspectionWindowEvent != null)
+                _InspectionWindowEvent(eIWCMD.SEND_DATA, _SendResParam);
 
             return _Result;
         }
+
+        private SendResultParameter GetLeadInspectionResultAnalysys()
+        {
+            SendResultParameter _SendResParam = new SendResultParameter();
+
+            _SendResParam.ID = ID;
+            _SendResParam.IsGood = true;
+            _SendResParam.ProjectItem = ProjectItem;
+
+            for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
+            {
+               if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LEAD)
+                {
+                    var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLeadResult;
+                    _SendResParam.LeadCount = _AlgoResultParam.LeadCount;
+                }
+            }
+
+            return _SendResParam;
+        }
+
+        private SendResultParameter GetNeedleFindResultAnalysis()
+        {
+            SendResultParameter _SendResParam = new SendResultParameter();
+
+            _SendResParam.ID = ID;
+            _SendResParam.IsGood = true;
+            _SendResParam.ProjectItem = ProjectItem;
+
+            var _AlgoResultParam = AlgoResultParamList[0].ResultParam as CogNeedleFindResult;
+
+            _SendResParam.ID = ID;
+            _SendResParam.IsGood = true;
+            _SendResParam.ProjectItem = ProjectItem;
+            _SendResParam.AlignX = _AlgoResultParam.CenterX;
+            _SendResParam.AlignY = _AlgoResultParam.CenterY;
+
+            return _SendResParam;
+        }
+        #endregion Result Data Send
         #endregion Inspection Process
 
         #region Thread Funtion

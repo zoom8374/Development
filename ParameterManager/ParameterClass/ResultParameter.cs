@@ -134,6 +134,7 @@ namespace ParameterManager
         public double OriginY;
 
         //Lead 검사에 필요한 Parameter
+        public int LeadCount;
         public double LeadPitchAvg;
         public double LeadAngleAvg;
         public bool[] IsLeadGood;
@@ -144,5 +145,15 @@ namespace ParameterManager
     }
     #endregion Inspection Result Parameter
 
+    public class SendResultParameter
+    {
+        public eProjectItem ProjectItem;
+        public eInspMode InspMode;
+        public int  ID;
+        public bool IsGood;
+        public double AlignX;
+        public double AlignY;
+        public int LeadCount;
+    }
 }
     

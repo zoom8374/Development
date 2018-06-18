@@ -159,5 +159,36 @@ namespace KPVisionInspectionFramework
             this.Cursor = Cursors.Default;
         }
         #endregion Control Default Event
+
+        public void SetResultData(SendResultParameter _ResultParam)
+        {
+            if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN)   SetNeedleAlignResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP) SetLeadInspectionResultData(_ResultParam);
+        }
+
+        private void SetNeedleAlignResultData(SendResultParameter _ResultParam)
+        {
+            if (_ResultParam.ID == 0)   //Needle Align Vision1
+            {
+                gradientLabelNeedleAlignX1.Text = _ResultParam.AlignX.ToString("F3");
+                gradientLabelNeedleAlignY1.Text = _ResultParam.AlignY.ToString("F3");
+            }
+
+            else if (_ResultParam.ID == 1)   //Needle Align Vision2
+            {
+                gradientLabelNeedleAlignX2.Text = _ResultParam.AlignX.ToString("F3");
+                gradientLabelNeedleAlignY2.Text = _ResultParam.AlignY.ToString("F3");
+            }
+
+            else
+            {
+                //LOG
+            }
+        }
+
+        private void SetLeadInspectionResultData(SendResultParameter _ResultParam)
+        {
+
+        }
     }
 }

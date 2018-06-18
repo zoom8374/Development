@@ -329,6 +329,8 @@ namespace KPVisionInspectionFramework
 
         private void SendResultData(object _Result)
         {
+            SendResultParameter _SendResParam = _Result as SendResultParameter;
+            ResultWnd.SetResultData(_SendResParam);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
         }
         #endregion Main Process
