@@ -50,6 +50,8 @@ namespace ParameterManager
 
     public enum eInspMode           { TRI_INSP = 0, ONE_INSP, SINGLE_INSP, SIMUL_INSP };
 
+    public enum eReferAction        { ADD = 0, DEL, MODIFY };
+
     public static class DIOMAP
     {
         public const int OUT_LIVE = 0;

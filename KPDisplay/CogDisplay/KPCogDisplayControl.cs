@@ -257,14 +257,15 @@ namespace KPDisplay
         /// <param name="_cogPointMarker"></param>
         /// <param name="_groupName"></param>
         /// <param name="_color"></param>
-        public void DrawInterActiveShape(CogPointMarker _cogPointMarker, string _groupName, CogColorConstants _color, int _LineSize = 1)
+        public void DrawInterActiveShape(CogPointMarker _cogPointMarker, string _groupName, CogColorConstants _color, int _LineSize = 12)
         {
             InteractivePointMarker = new CogPointMarker();
             InteractivePointMarker = _cogPointMarker;
             InteractivePointMarker.Interactive = true;
             InteractivePointMarker.Color = _color;
-            InteractivePointMarker.LineWidthInScreenPixels = 1;
-            InteractivePointMarker.GraphicType = CogPointMarkerGraphicTypeConstants.Crosshair;
+            InteractivePointMarker.LineWidthInScreenPixels = 2;
+            InteractivePointMarker.SizeInScreenPixels = _LineSize;
+            InteractivePointMarker.GraphicType = CogPointMarkerGraphicTypeConstants.Cross;
             InteractivePointMarker.GraphicDOFEnable = CogPointMarkerDOFConstants.All;
             kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.InteractiveGraphics.Add(InteractivePointMarker, _groupName, true);
@@ -276,13 +277,13 @@ namespace KPDisplay
         /// <param name="_cogRectAffine">RectAffine 객체</param>
         /// <param name="_groupName">그려지는 그룹명</param>
         /// <param name="_color">색상</param>
-        public void DrawStaticShape(CogPointMarker _cogPointMarker, string _groupName, CogColorConstants _color, int _LineSize = 2, bool ClearFlag = true)
+        public void DrawStaticShape(CogPointMarker _cogPointMarker, string _groupName, CogColorConstants _color, int _LineSize = 12, bool ClearFlag = true)
         {
             StaticPointMarker = new CogPointMarker();
             StaticPointMarker = _cogPointMarker;
             StaticPointMarker.Color = _color;
-            StaticPointMarker.LineWidthInScreenPixels = _LineSize;
-            StaticPointMarker.SizeInScreenPixels = 12;
+            StaticPointMarker.LineWidthInScreenPixels = 2;
+            StaticPointMarker.SizeInScreenPixels = _LineSize;
             StaticPointMarker.GraphicType = CogPointMarkerGraphicTypeConstants.Cross;
             if(ClearFlag == true) kCogDisplay.ClearDisplay(_groupName);
             kCogDisplay.StaticGraphics.Add(StaticPointMarker, _groupName);

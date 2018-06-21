@@ -6,6 +6,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
+
+using Cognex.VisionPro;
+using Cognex.VisionPro.PMAlign;
 
 namespace ParameterManager
 {
@@ -549,6 +553,7 @@ namespace ParameterManager
                             case "Height":              _ReferInfo.Height = Convert.ToDouble(_Node.InnerText); break;
                         }
                     }
+                    _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
                     _CogPattern.ReferenceInfoList.Add(_ReferInfo);
                     _Cnt++;
                 }
@@ -758,7 +763,7 @@ namespace ParameterManager
 
                 if (false == Directory.Exists(_RecipeParameterPath)) Directory.CreateDirectory(_RecipeParameterPath);
                 _CogPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath = _RecipeParameterPath + _FileName;
-                //Cognex VPP Pattern Save
+                CogSerializer.SaveObjectToFile(_CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference, _CogPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.InputImages);
 
                 _XmlWriter.WriteStartElement("Reference" + (iLoopCount + 1));
                 {
@@ -909,7 +914,7 @@ namespace ParameterManager
                         {
                             ReferenceInformation _ReferInfo = new ReferenceInformation();
                             _ReferInfo.ReferencePath = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].ReferencePath;
-
+                            _ReferInfo.Reference         = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].Reference;
                             _ReferInfo.ReferencePath     = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].ReferencePath;
                             _ReferInfo.InterActiveStartX = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].InterActiveStartX;
                             _ReferInfo.InterActiveStartY = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].InterActiveStartY;

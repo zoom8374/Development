@@ -7,10 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ParameterManager;
+
+using Cognex.VisionPro;
+
 namespace InspectionSystemManager
 {
     public partial class ucCogPattern : UserControl
     {
+        private CogPatternAlgo CogPatternAlgoRcp = new CogPatternAlgo();
+        private References ReferenceBackup = new References();
+
+        private int CurrentPattern = 0;
+        private double ResolutionX = 0.005;
+        private double ResolutionY = 0.005;
+
+        public delegate void DrawReferRegionHandler(CogRectangle _Region, double _OriginX, double _OriginY, CogColorConstants _Color);
+        public event DrawReferRegionHandler DrawReferRegionEvent;
+
+        public delegate void ReferenceActionHandler(eReferAction _ReferAction, int _Index = 0);
+        public event ReferenceActionHandler ReferenceActionEvent;
+
+        public delegate void ApplyPatternMatchingValueHandler(CogPatternAlgo _CogPatternAlgo, ref CogPatternResult _CogPatternResult);
+        public event ApplyPatternMatchingValueHandler ApplyPatternMatchingValueEvent;
+
+        #region Initialize & DeInitialize
         public ucCogPattern()
         {
             InitializeComponent();
@@ -25,15 +46,176 @@ namespace InspectionSystemManager
         {
 
         }
+        #endregion Initialize & DeInitialize
 
-        public void SetAlgoRecipe()
+        #region Control Event
+        private void btnPrev_Click(object sender, EventArgs e)
         {
+            CurrentPattern--;
+            if (CurrentPattern <= 0) { CurrentPattern = 1; return; }
 
+            ShowPatternImage(CurrentPattern);
+            ShowPatternImageArea(CurrentPattern);
+            UpdatePatternCount();
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            CurrentPattern++;
+            if (CurrentPattern > CogPatternAlgoRcp.ReferenceInfoList.Count) { CurrentPattern = CogPatternAlgoRcp.ReferenceInfoList.Count; return; }
+
+            ShowPatternImage(CurrentPattern);
+            ShowPatternImageArea(CurrentPattern);
+            UpdatePatternCount();
+        }
+
+        private void btnShowArea_Click(object sender, EventArgs e)
+        {
+            CogRectangle _Region = new CogRectangle();
+            _Region.SetCenterWidthHeight(200, 200, 200, 200);
+
+            var _DrawReferRegionEvent = DrawReferRegionEvent;
+            _DrawReferRegionEvent?.Invoke(_Region, _Region.CenterX, _Region.CenterY, CogColorConstants.Cyan);
+        }
+
+        private void btnPatternAdd_Click(object sender, EventArgs e)
+        {
+            var _ReferenceActionEvent = ReferenceActionEvent;
+            _ReferenceActionEvent?.Invoke(eReferAction.ADD);
+
+            CurrentPattern++;
+            ShowPatternImage(CurrentPattern);
+            ShowPatternImageArea(CurrentPattern);
+            UpdatePatternCount();
+        }
+
+        private void btnPatternDel_Click(object sender, EventArgs e)
+        {
+            var _ReferenceActionEvent = ReferenceActionEvent;
+            _ReferenceActionEvent?.Invoke(eReferAction.DEL, CurrentPattern - 1);
+
+            CurrentPattern--;
+            if (CurrentPattern <= 0 && CogPatternAlgoRcp.ReferenceInfoList.Count > 0) CurrentPattern = 1;
+            ShowPatternImage(CurrentPattern);
+            ShowPatternImageArea(CurrentPattern);
+            UpdatePatternCount();
+        }
+
+        private void btnPatternModify_Click(object sender, EventArgs e)
+        {
+            var _ReferenceActionEvent = ReferenceActionEvent;
+            _ReferenceActionEvent?.Invoke(eReferAction.MODIFY, CurrentPattern - 1);
+
+            ShowPatternImage(CurrentPattern);
+            ShowPatternImageArea(CurrentPattern);
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            CogPatternResult _CogPatternResult = new CogPatternResult();
+            CogPatternAlgo _CogPatternAlgoRcp = new CogPatternAlgo();
+            _CogPatternAlgoRcp.MatchingScore = Convert.ToDouble(numericUpDownFindScore.Value);
+            _CogPatternAlgoRcp.MatchingCount = Convert.ToInt32(numericUpDownFindCount.Value);
+            _CogPatternAlgoRcp.MatchingAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
+            _CogPatternAlgoRcp.IsShift = Convert.ToBoolean(checkBoxShift.Checked);
+            _CogPatternAlgoRcp.AllowedShiftX = Convert.ToDouble(numericUpDownAllowedShiftX.Value);
+            _CogPatternAlgoRcp.AllowedShiftY = Convert.ToDouble(numericUpDownAllowedShiftY.Value);
+            _CogPatternAlgoRcp.PatternCount = CogPatternAlgoRcp.ReferenceInfoList.Count;
+
+            _CogPatternAlgoRcp.ReferenceInfoList = new References();
+            for (int iLoopCount = 0; iLoopCount < CogPatternAlgoRcp.ReferenceInfoList.Count; ++iLoopCount)
+            {
+                ReferenceInformation _ReferInfo = new ReferenceInformation();
+                _ReferInfo = CogPatternAlgoRcp.ReferenceInfoList[iLoopCount];
+                _CogPatternAlgoRcp.ReferenceInfoList.Add(_ReferInfo);
+            }
+
+            var _ApplyPatternMatchingValueEvent = ApplyPatternMatchingValueEvent;
+            _ApplyPatternMatchingValueEvent?.Invoke(_CogPatternAlgoRcp, ref _CogPatternResult);
+        }
+        #endregion Control Event
+
+        public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
+        {
+            if (null == _Algorithm) return;
+
+            CogPatternAlgoRcp = _Algorithm as CogPatternAlgo;
+            ReferenceBackup.Clear();
+            for (int iLoopCount = 0; iLoopCount < CogPatternAlgoRcp.ReferenceInfoList.Count; ++iLoopCount)
+            {
+                ReferenceInformation _ReferInfo = CogPatternAlgoRcp.ReferenceInfoList[iLoopCount];
+                ReferenceBackup.Add(_ReferInfo);
+            }
+
+            ResolutionX = _ResolutionX;
+            ResolutionY = _ResolutionY;
+
+            numericUpDownFindScore.Value = Convert.ToDecimal(CogPatternAlgoRcp.MatchingScore);
+            numericUpDownFindCount.Value = Convert.ToDecimal(CogPatternAlgoRcp.MatchingCount);
+            numericUpDownAngleLimit.Value = Convert.ToDecimal(CogPatternAlgoRcp.MatchingAngle);
+            numericUpDownAllowedShiftX.Value = Convert.ToDecimal(CogPatternAlgoRcp.AllowedShiftX);
+            numericUpDownAllowedShiftY.Value = Convert.ToDecimal(CogPatternAlgoRcp.AllowedShiftY);
+            checkBoxShift.Checked = CogPatternAlgoRcp.IsShift;
+            labelPatternCount.Text = CogPatternAlgoRcp.ReferenceInfoList.Count.ToString();
+
+            CogPatternAlgoRcp.PatternCount = CogPatternAlgoRcp.ReferenceInfoList.Count;
+            if (CogPatternAlgoRcp.ReferenceInfoList.Count > 0)
+            {
+                if (CurrentPattern == 0) CurrentPattern = 1;
+                ShowPatternImageArea(CurrentPattern);
+                ShowPatternImage(CurrentPattern);
+                UpdatePatternCount();
+            }
+        }
+
+        public void CancelAlgoRecipe()
+        {
+            CogPatternAlgoRcp.ReferenceInfoList.Clear();
+            for (int iLoopCount = 0; iLoopCount < ReferenceBackup.Count; ++iLoopCount)
+            {
+                ReferenceInformation _ReferInfo = ReferenceBackup[iLoopCount];
+                CogPatternAlgoRcp.ReferenceInfoList.Add(_ReferInfo);
+            }
         }
 
         public void SaveAlgoRecipe()
         {
+            CogPatternAlgoRcp.MatchingScore = Convert.ToDouble(numericUpDownFindScore.Value);
+            CogPatternAlgoRcp.MatchingCount = Convert.ToInt32(numericUpDownFindCount.Value);
+            CogPatternAlgoRcp.MatchingAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
+            CogPatternAlgoRcp.IsShift = Convert.ToBoolean(checkBoxShift.Checked);
+            CogPatternAlgoRcp.AllowedShiftX = Convert.ToDouble(numericUpDownAllowedShiftX.Value);
+            CogPatternAlgoRcp.AllowedShiftY = Convert.ToDouble(numericUpDownAllowedShiftY.Value);
+            CogPatternAlgoRcp.PatternCount = CogPatternAlgoRcp.ReferenceInfoList.Count;
+        }
 
+        private void ShowPatternImageArea(int _PatternNumber)
+        {
+            if (_PatternNumber <= 0) return;
+            if (_PatternNumber > CogPatternAlgoRcp.ReferenceInfoList.Count || CogPatternAlgoRcp.ReferenceInfoList.Count == 0) return;
+
+            _PatternNumber = _PatternNumber - 1;
+            CogRectangle _Region = new CogRectangle();
+            _Region.SetCenterWidthHeight(CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].CenterX, CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].CenterY, CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].Width, CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].Height);
+            var _DrawReferRegionEvent = DrawReferRegionEvent;
+            _DrawReferRegionEvent.Invoke(_Region, 
+                                        CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].CenterX - CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].OriginPointOffsetX, 
+                                        CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].CenterY - CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].OriginPointOffsetY, CogColorConstants.Yellow);
+        }
+
+        private void ShowPatternImage(int _PatternNumber)
+        {
+            if (_PatternNumber <= 0) { kpPatternDisplay.SetDisplayImage(null); return; }
+            if (_PatternNumber > CogPatternAlgoRcp.ReferenceInfoList.Count || CogPatternAlgoRcp.ReferenceInfoList.Count == 0) return;
+
+            _PatternNumber = _PatternNumber - 1;
+            kpPatternDisplay.SetDisplayImage((CogImage8Grey)CogPatternAlgoRcp.ReferenceInfoList[_PatternNumber].Reference.GetTrainedPatternImage());
+        }
+
+        private void UpdatePatternCount()
+        {
+            string _CurrentPatternString = string.Format($"{CurrentPattern}/{CogPatternAlgoRcp.ReferenceInfoList.Count}");
+            labelPatternCount.Text = _CurrentPatternString;
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 
 using Cognex.VisionPro;
+using Cognex.VisionPro.PMAlign;
+using Cognex.VisionPro.ImageProcessing;
 using Cognex.VisionPro.Caliper;
 
 using ParameterManager;
@@ -16,6 +18,9 @@ namespace InspectionSystemManager
         #region InitializeEvent & DeInitializeEvent
         private void InitializeEvent()
         {
+            ucCogPatternWnd.DrawReferRegionEvent += new ucCogPattern.DrawReferRegionHandler(DrawReferRegionFunction);
+            ucCogPatternWnd.ReferenceActionEvent += new ucCogPattern.ReferenceActionHandler(ReferenceActionFunction);
+            ucCogPatternWnd.ApplyPatternMatchingValueEvent += new ucCogPattern.ApplyPatternMatchingValueHandler(ApplyPatternMatchingValueFunction);
             ucCogBlobReferWnd.ApplyBlobReferValueEvent += new ucCogBlobReference.ApplyBlobReferValueHandler(ApplyBlobReferenceValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent += new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent += new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
@@ -25,6 +30,9 @@ namespace InspectionSystemManager
 
         private void DeInitializeEvent()
         {
+            ucCogPatternWnd.DrawReferRegionEvent -= new ucCogPattern.DrawReferRegionHandler(DrawReferRegionFunction);
+            ucCogPatternWnd.ReferenceActionEvent -= new ucCogPattern.ReferenceActionHandler(ReferenceActionFunction);
+            ucCogPatternWnd.ApplyPatternMatchingValueEvent -= new ucCogPattern.ApplyPatternMatchingValueHandler(ApplyPatternMatchingValueFunction);
             ucCogBlobReferWnd.ApplyBlobReferValueEvent -= new ucCogBlobReference.ApplyBlobReferValueHandler(ApplyBlobReferenceValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent -= new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent -= new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
@@ -54,6 +62,121 @@ namespace InspectionSystemManager
             ucCogNeedleFindWnd.SetCircularArc(_CenterX, _CenterY, _Radius, _AngleStart, _AngleSpan);
         }
         #endregion KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
+
+        #region Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow
+        private void DrawReferRegionFunction(CogRectangle _ReferRegion, double _OriginX, double _OriginY, CogColorConstants _Color)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            CogPointMarker _PointMarker = new CogPointMarker();
+            _PointMarker.SetCenterRotationSize(_OriginX, _OriginY, 0, 1);
+
+            kpTeachDisplay.DrawInterActiveShape(_ReferRegion, "ReferRegion", _Color);
+            kpTeachDisplay.DrawInterActiveShape(_PointMarker, "ReferOriginPoint", _Color, 14);
+        }
+
+        private void ReferenceActionFunction(eReferAction _ReferAction, int _Index = 0)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+
+            if (_ReferAction == eReferAction.ADD)
+            {
+                CogPointMarker _PointMark = new CogPointMarker();
+                int _Pixel;
+                double _PointCenterX, _PointCenterY, _Rotate;
+                _PointMark = kpTeachDisplay.GetInterActivePoint();
+                _PointMark.GetCenterRotationSize(out _PointCenterX, out _PointCenterY, out _Rotate, out _Pixel);
+
+                CogRectangle _ReferRegion = new CogRectangle();
+                CogRectangle _Boundary = new CogRectangle();
+                _Boundary.SetXYWidthHeight(AlgoRegionRectangle.X, AlgoRegionRectangle.Y, AlgoRegionRectangle.Width, AlgoRegionRectangle.Height);
+                if (false == GetCorrectionRectangle(kpTeachDisplay, _Boundary, ref _ReferRegion)) { MessageBox.Show("The rectangle is outside the inspection area."); return; }
+
+                double _OriginPointOffsetX = _ReferRegion.CenterX - _PointCenterX;
+                double _OriginPointOffsetY = _ReferRegion.CenterY - _PointCenterY;
+
+                DrawReferRegionFunction(_ReferRegion, _PointMark.X, _PointMark.Y, CogColorConstants.Cyan);
+
+                //Pattern 추출
+                ReferenceInformation _PatternInfo = new ReferenceInformation();
+                _PatternInfo.StaticStartX = _ReferRegion.X;
+                _PatternInfo.StaticStartY = _ReferRegion.Y;
+                _PatternInfo.CenterX = _ReferRegion.CenterX;
+                _PatternInfo.CenterY = _ReferRegion.CenterY;
+                _PatternInfo.Width = _ReferRegion.Width;
+                _PatternInfo.Height = _ReferRegion.Height;
+                _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
+                _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
+                _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
+                ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+            }
+
+            else if (_ReferAction == eReferAction.MODIFY)
+            {
+                CogPointMarker _PointMark = new CogPointMarker();
+                int _Pixel;
+                double _PointCenterX, _PointCenterY, _Rotate;
+                _PointMark = kpTeachDisplay.GetInterActivePoint();
+                _PointMark.GetCenterRotationSize(out _PointCenterX, out _PointCenterY, out _Rotate, out _Pixel);
+
+                CogRectangle _ReferRegion = new CogRectangle();
+                CogRectangle _Boundary = new CogRectangle();
+                _Boundary.SetXYWidthHeight(AlgoRegionRectangle.X, AlgoRegionRectangle.Y, AlgoRegionRectangle.Width, AlgoRegionRectangle.Height);
+                if (false == GetCorrectionRectangle(kpTeachDisplay, _Boundary, ref _ReferRegion)) { MessageBox.Show("The rectangle is outside the inspection area."); return; }
+
+                double _OriginPointOffsetX = _ReferRegion.CenterX - _PointCenterX;
+                double _OriginPointOffsetY = _ReferRegion.CenterY - _PointCenterY;
+
+                DrawReferRegionFunction(_ReferRegion, _PointMark.X, _PointMark.Y, CogColorConstants.Cyan);
+
+                //Pattern 추출
+                ReferenceInformation _PatternInfo = new ReferenceInformation();
+                _PatternInfo.StaticStartX = _ReferRegion.X;
+                _PatternInfo.StaticStartY = _ReferRegion.Y;
+                _PatternInfo.CenterX = _ReferRegion.CenterX;
+                _PatternInfo.CenterY = _ReferRegion.CenterY;
+                _PatternInfo.Width = _ReferRegion.Width;
+                _PatternInfo.Height = _ReferRegion.Height;
+                _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
+                _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
+                _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
+                ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+            }
+
+            else if (_ReferAction == eReferAction.DEL)
+            {
+                kpTeachDisplay.ClearDisplay("ReferRegion");
+                kpTeachDisplay.ClearDisplay("ReferOriginPoint");
+
+                ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.RemoveAt(_Index);
+            }
+
+            GC.Collect();
+        }
+
+        private void ApplyPatternMatchingValueFunction(CogPatternAlgo _CogPatternAlgo, ref CogPatternResult _CogPatternResult)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            bool _Result = InspPatternProcess.Run(InspectionImage, AlgoRegionRectangle, _CogPatternAlgo, ref _CogPatternResult);
+
+            for (int iLoopCount = 0; iLoopCount < _CogPatternResult.FindCount; ++iLoopCount)
+            {
+                CogRectangle _PatternRect = new CogRectangle();
+                _PatternRect.SetCenterWidthHeight(_CogPatternResult.CenterX[iLoopCount], _CogPatternResult.CenterY[iLoopCount], _CogPatternResult.Width[iLoopCount], _CogPatternResult.Height[iLoopCount]);
+                kpTeachDisplay.DrawStaticShape(_PatternRect, "PatternRect" + (iLoopCount + 1), CogColorConstants.Green);
+
+                CogPointMarker _Point = new CogPointMarker();
+                _Point.SetCenterRotationSize(_CogPatternResult.OriginPointX[iLoopCount], _CogPatternResult.OriginPointY[iLoopCount], 0, 2);
+                kpTeachDisplay.DrawStaticShape(_Point, "PatternOrigin" + (iLoopCount + 1), CogColorConstants.Green, 12);
+
+                string _MatchingName = string.Format($"Rate = {_CogPatternResult.Score[iLoopCount]:F2}, X = {_CogPatternResult.OriginPointX[iLoopCount]:F2}, Y = {_CogPatternResult.OriginPointY[iLoopCount]:F2}");
+                kpTeachDisplay.DrawText(_MatchingName, _CogPatternResult.OriginPointX[iLoopCount], _CogPatternResult.OriginPointY[iLoopCount] + 30, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+        }
+        #endregion Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow
 
         #region Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
         private void ApplyBlobReferenceValueFunction(CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult)

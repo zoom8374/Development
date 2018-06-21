@@ -20,6 +20,7 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
+        private InspectionPattern           InspPatternProc;
         private InspectionBlobReference     InspBlobReferProc;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
         private InspectionLead              InspLeadProc;
@@ -107,6 +108,9 @@ namespace InspectionSystemManager
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
+            InspPatternProc = new InspectionPattern();
+            InspPatternProc.Initialize();
+
             InspBlobReferProc = new InspectionBlobReference();
             InspBlobReferProc.Initialize();
 
@@ -136,6 +140,7 @@ namespace InspectionSystemManager
 
         public void Deinitialize()
         {
+            InspPatternProc.DeInitialize();
             InspBlobReferProc.DeInitialize();
             InspNeedleCircleFindProc.DeInitialize();
             InspLeadProc.DeInitialize();
@@ -587,6 +592,13 @@ namespace InspectionSystemManager
 
         private bool CogPatternAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
+            var _CogPatternAlgo = _Algorithm as CogPatternAlgo;
+            CogPatternResult _CogPatternResult = new CogPatternResult();
+
+            bool _Result = InspPatternProc.Run(OriginImage, _InspRegion, _CogPatternAlgo, ref _CogPatternResult);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_PATTERN, _CogPatternResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
 
             return true;
         }
@@ -667,6 +679,19 @@ namespace InspectionSystemManager
         private bool DisplayResultPatternMatching(Object _ResultParam, int _Index)
         {
             bool _IsGood = true;
+            var _PatternResult = _ResultParam as CogPatternResult;
+
+            CogRectangle _PatternRect = new CogRectangle();
+            CogPointMarker _Point = new CogPointMarker();
+            for (int iLoopCount = 0; iLoopCount < _PatternResult.FindCount; ++iLoopCount)
+            {
+                _PatternRect.SetCenterWidthHeight(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount]);
+                _Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
+                ResultDisplay(_PatternRect, _Point, "Pattern", _PatternResult.IsGood);
+
+                string _MatchingName = string.Format($"Rate = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
+                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
 
             return _IsGood;
         }
@@ -674,7 +699,6 @@ namespace InspectionSystemManager
         private bool DisplayResultBlobReference(Object _ResultParam, int _Index)
         {
             bool _IsGood = false;
-            //CogBlobReferenceResult _BlobReferResult = (CogBlobReferenceResult)_ResultParam;
             var _BlobReferResult = _ResultParam as CogBlobReferenceResult;
 
             CogRectangle _Region = new CogRectangle();

@@ -41,6 +41,8 @@
     <Reference Include="Cognex.VisionPro.Display.Controls, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.ImageFile, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.ImageFile.Controls, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
+    <Reference Include="Cognex.VisionPro.ImageProcessing, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
+    <Reference Include="Cognex.VisionPro.PMAlign, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -63,6 +65,7 @@
     <Compile Include="Algorithm\InspectionClass\InspectionBlob.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionNeedleCircleFind.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionLead.cs" />
+    <Compile Include="Algorithm\InspectionClass\InspectionPattern.cs" />
     <Compile Include="InspSysManagerWindow\InspectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>

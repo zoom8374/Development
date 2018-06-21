@@ -74,6 +74,29 @@ namespace ParameterManager
         public eNgType  NgType;
     }
 
+    public class CogPatternResult : Result
+    {
+        public int FindCount;
+
+        public double[] Score;
+        public double[] Scale;
+        public double[] Angle;
+        public double[] CenterX;
+        public double[] CenterY;
+        public double[] OriginPointX;
+        public double[] OriginPointY;
+        public double[] Width;
+        public double[] Height;
+
+        public CogPatternResult()
+        {
+            IsGood = true;
+            NgType = eNgType.GOOD;
+
+            FindCount = 0;
+        }
+    }
+
     public class CogBlobReferenceResult : Result
     {
         public int      BlobCount;

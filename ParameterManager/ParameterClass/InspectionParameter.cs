@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Cognex.VisionPro.PMAlign;
+
 namespace ParameterManager
 {
     #region Reference class
     public class ReferenceInformation
     {
-        //public MIL_ID Reference;
-        public Object Reference;
+        //public CogPattern Reference;
+        //public Object Reference;
+        public CogPMAlignPattern Reference;
         public string ReferencePath;
         public double InterActiveStartX;
         public double InterActiveStartY;

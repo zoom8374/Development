@@ -111,7 +111,7 @@ namespace KPVisionInspectionFramework
 
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
-                InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
+                InspSysManager[iLoopCount].InspSysManagerEvent -= new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].DeInitialize();
@@ -125,7 +125,7 @@ namespace KPVisionInspectionFramework
             this.Text = "KP - CIPOS Inspection Program";
 
             string _CompileMode = "";
-#if _DEBUG
+#if DEBUG
             _CompileMode = " - [DEBUG]";
 #endif
             string _Version = System.Windows.Forms.Application.ProductVersion;

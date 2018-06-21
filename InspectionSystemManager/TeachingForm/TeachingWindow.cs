@@ -29,6 +29,7 @@ namespace InspectionSystemManager
         private InspectionBlobReference     InspBlobReferProcess;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProcess;
         private InspectionLead              InspLeadProcess;
+        private InspectionPattern           InspPatternProcess;
 
         //검사 Algorithm Teaching UI
         private ucCogPattern            ucCogPatternWnd;
@@ -85,6 +86,7 @@ namespace InspectionSystemManager
             InspBlobReferProcess = new InspectionBlobReference();
             InspNeedleCircleFindProcess = new InspectionNeedleCircleFind();
             InspLeadProcess = new InspectionLead();
+            InspPatternProcess = new InspectionPattern();
             
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
@@ -114,6 +116,7 @@ namespace InspectionSystemManager
             InspBlobReferProcess.DeInitialize();
             InspNeedleCircleFindProcess.DeInitialize();
             InspLeadProcess.DeInitialize();
+            InspPatternProcess.DeInitialize();
         }
 
         private void InitializeContextMenu()
@@ -492,6 +495,8 @@ namespace InspectionSystemManager
             AlgoRegionRectangle = new CogRectangle(_AlgoRegion);
 
             UpdateTeachingStatus(eTeachStep.ALGO_SET);
+
+            UpdateInspectionAlgoTeachingWindow(InspAlgoSelected);
         }
 
         private void gridViewArea_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -537,7 +542,7 @@ namespace InspectionSystemManager
                 int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
                 GetAlgoResultDataOffset(InspAreaSelected, _ID);
 
-                UpdateInspectionAlgoTeachingWindow(_ID);
+                //UpdateInspectionAlgoTeachingWindow(_ID);
                 UpdateInspectionAlgorithmAreaDraw(_ID);
                 InspAlgoSelected = _ID;
 
@@ -564,6 +569,11 @@ namespace InspectionSystemManager
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            switch (CurrentAlgoType)
+            {
+                case eAlgoType.C_PATTERN: ucCogPatternWnd.CancelAlgoRecipe(); break;
+            }
+
             this.DialogResult = DialogResult.Cancel;
             this.Hide();
         }
@@ -710,7 +720,7 @@ namespace InspectionSystemManager
             eAlgoType _AlgoType = (eAlgoType)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoType;
             switch (_AlgoType)
             {
-                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe();    break;
+                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
                 case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
