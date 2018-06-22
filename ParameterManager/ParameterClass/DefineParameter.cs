@@ -8,17 +8,17 @@ namespace ParameterManager
     /// <summary>
     /// Project Type
     /// </summary>
-    public enum eProjectType { DISPENSER = 0 };
+    public enum eProjectType { DISPENSER = 0, BLOWER };
 
     /// <summary>
     /// Project Item
     /// </summary>
-    public enum eProjectItem { NEEDLE_ALIGN = 0, LEAD_INSP };
+    public enum eProjectItem { NEEDLE_ALIGN = 0, LEAD_INSP, ID_INSP};
 
     /// <summary>
     /// Algorithm Type
     /// </summary>
-    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND }
+    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID }
 
     /// <summary>
     /// Inspection Window Command
@@ -38,7 +38,7 @@ namespace ParameterManager
     /// <summary>
     /// NG Type
     /// </summary>
-    public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN }
+    public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN, ID }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
 

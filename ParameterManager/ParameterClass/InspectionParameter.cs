@@ -221,6 +221,27 @@ namespace ParameterManager
             OriginRadius = 0;
         }
     }
+
+    /// <summary>
+    /// Code Read 검사 알고리즘
+    /// </summary>
+    public class CogBarCodeIDAlgo
+    {
+        public string Symbology;
+        public int TimeLimit;
+        public int FindCount;
+        public double OriginX;
+        public double OriginY;
+
+        public CogBarCodeIDAlgo()
+        {
+            Symbology = "DataMatrix";
+            TimeLimit = 500;
+            FindCount = 1;
+            OriginX = 0;
+            OriginY = 0;
+        }
+    }
     #endregion Cog Algorithm Class
 
     public class InspectionAlgorithmParameter
@@ -250,6 +271,7 @@ namespace ParameterManager
             else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo();
             else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadAlgo();
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)  Algorithm = new CogNeedleFindAlgo();
+            else if (_AlgoType == eAlgoType.C_ID)           Algorithm = new CogBarCodeIDAlgo();
         }
     }
 

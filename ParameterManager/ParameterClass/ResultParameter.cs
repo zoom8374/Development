@@ -167,13 +167,23 @@ namespace ParameterManager
         public double[] LeadPitchBottomX;
         public double[] LeadPitchBottomY;
     }
+
+    public class CogBarCodeIDResult : Result
+    {
+        public int IDCount;
+        public string[] IDResult;
+        public double[] IDCenterX;
+        public double[] IDCenterY;
+        public double[] IDAngle;
+        public CogPolygon[] IDPolygon;
+    }
     #endregion Inspection Result Parameter
 
     public class SendResultParameter
     {
         public eProjectItem ProjectItem;
         public eInspMode InspMode;
-        public int  ID;
+        public int ID;
         public bool IsGood;
         public double AlignX;
         public double AlignY;

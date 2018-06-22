@@ -502,6 +502,7 @@ namespace ParameterManager
                 else if ((int)eAlgoType.C_BLOB_REFER == _InspAlgoParamTemp.AlgoType) GetBlobReferInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)       GetLeadInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
                 else if ((int)eAlgoType.C_NEEDLE_FIND == _InspAlgoParamTemp.AlgoType)GetNeedleFindInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_ID == _InspAlgoParamTemp.AlgoType)         GetBarCodeIDInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
              
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
             }
@@ -675,6 +676,25 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogNeedleFind;
         }
 
+        private void GetBarCodeIDInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+            CogBarCodeIDAlgo _CogBarCodeID = new CogBarCodeIDAlgo();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch (_NodeChild.Name)
+                {
+                    case "Symbology": _CogBarCodeID.Symbology = _NodeChild.InnerText; break;
+                    case "TimeLimit": _CogBarCodeID.TimeLimit = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "FindCount": _CogBarCodeID.FindCount = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "OriginX": _CogBarCodeID.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginY": _CogBarCodeID.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                }
+            }
+            _InspParam.Algorithm = _CogBarCodeID;
+        }
+
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
         {
             if (null == _InspParamFullPath) _InspParamFullPath = InspectionDefaultPath + @"RecipeParameter\" + SystemParam.LastRecipeName + @"\Module" + (_ID + 1) + @"\InspectionCondition.Rcp";
@@ -730,6 +750,7 @@ namespace ParameterManager
                                 else if (eAlgoType.C_BLOB_REFER == _AlgoType)   WriteBlobReferInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_LEAD == _AlgoType)         WriteLeadInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  WriteNeedleFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_ID == _AlgoType)           WriteBarCodeIDInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
                         }
@@ -860,6 +881,16 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("OriginX", _CogNeedleFindAlgo.OriginX.ToString());
             _XmlWriter.WriteElementString("OriginY", _CogNeedleFindAlgo.OriginY.ToString());
             _XmlWriter.WriteElementString("OriginRadius", _CogNeedleFindAlgo.OriginRadius.ToString());
+        }
+
+        private void WriteBarCodeIDInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            var _CogBarCodeIDAlgo = _InspAlgoParam as CogBarCodeIDAlgo;
+            _XmlWriter.WriteElementString("Symbology", _CogBarCodeIDAlgo.Symbology);
+            _XmlWriter.WriteElementString("OriginX", _CogBarCodeIDAlgo.OriginX.ToString());
+            _XmlWriter.WriteElementString("OriginY", _CogBarCodeIDAlgo.OriginY.ToString());
+            _XmlWriter.WriteElementString("TimeLimit", _CogBarCodeIDAlgo.TimeLimit.ToString());
+            _XmlWriter.WriteElementString("FindCount", _CogBarCodeIDAlgo.FindCount.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -1021,6 +1052,21 @@ namespace ParameterManager
                         _Algorithm.OriginX      = _SrcAlgorithm.OriginX;
                         _Algorithm.OriginY      = _SrcAlgorithm.OriginY;
                         _Algorithm.IsShowwBoundary = _SrcAlgorithm.IsShowwBoundary;
+
+                        _InspAlgoParam.Algorithm = _Algorithm;
+                    }
+
+                    else if (eAlgoType.C_ID == _AlgoType)
+                    {
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogBarCodeIDAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogBarCodeIDAlgo;
+
+                        _Algorithm = new CogBarCodeIDAlgo();
+                        _Algorithm.Symbology = _SrcAlgorithm.Symbology;
+                        _Algorithm.OriginX = _SrcAlgorithm.OriginX;
+                        _Algorithm.OriginY = _SrcAlgorithm.OriginY;
+                        _Algorithm.TimeLimit = _SrcAlgorithm.TimeLimit;
+                        _Algorithm.FindCount = _SrcAlgorithm.FindCount;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

@@ -200,7 +200,8 @@ namespace InspectionSystemManager
 
         private void Teaching(object _Value)
         {
-            InspSysManagerEvent(eISMCMD.TEACHING_STATUS, Convert.ToBoolean(_Value));
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            _InspSysManagerEvent?.Invoke(eISMCMD.TEACHING_STATUS, Convert.ToBoolean(_Value));
         }
 
         private void TeachingComplete(object _Value)
@@ -212,7 +213,8 @@ namespace InspectionSystemManager
 
         private void TeachingSave(object _Value)
         {
-            InspSysManagerEvent(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            _InspSysManagerEvent?.Invoke(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
         }
 
         private void OneShotInspection()

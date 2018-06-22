@@ -26,10 +26,11 @@ namespace InspectionSystemManager
         private double InspectionAreaHeight;
 
         //검사 Algorithm Class
+        private InspectionPattern           InspPatternProcess;
         private InspectionBlobReference     InspBlobReferProcess;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProcess;
         private InspectionLead              InspLeadProcess;
-        private InspectionPattern           InspPatternProcess;
+        private InspectionID                InspIDProcess;
 
         //검사 Algorithm Teaching UI
         private ucCogPattern            ucCogPatternWnd;
@@ -37,6 +38,7 @@ namespace InspectionSystemManager
         private ucCogBlob               ucCogBlobWnd;
         private ucCogNeedleCircleFind   ucCogNeedleFindWnd;
         private ucCogLeadInspection     ucCogLeadInspWnd;
+        private ucCogID                 ucCogIDInspWnd;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -82,12 +84,14 @@ namespace InspectionSystemManager
             ucCogBlobReferWnd = new ucCogBlobReference();
             ucCogNeedleFindWnd = new ucCogNeedleCircleFind();
             ucCogLeadInspWnd = new ucCogLeadInspection();
+            ucCogIDInspWnd = new ucCogID();
 
+            InspPatternProcess = new InspectionPattern();
             InspBlobReferProcess = new InspectionBlobReference();
             InspNeedleCircleFindProcess = new InspectionNeedleCircleFind();
             InspLeadProcess = new InspectionLead();
-            InspPatternProcess = new InspectionPattern();
-            
+            InspIDProcess = new InspectionID();
+
             InspAreaSelected = -1;
             InspAlgoSelected = -1;
             CurrentTeachStep = eTeachStep.NONE;
@@ -112,11 +116,13 @@ namespace InspectionSystemManager
             ucCogBlobReferWnd.Dispose();
             ucCogNeedleFindWnd.Dispose();
             ucCogLeadInspWnd.Dispose();
+            ucCogIDInspWnd.Dispose();
 
             InspBlobReferProcess.DeInitialize();
             InspNeedleCircleFindProcess.DeInitialize();
             InspLeadProcess.DeInitialize();
             InspPatternProcess.DeInitialize();
+			InspIDProcess.DeInitialize();
         }
 
         private void InitializeContextMenu()
@@ -129,6 +135,7 @@ namespace InspectionSystemManager
             ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
             ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
+            ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
         }
 
         private void SetInspectionParameter(InspectionParameter _InspParam = null)
@@ -190,6 +197,14 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD);
+        }
+
+        private void BarCodeIDAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_ID);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_ID);
         }
         #endregion Conext Menu Function
 
@@ -587,6 +602,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_BLOB:          ucCogBlobWnd.SaveAlgoRecipe();       break;
                 case eAlgoType.C_NEEDLE_FIND:   ucCogNeedleFindWnd.SaveAlgoRecipe(); break;
                 case eAlgoType.C_LEAD:          ucCogLeadInspWnd.SaveAlgoRecipe();   break;
+                case eAlgoType.C_ID:            ucCogIDInspWnd.SaveAlgoRecipe();     break;
             }
         }
         #endregion Button Event
@@ -674,6 +690,7 @@ namespace InspectionSystemManager
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)       _Name = "Defect detection";        //"Blob - Defect"
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_NEEDLE_FIND)_Name = "Search a needle circle";
                 else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD)       _Name = "Lead status inspection";
+                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID)         _Name = "Search a BarCode Insepction"; //"ID - Search"
 
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
@@ -725,6 +742,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
                 case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);   ucCogLeadInspWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);     ucCogIDInspWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

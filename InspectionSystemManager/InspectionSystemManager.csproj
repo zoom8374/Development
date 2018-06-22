@@ -39,6 +39,7 @@
     <Reference Include="Cognex.VisionPro.Controls, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.Core, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.Display.Controls, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
+    <Reference Include="Cognex.VisionPro.ID, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.ImageFile, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.ImageFile.Controls, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
     <Reference Include="Cognex.VisionPro.ImageProcessing, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
@@ -66,6 +67,7 @@
     <Compile Include="Algorithm\InspectionClass\InspectionNeedleCircleFind.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionLead.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionPattern.cs" />
+    <Compile Include="Algorithm\InspectionClass\InspectionID.cs" />
     <Compile Include="InspSysManagerWindow\InspectionWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +112,12 @@
     </Compile>
     <Compile Include="Algorithm\ucCogLeadInspection.Designer.cs">
       <DependentUpon>ucCogLeadInspection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Algorithm\ucCogID.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogID.designer.cs">
+      <DependentUpon>ucCogID.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeachingForm\TeachingWindow.resx">
       <DependentUpon>TeachingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogID.resx">
+      <DependentUpon>ucCogID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,7 @@ namespace KPDisplay
         CogLineSegment staticGraphicVer = new CogLineSegment();
         CogLineSegment staticGraphicDistance = new CogLineSegment();
         CogCircle StaticCircleGraphic = new CogCircle();
+        CogPolygon StaticPolygonGraphic = new CogPolygon();
 
         CogLineSegment StaticArrow = new CogLineSegment();
         CogLineSegment StaticLineSegment = new CogLineSegment();
@@ -249,6 +250,23 @@ namespace KPDisplay
             StaticRectGraphic.Selected = false;
             kCogDisplay.ClearDisplay("DistanceDrawRegion");
             kCogDisplay.StaticGraphics.Add(StaticRectGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);
+        }
+
+        /// <summary>
+        /// 수정이 불 가능한 고정 도형 그리기
+        /// </summary>
+        /// <param name="_cogPolygon">Polygon 객체</param>
+        /// <param name="_groupName">그려지는 그룹명</param>
+        /// <param name="_color">색상</param>
+        public void DrawStaticShape(CogPolygon _cogPolygon, string _groupName, CogColorConstants _color, int _LineSize = 2)
+        {
+            StaticPolygonGraphic = new CogPolygon();
+            StaticPolygonGraphic = _cogPolygon;
+            StaticPolygonGraphic.Color = _color;
+            StaticPolygonGraphic.LineWidthInScreenPixels = _LineSize;
+            StaticPolygonGraphic.Selected = false;
+            kCogDisplay.ClearDisplay(_groupName);
+            kCogDisplay.StaticGraphics.Add(StaticPolygonGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);
         }
 
         /// <summary>

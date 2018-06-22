@@ -25,6 +25,7 @@ namespace InspectionSystemManager
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent += new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent += new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
             ucCogLeadInspWnd.ApplyLeadInspValueEvent += new ucCogLeadInspection.ApplyLeadInspValueHandler(ApplyLeadInspValueFunction);
+            ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent += new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent += new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
         }
 
@@ -37,6 +38,7 @@ namespace InspectionSystemManager
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent -= new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent -= new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
             ucCogLeadInspWnd.ApplyLeadInspValueEvent -= new ucCogLeadInspection.ApplyLeadInspValueHandler(ApplyLeadInspValueFunction);
+            ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent -= new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent -= new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
         }
         #endregion InitializeEvent & DeInitializeEvent
@@ -314,5 +316,28 @@ namespace InspectionSystemManager
             #endregion Lead Angle Average 측정
         }
         #endregion Lead Inspection Window Event : ucCogLeadInspection -> TeachingWindow
+			
+
+        private void ApplyBarCodeIDInspValueFunction(CogBarCodeIDAlgo _CogBarCodeIDAlgo, ref CogBarCodeIDResult _CogBarCodeIDResult)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            bool _Result = InspIDProcess.Run(InspectionImage, AlgoRegionRectangle, _CogBarCodeIDAlgo, ref _CogBarCodeIDResult);
+
+            CogPolygon _Polygon = new CogPolygon();
+
+            if (_CogBarCodeIDResult != null)
+            {
+                for (int iLoopCount = 0; iLoopCount < _CogBarCodeIDResult.IDCount; iLoopCount++)
+                {
+                    _Polygon.SetVertices(_CogBarCodeIDResult.IDPolygon[iLoopCount].GetVertices());
+                    kpTeachDisplay.DrawStaticShape(_Polygon, "BarCodeID" + iLoopCount + "_Polygon", CogColorConstants.Green);
+
+                    string _ResultIDName = string.Format("ID = {0}", _CogBarCodeIDResult.IDResult);
+                    kpTeachDisplay.DrawText(_ResultIDName, _CogBarCodeIDResult.IDCenterX[iLoopCount], _CogBarCodeIDResult.IDCenterY[iLoopCount] + 30, CogColorConstants.Green, 8, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                }
+            }
+        }
     }
 }

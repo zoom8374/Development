@@ -23,7 +23,8 @@ namespace InspectionSystemManager
         private InspectionPattern           InspPatternProc;
         private InspectionBlobReference     InspBlobReferProc;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
-        private InspectionLead              InspLeadProc;
+        private InspectionLead InspLeadProc;
+        private InspectionID InspIDProc;
 
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
@@ -119,6 +120,9 @@ namespace InspectionSystemManager
 
             InspLeadProc = new InspectionLead();
             InspLeadProc.Initialize();
+
+            InspIDProc = new InspectionID();
+            InspIDProc.Initialize();
 
             AreaResultParamList = new AreaResultParameterList();
             AlgoResultParamList = new AlgoResultParameterList();
@@ -581,11 +585,12 @@ namespace InspectionSystemManager
             #endregion Buffer Area Calculate
 
             eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
-            if (eAlgoType.C_PATTERN == _AlgoType)           _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB == _AlgoType)         _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            if (eAlgoType.C_PATTERN == _AlgoType) _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB_REFER == _AlgoType) _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB == _AlgoType) _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LEAD == _AlgoType) _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType) _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_ID == _AlgoType) _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
             return _Result;
         }
@@ -647,6 +652,19 @@ namespace InspectionSystemManager
 
             return _CogNeedleFindResult.IsGood;
         }
+
+        private bool CogBarCodeIDAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            CogBarCodeIDAlgo    _CogBarCodeIDAlgo = _Algorithm as CogBarCodeIDAlgo;
+            CogBarCodeIDResult  _CogBarCodeIDResult = new CogBarCodeIDResult();
+
+            bool _Result = InspIDProc.Run(OriginImage, _InspRegion, _CogBarCodeIDAlgo, ref _CogBarCodeIDResult);
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_ID, _CogBarCodeIDResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogBarCodeIDResult.IsGood;
+        }
         #endregion Algorithm 별 Inspection Step
 
         #region Algorithm 별 Display
@@ -657,11 +675,12 @@ namespace InspectionSystemManager
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
                 eAlgoType _AlgoType = AlgoResultParamList[iLoopCount].ResultAlgoType;
-                if (eAlgoType.C_PATTERN == _AlgoType)           _IsGood = DisplayResultPatternMatching(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
-                else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _IsGood = DisplayResultBlobReference(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount); 
-                else if (eAlgoType.C_BLOB == _AlgoType)         _IsGood = DisplayResultBlob(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
-                else if (eAlgoType.C_LEAD == _AlgoType)         _IsGood = DisplayResultLeadMeasure(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
-                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _IsGood = DisplayResultNeedleFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                if (eAlgoType.C_PATTERN == _AlgoType) _IsGood = DisplayResultPatternMatching(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_BLOB_REFER == _AlgoType) _IsGood = DisplayResultBlobReference(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_BLOB == _AlgoType) _IsGood = DisplayResultBlob(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_LEAD == _AlgoType) _IsGood = DisplayResultLeadMeasure(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType) _IsGood = DisplayResultNeedleFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_ID == _AlgoType) _IsGood = DisplayResultBarCodeIDFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
 
                 if (true == _IsLastGood) _IsLastGood = _IsGood;
             }
@@ -804,6 +823,28 @@ namespace InspectionSystemManager
 
             return _CogNeedleFindResult.IsGood;
         }
+
+        private bool DisplayResultBarCodeIDFind(Object _ResultParam, int _Index)
+        {
+            CogBarCodeIDResult _CogBarCodeIDResult = _ResultParam as CogBarCodeIDResult;
+
+            CogPolygon _Polygon = new CogPolygon();
+            
+            if(_CogBarCodeIDResult != null)
+            {
+                for (int iLoopCount = 0; iLoopCount < _CogBarCodeIDResult.IDCount; iLoopCount++)
+                {
+                    _Polygon.SetVertices(_CogBarCodeIDResult.IDPolygon[iLoopCount].GetVertices());
+                    ResultDisplay(_Polygon, "BarCodeID" + iLoopCount, _CogBarCodeIDResult.IsGood);
+
+                    string _ResultIDName = string.Format("ID = {0}", _CogBarCodeIDResult.IDResult);
+                    ResultDisplayMessage(_CogBarCodeIDResult.IDCenterX[iLoopCount], _CogBarCodeIDResult.IDCenterY[iLoopCount] + 30, _ResultIDName, true, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                }
+
+            }
+
+            return _CogBarCodeIDResult.IsGood;
+        }
         #endregion Algorithm 별 Display
 
         #region Display Result function
@@ -832,6 +873,11 @@ namespace InspectionSystemManager
 
             if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
             else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+        }
+
+        public void ResultDisplay(CogPolygon _Polygon, string _Name, bool _IsGood)
+        {
+            kpCogDisplayMain.DrawStaticShape(_Polygon, _Name + "_Polygon", CogColorConstants.Green);
         }
 
         public void ResultDisplay(CogLineSegment _Line, string _Name, CogColorConstants _Color)
@@ -869,6 +915,7 @@ namespace InspectionSystemManager
 
             if (ProjectItem == eProjectItem.LEAD_INSP)          _SendResParam = GetLeadInspectionResultAnalysys();
             else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  _SendResParam = GetNeedleFindResultAnalysis();
+            else if (ProjectItem == eProjectItem.ID_INSP)       _SendResParam = GetIDInspectionResultAnalysis();
 
             var _InspectionWindowEvent = InspectionWindowEvent;
             if (InspectionWindowEvent != null)
@@ -887,10 +934,15 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
-               if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LEAD)
+                if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LEAD)
                 {
                     var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLeadResult;
                     _SendResParam.LeadCount = _AlgoResultParam.LeadCount;
+                }
+
+                else if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_PATTERN)
+                {
+
                 }
             }
 
@@ -912,6 +964,17 @@ namespace InspectionSystemManager
             _SendResParam.ProjectItem = ProjectItem;
             _SendResParam.AlignX = _AlgoResultParam.CenterX;
             _SendResParam.AlignY = _AlgoResultParam.CenterY;
+
+            return _SendResParam;
+        }
+
+        private SendResultParameter GetIDInspectionResultAnalysis()
+        {
+            SendResultParameter _SendResParam = new SendResultParameter();
+
+            _SendResParam.ID = ID;
+            _SendResParam.IsGood = true;
+            _SendResParam.ProjectItem = ProjectItem;
 
             return _SendResParam;
         }
