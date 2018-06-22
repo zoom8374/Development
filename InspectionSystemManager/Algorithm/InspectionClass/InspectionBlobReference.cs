@@ -49,20 +49,40 @@ namespace InspectionSystemManager
         public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult, int _NgNumber = 0)
         {
             bool _Result = true;
+            double _X = 0, _Y = 0;
 
             SetHardFixedThreshold(_CogBlobReferAlgo.ThresholdMin);
             SetConnectivityMinimum((int)_CogBlobReferAlgo.BlobAreaMin);
             SetPolarity(Convert.ToBoolean(_CogBlobReferAlgo.ForeGround));
+            SetMeasurement(CogBlobMeasureConstants.Area, CogBlobMeasureModeConstants.Filter, CogBlobFilterModeConstants.IncludeBlobsInRange, _CogBlobReferAlgo.BlobAreaMin, _CogBlobReferAlgo.BlobAreaMax);
 
             if (true == Inspection(_SrcImage, _InspRegion)) GetResult(true);
-
+            
             if (GetResults().BlobCount > 0)
             {
                 _CogBlobReferResult = GetResults();
 
                 for (int iLoopCount = 0; iLoopCount < _CogBlobReferResult.BlobCount; ++iLoopCount)
                 {
-                    double _X = 0, _Y = 0;
+                    _CogBlobReferResult.IsGoods[iLoopCount] = true;
+                    if (_CogBlobReferAlgo.UseBodyArea)
+                    {
+                        double _BodyAreaGap = Math.Abs(_CogBlobReferResult.BlobArea[iLoopCount] - _CogBlobReferAlgo.BodyArea);
+                        if ((_CogBlobReferAlgo.BodyArea * _CogBlobReferAlgo.BodyAreaPermitPercent / 100) > _BodyAreaGap) { _CogBlobReferResult.IsGoods[iLoopCount] = false; continue; }
+                    }
+
+                    if (_CogBlobReferAlgo.UseBodyWidth)
+                    {
+                        double _BodyWidthGap = Math.Abs(_CogBlobReferResult.Width[iLoopCount] - _CogBlobReferAlgo.BodyWidth);
+                        if ((_CogBlobReferAlgo.BodyWidth * _CogBlobReferAlgo.BodyWidthPermitPercent / 100) > _BodyWidthGap) { _CogBlobReferResult.IsGoods[iLoopCount] = false; continue; }
+                    }
+
+                    if (_CogBlobReferAlgo.UseBodyHeight)
+                    {
+                        double _BodyHeightGap = Math.Abs(_CogBlobReferResult.Height[iLoopCount] - _CogBlobReferAlgo.BodyHeight);
+                        if ((_CogBlobReferAlgo.BodyHeight * _CogBlobReferAlgo.BodyHeightPermitPercent / 100) > _BodyHeightGap) { _CogBlobReferResult.IsGoods[iLoopCount] = false; continue; }
+                    }
+
                     eBenchMarkPosition _eBenchMark = (eBenchMarkPosition)_CogBlobReferAlgo.BenchMarkPosition;
                     if (eBenchMarkPosition.TL == _eBenchMark) { _X = _CogBlobReferResult.BlobMinX[iLoopCount]; _Y = _CogBlobReferResult.BlobMinY[iLoopCount]; }
                     else if (eBenchMarkPosition.TC == _eBenchMark) { _X = _CogBlobReferResult.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResult.BlobMinY[iLoopCount]; }
@@ -90,6 +110,7 @@ namespace InspectionSystemManager
                 _CogBlobReferResult.Height = new double[1];
                 _CogBlobReferResult.OriginX = new double[1];
                 _CogBlobReferResult.OriginY = new double[1];
+                _CogBlobReferResult.IsGoods = new bool[1];
                 _CogBlobReferResult.BlobMinX[0] = _InspRegion.X;
                 _CogBlobReferResult.BlobMaxY[0] = _InspRegion.Y + _InspRegion.Height;
                 _CogBlobReferResult.BlobCenterX[0] = _InspRegion.CenterX;
@@ -159,6 +180,7 @@ namespace InspectionSystemManager
             InspResults.BlobMessCenterY = new double[BlobResults.GetBlobs().Count];
             InspResults.OriginX = new double[BlobResults.GetBlobs().Count];
             InspResults.OriginY = new double[BlobResults.GetBlobs().Count];
+            InspResults.IsGoods = new bool[BlobResults.GetBlobs().Count];
             if (_IsGraphicResult) InspResults.ResultGraphic = new CogCompositeShape[InspResults.BlobCount];
 
             for (int iLoopCount = 0; iLoopCount < InspResults.BlobCount; ++iLoopCount)
@@ -181,6 +203,19 @@ namespace InspectionSystemManager
             }
 
             return _Result;
+        }
+
+        private void SetMeasurement(CogBlobMeasureConstants _Properties, CogBlobMeasureModeConstants _Filter, CogBlobFilterModeConstants _Range, double _RangeLow, double _RangeHigh, bool _IsNew = true)
+        {
+            if (_IsNew) BlobProc.RunTimeMeasures.Clear();
+
+            CogBlobMeasure _BlobMeasure = new CogBlobMeasure();
+            _BlobMeasure.Measure = _Properties;
+            _BlobMeasure.Mode = _Filter;
+            _BlobMeasure.FilterMode = _Range;
+            _BlobMeasure.FilterRangeLow = _RangeLow;
+            _BlobMeasure.FilterRangeHigh = _RangeHigh;
+            BlobProc.RunTimeMeasures.Add(_BlobMeasure);
         }
 
         private void SetPolarity(bool _IsMode)

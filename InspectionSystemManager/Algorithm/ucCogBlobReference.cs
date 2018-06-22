@@ -15,6 +15,10 @@ namespace InspectionSystemManager
     {
         private CogBlobReferenceAlgo CogBlobReferAlgoRcp = new CogBlobReferenceAlgo();
 
+        private double BodyAreaSize = 0;
+        private double BodyWidthSize = 0;
+        private double BodyHeightSize = 0;
+
         private double OriginX = 0;
         private double OriginY = 0;
         private double ResolutionX = 0.005;
@@ -49,6 +53,15 @@ namespace InspectionSystemManager
         private void btnSetting_Click(object sender, EventArgs e)
         {
             ApplySettingValue();
+        }
+
+        private void btnGet_Click(object sender, EventArgs e)
+        {
+            ApplySettingValue();
+
+            textBoxBodyArea.Text = BodyAreaSize.ToString();
+            textBoxBodyWidth.Text = (BodyWidthSize * ResolutionX).ToString("F2");
+            textBoxBodyHeight.Text = (BodyHeightSize * ResolutionY).ToString("F2");
         }
 
         private void rbForeground_MouseUp(object sender, MouseEventArgs e)
@@ -218,9 +231,9 @@ namespace InspectionSystemManager
             {
                 double _MaxArea = _CogBlobReferResult.BlobArea.Max();
                 int _MaxIndex = Array.IndexOf(_CogBlobReferResult.BlobArea, _MaxArea);
-                textBoxBodyArea.Text = _CogBlobReferResult.BlobArea[_MaxIndex].ToString("F2");
-                textBoxBodyWidth.Text = _CogBlobReferResult.Width[_MaxIndex].ToString("F2");
-                textBoxBodyHeight.Text = _CogBlobReferResult.Height[_MaxIndex].ToString("F2");
+                BodyAreaSize = _CogBlobReferResult.BlobArea[_MaxIndex];
+                BodyWidthSize = _CogBlobReferResult.Width[_MaxIndex];
+                BodyHeightSize = _CogBlobReferResult.Height[_MaxIndex];
 
                 OriginX = _CogBlobReferResult.OriginX[_MaxIndex];
                 OriginY = _CogBlobReferResult.OriginY[_MaxIndex];

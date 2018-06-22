@@ -118,6 +118,7 @@ namespace ParameterManager
         public double[] BlobArea;
         public double[] OriginX;
         public double[] OriginY;
+        public bool[] IsGoods;
         public CogCompositeShape[] ResultGraphic;
     }
 

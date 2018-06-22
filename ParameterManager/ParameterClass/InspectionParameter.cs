@@ -103,6 +103,10 @@ namespace ParameterManager
             HeightMin = 5;
             HeightMax = 200;
 
+            BodyAreaPermitPercent = 85;
+            BodyWidthPermitPercent = 85;
+            BodyHeightPermitPercent = 85;
+
             BenchMarkPosition = 4;
         }
     }

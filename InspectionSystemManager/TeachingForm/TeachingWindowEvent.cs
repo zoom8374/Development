@@ -241,6 +241,7 @@ namespace InspectionSystemManager
         }
         #endregion Needle Circle Find Window Event : ucCogNeedleCircleFind -> TeachingWindow
 
+        #region Lead Inspection Window Event : ucCogLeadInspection -> TeachingWindow
         private void ApplyLeadInspValueFunction(CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult, bool _IsDisplay = true)
         {
             if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
@@ -312,5 +313,6 @@ namespace InspectionSystemManager
             _CogLeadResult.LeadAngleAvg = _AngleAvg;
             #endregion Lead Angle Average 측정
         }
+        #endregion Lead Inspection Window Event : ucCogLeadInspection -> TeachingWindow
     }
 }
