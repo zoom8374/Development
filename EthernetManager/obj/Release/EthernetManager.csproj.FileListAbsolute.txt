@@ -1,0 +1,4 @@
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Release\EthernetManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Release\EthernetManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Release\EthernetManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Release\EthernetManager.pdb

@@ -107,6 +107,14 @@ namespace InspectionSystemManager
 
             gridViewArea.ShowCellToolTips = false;
             gridViewAlgo.ShowCellToolTips = false;
+
+            //gridViewArea.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
+            //gridViewArea.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            
+            //gridViewArea.EnableHeadersVisualStyles = false;
+            //gridViewArea.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            //gridViewArea.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
+            //gridViewArea.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
         }
 
         public void DeInitialize()

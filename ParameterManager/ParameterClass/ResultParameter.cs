@@ -179,15 +179,35 @@ namespace ParameterManager
     }
     #endregion Inspection Result Parameter
 
+    #region Last Send Result Parameter
     public class SendResultParameter
     {
         public eProjectItem ProjectItem;
         public eInspMode InspMode;
         public int ID;
         public bool IsGood;
+
+        public object SendResult;
+    }
+
+    public class SendIDResult
+    {
+        public string ReadCode;
+    }
+
+    public class SendNeedleAlignResult
+    {
         public double AlignX;
         public double AlignY;
-        public int LeadCount;
     }
+
+    public class SendLeadResult
+    {
+        public int LeadCount;
+        public double[] LeadAngle;
+        public double[] LeadLength;
+        public double[] LeadWidth;
+        public double[] LeadPitch;
+    }
+    #endregion Last Send Result Parameter
 }
-    

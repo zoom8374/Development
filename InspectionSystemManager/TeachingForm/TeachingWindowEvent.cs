@@ -276,48 +276,64 @@ namespace InspectionSystemManager
             #endregion Result Display
 
             #region Pitch Average 측정
-            double[] _LeadPitchX = new double[_CogLeadResult.BlobCount];
-            Array.Copy(_CogLeadResult.LeadPitchTopX, _LeadPitchX, _CogLeadResult.BlobCount);
-            Array.Sort(_LeadPitchX);
-
-            double[] _LeadPitches = new double[_CogLeadResult.BlobCount - 1];
-            for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount - 1; ++iLoopCount)
-                _LeadPitches[iLoopCount] = _LeadPitchX[iLoopCount + 1] - _LeadPitchX[iLoopCount];
-
-            Array.Sort(_LeadPitches);
-            double _Gab = _LeadPitches[4];
-            int _Index = 1;
-            double _PitchSum = _LeadPitches[4], _PitchArray = 0;
-            for (int iLoopCount = 5; iLoopCount < _CogLeadResult.BlobCount - 1; ++iLoopCount)
+            try
             {
-                if (_Gab + 20 < _LeadPitches[iLoopCount]) break;
-                _PitchSum += _LeadPitches[iLoopCount];
-                _Index++;
+                double[] _LeadPitchX = new double[_CogLeadResult.BlobCount];
+                Array.Copy(_CogLeadResult.LeadPitchTopX, _LeadPitchX, _CogLeadResult.BlobCount);
+                Array.Sort(_LeadPitchX);
+
+                double[] _LeadPitches = new double[_CogLeadResult.BlobCount - 1];
+                for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount - 1; ++iLoopCount)
+                    _LeadPitches[iLoopCount] = _LeadPitchX[iLoopCount + 1] - _LeadPitchX[iLoopCount];
+
+                Array.Sort(_LeadPitches);
+                double _Gab = _LeadPitches[4];
+                int _Index = 1;
+                double _PitchSum = _LeadPitches[4], _PitchArray = 0;
+                for (int iLoopCount = 5; iLoopCount < _CogLeadResult.BlobCount - 1; ++iLoopCount)
+                {
+                    if (_Gab + 20 < _LeadPitches[iLoopCount]) break;
+                    _PitchSum += _LeadPitches[iLoopCount];
+                    _Index++;
+                }
+
+                _PitchArray = _PitchSum / _Index;
+                _CogLeadResult.LeadPitchAvg = _PitchArray;
             }
 
-            _PitchArray = _PitchSum / _Index;
-            _CogLeadResult.LeadPitchAvg = _PitchArray;
+            catch
+            {
+                _CogLeadResult.LeadPitchAvg = 0;
+            }
             #endregion Pitch Average 측정
 
             #region Lead Angle Average 측정
-            double[] _LeadAngles = new double[_CogLeadResult.BlobCount];
-            Array.Copy(_CogLeadResult.Angle, _LeadAngles, _CogLeadResult.BlobCount);
-            Array.Sort(_LeadAngles);
-
-            _Index = 0;
-            double _AngleSum = 0, _AngleAvg = 0;
-            for (int iLoopCount = 5; iLoopCount < _CogLeadResult.BlobCount - 5; ++iLoopCount)
+            try
             {
-                _AngleSum += _CogLeadResult.Angle[iLoopCount];
-                _Index++;
+                double[] _LeadAngles = new double[_CogLeadResult.BlobCount];
+                Array.Copy(_CogLeadResult.Angle, _LeadAngles, _CogLeadResult.BlobCount);
+                Array.Sort(_LeadAngles);
+
+                int _Index = 0;
+                double _AngleSum = 0, _AngleAvg = 0;
+                for (int iLoopCount = 5; iLoopCount < _CogLeadResult.BlobCount - 5; ++iLoopCount)
+                {
+                    _AngleSum += _CogLeadResult.Angle[iLoopCount];
+                    _Index++;
+                }
+                _AngleAvg = _AngleSum / _Index;
+                _CogLeadResult.LeadAngleAvg = _AngleAvg;
             }
-            _AngleAvg = _AngleSum / _Index;
-            _CogLeadResult.LeadAngleAvg = _AngleAvg;
+
+            catch
+            {
+                _CogLeadResult.LeadAngleAvg = 0;
+            }
             #endregion Lead Angle Average 측정
         }
         #endregion Lead Inspection Window Event : ucCogLeadInspection -> TeachingWindow
-			
 
+        #region ID Reading Window Event : ucCogID ->TeachingWindow
         private void ApplyBarCodeIDInspValueFunction(CogBarCodeIDAlgo _CogBarCodeIDAlgo, ref CogBarCodeIDResult _CogBarCodeIDResult)
         {
             if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
@@ -339,5 +355,6 @@ namespace InspectionSystemManager
                 }
             }
         }
+        #endregion ID Reading Window Event : ucCogID ->TeachingWindow
     }
 }

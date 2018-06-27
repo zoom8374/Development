@@ -106,7 +106,7 @@ namespace InspectionSystemManager
 
         private void SetIDMode(CogBarCodeIDAlgo _CogBarCodeIDAlgo)
         {
-            IDProc.ProcessingMode = CogIDProcessingModeConstants.IDMax;
+            IDProc.ProcessingMode = CogIDProcessingModeConstants.IDQuick;
             IDProc.DecodedStringCodePage = CogIDCodePageConstants.ANSILatin1;
             IDProc.NumToFind = _CogBarCodeIDAlgo.FindCount;
             SetSymbologyFalse();

@@ -32,6 +32,29 @@ namespace KPVisionInspectionFramework
 
             SetControls();
             SetWindowLocation(1482, 148);
+
+            for (int iLoopCount = 0; iLoopCount < 22; ++iLoopCount)
+            {
+                DataGridViewRow _GridRow = new DataGridViewRow();
+                DataGridViewCell[] _GridCell = new DataGridViewCell[5];
+                _GridCell[0] = gridLeadNum.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[1] = gridLeadBent.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[2] = gridLeadWidth.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[3] = gridLeadLength.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[4] = gridLeadPitch.CellTemplate.Clone() as DataGridViewCell;
+
+                _GridCell[0].Value = (iLoopCount + 1);
+                _GridCell[0].Style.BackColor = Color.DarkGreen;
+                _GridCell[0].Style.ForeColor = Color.White;
+                //_GridCell[1].Style.BackColor = Color.PowderBlue;
+                //_GridCell[2].Style.BackColor = Color.PowderBlue;
+                //_GridCell[3].Style.BackColor = Color.PowderBlue;
+                //_GridCell[4].Style.BackColor = Color.PowderBlue;
+                //
+                _GridRow.Cells.AddRange(_GridCell);
+                QuickGridViewLeadResult.Rows.Add(_GridRow);
+            }
+            QuickGridViewLeadResult.ClearSelection();
         }
 
         public void DeInitialize()
@@ -83,6 +106,53 @@ namespace KPVisionInspectionFramework
 
                 this.LastPosition = e.Location;
             }
+        }
+
+        static int count = 1;
+        private void btnResultTest_Click(object sender, EventArgs e)
+        {
+            DataGridViewCell[] _GridCell = new DataGridViewCell[5];
+            _GridCell[0] = gridLeadNum.CellTemplate.Clone() as DataGridViewCell;
+            _GridCell[1] = gridLeadBent.CellTemplate.Clone() as DataGridViewCell;
+            _GridCell[2] = gridLeadWidth.CellTemplate.Clone() as DataGridViewCell;
+            _GridCell[3] = gridLeadLength.CellTemplate.Clone() as DataGridViewCell;
+            _GridCell[4] = gridLeadPitch.CellTemplate.Clone() as DataGridViewCell;
+
+            _GridCell[0].Value = count;
+            _GridCell[0].Style.BackColor = Color.DarkGreen;
+            _GridCell[0].Style.ForeColor = Color.White;
+            
+            _GridCell[1].Value = 0.00;
+            _GridCell[1].Style.BackColor = Color.PowderBlue;
+
+            _GridCell[2].Value = 0.00;
+            _GridCell[2].Style.BackColor = Color.PowderBlue;
+
+            _GridCell[3].Value = 0.00;
+            _GridCell[3].Style.BackColor = Color.PowderBlue;
+
+            _GridCell[4].Value = 0.00;
+            _GridCell[4].Style.BackColor = Color.PowderBlue;
+
+            DataGridViewRow _GridRow = new DataGridViewRow();
+            _GridRow.Cells.AddRange(_GridCell);
+            QuickGridViewLeadResult.Rows.Add(_GridRow);
+            QuickGridViewLeadResult.ClearSelection();
+            count++;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //QuickGridViewLeadResult[2, 3].Style.BackColor = Color.Red;
+            //QuickGridViewLeadResult[2, 3].Style.ForeColor = Color.White;
+
+            for (int iLoopCount = 0; iLoopCount < 22; ++iLoopCount)
+            {
+                QuickGridViewLeadResult[1, iLoopCount].Value = 0;
+                QuickGridViewLeadResult[2, iLoopCount].Value = 0;
+                QuickGridViewLeadResult[3, iLoopCount].Value = 0;
+            }
+            QuickGridViewLeadResult.ClearSelection();
         }
 
         private void MainResultWindow_MouseDown(object sender, MouseEventArgs e)
@@ -160,24 +230,31 @@ namespace KPVisionInspectionFramework
         }
         #endregion Control Default Event
 
+        #region 프로젝트 별 Result Data Setting
         public void SetResultData(SendResultParameter _ResultParam)
         {
             if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN)   SetNeedleAlignResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP) SetLeadInspectionResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)   SetIDInspectionResultData(_ResultParam);
         }
 
         private void SetNeedleAlignResultData(SendResultParameter _ResultParam)
         {
             if (_ResultParam.ID == 0)   //Needle Align Vision1
             {
-                gradientLabelNeedleAlignX1.Text = _ResultParam.AlignX.ToString("F3");
-                gradientLabelNeedleAlignY1.Text = _ResultParam.AlignY.ToString("F3");
+                var _Result = _ResultParam.SendResult as SendNeedleAlignResult;
+                gradientLabelNeedleAlignX1.Text = _Result.AlignX.ToString("F3");
+                gradientLabelNeedleAlignY1.Text = _Result.AlignY.ToString("F3");
+                SevenSegArr.Value = _Result.AlignX.ToString("F3");
+
+                string _AlignValueX = _Result.AlignX.ToString("F3");
+                SevenSegArr.Value = _AlignValueX;
             }
 
             else if (_ResultParam.ID == 1)   //Needle Align Vision2
             {
-                gradientLabelNeedleAlignX2.Text = _ResultParam.AlignX.ToString("F3");
-                gradientLabelNeedleAlignY2.Text = _ResultParam.AlignY.ToString("F3");
+                //gradientLabelNeedleAlignX2.Text = _ResultParam.AlignX.ToString("F3");
+                //gradientLabelNeedleAlignY2.Text = _ResultParam.AlignY.ToString("F3");
             }
 
             else
@@ -188,7 +265,24 @@ namespace KPVisionInspectionFramework
 
         private void SetLeadInspectionResultData(SendResultParameter _ResultParam)
         {
+            var _Result = _ResultParam.SendResult as SendLeadResult;
 
+            for (int iLoopCount = 0; iLoopCount < _Result.LeadCount; ++iLoopCount)
+            {
+                QuickGridViewLeadResult[1, iLoopCount].Value = _Result.LeadAngle[iLoopCount].ToString("F3");
+                QuickGridViewLeadResult[2, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F3");
+                QuickGridViewLeadResult[3, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F3");
+
+                //QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = (_Result.LeadAngle[iLoopCount] > 0) ? Color.White : Color.Red;
+            }
+            QuickGridViewLeadResult.ClearSelection();
         }
+
+        private void SetIDInspectionResultData(SendResultParameter _ResultParam)
+        {
+            var _Result = _ResultParam.SendResult as SendIDResult;
+            gradientLabelDataMatrix.Text = (_ResultParam.IsGood == true) ? _Result.ReadCode : "-----";
+        }
+        # endregion 프로젝트 별 Result Data Setting
     }
 }

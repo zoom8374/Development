@@ -59,6 +59,7 @@ namespace InspectionSystemManager
             if (GetResults().BlobCount > 0)
             {
                 _CogLeadResult = GetResults();
+                _CogLeadResult.LeadCount = _CogLeadResult.BlobCount;
 
                 #region Lead Pitch Point Get
                 for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount; ++iLoopCount)
