@@ -1,4 +1,11 @@
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\EthernetManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\EthernetManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\bin\Debug\EthernetManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\bin\Debug\EthernetManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\bin\Debug\LogMessageManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\bin\Debug\log4net.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\bin\Debug\LogMessageManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.csprojResolveAssemblyReference.cache
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.EthernetWindow.resources
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.csproj.GenerateResource.Cache
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.dll
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.pdb
+F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.Properties.Resources.resources

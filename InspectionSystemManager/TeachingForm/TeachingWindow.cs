@@ -472,7 +472,8 @@ namespace InspectionSystemManager
 
             if (-1 == InspAreaSelected) { MessageBox.Show("Select Inspection Area"); return; }
             if (-1 == InspAlgoSelected) { MessageBox.Show("Select Algorithm Area"); return; }
-            if (eTeachStep.ALGO_SET == CurrentTeachStep) return;
+            if (eTeachStep.ALGO_SELECT != CurrentTeachStep) return;
+            //if (eTeachStep.ALGO_SET == CurrentTeachStep) return;
 
             //Benchmark Setting
             DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.BENCHMARK), InspAlgoSelected];
@@ -582,6 +583,34 @@ namespace InspectionSystemManager
                 bool _Flag = Convert.ToBoolean(gridViewAlgo.SelectedRows[0].Cells[_Index].Value);
                 gridViewAlgo.SelectedRows[0].Cells[_Index].Value = !_Flag;
             }
+        }
+
+        private void gridViewAlgo_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            
+        }
+
+        private void gridViewAlgo_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //if (e.ColumnIndex != 2 && e.ColumnIndex != 3)
+            //{
+            //    if (gridViewAlgo.RowCount <= 0) return;
+            //    if (gridViewAlgo.SelectedRows.Count == 0) return;
+            //
+            //    int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
+            //    GetAlgoResultDataOffset(InspAreaSelected, _ID);
+            //
+            //    //UpdateInspectionAlgoTeachingWindow(_ID);
+            //    if (InspAlgoSelected > -1) gridViewAlgo.Rows[InspAlgoSelected].DefaultCellStyle.BackColor = Color.White;
+            //    UpdateInspectionAlgorithmAreaDraw(_ID);
+            //    InspAlgoSelected = _ID;
+            //
+            //    AlgoRegionRectangle = null;
+            //    UpdateTeachingStatus(eTeachStep.ALGO_SELECT);
+            //
+            //    gridViewAlgo.Rows[InspAlgoSelected].DefaultCellStyle.BackColor = Color.Yellow;
+            //    gridViewAlgo.ClearSelection();
+            //}
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)

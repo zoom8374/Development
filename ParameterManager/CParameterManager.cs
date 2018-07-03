@@ -228,9 +228,9 @@ namespace ParameterManager
                         case "ImageSizeHeight":  InspSysManagerParam[_ID].ImageSizeHeight = Convert.ToInt32(_Node.InnerText); break;
                         case "ResolutionX":      InspSysManagerParam[_ID].ResolutionX = Convert.ToDouble(_Node.InnerText); break;
                         case "ResolutionY":      InspSysManagerParam[_ID].ResolutionY = Convert.ToDouble(_Node.InnerText); break;
-                        case "DispWindowZoom":      InspSysManagerParam[_ID].InspWndParam.DisplayZoomValue = Convert.ToDouble(_Node.InnerText); break;
-                        case "DispWindowPanX":      InspSysManagerParam[_ID].InspWndParam.DisplayPanXValue = Convert.ToDouble(_Node.InnerText); break;
-                        case "DispWindowPanY":      InspSysManagerParam[_ID].InspWndParam.DisplayPanYValue = Convert.ToDouble(_Node.InnerText); break;
+                        case "InspWindowZoom":      InspSysManagerParam[_ID].InspWndParam.DisplayZoomValue = Convert.ToDouble(_Node.InnerText); break;
+                        case "InspWindowPanX":      InspSysManagerParam[_ID].InspWndParam.DisplayPanXValue = Convert.ToDouble(_Node.InnerText); break;
+                        case "InspWindowPanY":      InspSysManagerParam[_ID].InspWndParam.DisplayPanYValue = Convert.ToDouble(_Node.InnerText); break;
                         case "InspWindowLocationX": InspSysManagerParam[_ID].InspWndParam.LocationX = Convert.ToInt32(_Node.InnerText); break;
                         case "InspWindowLocationY": InspSysManagerParam[_ID].InspWndParam.LocationY = Convert.ToInt32(_Node.InnerText); break;
                         case "InspWindowWidth":     InspSysManagerParam[_ID].InspWndParam.Width = Convert.ToInt32(_Node.InnerText); break;
@@ -1051,7 +1051,7 @@ namespace ParameterManager
                         _Algorithm.HeightMax    = _SrcAlgorithm.HeightMax;
                         _Algorithm.OriginX      = _SrcAlgorithm.OriginX;
                         _Algorithm.OriginY      = _SrcAlgorithm.OriginY;
-                        _Algorithm.IsShowwBoundary = _SrcAlgorithm.IsShowwBoundary;
+                        _Algorithm.IsShowBoundary = _SrcAlgorithm.IsShowBoundary;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

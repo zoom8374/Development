@@ -30,6 +30,8 @@ namespace InspectionSystemManager
         private InspectionParameter InspParam = new InspectionParameter();
         public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
         public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
+        private double AnyReferenceX = 0;
+        private double AnyReferenceY = 0;
 
         private int ID;
         private eProjectType ProjectType;
@@ -98,6 +100,9 @@ namespace InspectionSystemManager
             btnImageLoad.ButtonImage = InspectionSystemManager.Properties.Resources.ImageLoad;
             btnImageLoad.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageLoadOver;
             btnImageLoad.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageLoadOver;
+            btnConfigSave.ButtonImage = InspectionSystemManager.Properties.Resources.ConfigSave;
+            btnConfigSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ConfigSaveOver;
+            btnConfigSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ConfigSaveOver;
             #endregion Set Button Image Resource
         }
 
@@ -351,11 +356,21 @@ namespace InspectionSystemManager
         private void btnImageLoad_Click(object sender, EventArgs e)
         {
             LoadCogImage();
+            kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
+            kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
+            kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
         }
 
         private void btnImageSave_Click(object sender, EventArgs e)
         {
             SaveCogImage();
+        }
+
+        private void btnConfigSave_Click(object sender, EventArgs e)
+        {
+            DisplayZoomValue = kpCogDisplayMain.GetDisplayZoom();
+            DisplayPanXValue = kpCogDisplayMain.GetDisplayPanX();
+            DisplayPanYValue = kpCogDisplayMain.GetDisplayPanY();
         }
         #endregion Control Event
 
@@ -464,6 +479,8 @@ namespace InspectionSystemManager
             AreaAlgoCount = 0;
             AreaResultParamList.Clear();
             AlgoResultParamList.Clear();
+            AnyReferenceX = 0;
+            AnyReferenceY = 0;
             DisplayClear(true, true);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Resut Clear", ID + 1));
             return _Result;
@@ -586,9 +603,9 @@ namespace InspectionSystemManager
 
             eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
             if (eAlgoType.C_PATTERN == _AlgoType)           _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_BLOB == _AlgoType)         _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
@@ -601,6 +618,9 @@ namespace InspectionSystemManager
             CogPatternResult _CogPatternResult = new CogPatternResult();
 
             bool _Result = InspPatternProc.Run(OriginImage, _InspRegion, _CogPatternAlgo, ref _CogPatternResult);
+
+            if (_CogPatternResult.OriginPointX?.Length > 0) AnyReferenceX = _CogPatternResult.OriginPointX[0];
+            if (_CogPatternResult.OriginPointY?.Length > 0) AnyReferenceY = _CogPatternResult.OriginPointY[0];
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_PATTERN, _CogPatternResult);
             AlgoResultParamList.Add(_AlgoResultParam);
@@ -616,6 +636,9 @@ namespace InspectionSystemManager
 
             bool _Result = InspBlobReferProc.Run(OriginImage, _InspRegion, _CogBlobReferAlgo, ref _CogBlobReferResult, _NgAreaNumber);
 
+            if (_CogBlobReferResult.OriginX?.Length > 0) AnyReferenceX = _CogBlobReferResult.OriginX[0];
+            if (_CogBlobReferResult.OriginY?.Length > 0) AnyReferenceY = _CogBlobReferResult.OriginY[0];
+
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_BLOB_REFER, _CogBlobReferResult);
             AlgoResultParamList.Add(_AlgoResultParam);
 
@@ -624,7 +647,6 @@ namespace InspectionSystemManager
 
         private bool CogBlobAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
-
             return true;
         }
 
@@ -633,7 +655,7 @@ namespace InspectionSystemManager
             CogLeadAlgo _CogLeadAlgo = _Algorithm as CogLeadAlgo;
             CogLeadResult _CogLeadResult = new CogLeadResult();
 
-            bool _Result = InspLeadProc.Run(OriginImage, _InspRegion, _CogLeadAlgo, ref _CogLeadResult);
+            bool _Result = InspLeadProc.Run(OriginImage, _InspRegion, _CogLeadAlgo, ref _CogLeadResult, AnyReferenceX, AnyReferenceY);
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LEAD, _CogLeadResult);
             AlgoResultParamList.Add(_AlgoResultParam);
 
@@ -792,6 +814,11 @@ namespace InspectionSystemManager
                 ResultDisplay(_PitchPoint, "PointStart" + (iLoopCount + 1), CogColorConstants.Yellow);
                 _PitchPoint.SetCenterRotationSize(_CogLeadResult.LeadPitchBottomX[iLoopCount], _CogLeadResult.LeadPitchBottomY[iLoopCount], 0, 1);
                 ResultDisplay(_PitchPoint, "PointEnd" + (iLoopCount + 1), CogColorConstants.Orange);
+
+                //Length Line
+                //CogLineSegment _LengthLine = new CogLineSegment();
+                //_LengthLine.SetStartEnd(_CogLeadResult.LeadLengthStartX[iLoopCount], _CogLeadResult.LeadLengthStartY[iLoopCount], _CogLeadResult.LeadPitchTopX[iLoopCount], _CogLeadResult.LeadPitchTopY[iLoopCount]);
+                //ResultDisplay(_LengthLine, "LengthLine" + (iLoopCount + 1), CogColorConstants.Yellow);
             }
             //});
 

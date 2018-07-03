@@ -127,6 +127,9 @@
   <data name="InspectionOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\InspectionOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Rang_Upper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rang_Upper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Inspection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Inspection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -166,7 +169,10 @@
   <data name="ImageLoad" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ImageLoad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Rang_Upper" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Rang_Upper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ConfigSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConfigSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConfigSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConfigSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

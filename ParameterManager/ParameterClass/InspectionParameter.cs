@@ -167,7 +167,18 @@ namespace ParameterManager
         public double HeightMax;
         public double OriginX;
         public double OriginY;
-        public bool IsShowwBoundary;
+        public bool IsShowBoundary;
+
+        //Lead Bent & Pitch 검사 Parameter
+        public bool IsLeadPitchInspection;
+        public double LeadPich;
+        public double LeadPitchMin;
+        public double LeadPitchMax;
+
+        public bool IsLeadBentInspection;
+        public double LeadBent;
+        public double LeadBentMin;
+        public double LeadBentMax;
 
         public CogLeadAlgo()
         {

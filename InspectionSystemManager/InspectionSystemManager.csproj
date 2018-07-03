@@ -68,7 +68,7 @@
     <Compile Include="Algorithm\InspectionClass\InspectionLead.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionPattern.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionID.cs" />
-    <Compile Include="InspectionWindowProcLead.cs">
+    <Compile Include="InspSysManagerWindow\InspectionWindowProcLead.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InspSysManagerWindow\InspectionWindowProcID.cs">
@@ -227,6 +227,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Rang_Upper.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConfigSave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConfigSaveOver.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

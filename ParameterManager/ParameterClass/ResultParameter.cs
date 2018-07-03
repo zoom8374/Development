@@ -166,6 +166,10 @@ namespace ParameterManager
         public double[] LeadPitchTopY;
         public double[] LeadPitchBottomX;
         public double[] LeadPitchBottomY;
+
+        public double[] LeadLength;
+        public double[] LeadLengthStartX;
+        public double[] LeadLengthStartY;
     }
 
     public class CogBarCodeIDResult : Result
@@ -204,6 +208,8 @@ namespace ParameterManager
     public class SendLeadResult
     {
         public int LeadCount;
+        public double BodyReferenceX;
+        public double BodyReferencY;
         public double[] LeadAngle;
         public double[] LeadLength;
         public double[] LeadWidth;

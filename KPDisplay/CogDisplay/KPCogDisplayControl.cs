@@ -341,8 +341,8 @@ namespace KPDisplay
 
         public void DrawStaticLine(CogLineSegment _Line, string _GroupName, CogColorConstants _Color)
         {
-            StaticLineSegment.Color = _Color;
             StaticLineSegment = _Line;
+            StaticLineSegment.Color = _Color;
             StaticLineSegment.Interactive = false;
             StaticLineSegment.LineStyle = CogGraphicLineStyleConstants.Solid;
             kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);

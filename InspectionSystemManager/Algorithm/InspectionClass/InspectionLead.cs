@@ -46,7 +46,7 @@ namespace InspectionSystemManager
         }
         #endregion Initialize & Deinitialize
 
-        public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult)
+        public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult, double _ReferX = -1, double _ReferY = -1)
         {
             bool _Result = true;
 
@@ -64,6 +64,7 @@ namespace InspectionSystemManager
                 #region Lead Pitch Point Get
                 for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount; ++iLoopCount)
                 {
+                    //Pitch Point 구하기
                     if (_CogLeadResult.Angle[iLoopCount] > 0)
                     {
                         CogLineSegment _CenterLine = new CogLineSegment();
@@ -87,8 +88,19 @@ namespace InspectionSystemManager
                         _CogLeadResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
                         _CogLeadResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
                     }
+
+                    //Length 구하기
+                    if (_ReferY != -1 && _ReferY != -1)
+                    {
+                        _CogLeadResult.LeadLength[iLoopCount] = Math.Abs(_ReferY - _CogLeadResult.LeadPitchTopY[iLoopCount]);
+                        _CogLeadResult.LeadLengthStartX[iLoopCount] = _CogLeadResult.LeadPitchTopX[iLoopCount];
+                        _CogLeadResult.LeadLengthStartY[iLoopCount] = _ReferY;
+                    }
                 }
                 #endregion Lead Pitch Point Get
+
+                #region Lead Length Get
+                #endregion Lead Length Get
 
                 _CogLeadResult.IsGood = true;
             }
@@ -163,6 +175,10 @@ namespace InspectionSystemManager
             InspResults.LeadPitchTopY = new double[BlobResults.GetBlobs().Count];
             InspResults.LeadPitchBottomX = new double[BlobResults.GetBlobs().Count];
             InspResults.LeadPitchBottomY = new double[BlobResults.GetBlobs().Count];
+
+            InspResults.LeadLength = new double[BlobResults.GetBlobs().Count];
+            InspResults.LeadLengthStartX = new double[BlobResults.GetBlobs().Count];
+            InspResults.LeadLengthStartY = new double[BlobResults.GetBlobs().Count];
 
             if (_IsGraphicResult) InspResults.ResultGraphic = new CogCompositeShape[InspResults.BlobCount];
 

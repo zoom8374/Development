@@ -205,6 +205,7 @@ namespace InspectionSystemManager
 
             LeadPitchAverage = _CogLeadResult.LeadPitchAvg;
             LeadAngleAverage = _CogLeadResult.LeadAngleAvg;
+            LeadCount = _CogLeadResult.LeadCount;
         }
     }
 }

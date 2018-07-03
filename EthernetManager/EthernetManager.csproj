@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,7 +45,48 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CEthernetManager.cs" />
+    <Compile Include="EthernetWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EthernetWindow.designer.cs">
+      <DependentUpon>EthernetWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EthernetWindow.resx">
+      <DependentUpon>EthernetWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogManager\LogMessageManager.csproj">
+      <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
+      <Name>LogMessageManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Ethernet_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Disconnect_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Stop_Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Confirm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Light.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

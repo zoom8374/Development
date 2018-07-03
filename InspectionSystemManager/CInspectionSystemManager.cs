@@ -97,7 +97,8 @@ namespace InspectionSystemManager
             //CameraType = _InspSysManagerParam.CameraType;
             InspWnd.SetLocation(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
             InspWnd.SetWindowSize(_InspSysManagerParam.InspWndParam.Width, _InspSysManagerParam.InspWndParam.Height);
-            
+            InspWnd.SetWindowDisplayInfo(_InspSysManagerParam.InspWndParam.DisplayZoomValue, _InspSysManagerParam.InspWndParam.DisplayPanXValue, _InspSysManagerParam.InspWndParam.DisplayPanYValue);
+
             WndLocation = new Point(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
         }
 

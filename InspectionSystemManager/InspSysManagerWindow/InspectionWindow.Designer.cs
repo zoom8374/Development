@@ -32,6 +32,7 @@
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
+            this.btnConfigSave = new CustomControl.ImageButton();
             this.btnImageSave = new CustomControl.ImageButton();
             this.btnImageLoad = new CustomControl.ImageButton();
             this.btnRecipeSave = new CustomControl.ImageButton();
@@ -69,6 +70,7 @@
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.panelMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenu.Controls.Add(this.btnConfigSave);
             this.panelMenu.Controls.Add(this.btnImageSave);
             this.panelMenu.Controls.Add(this.btnImageLoad);
             this.panelMenu.Controls.Add(this.btnRecipeSave);
@@ -96,6 +98,24 @@
             this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            // 
+            // btnConfigSave
+            // 
+            this.btnConfigSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnConfigSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ConfigSave;
+            this.btnConfigSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnConfigSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnConfigSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnConfigSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnConfigSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnConfigSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfigSave.ForeColor = System.Drawing.Color.White;
+            this.btnConfigSave.Location = new System.Drawing.Point(233, 1);
+            this.btnConfigSave.Name = "btnConfigSave";
+            this.btnConfigSave.Size = new System.Drawing.Size(34, 34);
+            this.btnConfigSave.TabIndex = 14;
+            this.btnConfigSave.UseVisualStyleBackColor = false;
+            this.btnConfigSave.Click += new System.EventHandler(this.btnConfigSave_Click);
             // 
             // btnImageSave
             // 
@@ -263,5 +283,6 @@
         private System.Windows.Forms.Label labelTitle;
         private CustomControl.ImageButton btnImageSave;
         private CustomControl.ImageButton btnImageLoad;
+        private CustomControl.ImageButton btnConfigSave;
     }
 }

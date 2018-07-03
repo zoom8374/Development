@@ -32,9 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTitle = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnConfirm = new System.Windows.Forms.Button();
@@ -47,6 +47,11 @@
             this.btnInspectionAreaDel = new System.Windows.Forms.Button();
             this.btnInspectionAreaAdd = new System.Windows.Forms.Button();
             this.gridViewArea = new System.Windows.Forms.DataGridView();
+            this.gridAreaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridAreaName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridAreaBenchMark = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.gridAreaEnable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.gridAreaNgNum = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnAlgorithmIndexMoveDown = new System.Windows.Forms.Button();
@@ -68,11 +73,6 @@
             this.panelTeaching = new CustomControl.PanelDoubleBuffer();
             this.gradientLabelTeaching = new CustomControl.GradientLabel();
             this.gradientLabel1 = new CustomControl.GradientLabel();
-            this.gridAreaID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridAreaName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridAreaBenchMark = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.gridAreaEnable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.gridAreaNgNum = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControlTeach.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -219,7 +219,7 @@
             this.gridViewArea.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("나눔바른고딕", 11F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -234,7 +234,7 @@
             this.gridAreaNgNum});
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("나눔바른고딕", 11F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -260,6 +260,52 @@
             this.gridViewArea.TabIndex = 3;
             this.gridViewArea.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewArea_CellContentClick);
             this.gridViewArea.CurrentCellChanged += new System.EventHandler(this.gridViewArea_CurrentCellChanged);
+            // 
+            // gridAreaID
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridAreaID.DefaultCellStyle = dataGridViewCellStyle3;
+            this.gridAreaID.HeaderText = "ID";
+            this.gridAreaID.Name = "gridAreaID";
+            this.gridAreaID.ReadOnly = true;
+            this.gridAreaID.Width = 40;
+            // 
+            // gridAreaName
+            // 
+            this.gridAreaName.HeaderText = "Name";
+            this.gridAreaName.Name = "gridAreaName";
+            this.gridAreaName.ReadOnly = true;
+            this.gridAreaName.Width = 400;
+            // 
+            // gridAreaBenchMark
+            // 
+            this.gridAreaBenchMark.HeaderText = "BenchMark";
+            this.gridAreaBenchMark.Name = "gridAreaBenchMark";
+            this.gridAreaBenchMark.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridAreaBenchMark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.gridAreaBenchMark.Width = 150;
+            // 
+            // gridAreaEnable
+            // 
+            this.gridAreaEnable.HeaderText = "Enable";
+            this.gridAreaEnable.Name = "gridAreaEnable";
+            this.gridAreaEnable.ReadOnly = true;
+            this.gridAreaEnable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // gridAreaNgNum
+            // 
+            this.gridAreaNgNum.HeaderText = "Ng Area";
+            this.gridAreaNgNum.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.gridAreaNgNum.Name = "gridAreaNgNum";
+            this.gridAreaNgNum.Width = 85;
             // 
             // tabPage2
             // 
@@ -336,7 +382,7 @@
             this.gridViewAlgo.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("나눔바른고딕", 11F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -351,7 +397,7 @@
             this.gridAlgoEnable});
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 11F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -369,6 +415,8 @@
             this.gridViewAlgo.TabIndex = 3;
             this.gridViewAlgo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewAlgo_CellClick);
             this.gridViewAlgo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewAlgo_CellContentClick);
+            this.gridViewAlgo.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewAlgo_CellMouseDoubleClick);
+            this.gridViewAlgo.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewAlgo_CellMouseDown);
             // 
             // gridAlgoID
             // 
@@ -515,52 +563,6 @@
             this.gradientLabel1.TabIndex = 18;
             this.gradientLabel1.Text = " Inspection & Algorithm Area Setting Window";
             this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // gridAreaID
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridAreaID.DefaultCellStyle = dataGridViewCellStyle3;
-            this.gridAreaID.HeaderText = "ID";
-            this.gridAreaID.Name = "gridAreaID";
-            this.gridAreaID.ReadOnly = true;
-            this.gridAreaID.Width = 40;
-            // 
-            // gridAreaName
-            // 
-            this.gridAreaName.HeaderText = "Name";
-            this.gridAreaName.Name = "gridAreaName";
-            this.gridAreaName.ReadOnly = true;
-            this.gridAreaName.Width = 400;
-            // 
-            // gridAreaBenchMark
-            // 
-            this.gridAreaBenchMark.HeaderText = "BenchMark";
-            this.gridAreaBenchMark.Name = "gridAreaBenchMark";
-            this.gridAreaBenchMark.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridAreaBenchMark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.gridAreaBenchMark.Width = 150;
-            // 
-            // gridAreaEnable
-            // 
-            this.gridAreaEnable.HeaderText = "Enable";
-            this.gridAreaEnable.Name = "gridAreaEnable";
-            this.gridAreaEnable.ReadOnly = true;
-            this.gridAreaEnable.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // gridAreaNgNum
-            // 
-            this.gridAreaNgNum.HeaderText = "Ng Area";
-            this.gridAreaNgNum.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8"});
-            this.gridAreaNgNum.Name = "gridAreaNgNum";
-            this.gridAreaNgNum.Width = 85;
             // 
             // TeachingWindow
             // 
