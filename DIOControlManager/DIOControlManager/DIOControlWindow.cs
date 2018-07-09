@@ -73,6 +73,7 @@ namespace DIOControlManager
 
             ThreadInputIOCheck = new Thread(ThreadInputIOCheckFunc);
             IsThreadInputIOCheckExit = false;
+            ThreadInputIOCheck.IsBackground = true;
             ThreadInputIOCheck.Start();
 
             ThreadOutputIOCheck = new Thread(ThreadOutputIOCheckFunc);
@@ -82,10 +83,12 @@ namespace DIOControlManager
 
             ThreadVisionAliveSignal = new Thread(ThreadVisionAliveSignalFunc);
             IsThreadVisionAliveSignalExit = false;
+            ThreadOutputIOCheck.IsBackground = true;
             ThreadVisionAliveSignal.Start();
 
             ThreadInputAliveCheck = new Thread(ThreadInputAliveCheckFunc);
             IsThreadInputAliveCheckExit = false;
+            ThreadOutputIOCheck.IsBackground = true;
             ThreadInputAliveCheck.Start();
 
             IsInitialize = true;
@@ -95,13 +98,14 @@ namespace DIOControlManager
 
         public void DeInitialize()
         {
-            DigitalIO.DeInitialize();
             IsInitialize = false;
 
             if (ThreadInputIOCheck != null)      { IsThreadInputIOCheckExit = true; Thread.Sleep(100); ThreadInputIOCheck.Abort(); ThreadInputIOCheck = null; }
             if (ThreadOutputIOCheck != null)     { IsThreadOutputIOCheckExit = true; Thread.Sleep(100); ThreadOutputIOCheck.Abort(); ThreadOutputIOCheck = null; }
             if (ThreadVisionAliveSignal != null) { IsThreadVisionAliveSignalExit = true; Thread.Sleep(100); ThreadVisionAliveSignal.Abort(); ThreadVisionAliveSignal = null; }
             if (ThreadInputAliveCheck != null)   { IsThreadInputAliveCheckExit = true; Thread.Sleep(100); ThreadInputAliveCheck.Abort(); ThreadInputAliveCheck = null; }
+
+            DigitalIO.DeInitialize();
         }
 
         private void InitializeIOBoard()

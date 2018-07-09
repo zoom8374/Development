@@ -15,6 +15,7 @@ using Cognex.VisionPro.ImageFile;
 
 using LogMessageManager;
 using ParameterManager;
+using CameraManager;
 
 namespace InspectionSystemManager
 {
@@ -23,8 +24,9 @@ namespace InspectionSystemManager
         private InspectionPattern           InspPatternProc;
         private InspectionBlobReference     InspBlobReferProc;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
-        private InspectionLead InspLeadProc;
-        private InspectionID InspIDProc;
+        private InspectionLead              InspLeadProc;
+        private InspectionID                InspIDProc;
+        private InspectionLineFind          InspLineFindProc;
 
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
@@ -32,6 +34,8 @@ namespace InspectionSystemManager
         public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
         private double AnyReferenceX = 0;
         private double AnyReferenceY = 0;
+
+        private CCameraManager objCameraManger = new CCameraManager();
 
         private int ID;
         private eProjectType ProjectType;
@@ -53,8 +57,10 @@ namespace InspectionSystemManager
         private double AreaBenchMarkOffsetY;
         private int AreaAlgoCount;
 
+        private string CameraType;
         private int ImageSizeWidth = 0;
         private int ImageSizeHeight = 0;
+        private bool CamLiveFlag = false;
         private bool IsCrossLine = false;
 
         private double DisplayZoomValue = 1;
@@ -129,6 +135,9 @@ namespace InspectionSystemManager
             InspIDProc = new InspectionID();
             InspIDProc.Initialize();
 
+            InspLineFindProc = new InspectionLineFind();
+            InspLineFindProc.Initialize();
+
             AreaResultParamList = new AreaResultParameterList();
             AlgoResultParamList = new AlgoResultParameterList();
 
@@ -147,12 +156,24 @@ namespace InspectionSystemManager
             SetInspectionParameter(_InspParam);
         }
 
+        //LDH, 2018.07.04, Camera 초기화
+        public void InitializeCam(string CamType, int Width, int Height)
+        {
+            ImageSizeWidth = Width;
+            ImageSizeHeight = Height;
+            objCameraManger.ImageDisplayEvent += new CCameraManager.ImageDisplayHandler(SetDisplayImage);
+            objCameraManger.Initialize(ID, CamType);
+        }
+
         public void Deinitialize()
         {
             InspPatternProc.DeInitialize();
             InspBlobReferProc.DeInitialize();
             InspNeedleCircleFindProc.DeInitialize();
             InspLeadProc.DeInitialize();
+            InspLineFindProc.DeInitialize();
+			objCameraManger.DeInitialilze();
+            objCameraManger.ImageDisplayEvent -= new CCameraManager.ImageDisplayHandler(SetDisplayImage);
         }
 
         public void SetLocation(int _StartX, int _StartY)
@@ -350,7 +371,7 @@ namespace InspectionSystemManager
 
         private void btnLive_Click(object sender, EventArgs e)
         {
-
+            objCameraManger.CamLive();            
         }
 
         private void btnImageLoad_Click(object sender, EventArgs e)
@@ -385,6 +406,12 @@ namespace InspectionSystemManager
             kpCogDisplayMain.ClearDisplay();
             kpCogDisplayMain.SetDisplayImage(_DisplayImage);
             GC.Collect();
+        }
+
+        //LDH, 2018.07.04, byte Image display 함수 
+        private void SetDisplayImage(byte[] Image)
+        {
+            kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
         }
         #endregion Set Image Display Control
 
@@ -608,6 +635,7 @@ namespace InspectionSystemManager
             else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
             return _Result;
         }
@@ -687,6 +715,26 @@ namespace InspectionSystemManager
 
             return _CogBarCodeIDResult.IsGood;
         }
+
+        private bool CogLineFindAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            CogLineFindAlgo     _CogLineFindAlgo = _Algorithm as CogLineFindAlgo;
+            CogLineFindResult   _CogLineFindResult = new CogLineFindResult();
+
+            CogImage8Grey _DestImage = new CogImage8Grey();
+            bool _Result = InspLineFindProc.Run(OriginImage, ref _DestImage, _InspRegion, _CogLineFindAlgo, ref _CogLineFindResult);
+
+            if (_CogLineFindAlgo.UseAlignment)
+            {
+                OriginImage = _DestImage;
+                kpCogDisplayMain.SetDisplayImage(OriginImage);
+            }
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LINE_FIND, _CogLineFindResult);
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return _CogLineFindResult.IsGood;
+        }
         #endregion Algorithm 별 Inspection Step
 
         #region Algorithm 별 Display
@@ -703,6 +751,7 @@ namespace InspectionSystemManager
                 else if (eAlgoType.C_LEAD == _AlgoType)         _IsGood = DisplayResultLeadMeasure(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _IsGood = DisplayResultNeedleFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_ID == _AlgoType)           _IsGood = DisplayResultBarCodeIDFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
+                else if (eAlgoType.C_LINE_FIND == _AlgoType)    _IsGood = DisplayResultLineFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
 
                 if (true == _IsLastGood) _IsLastGood = _IsGood;
             }
@@ -798,7 +847,7 @@ namespace InspectionSystemManager
                 CogPointMarker _CenterPoint = new CogPointMarker();
                 _BlobRectAffine.SetCenterLengthsRotationSkew(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount], _CogLeadResult.PrincipalHeight[iLoopCount], _CogLeadResult.Angle[iLoopCount], 0);
                 _CenterPoint.SetCenterRotationSize(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], 0, 2);
-                ResultDisplay(_BlobRectAffine, _CenterPoint, "Lead" + (iLoopCount + 1), _CogLeadResult.IsGood);
+                ResultDisplay(_BlobRectAffine, _CenterPoint, "Lead" + (iLoopCount + 1), _CogLeadResult.IsLeadBentGood[iLoopCount]);
 
                 //Draw Center Line
                 CogLineSegment _CenterLineStart = new CogLineSegment();
@@ -870,6 +919,17 @@ namespace InspectionSystemManager
             }
 
             return _CogBarCodeIDResult.IsGood;
+        }
+
+        private bool DisplayResultLineFind(Object _ResultParam, int _Index)
+        {
+            CogLineFindResult _CogLineFindResult = _ResultParam as CogLineFindResult;
+
+            CogLineSegment _CogLine = new CogLineSegment();
+            _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
+            ResultDisplay(_CogLine, "LineFind", CogColorConstants.Green);
+
+            return _CogLineFindResult.IsGood;
         }
         #endregion Algorithm 별 Display
 

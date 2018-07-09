@@ -497,19 +497,20 @@ namespace ParameterManager
                     }
                 }
 
-                if ((int)eAlgoType.C_PATTERN == _InspAlgoParamTemp.AlgoType)         GetPatternInspectionparameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_BLOB == _InspAlgoParamTemp.AlgoType)       GetBlobInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_BLOB_REFER == _InspAlgoParamTemp.AlgoType) GetBlobReferInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)       GetLeadInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_NEEDLE_FIND == _InspAlgoParamTemp.AlgoType)GetNeedleFindInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_ID == _InspAlgoParamTemp.AlgoType)         GetBarCodeIDInspectionParameterAlgorithm(_Node, ref _InspAlgoParamTemp);
-             
+                if ((int)eAlgoType.C_PATTERN == _InspAlgoParamTemp.AlgoType)         GetPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_BLOB == _InspAlgoParamTemp.AlgoType)       GetBlobInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_BLOB_REFER == _InspAlgoParamTemp.AlgoType) GetBlobReferInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)       GetLeadInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_NEEDLE_FIND == _InspAlgoParamTemp.AlgoType)GetNeedleFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_ID == _InspAlgoParamTemp.AlgoType)         GetBarCodeIDInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LINE_FIND == _InspAlgoParamTemp.AlgoType)  GetLineFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
+
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
             }
             return _Result;
         }
 
-        private void GetPatternInspectionparameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetPatternInspectionparameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
             if (null == _Nodes) return;
 
@@ -562,7 +563,7 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogPattern;
         }
 
-        private void GetBlobReferInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetBlobReferInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
             if (null == _Nodes) return;
             CogBlobReferenceAlgo _CogBlobRefer = new CogBlobReferenceAlgo();
@@ -597,7 +598,7 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogBlobRefer;
         }
 
-        private void GetBlobInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetBlobInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
             if (null == _Nodes) return;
             CogBlobAlgo _CogBlob = new CogBlobAlgo();
@@ -623,7 +624,7 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogBlob;
         }
 
-        private void GetLeadInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetLeadInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
             if (null == _Nodes) return;
             CogLeadAlgo _CogLeadAlgo = new CogLeadAlgo();
@@ -645,12 +646,20 @@ namespace ParameterManager
                     case "HeightMax":       _CogLeadAlgo.HeightMax = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginX":         _CogLeadAlgo.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginY":         _CogLeadAlgo.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadBent":        _CogLeadAlgo.LeadBent = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadBentMin":     _CogLeadAlgo.LeadBentMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadBentMax":     _CogLeadAlgo.LeadBentMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadPitch":       _CogLeadAlgo.LeadPitch = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadPitchMin":    _CogLeadAlgo.LeadPitchMin = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "LeadPitchMax":    _CogLeadAlgo.LeadPitchMax = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "IsLeadBentInsp":  _CogLeadAlgo.IsLeadBentInspection = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "IsLeadPitchInsp": _CogLeadAlgo.IsLeadPitchInspection = Convert.ToBoolean(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogLeadAlgo;
         }
 
-        private void GetNeedleFindInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetNeedleFindInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
             if (null == _Nodes) return;
             CogNeedleFindAlgo _CogNeedleFind = new CogNeedleFindAlgo();
@@ -676,7 +685,7 @@ namespace ParameterManager
             _InspParam.Algorithm = _CogNeedleFind;
         }
 
-        private void GetBarCodeIDInspectionParameterAlgorithm(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        private void GetBarCodeIDInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
         {
             if (null == _Nodes) return;
             CogBarCodeIDAlgo _CogBarCodeID = new CogBarCodeIDAlgo();
@@ -693,6 +702,32 @@ namespace ParameterManager
                 }
             }
             _InspParam.Algorithm = _CogBarCodeID;
+        }
+
+        private void GetLineFindInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+            CogLineFindAlgo _CogLineFind = new CogLineFindAlgo();
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+                switch (_NodeChild.Name)
+                {
+                    case "CaliperNumber":           _CogLineFind.CaliperNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperSearchLength":     _CogLineFind.CaliperSearchLength = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperProjectionLength": _CogLineFind.CaliperProjectionLength = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperSearchDirection":  _CogLineFind.CaliperSearchDirection = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "IgnoreNumber":            _CogLineFind.IgnoreNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperLineStartX":       _CogLineFind.CaliperLineStartX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperLineStartY":       _CogLineFind.CaliperLineStartY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperLineEndX":         _CogLineFind.CaliperLineEndX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "CaliperLineEndY":         _CogLineFind.CaliperLineEndY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ContrastThreshold":       _CogLineFind.ContrastThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "FilterHalfSizePixels":    _CogLineFind.FilterHalfSizePixels = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "UseAlignment":            _CogLineFind.UseAlignment = Convert.ToBoolean(_NodeChild.InnerText); break;
+                }
+            }
+            _InspParam.Algorithm = _CogLineFind;
         }
 
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
@@ -751,6 +786,7 @@ namespace ParameterManager
                                 else if (eAlgoType.C_LEAD == _AlgoType)         WriteLeadInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  WriteNeedleFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                                 else if (eAlgoType.C_ID == _AlgoType)           WriteBarCodeIDInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LINE_FIND == _AlgoType)    WriteLineFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
                         }
@@ -864,6 +900,14 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("HeightMax", _CogLeadAlgo.HeightMax.ToString());
             _XmlWriter.WriteElementString("OriginX", _CogLeadAlgo.OriginX.ToString());
             _XmlWriter.WriteElementString("OriginY", _CogLeadAlgo.OriginY.ToString());
+            _XmlWriter.WriteElementString("LeadBent", _CogLeadAlgo.LeadBent.ToString());
+            _XmlWriter.WriteElementString("LeadBentMin", _CogLeadAlgo.LeadBentMin.ToString());
+            _XmlWriter.WriteElementString("LeadBentMax", _CogLeadAlgo.LeadBentMax.ToString());
+            _XmlWriter.WriteElementString("LeadPitch", _CogLeadAlgo.LeadPitch.ToString());
+            _XmlWriter.WriteElementString("LeadPitchMin", _CogLeadAlgo.LeadPitchMin.ToString());
+            _XmlWriter.WriteElementString("LeadPitchMax", _CogLeadAlgo.LeadPitchMax.ToString());
+            _XmlWriter.WriteElementString("IsLeadPitchInsp", _CogLeadAlgo.IsLeadPitchInspection.ToString());
+            _XmlWriter.WriteElementString("IsLeadBentInsp", _CogLeadAlgo.IsLeadBentInspection.ToString());
         }
 
         private void WriteNeedleFindInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
@@ -891,6 +935,23 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("OriginY", _CogBarCodeIDAlgo.OriginY.ToString());
             _XmlWriter.WriteElementString("TimeLimit", _CogBarCodeIDAlgo.TimeLimit.ToString());
             _XmlWriter.WriteElementString("FindCount", _CogBarCodeIDAlgo.FindCount.ToString());
+        }
+
+        private void WriteLineFindInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            var _CogLineFindAlgo = _InspAlgoParam as CogLineFindAlgo;
+            _XmlWriter.WriteElementString("CaliperNumber", _CogLineFindAlgo.CaliperNumber.ToString());
+            _XmlWriter.WriteElementString("CaliperSearchLength", _CogLineFindAlgo.CaliperSearchLength.ToString());
+            _XmlWriter.WriteElementString("CaliperProjectionLength", _CogLineFindAlgo.CaliperProjectionLength.ToString());
+            _XmlWriter.WriteElementString("CaliperSearchDirection", _CogLineFindAlgo.CaliperSearchDirection.ToString());
+            _XmlWriter.WriteElementString("IgnoreNumber", _CogLineFindAlgo.IgnoreNumber.ToString());
+            _XmlWriter.WriteElementString("CaliperLineStartX", _CogLineFindAlgo.CaliperLineStartX.ToString());
+            _XmlWriter.WriteElementString("CaliperLineStartY", _CogLineFindAlgo.CaliperLineStartY.ToString());
+            _XmlWriter.WriteElementString("CaliperLineEndX", _CogLineFindAlgo.CaliperLineEndX.ToString());
+            _XmlWriter.WriteElementString("CaliperLineEndY", _CogLineFindAlgo.CaliperLineEndY.ToString());
+            _XmlWriter.WriteElementString("ContrastThreshold", _CogLineFindAlgo.ContrastThreshold.ToString());
+            _XmlWriter.WriteElementString("FilterHalfSizePixels", _CogLineFindAlgo.FilterHalfSizePixels.ToString());
+            _XmlWriter.WriteElementString("UseAlignment", _CogLineFindAlgo.UseAlignment.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -1028,7 +1089,7 @@ namespace ParameterManager
                         _Algorithm.OriginX          = _SrcAlgorithm.OriginX;
                         _Algorithm.OriginY          = _SrcAlgorithm.OriginY;
                         _Algorithm.OriginRadius     = _SrcAlgorithm.OriginRadius;
-                        
+
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }
 
@@ -1053,6 +1114,16 @@ namespace ParameterManager
                         _Algorithm.OriginY      = _SrcAlgorithm.OriginY;
                         _Algorithm.IsShowBoundary = _SrcAlgorithm.IsShowBoundary;
 
+                        _Algorithm.LeadBent = _SrcAlgorithm.LeadBent;
+                        _Algorithm.LeadBentMin = _SrcAlgorithm.LeadBentMin;
+                        _Algorithm.LeadBentMax = _SrcAlgorithm.LeadBentMax;
+                        _Algorithm.LeadPitch = _SrcAlgorithm.LeadPitch;
+                        _Algorithm.LeadPitchMin = _SrcAlgorithm.LeadPitchMin;
+                        _Algorithm.LeadPitchMax = _SrcAlgorithm.LeadPitchMax;
+
+                        _Algorithm.IsLeadBentInspection = _SrcAlgorithm.IsLeadBentInspection;
+                        _Algorithm.IsLeadPitchInspection = _SrcAlgorithm.IsLeadPitchInspection;
+
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }
 
@@ -1070,6 +1141,29 @@ namespace ParameterManager
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }
+
+                    else if (eAlgoType.C_LINE_FIND == _AlgoType)
+                    {
+                        var _Algorithm = _InspAlgoParam.Algorithm as CogLineFindAlgo;
+                        var _SrcAlgorithm = _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm as CogLineFindAlgo;
+
+                        _Algorithm = new CogLineFindAlgo();
+                        _Algorithm.CaliperNumber = _SrcAlgorithm.CaliperNumber;
+                        _Algorithm.CaliperSearchLength = _SrcAlgorithm.CaliperSearchLength;
+                        _Algorithm.CaliperProjectionLength = _SrcAlgorithm.CaliperProjectionLength;
+                        _Algorithm.CaliperSearchDirection = _SrcAlgorithm.CaliperSearchDirection;
+                        _Algorithm.IgnoreNumber = _SrcAlgorithm.IgnoreNumber;
+                        _Algorithm.CaliperLineStartX = _SrcAlgorithm.CaliperLineStartX;
+                        _Algorithm.CaliperLineStartY = _SrcAlgorithm.CaliperLineStartY;
+                        _Algorithm.CaliperLineEndX = _SrcAlgorithm.CaliperLineEndX;
+                        _Algorithm.CaliperLineEndY = _SrcAlgorithm.CaliperLineEndY;
+                        _Algorithm.ContrastThreshold = _SrcAlgorithm.ContrastThreshold;
+                        _Algorithm.FilterHalfSizePixels = _SrcAlgorithm.FilterHalfSizePixels;
+                        _Algorithm.UseAlignment = _SrcAlgorithm.UseAlignment;
+
+                        _InspAlgoParam.Algorithm = _Algorithm;
+                    }
+
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
                 }
                 _DestParam.InspAreaParam.Add(_InspAreaParam);

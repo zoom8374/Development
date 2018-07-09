@@ -161,7 +161,7 @@ namespace ParameterManager
         public int LeadCount;
         public double LeadPitchAvg;
         public double LeadAngleAvg;
-        public bool[] IsLeadGood;
+        public bool[] IsLeadBentGood;
         public double[] LeadPitchTopX;
         public double[] LeadPitchTopY;
         public double[] LeadPitchBottomX;
@@ -180,6 +180,18 @@ namespace ParameterManager
         public double[] IDCenterY;
         public double[] IDAngle;
         public CogPolygon[] IDPolygon;
+    }
+
+    public class CogLineFindResult : Result
+    {
+        public double StartX;
+        public double StartY;
+        public double EndX;
+        public double EndY;
+        public double Length;
+        public double Rotation;
+        public int PointCount;
+        public bool[] PointStatus;
     }
     #endregion Inspection Result Parameter
 
@@ -209,11 +221,14 @@ namespace ParameterManager
     {
         public int LeadCount;
         public double BodyReferenceX;
-        public double BodyReferencY;
+        public double BodyReferenceY;
+        public bool[] IsLeadBendGood;
         public double[] LeadAngle;
         public double[] LeadLength;
         public double[] LeadWidth;
         public double[] LeadPitch;
+        public double[] LeadPitchTopX;
+        public double[] LeadPitchTopY;
     }
     #endregion Last Send Result Parameter
 }

@@ -26,6 +26,8 @@ namespace InspectionSystemManager
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent += new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
             ucCogLeadInspWnd.ApplyLeadInspValueEvent += new ucCogLeadInspection.ApplyLeadInspValueHandler(ApplyLeadInspValueFunction);
             ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent += new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
+            ucCogLineFindWnd.ApplyLineFindEvent += new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
+            ucCogLineFindWnd.DrawLineFindCaliperEvent += new ucCogLineFind.DrawLineFindCaliperHandler(DrawLineFindCaliperFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent += new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
         }
 
@@ -39,29 +41,54 @@ namespace InspectionSystemManager
             ucCogNeedleFindWnd.DrawNeedleCircleFindCaliperEvent -= new ucCogNeedleCircleFind.DrawNeedleCircleFindCaliperHandler(DrawNeedleCircleFindCaliperFunction);
             ucCogLeadInspWnd.ApplyLeadInspValueEvent -= new ucCogLeadInspection.ApplyLeadInspValueHandler(ApplyLeadInspValueFunction);
             ucCogIDInspWnd.ApplyBarCodeIDInspValueEvent -= new ucCogID.ApplyBarCodeIDInspValueHandler(ApplyBarCodeIDInspValueFunction);
+            ucCogLineFindWnd.ApplyLineFindEvent -= new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
+            ucCogLineFindWnd.DrawLineFindCaliperEvent -= new ucCogLineFind.DrawLineFindCaliperHandler(DrawLineFindCaliperFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent -= new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
         }
         #endregion InitializeEvent & DeInitializeEvent
 
         #region KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
-        private void TeachDisplayMouseUpEvent(CogFindCircleTool _CircleCaliperTool)
+        private void TeachDisplayMouseUpEvent(object _CaliperTool)
         {
-            if (CurrentAlgoType != eAlgoType.C_NEEDLE_FIND) return;
+            if (CurrentAlgoType != eAlgoType.C_NEEDLE_FIND && CurrentAlgoType != eAlgoType.C_LINE_FIND) return;
             if (CurrentTeachStep != eTeachStep.ALGO_SET)    return;
 
-            double _CenterX = 0, _CenterY = 0, _Radius = 0, _AngleStart = 0, _AngleSpan = 0;
-            _CircleCaliperTool.RunParams.ExpectedCircularArc.GetCenterRadiusAngleStartAngleSpan(out _CenterX, out _CenterY, out _Radius, out _AngleStart, out _AngleSpan);
+            if (CurrentAlgoType == eAlgoType.C_NEEDLE_FIND)
+            {
+                CogFindCircleTool _CircleCaliperTool = _CaliperTool as CogFindCircleTool;
 
-            int _CaliperNumber = 0;
-            double _CaliperSearchLength = 0, _CaliperProjectionLength = 0;
-            eSearchDirection _CaliperSearchDir = eSearchDirection.IN_WARD;
-            _CaliperNumber = _CircleCaliperTool.RunParams.NumCalipers;
-            _CaliperSearchLength = _CircleCaliperTool.RunParams.CaliperSearchLength;
-            _CaliperProjectionLength = _CircleCaliperTool.RunParams.CaliperProjectionLength;
-            _CaliperSearchDir = (eSearchDirection)_CircleCaliperTool.RunParams.CaliperSearchDirection;
+                double _CenterX = 0, _CenterY = 0, _Radius = 0, _AngleStart = 0, _AngleSpan = 0;
+                _CircleCaliperTool.RunParams.ExpectedCircularArc.GetCenterRadiusAngleStartAngleSpan(out _CenterX, out _CenterY, out _Radius, out _AngleStart, out _AngleSpan);
 
-            ucCogNeedleFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir);
-            ucCogNeedleFindWnd.SetCircularArc(_CenterX, _CenterY, _Radius, _AngleStart, _AngleSpan);
+                int _CaliperNumber = 0;
+                double _CaliperSearchLength = 0, _CaliperProjectionLength = 0;
+                eSearchDirection _CaliperSearchDir = eSearchDirection.IN_WARD;
+                _CaliperNumber = _CircleCaliperTool.RunParams.NumCalipers;
+                _CaliperSearchLength = _CircleCaliperTool.RunParams.CaliperSearchLength;
+                _CaliperProjectionLength = _CircleCaliperTool.RunParams.CaliperProjectionLength;
+                _CaliperSearchDir = (eSearchDirection)_CircleCaliperTool.RunParams.CaliperSearchDirection;
+
+                ucCogNeedleFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir);
+                ucCogNeedleFindWnd.SetCircularArc(_CenterX, _CenterY, _Radius, _AngleStart, _AngleSpan);
+            }
+
+            else if (CurrentAlgoType == eAlgoType.C_LINE_FIND)
+            {
+                CogFindLineTool _FindLineTool = _CaliperTool as CogFindLineTool;
+
+                double _StartX = 0, _StartY = 0, _EndX = 0, _EndY = 0;
+                _FindLineTool.RunParams.ExpectedLineSegment.GetStartEnd(out _StartX, out _StartY, out _EndX, out _EndY);
+
+                int _CaliperNumber = 0;
+                double _CaliperSearchLength = 0, _CaliperProjectionLength = 0, _CaliperDirection;
+                _CaliperNumber = _FindLineTool.RunParams.NumCalipers;
+                _CaliperSearchLength = _FindLineTool.RunParams.CaliperSearchLength;
+                _CaliperProjectionLength = _FindLineTool.RunParams.CaliperProjectionLength;
+                _CaliperDirection = _FindLineTool.RunParams.CaliperSearchDirection;
+
+                ucCogLineFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperDirection);
+                ucCogLineFindWnd.SetCaliperLine(_StartX, _StartY, _EndX, _EndY);
+            }
         }
         #endregion KPCogDisplay Control Event : KPCogDisplayControl -> TeachingWindow
 
@@ -356,5 +383,38 @@ namespace InspectionSystemManager
             }
         }
         #endregion ID Reading Window Event : ucCogID ->TeachingWindow
+
+        #region Line Find Window Event : ucCogLineFind -> TeachingWindow
+        private void ApplyLineFindValueFunction(CogLineFindAlgo _CogLineFindAlgo, ref CogLineFindResult _CogLineFindResult)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            CogImage8Grey _DestImage = new CogImage8Grey();
+            bool _Result = InspLineFindProcess.Run(InspectionImage, ref _DestImage, AlgoRegionRectangle, _CogLineFindAlgo, ref _CogLineFindResult);
+
+            CogLineSegment _CogLine = new CogLineSegment();
+            _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
+            kpTeachDisplay.DrawStaticLine(_CogLine, "LineFind", CogColorConstants.Green);
+        }
+
+        private void DrawLineFindCaliperFunction(CogLineFindAlgo _CogLineFindAlgo)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            CogFindLine _CogFindLine = new CogFindLine();
+            _CogFindLine.NumCalipers = _CogLineFindAlgo.CaliperNumber;
+            _CogFindLine.CaliperSearchLength = _CogLineFindAlgo.CaliperSearchLength;
+            _CogFindLine.CaliperProjectionLength = _CogLineFindAlgo.CaliperProjectionLength;
+            _CogFindLine.CaliperSearchDirection = (_CogLineFindAlgo.CaliperSearchDirection == 90) ? 1.5708 : -1.5708;
+            _CogFindLine.NumToIgnore = _CogLineFindAlgo.IgnoreNumber;
+            _CogFindLine.CaliperRunParams.ContrastThreshold = _CogLineFindAlgo.ContrastThreshold;
+            _CogFindLine.CaliperRunParams.FilterHalfSizeInPixels = _CogLineFindAlgo.FilterHalfSizePixels;
+            _CogFindLine.ExpectedLineSegment.SetStartEnd(_CogLineFindAlgo.CaliperLineStartX, _CogLineFindAlgo.CaliperLineStartY, _CogLineFindAlgo.CaliperLineEndX, _CogLineFindAlgo.CaliperLineEndY);
+
+            kpTeachDisplay.DrawFindLineCaliper(_CogFindLine);
+        }
+        #endregion Line Find Window Event : ucCogLineFind -> TeachingWindow
     }
 }

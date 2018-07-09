@@ -64,7 +64,23 @@ namespace InspectionSystemManager
                 #region Lead Pitch Point Get
                 for (int iLoopCount = 0; iLoopCount < _CogLeadResult.BlobCount; ++iLoopCount)
                 {
-                    //Pitch Point 구하기
+                    #region Lead Bent Check
+                    double _Angle = _CogLeadResult.Angle[iLoopCount] * 180 / Math.PI;
+                    if (_Angle > 0) _Angle = 90 - (_CogLeadResult.Angle[iLoopCount] * 180 / Math.PI);
+                    else            _Angle = -(90 + (_CogLeadResult.Angle[iLoopCount] * 180 / Math.PI));
+
+                    _CogLeadResult.IsLeadBentGood[iLoopCount] = true;
+                    if (_CogLeadAlgo.IsLeadBentInspection)
+                    {
+                        if ((_Angle > _CogLeadAlgo.LeadBentMax) || (_Angle < -_CogLeadAlgo.LeadBentMin))
+                        {
+                            _CogLeadResult.IsLeadBentGood[iLoopCount] = false;
+                            _CogLeadResult.IsGood &= _CogLeadResult.IsLeadBentGood[iLoopCount];
+                        }
+                    }
+                    #endregion Lead Bent Check
+
+                    #region Pitch Point 구하기
                     if (_CogLeadResult.Angle[iLoopCount] > 0)
                     {
                         CogLineSegment _CenterLine = new CogLineSegment();
@@ -88,21 +104,23 @@ namespace InspectionSystemManager
                         _CogLeadResult.LeadPitchBottomX[iLoopCount] = _CenterLine.EndX;
                         _CogLeadResult.LeadPitchBottomY[iLoopCount] = _CenterLine.EndY;
                     }
+                    #endregion Pitch Point 구하기
 
-                    //Length 구하기
+                    #region Length 구하기
                     if (_ReferY != -1 && _ReferY != -1)
                     {
                         _CogLeadResult.LeadLength[iLoopCount] = Math.Abs(_ReferY - _CogLeadResult.LeadPitchTopY[iLoopCount]);
                         _CogLeadResult.LeadLengthStartX[iLoopCount] = _CogLeadResult.LeadPitchTopX[iLoopCount];
                         _CogLeadResult.LeadLengthStartY[iLoopCount] = _ReferY;
                     }
+                    #endregion Length 구하기
                 }
                 #endregion Lead Pitch Point Get
 
                 #region Lead Length Get
                 #endregion Lead Length Get
 
-                _CogLeadResult.IsGood = true;
+                _CogLeadResult.IsGood &= true;
             }
 
             else
@@ -170,7 +188,7 @@ namespace InspectionSystemManager
             InspResults.Angle = new double[BlobResults.GetBlobs().Count];
             InspResults.Degree = new double[BlobResults.GetBlobs().Count];
 
-            InspResults.IsLeadGood = new bool[BlobResults.GetBlobs().Count];
+            InspResults.IsLeadBentGood = new bool[BlobResults.GetBlobs().Count];
             InspResults.LeadPitchTopX = new double[BlobResults.GetBlobs().Count];
             InspResults.LeadPitchTopY = new double[BlobResults.GetBlobs().Count];
             InspResults.LeadPitchBottomX = new double[BlobResults.GetBlobs().Count];

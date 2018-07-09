@@ -57,6 +57,7 @@ namespace InspectionSystemManager
 
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
             InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName);
+            InspWnd.InitializeCam(_InspSysManagerParam.CameraType, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
         }
 
         public void DeInitialize()

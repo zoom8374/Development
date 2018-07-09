@@ -115,7 +115,6 @@ namespace KPVisionInspectionFramework
                 DIOWnd.DeInitialize();
             }
 
-
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].InspSysManagerEvent -= new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
 

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Cognex.VisionPro;
+
+
 using ParameterManager;
 
 namespace InspectionSystemManager
@@ -19,7 +22,6 @@ namespace InspectionSystemManager
             _SendResParam.ProjectItem = ProjectItem;
 
             SendLeadResult _SendResult = new SendLeadResult();
-
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
                 if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LEAD)
@@ -30,27 +32,41 @@ namespace InspectionSystemManager
                     _SendResult.LeadAngle = _AlgoResultParam.Angle;
                     _SendResult.LeadWidth = _AlgoResultParam.Width;
                     _SendResult.LeadLength = _AlgoResultParam.LeadLength;
+                    _SendResult.LeadPitchTopX = _AlgoResultParam.LeadPitchTopX;
+                    _SendResult.LeadPitchTopY = _AlgoResultParam.LeadPitchTopY;
+                    _SendResult.IsLeadBendGood = _AlgoResultParam.IsLeadBentGood;
 
                     _SendResParam.SendResult = _SendResult;
                 }
 
+                else if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LINE_FIND)
+                {
+                    var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLineFindResult;
+
+                    _SendResult.BodyReferenceX = (_AlgoResultParam.StartX + _AlgoResultParam.EndX) / 2;
+                    _SendResult.BodyReferenceY = (_AlgoResultParam.StartY + _AlgoResultParam.EndY) / 2;
+                }
+
                 else if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_BLOB_REFER)
                 {
-                    //var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogBlobReferenceResult;
-                    //
-                    //if (_AlgoResultParam.OriginX.Length != 0 && _AlgoResultParam.OriginY.Length != 0)
-                    //{
-                    //    _SendResult.ReferenceX = _AlgoResultParam.OriginX[0];
-                    //    _SendResult.ReferenceY = _AlgoResultParam.OriginY[0];
-                    //}
-                    //
-                    //_SendResParam.SendResult = _SendResult;
+                    
                 }
 
                 else if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_PATTERN)
                 {
 
                 }
+            }
+
+            //Mergy Result
+            for (int iLoopCount = 0; iLoopCount < _SendResult.LeadPitchTopX.Length; ++iLoopCount)
+            {
+                _SendResult.LeadLength[iLoopCount] = Math.Abs(_SendResult.BodyReferenceY - _SendResult.LeadPitchTopY[iLoopCount]);
+
+                CogLineSegment _LengthLine = new CogLineSegment();
+                _LengthLine.SetStartEnd(_SendResult.LeadPitchTopX[iLoopCount], _SendResult.LeadPitchTopY[iLoopCount], 
+                                        _SendResult.LeadPitchTopX[iLoopCount], _SendResult.BodyReferenceY);
+                ResultDisplay(_LengthLine, "LengthLine" + (iLoopCount + 1), CogColorConstants.Orange);
             }
 
             return _SendResParam;

@@ -253,6 +253,43 @@ namespace ParameterManager
             OriginY = 0;
         }
     }
+
+    public class CogLineFindAlgo
+    {
+        public int CaliperNumber;
+        public double CaliperSearchLength;
+        public double CaliperProjectionLength;
+        public int CaliperSearchDirection;
+        public int IgnoreNumber;
+
+        public double CaliperLineStartX;
+        public double CaliperLineStartY;
+        public double CaliperLineEndX;
+        public double CaliperLineEndY;
+
+        public int ContrastThreshold;
+        public int FilterHalfSizePixels;
+
+        public bool UseAlignment;
+
+        public CogLineFindAlgo()
+        {
+            CaliperNumber = 6;
+            CaliperSearchLength = 30;
+            CaliperProjectionLength = 10;
+            CaliperSearchDirection = 90;
+
+            CaliperLineStartX = 50;
+            CaliperLineStartY = 50;
+            CaliperLineEndX = 500;
+            CaliperLineEndY = 50;
+
+            ContrastThreshold = 5;
+            FilterHalfSizePixels = 2;
+
+            UseAlignment = false;
+        }
+    }
     #endregion Cog Algorithm Class
 
     public class InspectionAlgorithmParameter
@@ -283,6 +320,7 @@ namespace ParameterManager
             else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadAlgo();
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)  Algorithm = new CogNeedleFindAlgo();
             else if (_AlgoType == eAlgoType.C_ID)           Algorithm = new CogBarCodeIDAlgo();
+            else if (_AlgoType == eAlgoType.C_LINE_FIND)    Algorithm = new CogLineFindAlgo();
         }
     }
 

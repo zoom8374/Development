@@ -39,7 +39,11 @@ namespace KPDisplay
         CogFindCircleTool CircleCaliperTool = new CogFindCircleTool();
         CogCircularArc InteractiveCircularArc = new CogCircularArc();
 
-        public delegate void CogDisplayMouseUpHandler(CogFindCircleTool _CircleCaliperTool);
+        CogFindLineTool LineCaliperTool = new CogFindLineTool();
+        CogLineSegment InteractiveLine = new CogLineSegment();
+
+        //public delegate void CogDisplayMouseUpHandler(CogFindCircleTool _CircleCaliperTool);
+        public delegate void CogDisplayMouseUpHandler(object _CaliperTool);
         public event CogDisplayMouseUpHandler CogDisplayMouseUpEvent;
 
         [Category("UseStatusBar"), Browsable(true)]
@@ -339,12 +343,12 @@ namespace KPDisplay
         //    kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);
         //}
 
-        public void DrawStaticLine(CogLineSegment _Line, string _GroupName, CogColorConstants _Color)
+        public void DrawStaticLine(CogLineSegment _Line, string _GroupName, CogColorConstants _Color, CogGraphicLineStyleConstants _LineStyle = CogGraphicLineStyleConstants.Solid)
         {
             StaticLineSegment = _Line;
             StaticLineSegment.Color = _Color;
             StaticLineSegment.Interactive = false;
-            StaticLineSegment.LineStyle = CogGraphicLineStyleConstants.Solid;
+            StaticLineSegment.LineStyle = _LineStyle;
             kCogDisplay.StaticGraphics.Add(StaticLineSegment, _GroupName);
         }
 
@@ -451,6 +455,25 @@ namespace KPDisplay
             _Region = (CogGraphicCollection)_Record.SubRecords["InputImage"].SubRecords["CaliperRegions"].Content;
 
             kCogDisplay.InteractiveGraphics.Add(InteractiveCircularArc, "CircleArc", false);
+            foreach (ICogGraphic _ICogGra in _Region)
+                kCogDisplay.InteractiveGraphics.Add((ICogGraphicInteractive)_ICogGra, "", false);
+            GC.Collect();
+        }
+
+        //public void DrawFindLineCaliper(CogLineSegment _CogFindLine = null)
+        public void DrawFindLineCaliper(CogFindLine _CogFindLine = null)
+        {
+            ICogRecord _Record;
+            CogGraphicCollection _Region;
+
+            LineCaliperTool.InputImage = (CogImage8Grey)kCogDisplay.Image;
+            LineCaliperTool.RunParams = _CogFindLine;
+
+            _Record = LineCaliperTool.CreateCurrentRecord();
+            InteractiveLine = (CogLineSegment)_Record.SubRecords["InputImage"].SubRecords["ExpectedShapeSegment"].Content;
+            _Region = (CogGraphicCollection)_Record.SubRecords["InputImage"].SubRecords["CaliperRegions"].Content;
+
+            kCogDisplay.InteractiveGraphics.Add(InteractiveLine, "Line", false);
             foreach (ICogGraphic _ICogGra in _Region)
                 kCogDisplay.InteractiveGraphics.Add((ICogGraphicInteractive)_ICogGra, "", false);
             GC.Collect();
@@ -753,8 +776,19 @@ namespace KPDisplay
             var _CogDisplayMouseUpEvent = CogDisplayMouseUpEvent;
             if (_CogDisplayMouseUpEvent != null)
             {
-                CircleCaliperTool.CreateCurrentRecord();
-                CogDisplayMouseUpEvent(CircleCaliperTool);
+                //CircleCaliperTool.CreateCurrentRecord();
+                //CogDisplayMouseUpEvent(CircleCaliperTool);
+                if (CircleCaliperTool.InputImage != null)
+                {
+                    CircleCaliperTool.CreateCurrentRecord();
+                    CogDisplayMouseUpEvent(CircleCaliperTool);
+                }
+
+                else if (LineCaliperTool.InputImage != null)
+                {
+                    LineCaliperTool.CreateCurrentRecord();
+                    CogDisplayMouseUpEvent(LineCaliperTool);
+                }
             }
         }
     }

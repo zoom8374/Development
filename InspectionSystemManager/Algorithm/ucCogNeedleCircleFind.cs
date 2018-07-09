@@ -58,7 +58,7 @@ namespace InspectionSystemManager
 
         private void btnDrawCaliper_Click(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void rbSearchDirection_MouseUp(object sender, MouseEventArgs e)
@@ -68,47 +68,47 @@ namespace InspectionSystemManager
             SetSearchDirection(_Direction);
             graLabelSearchDirection.Text = _Direction.ToString();
             //ApplySettingValue();
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownCaliperNumber_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownSearchLength_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownProjectionLength_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownArcCenterX_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownArcCenterY_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownArcRadius_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownAngleStart_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
 
         private void numUpDownAngleSpan_ValueChanged(object sender, EventArgs e)
         {
-            DrawCircleFindCapliper();
+            DrawCircleFindCaliper();
         }
         #endregion Control Event
 
@@ -216,7 +216,7 @@ namespace InspectionSystemManager
             }
         }
 
-        private void DrawCircleFindCapliper()
+        private void DrawCircleFindCaliper()
         {
             if (!AlgoInitFlag) return;
 

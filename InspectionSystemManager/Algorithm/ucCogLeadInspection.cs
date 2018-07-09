@@ -124,6 +124,16 @@ namespace InspectionSystemManager
                 textBoxHeightSizeMin.Text = CogLeadAlgoRcp.HeightMin.ToString();
                 textBoxHeightSizeMax.Text = CogLeadAlgoRcp.HeightMax.ToString();
 
+                ckLeadBent.Checked = CogLeadAlgoRcp.IsLeadBentInspection;
+                textBoxLeadBentAngle.Text = CogLeadAlgoRcp.LeadBent.ToString();
+                textBoxLeadBentAngleMin.Text = CogLeadAlgoRcp.LeadBentMin.ToString();
+                textBoxLeadBentAngleMax.Text = CogLeadAlgoRcp.LeadBentMax.ToString();
+
+                ckLeadPitch.Checked = CogLeadAlgoRcp.IsLeadPitchInspection;
+                textBoxLeadPitch.Text = CogLeadAlgoRcp.LeadPitch.ToString();
+                textBoxLeadPitchMin.Text = CogLeadAlgoRcp.LeadPitchMin.ToString();
+                textBoxLeadPitchMax.Text = CogLeadAlgoRcp.LeadPitchMax.ToString();
+
                 SetForegroundComboBox(CogLeadAlgoRcp.ForeGround);
                 SetLeadPanelAllStatus();
 
@@ -146,6 +156,16 @@ namespace InspectionSystemManager
             CogLeadAlgoRcp.WidthMax = Convert.ToInt32(textBoxWidthSizeMax.Text);
             CogLeadAlgoRcp.HeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
             CogLeadAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
+
+            CogLeadAlgoRcp.IsLeadBentInspection = ckLeadBent.Checked;
+            CogLeadAlgoRcp.LeadBent = Convert.ToDouble(textBoxLeadBentAngle.Text);
+            CogLeadAlgoRcp.LeadBentMin = Convert.ToDouble(textBoxLeadBentAngleMin.Text);
+            CogLeadAlgoRcp.LeadBentMax= Convert.ToDouble(textBoxLeadBentAngleMax.Text);
+
+            CogLeadAlgoRcp.IsLeadPitchInspection = ckLeadPitch.Checked;
+            CogLeadAlgoRcp.LeadPitch = Convert.ToDouble(textBoxLeadPitch.Text);
+            CogLeadAlgoRcp.LeadPitchMin = Convert.ToDouble(textBoxLeadPitchMin.Text);
+            CogLeadAlgoRcp.LeadPitchMax = Convert.ToDouble(textBoxLeadPitchMax.Text);
         }
 
         private void SetForegroundComboBox(int _RangeType)

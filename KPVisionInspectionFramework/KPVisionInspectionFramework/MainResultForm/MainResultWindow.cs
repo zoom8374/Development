@@ -46,7 +46,7 @@ namespace KPVisionInspectionFramework
                 _GridCell[0].Value = (iLoopCount + 1);
                 _GridCell[0].Style.BackColor = Color.DarkGreen;
                 _GridCell[0].Style.ForeColor = Color.White;
-                //_GridCell[1].Style.BackColor = Color.PowderBlue;
+                //_GridCell[1].Style.BackColor = Color.PowderBluePowderBlue;
                 //_GridCell[2].Style.BackColor = Color.PowderBlue;
                 //_GridCell[3].Style.BackColor = Color.PowderBlue;
                 //_GridCell[4].Style.BackColor = Color.PowderBlue;
@@ -266,14 +266,24 @@ namespace KPVisionInspectionFramework
         private void SetLeadInspectionResultData(SendResultParameter _ResultParam)
         {
             var _Result = _ResultParam.SendResult as SendLeadResult;
-
-            for (int iLoopCount = 0; iLoopCount < _Result.LeadCount; ++iLoopCount)
+            if (_Result != null)
             {
-                QuickGridViewLeadResult[1, iLoopCount].Value = _Result.LeadAngle[iLoopCount].ToString("F3");
-                QuickGridViewLeadResult[2, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F3");
-                QuickGridViewLeadResult[3, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F3");
+                for (int iLoopCount = 0; iLoopCount < _Result.LeadCount; ++iLoopCount)
+                {
+                    double _Angle = _Result.LeadAngle[iLoopCount] * 180 / Math.PI;
+                    if (_Angle > 0) _Angle = 90 - (_Result.LeadAngle[iLoopCount] * 180 / Math.PI);
+                    else            _Angle = -(90 + (_Result.LeadAngle[iLoopCount] * 180 / Math.PI));
 
-                //QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = (_Result.LeadAngle[iLoopCount] > 0) ? Color.White : Color.Red;
+                    QuickGridViewLeadResult[1, iLoopCount].Value = _Angle.ToString("F3");
+                    QuickGridViewLeadResult[2, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F3");
+                    QuickGridViewLeadResult[3, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F3");
+
+                    //QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = (_Result.IsLeadBendGood[iLoopCount] == true) ? Color.PowderBlue : Color.Red;
+
+                    if (_Result.IsLeadBendGood[iLoopCount] && iLoopCount % 2 == 0)      QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = Color.PowderBlue;
+                    else if (_Result.IsLeadBendGood[iLoopCount] && iLoopCount % 2 == 1) QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = Color.White;
+                    else                                                                QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = Color.Red;
+                }
             }
             QuickGridViewLeadResult.ClearSelection();
         }
