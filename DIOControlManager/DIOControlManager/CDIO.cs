@@ -31,9 +31,16 @@ namespace DIOControlManager
 
         public int Initialize()
         {
-            int iResult = ContecIOControl.Init("DIO000", out ID);
-            if (iResult != (int)CDioConst.DIO_ERR_SUCCESS) InitializeDefaultMultiBit();
-
+            int iResult = (int)CDioConst.DIO_ERR_SUCCESS;
+            try
+            {
+                iResult = ContecIOControl.Init("DIO000", out ID);
+                if (iResult != (int)CDioConst.DIO_ERR_SUCCESS) InitializeDefaultMultiBit();
+            }
+            catch
+            {
+                iResult = (int)CDioConst.DIO_ERR_INI_RESOURCE;
+            }
             return iResult;
         }
 

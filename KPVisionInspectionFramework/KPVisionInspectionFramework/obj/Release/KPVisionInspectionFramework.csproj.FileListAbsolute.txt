@@ -35,3 +35,5 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramewor
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\CIPOS Lead Inspection.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.RecipeWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Release\KPVisionInspectionFramework.RecipeNewNameWindow.resources

@@ -131,8 +131,9 @@ namespace CameraManager
                 Marshal.Copy(bufferAddress, GrabImage, 0, GrabImage.Length);
 
                 var _EuresysGrabEvent = EuresysGrabEvent;
-                if (_EuresysGrabEvent != null)
-                    EuresysGrabEvent(GrabImage);
+                _EuresysGrabEvent?.Invoke(GrabImage);
+                //if (_EuresysGrabEvent != null)
+                //    EuresysGrabEvent(GrabImage);
 
                 // Retrieve the frame rate
                 Double frameRate_Hz;

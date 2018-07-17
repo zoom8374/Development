@@ -21,12 +21,13 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
-        private InspectionPattern           InspPatternProc;
-        private InspectionBlobReference     InspBlobReferProc;
-        private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
-        private InspectionLead              InspLeadProc;
-        private InspectionID                InspIDProc;
-        private InspectionLineFind          InspLineFindProc;
+        private InspectionPattern InspPatternProc;
+        private InspectionBlobReference InspBlobReferProc;
+        private InspectionNeedleCircleFind InspNeedleCircleFindProc;
+        private InspectionLead InspLeadProc;
+        private InspectionID InspIDProc;
+        private InspectionLineFind InspLineFindProc;
+        private CCameraManager CameraManager;
 
         private TeachingWindow TeachWnd;
         private InspectionParameter InspParam = new InspectionParameter();
@@ -35,19 +36,20 @@ namespace InspectionSystemManager
         private double AnyReferenceX = 0;
         private double AnyReferenceY = 0;
 
-        private CCameraManager objCameraManger = new CCameraManager();
+        private SendResultParameter SendResParam = new SendResultParameter();
 
         private int ID;
         private eProjectType ProjectType;
         private eProjectItem ProjectItem;
-        public  eInspMode    InspMode= eInspMode.TRI_INSP;
+        public eInspMode InspMode = eInspMode.TRI_INSP;
         private string FormName;
         private bool ResizingFlag = false;
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
+        public bool IsSimulationMode = false;
 
         private CogImageFileTool OriginImageFileTool = new CogImageFileTool();
-        private CogImage8Grey    OriginImage = new CogImage8Grey();
+        private CogImage8Grey OriginImage = new CogImage8Grey();
 
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
@@ -60,7 +62,7 @@ namespace InspectionSystemManager
         private string CameraType;
         private int ImageSizeWidth = 0;
         private int ImageSizeHeight = 0;
-        private bool CamLiveFlag = false;
+        private bool IsCamLiveFlag = false;
         private bool IsCrossLine = false;
 
         private double DisplayZoomValue = 1;
@@ -112,11 +114,12 @@ namespace InspectionSystemManager
             #endregion Set Button Image Resource
         }
 
-        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName)
+        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName, bool _IsSimulationMode)
         {
             ID = _ID;
             ProjectItem = _ProjectItem;
             FormName = _FormName;
+            IsSimulationMode = _IsSimulationMode;
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
@@ -138,6 +141,8 @@ namespace InspectionSystemManager
             InspLineFindProc = new InspectionLineFind();
             InspLineFindProc.Initialize();
 
+            CameraManager = new CCameraManager();
+
             AreaResultParamList = new AreaResultParameterList();
             AlgoResultParamList = new AlgoResultParameterList();
 
@@ -152,17 +157,28 @@ namespace InspectionSystemManager
             ThreadLiveCheck.Start();
 
             TeachWnd = new TeachingWindow();
-
-            SetInspectionParameter(_InspParam);
         }
 
         //LDH, 2018.07.04, Camera 초기화
-        public void InitializeCam(string CamType, int Width, int Height)
+        public void InitializeCam(string _CamType, string _CamInfo, int _Width, int _Height)
         {
-            ImageSizeWidth = Width;
-            ImageSizeHeight = Height;
-            objCameraManger.ImageDisplayEvent += new CCameraManager.ImageDisplayHandler(SetDisplayImage);
-            objCameraManger.Initialize(ID, CamType);
+            if (IsSimulationMode) return;
+
+            ImageSizeWidth = _Width;
+            ImageSizeHeight = _Height;
+
+            if (_CamType == eCameraType.Euresys.ToString())
+            {
+                CameraManager.ImageGrabEvent += new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
+                CameraManager.Initialize(ID, _CamType, "");
+            }
+
+            else
+            {
+                //CameraManager.ImageGrabIntPtrEvent += new CCameraManager.ImageGrabIntPtrHandler(SetDisplayGrabIntPtrImage);
+                CameraManager.ImageGrabEvent += new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
+                CameraManager.Initialize(ID, _CamType, _CamInfo);
+            }
         }
 
         public void Deinitialize()
@@ -172,8 +188,8 @@ namespace InspectionSystemManager
             InspNeedleCircleFindProc.DeInitialize();
             InspLeadProc.DeInitialize();
             InspLineFindProc.DeInitialize();
-			objCameraManger.DeInitialilze();
-            objCameraManger.ImageDisplayEvent -= new CCameraManager.ImageDisplayHandler(SetDisplayImage);
+			CameraManager.DeInitialilze();
+            CameraManager.ImageGrabEvent -= new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
         }
 
         public void SetLocation(int _StartX, int _StartY)
@@ -371,7 +387,9 @@ namespace InspectionSystemManager
 
         private void btnLive_Click(object sender, EventArgs e)
         {
-            objCameraManger.CamLive();            
+            if (IsSimulationMode) return;
+            IsCamLiveFlag = !IsCamLiveFlag;
+            CameraManager.CamLive(IsCamLiveFlag);            
         }
 
         private void btnImageLoad_Click(object sender, EventArgs e)
@@ -409,9 +427,25 @@ namespace InspectionSystemManager
         }
 
         //LDH, 2018.07.04, byte Image display 함수 
-        private void SetDisplayImage(byte[] Image)
+        private void SetDisplayGrabImage(byte[] Image)
         {
             kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1));
+
+            //Auto / Manual Mode 구분
+            //Inspection();
+        }
+
+        private void SetDisplayGrabIntPtrImage(IntPtr _Image)
+        {
+            var _CogRoot = new CogImage8Root();
+            _CogRoot.Initialize(ImageSizeWidth, ImageSizeHeight, _Image, ImageSizeWidth, null);
+
+            var _CogImage = new CogImage8Grey();
+            _CogImage.SetRoot(_CogRoot);
+
+            kpCogDisplayMain.SetDisplayImage(_CogImage);
+            GC.Collect();
         }
         #endregion Set Image Display Control
 
@@ -487,6 +521,7 @@ namespace InspectionSystemManager
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID + 1));
                 if (false == InspectionResultClear()) break;
                 if (false == InspectionProcess()) break;
+                if (false == InpsectionResultAnalysis()) break;
                 if (false == InspectionDataSend()) break;
                 if (false == InspectionResultDsiplay()) break;
 
@@ -742,6 +777,7 @@ namespace InspectionSystemManager
         {
             bool _IsLastGood = true, _IsGood = false;
 
+            if (AlgoResultParamList.Count == 0) _IsLastGood = false;
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
                 eAlgoType _AlgoType = AlgoResultParamList[iLoopCount].ResultAlgoType;
@@ -755,6 +791,7 @@ namespace InspectionSystemManager
 
                 if (true == _IsLastGood) _IsLastGood = _IsGood;
             }
+            
             DisplayLastResultMessage(_IsLastGood);
 
             return _IsLastGood;
@@ -990,18 +1027,24 @@ namespace InspectionSystemManager
         #endregion Display Result function
 
         #region Result Data Send
-        private bool InspectionDataSend()
+        private bool InpsectionResultAnalysis()
         {
             bool _Result = true;
 
-            SendResultParameter _SendResParam = new SendResultParameter();
+            SendResParam = new SendResultParameter();
+            if (ProjectItem == eProjectItem.LEAD_INSP)          SendResParam = GetLeadInspectionResultAnalysis();
+            else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  SendResParam = GetNeedleFindResultAnalysis();
+            else if (ProjectItem == eProjectItem.ID_INSP)       SendResParam = GetIDReadResultAnalysis();
 
-            if (ProjectItem == eProjectItem.LEAD_INSP)          _SendResParam = GetLeadInspectionResultAnalysys();
-            else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  _SendResParam = GetNeedleFindResultAnalysis();
-            else if (ProjectItem == eProjectItem.ID_INSP)       _SendResParam = GetIDReadResultAnalysis();
+            return _Result;
+        }
+
+        public bool InspectionDataSend()
+        {
+            bool _Result = true;
 
             var _InspectionWindowEvent = InspectionWindowEvent;
-            _InspectionWindowEvent?.Invoke(eIWCMD.SEND_DATA, _SendResParam);
+            _InspectionWindowEvent?.Invoke(eIWCMD.SEND_DATA, SendResParam);
 
             return _Result;
         }

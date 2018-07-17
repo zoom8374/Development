@@ -59,6 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\LoadingManager.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SevenSegment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Users\zoom7\Documents\Visual Studio 2015\Projects\ResultSample\ResultSample\SevenSegment.dll</HintPath>
@@ -93,6 +94,18 @@
       <DependentUpon>MainResultWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeForm\RecipeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecipeForm\RecipeWindow.Designer.cs">
+      <DependentUpon>RecipeWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RecipeForm\RecipeNewNameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecipeForm\RecipeNewNameWindow.designer.cs">
+      <DependentUpon>RecipeNewNameWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,6 +122,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RecipeForm\RecipeWindow.resx">
+      <DependentUpon>RecipeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecipeForm\RecipeNewNameWindow.resx">
+      <DependentUpon>RecipeNewNameWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -157,9 +176,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Form\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\CustomControl\CustomControl.csproj">
       <Project>{fe56e73e-490f-436e-885d-8be182b74794}</Project>

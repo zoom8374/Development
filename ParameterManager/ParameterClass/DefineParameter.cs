@@ -21,6 +21,11 @@ namespace ParameterManager
     public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND }
 
     /// <summary>
+    /// Camera Model Type
+    /// </summary>
+    public enum eCameraType { Dalsa, Euresys, BaslerGE }
+
+    /// <summary>
     /// Inspection Window Command
     /// </summary>
     public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SEND_DATA  }

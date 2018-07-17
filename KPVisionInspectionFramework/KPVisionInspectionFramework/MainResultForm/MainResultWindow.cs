@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using CustomControl;
 using ParameterManager;
 
 namespace KPVisionInspectionFramework
@@ -243,12 +244,27 @@ namespace KPVisionInspectionFramework
             if (_ResultParam.ID == 0)   //Needle Align Vision1
             {
                 var _Result = _ResultParam.SendResult as SendNeedleAlignResult;
-                gradientLabelNeedleAlignX1.Text = _Result.AlignX.ToString("F3");
-                gradientLabelNeedleAlignY1.Text = _Result.AlignY.ToString("F3");
-                SevenSegArr.Value = _Result.AlignX.ToString("F3");
+                if (_Result != null)
+                {
+                    //gradientLabelNeedleAlignX1.Text = _Result.AlignX.ToString("F3");
+                    //gradientLabelNeedleAlignY1.Text = _Result.AlignY.ToString("F3");
+                    //SevenSegArr.Value = _Result.AlignX.ToString("F3");
+                    //
+                    //string _AlignValueX = _Result.AlignX.ToString("F3");
+                    //SevenSegArr.Value = _AlignValueX;
 
-                string _AlignValueX = _Result.AlignX.ToString("F3");
-                SevenSegArr.Value = _AlignValueX;
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignX1, _Result.AlignX.ToString("F3"));
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignY1, _Result.AlignY.ToString("F3"));
+                }
+                else
+                {
+                    //gradientLabelNeedleAlignX1.Text = "-";
+                    //gradientLabelNeedleAlignY1.Text = "-";
+                    SevenSegArr.Value = "0";
+
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignX1, "-");
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignY1, "-");
+                }
             }
 
             else if (_ResultParam.ID == 1)   //Needle Align Vision2
@@ -291,7 +307,9 @@ namespace KPVisionInspectionFramework
         private void SetIDInspectionResultData(SendResultParameter _ResultParam)
         {
             var _Result = _ResultParam.SendResult as SendIDResult;
-            gradientLabelDataMatrix.Text = (_ResultParam.IsGood == true) ? _Result.ReadCode : "-----";
+
+            if (_Result != null) gradientLabelDataMatrix.Text = (_ResultParam.IsGood == true) ? _Result.ReadCode : "-----";
+            else                 gradientLabelDataMatrix.Text = "-";
         }
         # endregion 프로젝트 별 Result Data Setting
     }

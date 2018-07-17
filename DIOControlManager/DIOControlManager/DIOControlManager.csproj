@@ -40,6 +40,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CPressingButton">
+      <HintPath>.\CPressingButton.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,10 +63,19 @@
     <Compile Include="DIOControlWindow.Designer.cs">
       <DependentUpon>DIOControlWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="DIOWindow\DIONamingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DIOWindow\DIONamingWindow.Designer.cs">
+      <DependentUpon>DIONamingWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DIOControlWindow.resx">
       <DependentUpon>DIOControlWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DIOWindow\DIONamingWindow.resx">
+      <DependentUpon>DIONamingWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,6 +98,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CustomControl\CustomControl.csproj">
+      <Project>{fe56e73e-490f-436e-885d-8be182b74794}</Project>
+      <Name>CustomControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LogManager\LogMessageManager.csproj">
       <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
       <Name>LogMessageManager</Name>

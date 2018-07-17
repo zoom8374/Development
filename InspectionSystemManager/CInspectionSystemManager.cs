@@ -25,7 +25,7 @@ namespace InspectionSystemManager
         public bool IsSimulationMode = false;
         public eProjectType ProjectType = 0;
         public eProjectItem ProjectItem = 0;
-        private string      CameraType;
+        private string CameraType;
 
         private Point WndLocation = new Point(0, 0);
 
@@ -55,9 +55,9 @@ namespace InspectionSystemManager
             SetISMParameter(_InspSysManagerParam);
             SetInspectionParameter(_InspParam);
 
+            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName, IsSimulationMode);
+            InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
-            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName);
-            InspWnd.InitializeCam(_InspSysManagerParam.CameraType, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
         }
 
         public void DeInitialize()
@@ -95,7 +95,7 @@ namespace InspectionSystemManager
         /// <param name="_InspSysManagerParam">System Parameter</param>
         private void SetISMParameter(InspectionSystemManagerParameter _InspSysManagerParam)
         {
-            //CameraType = _InspSysManagerParam.CameraType;
+            CameraType = _InspSysManagerParam.CameraType;
             InspWnd.SetLocation(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
             InspWnd.SetWindowSize(_InspSysManagerParam.InspWndParam.Width, _InspSysManagerParam.InspWndParam.Height);
             InspWnd.SetWindowDisplayInfo(_InspSysManagerParam.InspWndParam.DisplayZoomValue, _InspSysManagerParam.InspWndParam.DisplayPanXValue, _InspSysManagerParam.InspWndParam.DisplayPanYValue);
@@ -112,6 +112,8 @@ namespace InspectionSystemManager
         {
             if (InspParam != null) FreeInspectionParameters(ref InspParam);
             CParameterManager.RecipeCopy(_InspParam, ref InspParam);
+
+            InspWnd.SetInspectionParameter(InspParam, _IsNew);
 
             //Reference File(VPP) Load
         }

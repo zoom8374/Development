@@ -23,6 +23,7 @@ namespace KPVisionInspectionFramework
         private CLogManager                 LogWnd;
         private MainResultWindow            ResultWnd;
         private DIOControlWindow            DIOWnd;
+        private RecipeWindow                RecipeWnd;
 
         private int ISMModuleCount = 1;
 
@@ -60,6 +61,7 @@ namespace KPVisionInspectionFramework
         private void Initialize()
         {
             LoadDefaultRibbonTheme();
+            UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName);
 
             #region Log Window Initialize
             LogWnd = new CLogManager();
@@ -69,11 +71,16 @@ namespace KPVisionInspectionFramework
             #endregion Log Window Initialize
 
             #region SubWindow 생성 및 Event 등록
+
+            RecipeWnd = new RecipeWindow(ParamManager.SystemParam.LastRecipeName);
+            RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
+
             ResultWnd = new MainResultWindow();
             ResultWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
 
+            //IO Initialize
             DIOWnd = new DIOControlWindow();
             if (!ParamManager.SystemParam.IsSimulationMode)
             {
@@ -107,9 +114,11 @@ namespace KPVisionInspectionFramework
             ParamManager.SystemParam.ResultWindowHeight = ResultWnd.Height;
             ResultWnd.DeInitialize();
 
+            RecipeWnd.RecipeChangeEvent -= new RecipeWindow.RecipeChangeHandler(RecipeChange);
+
             ParamManager.DeInitialize();
 
-            if (!ParamManager.SystemParam.IsSimulationMode)
+            //if (!ParamManager.SystemParam.IsSimulationMode)
             {
                 DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
                 DIOWnd.DeInitialize();
@@ -234,7 +243,7 @@ namespace KPVisionInspectionFramework
 
         private void rbRecipe_Click(object sender, EventArgs e)
         {
-
+            RecipeWnd.ShowDialog();
         }
 
         private void rbLog_Click(object sender, EventArgs e)
@@ -266,7 +275,7 @@ namespace KPVisionInspectionFramework
                 Environment.Exit(0);
             }
 
-            catch
+            catch (Exception ex)
             {
                 Environment.Exit(0);
             }
@@ -320,6 +329,30 @@ namespace KPVisionInspectionFramework
             if ((short)DIOMAP.IN_TRG1 == _BitNum) EventInspectionTriggerOn(_Signal);
         }
         #endregion Event : I/O Event & Function
+
+        #region Sub Window Events
+        private bool RecipeChange(string _RecipeName)
+        {
+            bool _Result = true;
+
+            ParamManager.RecipeReload(_RecipeName);
+
+            for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
+            {
+                InspSysManager[iLoopCount].SetInspectionParameter(ParamManager.InspParam[iLoopCount], false);
+                InspSysManager[iLoopCount].GetInspectionParameterRef(ref ParamManager.InspParam[iLoopCount]);
+            }
+
+            UpdateRibbonRecipeName(_RecipeName);
+
+            return _Result;
+        }
+
+        private void UpdateRibbonRecipeName(string _RecipeName)
+        {
+            rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
+        }
+        #endregion Sub Window Events
 
         #region Main Process
         private void EventInspectionTriggerOn(object _Value)

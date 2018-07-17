@@ -15,7 +15,7 @@ namespace InspectionSystemManager
         {
             SendResultParameter _SendResParam = new SendResultParameter();
             _SendResParam.ID = ID;
-            _SendResParam.IsGood = true;
+            _SendResParam.IsGood = false;
             _SendResParam.ProjectItem = ProjectItem;
 
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)

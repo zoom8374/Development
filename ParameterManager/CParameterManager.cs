@@ -62,6 +62,12 @@ namespace ParameterManager
             return _Result;
         }
 
+        public void RecipeReload(string _RecipeName)
+        {
+            SystemParam.LastRecipeName = _RecipeName;
+            ReadInspectionParameters();
+        }
+
         public void DeInitialize()
         {
             WriteSystemParameter();

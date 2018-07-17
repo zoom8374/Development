@@ -14,11 +14,11 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
-        private SendResultParameter GetLeadInspectionResultAnalysys()
+        private SendResultParameter GetLeadInspectionResultAnalysis()
         {
             SendResultParameter _SendResParam = new SendResultParameter();
             _SendResParam.ID = ID;
-            _SendResParam.IsGood = true;
+            _SendResParam.IsGood = false;
             _SendResParam.ProjectItem = ProjectItem;
 
             SendLeadResult _SendResult = new SendLeadResult();
@@ -59,14 +59,17 @@ namespace InspectionSystemManager
             }
 
             //Mergy Result
-            for (int iLoopCount = 0; iLoopCount < _SendResult.LeadPitchTopX.Length; ++iLoopCount)
+            if (_SendResult.LeadPitchTopX != null && _SendResult.LeadPitchTopY != null && _SendResult.LeadLength != null)
             {
-                _SendResult.LeadLength[iLoopCount] = Math.Abs(_SendResult.BodyReferenceY - _SendResult.LeadPitchTopY[iLoopCount]);
+                for (int iLoopCount = 0; iLoopCount < _SendResult.LeadPitchTopX.Length; ++iLoopCount)
+                {
+                    _SendResult.LeadLength[iLoopCount] = Math.Abs(_SendResult.BodyReferenceY - _SendResult.LeadPitchTopY[iLoopCount]);
 
-                CogLineSegment _LengthLine = new CogLineSegment();
-                _LengthLine.SetStartEnd(_SendResult.LeadPitchTopX[iLoopCount], _SendResult.LeadPitchTopY[iLoopCount], 
-                                        _SendResult.LeadPitchTopX[iLoopCount], _SendResult.BodyReferenceY);
-                ResultDisplay(_LengthLine, "LengthLine" + (iLoopCount + 1), CogColorConstants.Orange);
+                    CogLineSegment _LengthLine = new CogLineSegment();
+                    _LengthLine.SetStartEnd(_SendResult.LeadPitchTopX[iLoopCount], _SendResult.LeadPitchTopY[iLoopCount],
+                                            _SendResult.LeadPitchTopX[iLoopCount], _SendResult.BodyReferenceY);
+                    ResultDisplay(_LengthLine, "LengthLine" + (iLoopCount + 1), CogColorConstants.Orange);
+                }
             }
 
             return _SendResParam;
