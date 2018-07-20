@@ -31,7 +31,7 @@ namespace CameraManager
 
         private ManualResetEvent PauseEvent = new ManualResetEvent(false);
 
-        public CBaslerManager(uint _DeviceCount)
+        public CBaslerManager()
         {
             Environment.SetEnvironmentVariable("PYLON_GIGE_HEARTBEAT", "3000");
             Pylon.Initialize();
@@ -41,6 +41,7 @@ namespace CameraManager
 
         public bool Initialize(int _ID, string _DeviceID)
         {
+            bool _Result = false;
             if (0 == AvailableDeviceCount)   return false;
             if (_ID >= AvailableDeviceCount) return false;
 
@@ -55,10 +56,19 @@ namespace CameraManager
                 if (false == IsAvailable) { DestroyDeviceHandle(); return false; }
 
                 string _DeviceIDTemp = Pylon.DeviceFeatureToString(DeviceHandle, "DeviceID");
-                if (_DeviceID != _DeviceIDTemp) { DestroyDeviceHandle(); return false; }
-
+                if (_DeviceID != _DeviceIDTemp) { DestroyDeviceHandle(); continue; }
                 Pylon.DeviceFeatureFromString(DeviceHandle, "PixelFormat", "Mono8");
+
+                IsAvailable = Pylon.DeviceFeatureIsAvailable(DeviceHandle, "EnumEntry_TriggerSelector_AcquisitionStart");
+                if (false == IsAvailable) { DestroyDeviceHandle(); return false; }
+                Pylon.DeviceFeatureFromString(DeviceHandle, "TriggerSelector", "AcquisitionStart");
+                Pylon.DeviceFeatureFromString(DeviceHandle, "TriggerMode", "Off");
+
+                _Result = true;
+                break;
             }
+
+            if (false == _Result) return false;
 
             ThreadContinuousGrab = new Thread(ThreadContinuousGrabFunc);
             ThreadContinuousGrab.IsBackground = true;
@@ -74,15 +84,6 @@ namespace CameraManager
         {
             DestroyDeviceHandle();
             ThreadDeInitialize();
-        }
-
-        private void ThreadInitialize()
-        {
-            ThreadContinuousGrab = new Thread(ThreadContinuousGrabFunc);
-            ThreadContinuousGrab.IsBackground = true;
-            IsThreadContinuousGrabExit = false;
-            IsThreadContinuousGrabTrigger = false;
-            ThreadContinuousGrab.Start();
         }
 
         public void ThreadDeInitialize()
@@ -119,8 +120,6 @@ namespace CameraManager
 
                 Thread.Sleep(100);
             }
-            
-            
         }
 
         private void ThreadContinuousGrabFunc()
@@ -130,7 +129,6 @@ namespace CameraManager
                 while (false == IsThreadContinuousGrabExit)
                 {
                     if (IsThreadContinuousGrabTrigger)  OneShot();
-
                     Thread.Sleep(3);
                 }
             }

@@ -820,6 +820,8 @@ namespace InspectionSystemManager
                 ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
 
+            if (_PatternResult.FindCount <= 0) _IsGood = false;
+
             return _IsGood;
         }
 

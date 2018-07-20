@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,18 @@ namespace CustomControl
             else
             {
                 _Control.Text = _Text;
+            }
+        }
+
+        public static void GradientLabelText(GradientLabel _Control, string _Text, Color _FontColor)
+        {
+            if (_Control.InvokeRequired)
+            {
+                _Control.Invoke(new MethodInvoker(delegate () { _Control.Text = _Text; _Control.ForeColor = _FontColor; }));
+            }
+            else
+            {
+                _Control.Text = _Text; _Control.ForeColor = _FontColor;
             }
         }
     }

@@ -214,12 +214,12 @@ namespace InspectionSystemManager
             CogBlobReferenceResult _CogBlobReferResult = new CogBlobReferenceResult();
             CogBlobReferenceAlgo _CogBlobReferAlgoRcp = new CogBlobReferenceAlgo();
             _CogBlobReferAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
-            _CogBlobReferAlgoRcp.BlobAreaMin = Convert.ToInt32(textBoxBlobAreaMin.Text);
-            _CogBlobReferAlgoRcp.BlobAreaMax = Convert.ToInt32(textBoxBlobAreaMax.Text);
-            _CogBlobReferAlgoRcp.WidthMin = Convert.ToInt32(textBoxWidthSizeMin.Text);
-            _CogBlobReferAlgoRcp.WidthMax = Convert.ToInt32(textBoxWidthSizeMax.Text);
-            _CogBlobReferAlgoRcp.HeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
-            _CogBlobReferAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
+            _CogBlobReferAlgoRcp.BlobAreaMin = Convert.ToDouble(textBoxBlobAreaMin.Text);
+            _CogBlobReferAlgoRcp.BlobAreaMax = Convert.ToDouble(textBoxBlobAreaMax.Text);
+            _CogBlobReferAlgoRcp.WidthMin = Convert.ToDouble(textBoxWidthSizeMin.Text);
+            _CogBlobReferAlgoRcp.WidthMax = Convert.ToDouble(textBoxWidthSizeMax.Text);
+            _CogBlobReferAlgoRcp.HeightMin = Convert.ToDouble(textBoxHeightSizeMin.Text);
+            _CogBlobReferAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
             _CogBlobReferAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             _CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
             

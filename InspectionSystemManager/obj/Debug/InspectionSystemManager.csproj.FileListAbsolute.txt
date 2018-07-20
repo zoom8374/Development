@@ -28,4 +28,3 @@ C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\Inspecti
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro3D.dll

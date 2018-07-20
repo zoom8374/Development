@@ -37,9 +37,11 @@ namespace InspectionSystemManager
         {
             bool _Result = false;
 
+            PatternProc.RunParams.AcceptThreshold = _CogPatternAlgo.MatchingScore / 100;
+
             for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
             {
-                if (false == Inspection(_SrcImage, _CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference)) continue;
+                if (false == Inspection(_SrcImage, _InspRegion, _CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference)) continue;
 
                 if (PatternResults != null && PatternResults.Count > 0)
                 {
@@ -100,13 +102,14 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private bool Inspection(CogImage8Grey _SrcImage, CogPMAlignPattern _Pattern)
+        private bool Inspection(CogImage8Grey _SrcImage, CogRectangle _Region, CogPMAlignPattern _Pattern)
         {
             bool _Result = true;
 
             try
             {
                 PatternProc.InputImage = _SrcImage;
+                PatternProc.SearchRegion = _Region;
                 PatternProc.Pattern = _Pattern;
                 PatternProc.Run();
                 GetResult();

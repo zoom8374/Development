@@ -202,6 +202,7 @@ namespace ParameterManager
         public eInspMode InspMode;
         public int ID;
         public bool IsGood;
+        public eNgType NgType;
 
         public object SendResult;
     }

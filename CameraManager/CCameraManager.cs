@@ -43,10 +43,11 @@ namespace CameraManager
 
             else if (CameraType == eCameraType.BaslerGE.ToString())
             {
-                objBaslerManager = new CBaslerManager(1);
-                objBaslerManager.Initialize(_ID, _CamInfo);
-                objBaslerManager.BaslerGrabEvent += new CBaslerManager.BaslerGrabHandler(ImageGrabEvent);
-                //objBaslerManager.BaslerGrabEvent += new CBaslerManager.BaslerGrabHandler(ImageGrabIntPtrEvent);
+                objBaslerManager = new CBaslerManager();
+                if (true == objBaslerManager.Initialize(_ID, _CamInfo))
+                    objBaslerManager.BaslerGrabEvent += new CBaslerManager.BaslerGrabHandler(ImageGrabEvent);
+                else
+                    _Result = false;
             }
 
             return _Result;

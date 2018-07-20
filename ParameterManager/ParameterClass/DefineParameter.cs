@@ -43,7 +43,7 @@ namespace ParameterManager
     /// <summary>
     /// NG Type
     /// </summary>
-    public enum eNgType     { GOOD = 0, REF_NG, DEFECT, CRACK, RESIN, ID }
+    public enum eNgType     { GOOD = 0, NONE, REF_NG, DEFECT, CRACK, RESIN, ID, EMPTY }
 
     public enum eMorphologyMode { ERODE = 0, DILATE, OPEN, CLOSE, }
 
