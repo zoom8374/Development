@@ -190,6 +190,10 @@
       <Project>{050e0042-7f11-4e6d-8369-6d7db086d70d}</Project>
       <Name>InspectionSystemManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\LightManager\LightManager.csproj">
+      <Project>{abbc12af-e300-4cc1-a63c-af1ceb35c536}</Project>
+      <Name>LightManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LogManager\LogMessageManager.csproj">
       <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
       <Name>LogMessageManager</Name>
@@ -197,6 +201,10 @@
     <ProjectReference Include="..\..\ParameterManager\ParameterManager.csproj">
       <Project>{72a2c4a7-8c84-416f-a883-9cb823bc9155}</Project>
       <Name>ParameterManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SerialManager\SerialManager.csproj">
+      <Project>{97e36043-35ea-451c-b633-c8fe6a0267be}</Project>
+      <Name>SerialManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

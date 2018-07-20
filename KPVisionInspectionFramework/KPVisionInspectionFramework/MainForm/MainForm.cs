@@ -13,6 +13,8 @@ using ParameterManager;
 using LogMessageManager;
 using LoadingManager;
 using DIOControlManager;
+using LightManager;
+using SerialManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -23,6 +25,7 @@ namespace KPVisionInspectionFramework
         private CLogManager                 LogWnd;
         private MainResultWindow            ResultWnd;
         private DIOControlWindow            DIOWnd;
+		private CLightManager               LightControlManager;
         private RecipeWindow                RecipeWnd;
 
         private int ISMModuleCount = 1;
@@ -87,6 +90,13 @@ namespace KPVisionInspectionFramework
                 DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
                 DIOWnd.Initialize();
             }
+
+            LightControlManager = new CLightManager();
+            if (!ParamManager.SystemParam.IsSimulationMode)
+            {
+                LightControlManager.Initialize(ParamManager.SystemParam.LastRecipeName);
+            }
+            System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
 
             #region InspSysManager Initialize
@@ -123,6 +133,8 @@ namespace KPVisionInspectionFramework
                 DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
                 DIOWnd.DeInitialize();
             }
+
+            LightControlManager.DeInitialize();
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].InspSysManagerEvent -= new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
@@ -218,7 +230,7 @@ namespace KPVisionInspectionFramework
 
         private void rbLight_Click(object sender, EventArgs e)
         {
-
+            LightControlManager.ShowLightWindow();
         }
 
         private void rbDIO_Click(object sender, EventArgs e)
