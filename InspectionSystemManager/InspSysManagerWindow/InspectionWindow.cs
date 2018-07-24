@@ -922,12 +922,15 @@ namespace InspectionSystemManager
 
             if (_CogNeedleFindResult != null)// && _CogNeedleFindResult.IsGood)
             {
-                _Circle.SetCenterRadius(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, _CogNeedleFindResult.Radius);
-                _CirclePoint.SetCenterRotationSize(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, 0, 1);
-                ResultDisplay(_Circle, _CirclePoint, "NeedleCircle", _CogNeedleFindResult.IsGood);
+                if (_CogNeedleFindResult.Radius > 0)
+                {
+                    _Circle.SetCenterRadius(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, _CogNeedleFindResult.Radius);
+                    _CirclePoint.SetCenterRotationSize(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, 0, 1);
+                    ResultDisplay(_Circle, _CirclePoint, "NeedleCircle", _CogNeedleFindResult.IsGood);
 
-                string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionY);
-                ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 30, _CenterPointName, _CogNeedleFindResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionY);
+                    ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 30, _CenterPointName, _CogNeedleFindResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                }
             }
 
             else

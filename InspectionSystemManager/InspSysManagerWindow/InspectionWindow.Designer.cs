@@ -31,7 +31,6 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.labelTitle = new System.Windows.Forms.Label();
             this.btnConfigSave = new CustomControl.ImageButton();
             this.btnImageSave = new CustomControl.ImageButton();
             this.btnImageLoad = new CustomControl.ImageButton();
@@ -40,6 +39,7 @@
             this.btnOneShot = new CustomControl.ImageButton();
             this.btnInspection = new CustomControl.ImageButton();
             this.btnLive = new CustomControl.ImageButton();
+            this.labelTitle = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -82,22 +82,6 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(616, 38);
             this.panelMenu.TabIndex = 0;
-            // 
-            // labelTitle
-            // 
-            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelTitle.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.labelTitle.Location = new System.Drawing.Point(0, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(624, 30);
-            this.labelTitle.TabIndex = 1;
-            this.labelTitle.Text = " Inspection window";
-            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
-            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
-            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
-            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
             // btnConfigSave
             // 
@@ -243,6 +227,22 @@
             this.btnLive.UseVisualStyleBackColor = false;
             this.btnLive.Click += new System.EventHandler(this.btnLive_Click);
             // 
+            // labelTitle
+            // 
+            this.labelTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.labelTitle.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelTitle.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.labelTitle.Location = new System.Drawing.Point(0, 0);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(624, 30);
+            this.labelTitle.TabIndex = 1;
+            this.labelTitle.Text = " Inspection window";
+            this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
+            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
+            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
+            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            // 
             // InspectionWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -259,6 +259,7 @@
             this.Name = "InspectionWindow";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InspectionWindow_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.InspectionWindow_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.InspectionWindow_MouseMove);

@@ -84,7 +84,7 @@ namespace InspectionSystemManager
         public void ShowWindows()
         {
             InspWnd.Show();
-            InspWnd.SetLocation(WndLocation.X, WndLocation.Y);
+            ////InspWnd.SetLocation(WndLocation.X, WndLocation.Y);
         }
         #endregion Initialize & DeInitialize
 

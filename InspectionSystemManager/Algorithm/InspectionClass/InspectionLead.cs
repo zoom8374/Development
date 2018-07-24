@@ -171,6 +171,7 @@ namespace InspectionSystemManager
             bool _Result = true;
 
             if (null == BlobResult || BlobResults.GetBlobs().Count < 0) return false;
+            InspResults.IsGood = true;
             InspResults.BlobCount = BlobResults.GetBlobs().Count;
             InspResults.BlobArea = new double[BlobResults.GetBlobs().Count];
             InspResults.BlobCenterX = new double[BlobResults.GetBlobs().Count];

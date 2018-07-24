@@ -23,7 +23,7 @@ namespace KPVisionInspectionFramework
         private CParameterManager           ParamManager;
         private CInspectionSystemManager[]  InspSysManager;
         private CLogManager                 LogWnd;
-        private MainResultWindow            ResultWnd;
+        private MainResultBase              ResultBaseWnd;
         private DIOControlWindow            DIOWnd;
 		private CLightManager               LightControlManager;
         private RecipeWindow                RecipeWnd;
@@ -78,10 +78,10 @@ namespace KPVisionInspectionFramework
             RecipeWnd = new RecipeWindow(ParamManager.SystemParam.LastRecipeName);
             RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
 
-            ResultWnd = new MainResultWindow();
-            ResultWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
-            ResultWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
-            ResultWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
+            ResultBaseWnd = new MainResultBase();
+            ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
+            ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
+            ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
 
             //IO Initialize
             DIOWnd = new DIOControlWindow();
@@ -118,11 +118,11 @@ namespace KPVisionInspectionFramework
         {
             GetISMWindowInformation();
 
-            ParamManager.SystemParam.ResultWindowLocationX = ResultWnd.Location.X;
-            ParamManager.SystemParam.ResultWindowLocationY = ResultWnd.Location.Y;
-            ParamManager.SystemParam.ResultWindowWidth = ResultWnd.Width;
-            ParamManager.SystemParam.ResultWindowHeight = ResultWnd.Height;
-            ResultWnd.DeInitialize();
+            ParamManager.SystemParam.ResultWindowLocationX = ResultBaseWnd.Location.X;
+            ParamManager.SystemParam.ResultWindowLocationY = ResultBaseWnd.Location.Y;
+            ParamManager.SystemParam.ResultWindowWidth = ResultBaseWnd.Width;
+            ParamManager.SystemParam.ResultWindowHeight = ResultBaseWnd.Height;
+            ResultBaseWnd.DeInitialize();
 
             RecipeWnd.RecipeChangeEvent -= new RecipeWindow.RecipeChangeHandler(RecipeChange);
 
@@ -195,7 +195,7 @@ namespace KPVisionInspectionFramework
                 {
                     InspSysManager[iLoopCount].ShowWindows();
                 }
-                ResultWnd.Show();
+                ResultBaseWnd.Show();
                 CLoadingManager.Hide();
             }
         }
@@ -380,7 +380,7 @@ namespace KPVisionInspectionFramework
         private void SendResultData(object _Result)
         {
             SendResultParameter _SendResParam = _Result as SendResultParameter;
-            ResultWnd.SetResultData(_SendResParam);
+            ResultBaseWnd.SetResultData(_SendResParam);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
         }
         #endregion Main Process

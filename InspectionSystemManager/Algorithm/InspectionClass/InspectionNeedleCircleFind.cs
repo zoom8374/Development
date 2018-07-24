@@ -42,8 +42,8 @@ namespace InspectionSystemManager
 
             if (true == Inspection(_SrcImage)) GetResult();
 
-            if (FindCircleResults != null && FindCircleResults.Count > 0)_CogNeedleFindResult.IsGood = true;
-            else    _CogNeedleFindResult.IsGood = false;
+            if (FindCircleResults != null && FindCircleResults.Count > 0) _CogNeedleFindResult.IsGood = true;
+            else _CogNeedleFindResult.IsGood = false;
 
             if (!_CogNeedleFindResult.IsGood)
             {
@@ -56,11 +56,25 @@ namespace InspectionSystemManager
 
             else
             {
-                _CogNeedleFindResult.CenterX = FindCircleResults.GetCircle().CenterX;
-                _CogNeedleFindResult.CenterY = FindCircleResults.GetCircle().CenterY;
-                _CogNeedleFindResult.Radius = FindCircleResults.GetCircle().Radius;
-                _CogNeedleFindResult.OriginX = FindCircleResults.GetCircle().CenterX;
-                _CogNeedleFindResult.OriginY = FindCircleResults.GetCircle().CenterY;
+                if (FindCircleResults.GetCircle() != null)
+                {
+                    _CogNeedleFindResult.CenterX = FindCircleResults.GetCircle().CenterX;
+                    _CogNeedleFindResult.CenterY = FindCircleResults.GetCircle().CenterY;
+                    _CogNeedleFindResult.Radius = FindCircleResults.GetCircle().Radius;
+                    _CogNeedleFindResult.OriginX = FindCircleResults.GetCircle().CenterX;
+                    _CogNeedleFindResult.OriginY = FindCircleResults.GetCircle().CenterY;
+                }
+
+                else
+                {
+                    _CogNeedleFindResult.CenterX = 0;
+                    _CogNeedleFindResult.CenterY = 0;
+                    _CogNeedleFindResult.Radius = 0;
+                    _CogNeedleFindResult.OriginX = 0;
+                    _CogNeedleFindResult.OriginY = 0;
+
+                    _CogNeedleFindResult.IsGood = false;
+                }
             }
 
             return _Result;

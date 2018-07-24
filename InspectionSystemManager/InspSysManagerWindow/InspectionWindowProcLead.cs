@@ -18,13 +18,14 @@ namespace InspectionSystemManager
         {
             SendResultParameter _SendResParam = new SendResultParameter();
             _SendResParam.ID = ID;
-            _SendResParam.IsGood = false;
+            _SendResParam.NgType = eNgType.GOOD;
+            _SendResParam.IsGood = true;
             _SendResParam.ProjectItem = ProjectItem;
 
             SendLeadResult _SendResult = new SendLeadResult();
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
-                if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LEAD)
+                if (eAlgoType.C_LEAD == AlgoResultParamList[iLoopCount].ResultAlgoType)
                 {
                     var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogLeadResult;
                     
@@ -36,7 +37,10 @@ namespace InspectionSystemManager
                     _SendResult.LeadPitchTopY = _AlgoResultParam.LeadPitchTopY;
                     _SendResult.IsLeadBendGood = _AlgoResultParam.IsLeadBentGood;
 
+                    _SendResParam.IsGood &= _AlgoResultParam.IsGood;
                     _SendResParam.SendResult = _SendResult;
+                    if (_SendResParam.NgType == eNgType.GOOD)
+                        _SendResParam.NgType = (_AlgoResultParam.IsGood == true) ? eNgType.GOOD : eNgType.LEAD_BENT;
                 }
 
                 else if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LINE_FIND)

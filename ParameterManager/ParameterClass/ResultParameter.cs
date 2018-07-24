@@ -170,6 +170,12 @@ namespace ParameterManager
         public double[] LeadLength;
         public double[] LeadLengthStartX;
         public double[] LeadLengthStartY;
+
+        public CogLeadResult()
+        {
+            IsGood = true;
+            NgType = eNgType.GOOD;
+        }
     }
 
     public class CogBarCodeIDResult : Result
