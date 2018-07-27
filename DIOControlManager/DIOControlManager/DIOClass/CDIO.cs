@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public enum DIOEnum
 {
-    IO_CHANNEL = 8,
+    IO_CHANNEL = 16,
 
     OFF = 0,
     ON = 1

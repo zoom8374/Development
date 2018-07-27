@@ -28,6 +28,8 @@ namespace KPVisionInspectionFramework
 		private CLightManager               LightControlManager;
         private RecipeWindow                RecipeWnd;
 
+        private MainProcessBase             MainProcess;
+
         private int ISMModuleCount = 1;
 
         private Timer TimerShowWindow = new Timer(); //Dialog Show용 Timer
@@ -74,23 +76,25 @@ namespace KPVisionInspectionFramework
             #endregion Log Window Initialize
 
             #region SubWindow 생성 및 Event 등록
-
+            //Recipe Initialize
             RecipeWnd = new RecipeWindow(ParamManager.SystemParam.LastRecipeName);
             RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
 
+            //Result Initialize
             ResultBaseWnd = new MainResultBase();
             ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
 
             //IO Initialize
-            DIOWnd = new DIOControlWindow();
+            DIOWnd = new DIOControlWindow(ParamManager.SystemParam.ProjectType);
+            DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             if (!ParamManager.SystemParam.IsSimulationMode)
             {
-                DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
                 DIOWnd.Initialize();
             }
 
+            //Light Initialize
             LightControlManager = new CLightManager();
             if (!ParamManager.SystemParam.IsSimulationMode)
             {
@@ -98,6 +102,19 @@ namespace KPVisionInspectionFramework
             }
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
+
+            #region Project 별 MainProcess Setting
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
+            {
+                MainProcess = new MainProcessDispensor();
+            }
+
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            {
+                MainProcess = new MainProcessID();
+                ((MainProcessID)MainProcess).InitDioControlWindow(DIOWnd);
+            }
+            #endregion MainProcess Setting
 
             #region InspSysManager Initialize
             ISMModuleCount = ParamManager.SystemParam.InspSystemManagerCount;
@@ -338,7 +355,13 @@ namespace KPVisionInspectionFramework
         #region Event : I/O Event & Function
         private void InputChangeEventFunction(short _BitNum, bool _Signal)
         {
-            if ((short)DIOMAP.IN_TRG1 == _BitNum) EventInspectionTriggerOn(_Signal);
+            //if ((short)DIO_DEF.IN_TRG1 == _BitNum) EventInspectionTriggerOn(_Signal);
+            //if ((short)DIO_DEF.IN_TRG1 == _BitNum) MainProcess.TriggerOn(InspSysManager, 0);
+            switch (_BitNum)
+            {
+                case DIO_DEF.IN_TRG1:   MainProcess.TriggerOn(InspSysManager, 0);  break;
+                case DIO_DEF.IN_RESET:  MainProcess.Reset(); break;
+            }
         }
         #endregion Event : I/O Event & Function
 
@@ -370,7 +393,6 @@ namespace KPVisionInspectionFramework
         private void EventInspectionTriggerOn(object _Value)
         {
             if (false == Convert.ToBoolean(_Value)) return;
-            //int _ID = Convert.ToInt32(_Value);
             int _ID = 2;
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
 

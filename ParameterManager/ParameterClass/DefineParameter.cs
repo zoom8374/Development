@@ -8,7 +8,7 @@ namespace ParameterManager
     /// <summary>
     /// Project Type
     /// </summary>
-    public enum eProjectType { DISPENSER = 0, BLOWER };
+    public enum eProjectType { NONE = 0, DISPENSER, BLOWER };
 
     /// <summary>
     /// Project Item
@@ -57,15 +57,22 @@ namespace ParameterManager
 
     public enum eReferAction        { ADD = 0, DEL, MODIFY };
 
-    public static class DIOMAP
+    public static class DIO_DEF
     {
+        public const int NONE = -1;
+
         public const int OUT_LIVE = 0;
-        public const int OUT_ALARM = 1;
+        public const int OUT_AUTO = 1;
+        public const int OUT_READY = 2;
+        public const int OUT_COMPLETE = 3;
+        public const int OUT_ALARM = 7;
 
         public const int IN_LIVE = 0;
         public const int IN_TRG1 = 1;
         public const int IN_ALARM_OFF = 2;
         public const int IN_MODE = 3;
+        public const int IN_REQUEST = 4;
+        public const int IN_RESET = 5;
     }
 
     public static class SIGNAL

@@ -67,7 +67,9 @@
             this.Controls.Add(this.labelTitle);
             this.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "MainResultBase";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "MainResultBase";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainResultBase_KeyDown);

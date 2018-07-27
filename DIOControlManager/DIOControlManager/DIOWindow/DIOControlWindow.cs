@@ -21,6 +21,8 @@ namespace DIOControlManager
         private DIONamingWindow DioNamingWnd;
         private CDIO DigitalIO = new CDIO();
 
+        private eProjectType ProjectType = eProjectType.NONE;
+
         private readonly int ALIVE_SIGNAL_TIME = 0;
         private readonly int ALIVE_CHECK_TIME = 0;
 
@@ -32,13 +34,15 @@ namespace DIOControlManager
         private byte[] InputMultiSignalPre;
         private bool[] OutputSignalFlag = null;
 
-        private CPressingButton.PressButton CurrentButton;
-
         public bool IsShowWindow = false;
         public bool IsInitialize = false;
 
+        private CPressingButton.PressButton CurrentButton;
         private CPressingButton.PressButton[] btnInputSignal;
         private CPressingButton.PressButton[] btnOutputSignal;
+
+        public DIOBaseCommand DioBaseCmd;
+
 
         public delegate void InputChangedHandler(short _BitNum, bool _Signal);
         public event InputChangedHandler InputChangedEvent;
@@ -59,12 +63,16 @@ namespace DIOControlManager
         private bool InputAliveCheckFlag = false;
 
         #region Initialize & DeInitialize
-        public DIOControlWindow()
+        public DIOControlWindow(int _ProjectType = 0)
         {
             InitializeComponent();
             InitializeControl();
 
+            ProjectType = (eProjectType)_ProjectType;
             DioNamingWnd.ChangeNameEvent += new DIONamingWindow.ChangeNameHandler(ChangeNameEventFunction);
+
+            if (ProjectType == eProjectType.DISPENSER)   DioBaseCmd = new LeadCmd();
+            else if (ProjectType == eProjectType.BLOWER) DioBaseCmd = new AirBlowCmd();
         }
 
         public void InitializeControl()
@@ -349,13 +357,12 @@ namespace DIOControlManager
 
         private void btnTrigger_Click(object sender, EventArgs e)
         {
-            //이렇게 쓰는것 보다는 아래와 같이 쓰는게 안정적
-            //InputChangedEvent(DIOMAP.IN_TRG1, true);
-            //var _InputChangedEvent = InputChangedEvent;
-            //if (_InputChangedEvent != null) _InputChangedEvent(DIOMAP.IN_TRG1, true);
+            //int _BitCommand = AirBlowCmd.BitCheck(5);
+            int _BitCommand = DioBaseCmd.InputBitCheck(2);
+            if (_BitCommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;
-            _InputChangedEvent?.Invoke(DIOMAP.IN_TRG1, true); // 6.0부터
+            _InputChangedEvent?.Invoke((short)_BitCommand, true); // 6.0부터
         }
 
         public void ChangeNameEventFunction(string _ChangeName)
@@ -396,7 +403,7 @@ namespace DIOControlManager
             this.Hide();
         }
 
-        private void SetOutputSignal(short _BitNumber, bool _Signal)
+        public void SetOutputSignal(short _BitNumber, bool _Signal)
         {
             if (false == IsInitialize) return;
 
@@ -420,7 +427,7 @@ namespace DIOControlManager
 
             for(int iLoopCount = 0; iLoopCount < IOCnt; iLoopCount++)
             {
-                if (InputMultiSignal[iLoopCount] == (short)DIOEnum.ON) btnInputSignal[iLoopCount].BackColor = Color.DarkGreen;
+                if (InputMultiSignal[iLoopCount] == (short)DIOEnum.ON)       btnInputSignal[iLoopCount].BackColor = Color.DarkGreen;
                 else if (InputMultiSignal[iLoopCount] == (short)DIOEnum.OFF) btnInputSignal[iLoopCount].BackColor = Color.Maroon;
             }
         }
@@ -433,8 +440,12 @@ namespace DIOControlManager
                 {
                     InputMultiSignalPre[iLoopCount] = InputMultiSignal[iLoopCount];
 
-                    if (iLoopCount != DIOMAP.IN_LIVE)
-                        InputChangedEvent(iLoopCount, Convert.ToBoolean(InputMultiSignal[iLoopCount]));
+                    //int _BitCommand = AirBlowCmd.BitCheck(iLoopCount);
+                    int _BitCommand = DioBaseCmd.InputBitCheck(iLoopCount);
+                    if (_BitCommand == DIO_DEF.IN_LIVE) continue;
+                    
+                    var _InputChangedEvent = InputChangedEvent;
+                    _InputChangedEvent?.Invoke(iLoopCount, Convert.ToBoolean(InputMultiSignal[iLoopCount]));
                 }
             }
         }
@@ -455,8 +466,8 @@ namespace DIOControlManager
 
             for (int iLoopCount = 0; iLoopCount < IOCnt; iLoopCount++)
             {
-                if (_Data[iLoopCount] == (short)DIOEnum.ON) { btnOutputSignal[iLoopCount].BackColor = Color.DarkGreen; OutputSignalFlag[iLoopCount] = true; }
-                else if (_Data[iLoopCount] == (short)DIOEnum.OFF) { btnOutputSignal[iLoopCount].BackColor = Color.Maroon; OutputSignalFlag[iLoopCount] = false; }
+                if (_Data[iLoopCount] == (short)DIOEnum.ON)         { btnOutputSignal[iLoopCount].BackColor = Color.DarkGreen; OutputSignalFlag[iLoopCount] = true; }
+                else if (_Data[iLoopCount] == (short)DIOEnum.OFF)   { btnOutputSignal[iLoopCount].BackColor = Color.Maroon; OutputSignalFlag[iLoopCount] = false; }
             }
         }
 
@@ -466,7 +477,7 @@ namespace DIOControlManager
             if (VisionAliveSignalCount >= ALIVE_SIGNAL_TIME)
             {
                 VisionAliveSignalFlag = !VisionAliveSignalFlag;
-                SetOutputSignal(DIOMAP.OUT_LIVE, VisionAliveSignalFlag);
+                SetOutputSignal(DIO_DEF.OUT_LIVE, VisionAliveSignalFlag);
                 VisionAliveSignalCount = 0;
             }
         }
@@ -475,13 +486,13 @@ namespace DIOControlManager
         {
             bool _Result = true;
 
-            if(InputMultiSignal[DIOMAP.IN_LIVE] == (short)DIOEnum.OFF)
+            if(InputMultiSignal[DIO_DEF.IN_LIVE] == (short)DIOEnum.OFF)
             {
                 InputAliveCheckCount++;
                 if(InputAliveCheckCount > ALIVE_CHECK_TIME)
                 {
                     var _InputChangedEvent = InputChangedEvent;
-                    InputChangedEvent?.Invoke(DIOMAP.IN_LIVE, false);
+                    InputChangedEvent?.Invoke(DIO_DEF.IN_LIVE, false);
 
                     CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "DIO Alive Check Count : " + InputAliveCheckCount);
 
@@ -497,7 +508,7 @@ namespace DIOControlManager
                 if(InputAliveCheckFlag == false)
                 {
                     var _InputChangedEvent = InputChangedEvent;
-                    _InputChangedEvent?.Invoke(DIOMAP.IN_LIVE, true);
+                    _InputChangedEvent?.Invoke(DIO_DEF.IN_LIVE, true);
                     //InputChangedEvent(DIOMAP.IN_LIVE, true);
 
                     InputAliveCheckFlag = true;
@@ -517,6 +528,7 @@ namespace DIOControlManager
                 while (false == IsThreadInputIOCheckExit)
                 {
                     InputSignalCheck();
+                    InputSignalChangeCheck();
                     Thread.Sleep(25);
                 }
             }

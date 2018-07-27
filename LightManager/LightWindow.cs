@@ -63,25 +63,31 @@ namespace LightManager
 
         private void btnOn_Click(object sender, EventArgs e)
         {
-            SetLightCommandEvent(comboBoxLight.SelectedIndex, LightCommand.LightOn, Convert.ToInt32(numericUpDownLightValue.Value));
+            var _SetLightCommandEvent = SetLightCommandEvent;
+            _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.LightOn, Convert.ToInt32(numericUpDownLightValue.Value));
         }
 
         private void btnOff_Click(object sender, EventArgs e)
         {
-            SetLightCommandEvent(comboBoxLight.SelectedIndex, LightCommand.LightOff);
+            var _SetLightCommandEvent = SetLightCommandEvent;
+            _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.LightOff);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             LightValue[comboBoxLight.SelectedIndex] = Convert.ToInt32(numericUpDownLightValue.Value);
-            SetLightCommandEvent(comboBoxLight.SelectedIndex, LightCommand.SaveValue, LightValue[comboBoxLight.SelectedIndex]);
+            var _SetLightCommandEvent = SetLightCommandEvent;
+            _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.SaveValue, LightValue[comboBoxLight.SelectedIndex]);
+
             System.Threading.Thread.Sleep(100);
-            SetLightCommandEvent(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
+
+            _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
         } 
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            SetLightCommandEvent(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
+            var _SetLightCommandEvent = SetLightCommandEvent;
+            _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
             this.Close();
         }
 

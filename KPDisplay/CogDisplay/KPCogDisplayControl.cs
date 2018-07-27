@@ -501,7 +501,7 @@ namespace KPDisplay
         public CogRectangle GetInterActiveRectangle()
         {
             CogRectangle cogRectangle = new CogRectangle();
-            double CenterX, CenterY, Width, Height, Rotate, Skew;
+            double CenterX, CenterY, Width, Height;
             InteractiveRectGraphic.GetCenterWidthHeight(out CenterX, out CenterY, out Width, out Height);
             cogRectangle.SetCenterWidthHeight(CenterX, CenterY, Width, Height);
             return cogRectangle;
