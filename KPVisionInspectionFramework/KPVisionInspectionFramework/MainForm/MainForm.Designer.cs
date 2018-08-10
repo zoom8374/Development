@@ -32,24 +32,24 @@
             this.ribbonMain = new System.Windows.Forms.Ribbon();
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanelOperating = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanelSetting = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanelData = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanelStatus = new System.Windows.Forms.RibbonPanel();
-            this.rbLabelCurrentRecipe = new System.Windows.Forms.RibbonLabel();
-            this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
-            this.panelMain = new System.Windows.Forms.Panel();
             this.rbStart = new System.Windows.Forms.RibbonButton();
             this.rbStop = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanelSetting = new System.Windows.Forms.RibbonPanel();
             this.rbAlign = new System.Windows.Forms.RibbonButton();
             this.rbEthernet = new System.Windows.Forms.RibbonButton();
             this.rbLight = new System.Windows.Forms.RibbonButton();
             this.rbDIO = new System.Windows.Forms.RibbonButton();
             this.rbConfig = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanelData = new System.Windows.Forms.RibbonPanel();
             this.rbRecipe = new System.Windows.Forms.RibbonButton();
             this.rbLog = new System.Windows.Forms.RibbonButton();
             this.rbHistory = new System.Windows.Forms.RibbonButton();
             this.rbFolder = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanelStatus = new System.Windows.Forms.RibbonPanel();
+            this.rbLabelCurrentRecipe = new System.Windows.Forms.RibbonLabel();
+            this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
             this.rbExit = new System.Windows.Forms.RibbonButton();
+            this.panelMain = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // ribbonMain
@@ -93,6 +93,22 @@
             this.ribbonPanelOperating.Items.Add(this.rbStop);
             this.ribbonPanelOperating.Text = "Inspection Operating";
             // 
+            // rbStart
+            // 
+            this.rbStart.Image = global::KPVisionInspectionFramework.Properties.Resources.Start;
+            this.rbStart.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbStart.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbStart.SmallImage")));
+            this.rbStart.Text = " Auto";
+            this.rbStart.Click += new System.EventHandler(this.rbStart_Click);
+            // 
+            // rbStop
+            // 
+            this.rbStop.Image = global::KPVisionInspectionFramework.Properties.Resources.Stop;
+            this.rbStop.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbStop.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbStop.SmallImage")));
+            this.rbStop.Text = " Stop";
+            this.rbStop.Click += new System.EventHandler(this.rbStop_Click);
+            // 
             // ribbonPanelSetting
             // 
             this.ribbonPanelSetting.Items.Add(this.rbAlign);
@@ -101,50 +117,6 @@
             this.ribbonPanelSetting.Items.Add(this.rbDIO);
             this.ribbonPanelSetting.Items.Add(this.rbConfig);
             this.ribbonPanelSetting.Text = "Setting ";
-            // 
-            // ribbonPanelData
-            // 
-            this.ribbonPanelData.Items.Add(this.rbRecipe);
-            this.ribbonPanelData.Items.Add(this.rbLog);
-            this.ribbonPanelData.Items.Add(this.rbHistory);
-            this.ribbonPanelData.Items.Add(this.rbFolder);
-            this.ribbonPanelData.Text = "Data";
-            // 
-            // ribbonPanelStatus
-            // 
-            this.ribbonPanelStatus.Items.Add(this.rbLabelCurrentRecipe);
-            this.ribbonPanelStatus.Text = "Status";
-            // 
-            // rbLabelCurrentRecipe
-            // 
-            this.rbLabelCurrentRecipe.Text = "Recipe : Default Recipe";
-            // 
-            // ribbonPanelSystem
-            // 
-            this.ribbonPanelSystem.Items.Add(this.rbExit);
-            this.ribbonPanelSystem.Text = "System";
-            // 
-            // panelMain
-            // 
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 140);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(1904, 901);
-            this.panelMain.TabIndex = 2;
-            // 
-            // rbStart
-            // 
-            this.rbStart.Image = global::KPVisionInspectionFramework.Properties.Resources.Start;
-            this.rbStart.MinimumSize = new System.Drawing.Size(70, 60);
-            this.rbStart.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbStart.SmallImage")));
-            this.rbStart.Text = " Auto";
-            // 
-            // rbStop
-            // 
-            this.rbStop.Image = global::KPVisionInspectionFramework.Properties.Resources.Stop;
-            this.rbStop.MinimumSize = new System.Drawing.Size(70, 60);
-            this.rbStop.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbStop.SmallImage")));
-            this.rbStop.Text = " Stop";
             // 
             // rbAlign
             // 
@@ -185,6 +157,14 @@
             this.rbConfig.Text = " Config ";
             this.rbConfig.Click += new System.EventHandler(this.rbConfig_Click);
             // 
+            // ribbonPanelData
+            // 
+            this.ribbonPanelData.Items.Add(this.rbRecipe);
+            this.ribbonPanelData.Items.Add(this.rbLog);
+            this.ribbonPanelData.Items.Add(this.rbHistory);
+            this.ribbonPanelData.Items.Add(this.rbFolder);
+            this.ribbonPanelData.Text = "Data";
+            // 
             // rbRecipe
             // 
             this.rbRecipe.Image = global::KPVisionInspectionFramework.Properties.Resources.Recipe;
@@ -217,6 +197,20 @@
             this.rbFolder.Text = "Folder ";
             this.rbFolder.Click += new System.EventHandler(this.rbFolder_Click);
             // 
+            // ribbonPanelStatus
+            // 
+            this.ribbonPanelStatus.Items.Add(this.rbLabelCurrentRecipe);
+            this.ribbonPanelStatus.Text = "Status";
+            // 
+            // rbLabelCurrentRecipe
+            // 
+            this.rbLabelCurrentRecipe.Text = "Recipe : Default Recipe";
+            // 
+            // ribbonPanelSystem
+            // 
+            this.ribbonPanelSystem.Items.Add(this.rbExit);
+            this.ribbonPanelSystem.Text = "System";
+            // 
             // rbExit
             // 
             this.rbExit.Image = global::KPVisionInspectionFramework.Properties.Resources.Exit;
@@ -224,6 +218,14 @@
             this.rbExit.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbExit.SmallImage")));
             this.rbExit.Text = " Exit";
             this.rbExit.Click += new System.EventHandler(this.rbExit_Click);
+            // 
+            // panelMain
+            // 
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(0, 140);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(1904, 901);
+            this.panelMain.TabIndex = 2;
             // 
             // MainForm
             // 

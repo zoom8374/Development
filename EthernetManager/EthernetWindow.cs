@@ -38,11 +38,6 @@ namespace EthernetManager
             InitializeComponent();
         }
 
-        public EthernetWindow(Object _OwnerForm)
-        {
-            InitializeComponent();
-        }
-
         public void Initialize(string _IPAddress, int _PortNumber)
         {
             IPAddress = _IPAddress;

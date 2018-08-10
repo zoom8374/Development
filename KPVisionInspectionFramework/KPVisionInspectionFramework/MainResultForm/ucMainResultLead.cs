@@ -42,7 +42,8 @@ namespace KPVisionInspectionFramework
                 //_GridCell[2].Style.BackColor = Color.PowderBlue;
                 //_GridCell[3].Style.BackColor = Color.PowderBlue;
                 //_GridCell[4].Style.BackColor = Color.PowderBlue;
-                //
+
+                _GridRow.Height = 22;
                 _GridRow.Cells.AddRange(_GridCell);
                 QuickGridViewLeadResult.Rows.Add(_GridRow);
             }

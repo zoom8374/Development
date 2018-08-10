@@ -5,3 +5,11 @@ C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\S
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\SerialManager\obj\Debug\SerialManager.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\SerialManager\obj\Debug\SerialManager.dll
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\SerialManager\obj\Debug\SerialManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\bin\Debug\SerialManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\bin\Debug\SerialManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.Properties.Resources.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.SerialWindow.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.pdb

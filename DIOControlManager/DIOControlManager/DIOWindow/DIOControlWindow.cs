@@ -71,6 +71,9 @@ namespace DIOControlManager
             ProjectType = (eProjectType)_ProjectType;
             DioNamingWnd.ChangeNameEvent += new DIONamingWindow.ChangeNameHandler(ChangeNameEventFunction);
 
+            ALIVE_SIGNAL_TIME = 50;
+            ALIVE_CHECK_TIME = 500;
+
             if (ProjectType == eProjectType.DISPENSER)   DioBaseCmd = new LeadCmd();
             else if (ProjectType == eProjectType.BLOWER) DioBaseCmd = new AirBlowCmd();
         }

@@ -5,3 +5,11 @@ C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\L
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Debug\LightManager.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Debug\LightManager.dll
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\KPVisionInspectionFramework\LightManager\obj\Debug\LightManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\bin\Debug\LightManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\bin\Debug\LightManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.LightWindow.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.Properties.Resources.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.pdb

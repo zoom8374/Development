@@ -48,24 +48,32 @@ namespace CameraManager
             CameraNumber = _ID;
             for (int iLoopCount = 0; iLoopCount < AvailableDeviceCount; ++iLoopCount)
             {
-                DeviceHandle = new PYLON_DEVICE_HANDLE();
-                DeviceHandle = Pylon.CreateDeviceByIndex((uint)iLoopCount);
+                try
+                {
+                    DeviceHandle = new PYLON_DEVICE_HANDLE();
+                    DeviceHandle = Pylon.CreateDeviceByIndex((uint)iLoopCount);
 
-                Pylon.DeviceOpen(DeviceHandle, Pylon.cPylonAccessModeControl | Pylon.cPylonAccessModeStream);
-                IsAvailable = Pylon.DeviceFeatureIsAvailable(DeviceHandle, "EnumEntry_PixelFormat_Mono8");
-                if (false == IsAvailable) { DestroyDeviceHandle(); return false; }
+                    Pylon.DeviceOpen(DeviceHandle, Pylon.cPylonAccessModeControl | Pylon.cPylonAccessModeStream);
+                    IsAvailable = Pylon.DeviceFeatureIsAvailable(DeviceHandle, "EnumEntry_PixelFormat_Mono8");
+                    if (false == IsAvailable) { DestroyDeviceHandle(); return false; }
 
-                string _DeviceIDTemp = Pylon.DeviceFeatureToString(DeviceHandle, "DeviceID");
-                if (_DeviceID != _DeviceIDTemp) { DestroyDeviceHandle(); continue; }
-                Pylon.DeviceFeatureFromString(DeviceHandle, "PixelFormat", "Mono8");
+                    string _DeviceIDTemp = Pylon.DeviceFeatureToString(DeviceHandle, "DeviceID");
+                    if (_DeviceID != _DeviceIDTemp) { DestroyDeviceHandle(); continue; }
+                    Pylon.DeviceFeatureFromString(DeviceHandle, "PixelFormat", "Mono8");
 
-                IsAvailable = Pylon.DeviceFeatureIsAvailable(DeviceHandle, "EnumEntry_TriggerSelector_AcquisitionStart");
-                if (false == IsAvailable) { DestroyDeviceHandle(); return false; }
-                Pylon.DeviceFeatureFromString(DeviceHandle, "TriggerSelector", "AcquisitionStart");
-                Pylon.DeviceFeatureFromString(DeviceHandle, "TriggerMode", "Off");
+                    IsAvailable = Pylon.DeviceFeatureIsAvailable(DeviceHandle, "EnumEntry_TriggerSelector_AcquisitionStart");
+                    if (false == IsAvailable) { DestroyDeviceHandle(); return false; }
+                    Pylon.DeviceFeatureFromString(DeviceHandle, "TriggerSelector", "AcquisitionStart");
+                    Pylon.DeviceFeatureFromString(DeviceHandle, "TriggerMode", "Off");
 
-                _Result = true;
-                break;
+                    _Result = true;
+                    break;
+                }
+
+                catch
+                {
+                    _Result = false;
+                }
             }
 
             if (false == _Result) return false;

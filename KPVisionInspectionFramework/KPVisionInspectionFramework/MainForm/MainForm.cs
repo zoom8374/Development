@@ -24,10 +24,8 @@ namespace KPVisionInspectionFramework
         private CInspectionSystemManager[]  InspSysManager;
         private CLogManager                 LogWnd;
         private MainResultBase              ResultBaseWnd;
-        private DIOControlWindow            DIOWnd;
 		private CLightManager               LightControlManager;
         private RecipeWindow                RecipeWnd;
-
         private MainProcessBase             MainProcess;
 
         private int ISMModuleCount = 1;
@@ -86,19 +84,15 @@ namespace KPVisionInspectionFramework
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
 
-            //IO Initialize
-            DIOWnd = new DIOControlWindow(ParamManager.SystemParam.ProjectType);
-            DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
-            if (!ParamManager.SystemParam.IsSimulationMode)
-            {
-                DIOWnd.Initialize();
-            }
-
             //Light Initialize
             LightControlManager = new CLightManager();
+            //SerialWnd = new SerialWindow();
             if (!ParamManager.SystemParam.IsSimulationMode)
             {
                 LightControlManager.Initialize(ParamManager.SystemParam.LastRecipeName);
+
+                //SerialWnd.SerialReceiveEvent += new SerialWindow.SerialReceiveHandler(RecipeChange);
+                //SerialWnd.Initialize("COM1");
             }
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
@@ -112,7 +106,7 @@ namespace KPVisionInspectionFramework
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
             {
                 MainProcess = new MainProcessID();
-                ((MainProcessID)MainProcess).InitDioControlWindow(DIOWnd);
+                MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             }
             #endregion MainProcess Setting
 
@@ -145,13 +139,20 @@ namespace KPVisionInspectionFramework
 
             ParamManager.DeInitialize();
 
-            //if (!ParamManager.SystemParam.IsSimulationMode)
+            LightControlManager.DeInitialize();
+
+            //SerialWnd.SerialReceiveEvent -= new SerialWindow.SerialReceiveHandler(RecipeChange);
+            //SerialWnd.DeInitialize();
+
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
             {
-                DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
-                DIOWnd.DeInitialize();
+                
             }
 
-            LightControlManager.DeInitialize();
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            {
+                MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
+            }
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].InspSysManagerEvent -= new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
@@ -240,9 +241,19 @@ namespace KPVisionInspectionFramework
         #endregion Initialize & DeInitialize
 
         #region Riboon Button Event
+        private void rbStart_Click(object sender, EventArgs e)
+        {
+            MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, true);
+        }
+
+        private void rbStop_Click(object sender, EventArgs e)
+        {
+            MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, false);
+        }
         private void rbEthernet_Click(object sender, EventArgs e)
         {
-
+            if (ParamManager.SystemParam.ProjectType == (int)eProjectType.BLOWER)       MainProcess.ShowSerialWindow();
+            //else if (ParamManager.SystemParam.ProjectType == (int)eProjectType.BLOWER)  MainProcess.
         }
 
         private void rbLight_Click(object sender, EventArgs e)
@@ -252,17 +263,17 @@ namespace KPVisionInspectionFramework
 
         private void rbDIO_Click(object sender, EventArgs e)
         {
-            if (false == DIOWnd.IsShowWindow)
+            if (false == MainProcess.GetDIOWindowShown())
             {
-                DIOWnd.ShowDIOWindow();
+                MainProcess.ShowDIOWindow();
             }
 
             else
             {
-                DIOWnd.TopMost = true;
+                MainProcess.SetDIOWindowTopMost(true);
             }
 
-            DIOWnd.TopMost = false;
+            MainProcess.SetDIOWindowTopMost(false);
         }
 
         private void rbConfig_Click(object sender, EventArgs e)
@@ -359,18 +370,21 @@ namespace KPVisionInspectionFramework
             //if ((short)DIO_DEF.IN_TRG1 == _BitNum) MainProcess.TriggerOn(InspSysManager, 0);
             switch (_BitNum)
             {
-                case DIO_DEF.IN_TRG1:   MainProcess.TriggerOn(InspSysManager, 0);  break;
-                case DIO_DEF.IN_RESET:  MainProcess.Reset(); break;
+                //case DIO_DEF.IN_TRG1:   MainProcess.TriggerOn(InspSysManager, 0);  break;
+                //case DIO_DEF.IN_RESET:  MainProcess.Reset(); break;
             }
         }
         #endregion Event : I/O Event & Function
 
         #region Sub Window Events
-        private bool RecipeChange(string _RecipeName)
+        private bool RecipeChange(string _RecipeName, string _SrcRecipe = "")
         {
             bool _Result = true;
 
             ParamManager.RecipeReload(_RecipeName);
+
+            //LDH, 2018.07.26, Light File 따로 관리
+            LightControlManager.RecipeChange(_RecipeName, _SrcRecipe);
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
             {
@@ -390,14 +404,43 @@ namespace KPVisionInspectionFramework
         #endregion Sub Window Events
 
         #region Main Process
-        private void EventInspectionTriggerOn(object _Value)
+        private void MainProcessCommandEventFunction(eMainProcCmd _MainProcCmd, object _Value)
         {
-            if (false == Convert.ToBoolean(_Value)) return;
-            int _ID = 2;
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
+            switch (_MainProcCmd)
+            {
+                case eMainProcCmd.TRG:          MainProcessTriggerOn(_Value); break;
+                case eMainProcCmd.RCP_CHANGE:   MainProcessRcpChange(_Value); break;
+            }
+        }
 
+        private void MainProcessTriggerOn(object _Value)
+        {
+            int _ID = Convert.ToInt32(_Value);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
             InspSysManager[_ID].TriggerOn();
         }
+
+        private bool MainProcessRcpChange(object _Value)
+        {
+            bool _Result = true;
+
+            string[] _SerialDatas = _Value as string[];
+            string _RecipeName = _SerialDatas[0];
+            string _SrcRecipe = _SerialDatas[1];
+
+            RecipeChange(_RecipeName, _SrcRecipe);
+
+            return _Result;
+        }
+
+        //private void EventInspectionTriggerOn(object _Value)
+        //{
+        //    if (false == Convert.ToBoolean(_Value)) return;
+        //    int _ID = 2;
+        //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
+        //
+        //    InspSysManager[_ID].TriggerOn();
+        //}
 
         private void SendResultData(object _Result)
         {

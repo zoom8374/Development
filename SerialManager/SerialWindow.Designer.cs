@@ -46,10 +46,13 @@
             this.labelTitle.ForeColor = System.Drawing.Color.White;
             this.labelTitle.Location = new System.Drawing.Point(0, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(318, 30);
+            this.labelTitle.Size = new System.Drawing.Size(315, 30);
             this.labelTitle.TabIndex = 11;
             this.labelTitle.Text = " Serial Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
+            this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
+            this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
             // btnSend
             // 
@@ -59,6 +62,7 @@
             this.btnSend.TabIndex = 291;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // btnOK
             // 
@@ -72,6 +76,7 @@
             this.btnOK.Text = "  OK";
             this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // label6
             // 
@@ -157,7 +162,7 @@
             this.KeyPreview = true;
             this.Name = "SerialWindow";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SerialWindow";
             this.ResumeLayout(false);
             this.PerformLayout();

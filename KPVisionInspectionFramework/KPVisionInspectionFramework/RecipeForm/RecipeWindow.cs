@@ -19,7 +19,7 @@ namespace KPVisionInspectionFramework
         private string CurrentRecipeName;
         private bool IsRecipeNew = false;
 
-        public delegate bool RecipeChangeHandler(string _RecipeName);
+        public delegate bool RecipeChangeHandler(string _RecipeName, string _srcRecipeName = "");
         public event RecipeChangeHandler RecipeChangeEvent;
 
         #region Initialize & DeInitialize
@@ -97,11 +97,11 @@ namespace KPVisionInspectionFramework
             {
                 LoadRecipeList();
                 this.Hide();
-                RecipeChange(_RcpNewNameWnd.NewRecipeName);
+                RecipeChange(_RcpNewNameWnd.NewRecipeName, "[Default]");
                 this.Show();
             }
 
-            _RcpNewNameWnd.RecipeCopyEvent += new RecipeNewNameWindow.RecipeCopyHandler(RecipeCopyEventFunction);
+            _RcpNewNameWnd.RecipeCopyEvent -= new RecipeNewNameWindow.RecipeCopyHandler(RecipeCopyEventFunction);
             IsRecipeNew = false;
         }
 
@@ -114,7 +114,9 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < _RecipeList.Count(); ++iLoopCount)
                 _RecipeList[iLoopCount] = listBoxRecipe.Items[iLoopCount].ToString();
 
-            _RcpNewNameWnd.SetCurrentRecipe(CurrentRecipeName, _RecipeList);
+            if (listBoxRecipe.SelectedIndex == -1) { MessageBox.Show("No recipes selected."); return; }
+
+            _RcpNewNameWnd.SetCurrentRecipe(listBoxRecipe.SelectedItem.ToString(), _RecipeList);
             _RcpNewNameWnd.ShowDialog();
 
             _RcpNewNameWnd.RecipeCopyEvent -= new RecipeNewNameWindow.RecipeCopyHandler(RecipeCopyEventFunction);
@@ -163,10 +165,10 @@ namespace KPVisionInspectionFramework
             textBoxCurrentRecipe.Text = CurrentRecipeName;
         }
 
-        private void RecipeChange(string _RecipeName)
+        private void RecipeChange(string _RecipeName, string _SrcRecipeName = "")
         {
             var _RecipeChangeEvent = RecipeChangeEvent;
-            if (false == _RecipeChangeEvent?.Invoke(_RecipeName)) { MessageBox.Show(new Form { TopMost = true }, "Failed to load recipe."); return; }
+            if (false == _RecipeChangeEvent?.Invoke(_RecipeName, _SrcRecipeName)) { MessageBox.Show(new Form { TopMost = true }, "Failed to load recipe."); return; }
             CurrentRecipeName = _RecipeName;
             textBoxCurrentRecipe.Text = _RecipeName;
         }
@@ -233,7 +235,7 @@ namespace KPVisionInspectionFramework
                 }
             }
 
-            RecipeChange(_NewRecipeName);
+            RecipeChange(_NewRecipeName, _SrcRecipeName);
             LoadRecipeList();
         }
 

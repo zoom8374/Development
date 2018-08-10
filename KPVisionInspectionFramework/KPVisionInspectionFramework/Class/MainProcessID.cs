@@ -8,24 +8,82 @@ using InspectionSystemManager;
 using LogMessageManager;
 using ParameterManager;
 using DIOControlManager;
+using SerialManager;
 
 namespace KPVisionInspectionFramework
 {
     public class MainProcessID : MainProcessBase
     {
-        private DIOControlWindow DIOWnd;
+        public DIOControlWindow DIOWnd;
+        public SerialWindow     SerialWnd;
 
-        public void InitDioControlWindow(DIOControlWindow _DioWnd)
+        #region Initialize & DeInitialize
+        public MainProcessID()
         {
-            DIOWnd = _DioWnd;
+            DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER);
+            DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
+            DIOWnd.Initialize();
+
+            SerialWnd = new SerialWindow();
+            SerialWnd.SerialReceiveEvent += new SerialWindow.SerialReceiveHandler(SeraialReceiveEventFunction);
+            SerialWnd.Initialize("COM1");
         }
 
-        public override bool TriggerOn(CInspectionSystemManager[] _InspSysManager, int _ID)
+        public void DeInitialize()
+        {
+            DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
+            DIOWnd.DeInitialize();
+
+            SerialWnd.SerialReceiveEvent -= new SerialWindow.SerialReceiveHandler(SeraialReceiveEventFunction);
+            SerialWnd.DeInitialize();
+        }
+        #endregion Initialize & DeInitialize
+
+        #region DIO Window Function
+        public override void ShowDIOWindow()
+        {
+            DIOWnd.ShowDIOWindow();
+        }
+
+        public override bool GetDIOWindowShown()
+        {
+            return DIOWnd.IsShowWindow;
+        }
+
+        public override void SetDIOWindowTopMost(bool _IsTopMost)
+        {
+            DIOWnd.TopMost = _IsTopMost;
+        }
+
+        public override void SetDIOOutputSignal(short _BitNumber, bool _Signal)
+        {
+            DIOWnd.SetOutputSignal(_BitNumber, _Signal);
+        }
+        #endregion DIO Window Function
+
+        #region Serial Window Function
+        public override void ShowSerialWindow()
+        {
+            SerialWnd.Show();
+        }
+
+        public override bool GetSerialWindowShown()
+        {
+            return true;
+        }
+
+        public override void SetSerialWindowTopMost(bool _IsTopMost)
+        {
+            SerialWnd.TopMost = _IsTopMost;
+        }
+        #endregion Serial Window Function
+
+        public override bool TriggerOn(int _ID)
         {
             bool _Result = false;
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
-            _InspSysManager[_ID].TriggerOn();
+            OnMainProcessCommand(eMainProcCmd.TRG, _ID);
 
             return _Result;
         }
@@ -43,9 +101,25 @@ namespace KPVisionInspectionFramework
             return _Result;
         }
 
-        public void SetIOModule(DIOControlWindow _DioWnd)
+
+        #region Communication Event Function
+        private void InputChangeEventFunction(short _BitNum, bool _Signal)
         {
-            _DioWnd.SetOutputSignal(DIO_DEF.OUT_COMPLETE, false);
+            switch (_BitNum)
+            {
+                case DIO_DEF.IN_TRG1:   TriggerOn(0); break;
+                case DIO_DEF.IN_RESET:  Reset(); break;
+            }
         }
+
+        private bool SeraialReceiveEventFunction(string _SerialData, string _SubData = "")
+        {
+            string[] _SerialDatas = new string[2];
+            _SerialDatas[0] = _SerialData;
+            _SerialDatas[1] = _SubData;
+            OnMainProcessCommand(eMainProcCmd.RCP_CHANGE, _SerialDatas);
+            return true;
+        }
+        #endregion Communication Event Function
     }
 }

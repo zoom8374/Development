@@ -207,6 +207,10 @@
       <Project>{e0e5535a-0419-44f5-a201-e2f530a4b509}</Project>
       <Name>DIOControlManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\EthernetManager\EthernetManager.csproj">
+      <Project>{a34d8ba3-047b-41a3-88fa-20dc46ec5306}</Project>
+      <Name>EthernetManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\InspectionSystemManager\InspectionSystemManager.csproj">
       <Project>{050e0042-7f11-4e6d-8369-6d7db086d70d}</Project>
       <Name>InspectionSystemManager</Name>

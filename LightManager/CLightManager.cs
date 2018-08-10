@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml;
 using System.Collections;
+using Microsoft.VisualBasic.FileIO;
 
 enum eLightControllerType { Normal, JV501, JV504 }
 namespace LightManager
@@ -33,13 +34,44 @@ namespace LightManager
         {
             LightWnd.SetLightCommandEvent += new LightWindow.SetLightCommandHandler(SetLightCommand);
 
-            LightParameterFolderPath = "C:\\Program Files\\Common Files" + "\\" + RecipeName;
-            LightParameterFullPath = LightParameterFolderPath + "\\LightParameter.sys";
+            LightParameterFolderPath = ".\\Common\\" + "LightParameter";
+            LightParameterFullPath = LightParameterFolderPath + "\\" + RecipeName + ".sys";
 
             ReadLightParameters();
             CheckComportNum();
             SetLightParam();
             SetLightWindow();
+        }
+
+        public void DeInitialize()
+        {
+            LightWnd.SetLightCommandEvent -= new LightWindow.SetLightCommandHandler(SetLightCommand);
+
+            for (int iLoopCount = 0; iLoopCount < LightControlList.Count; iLoopCount++)
+            {
+                switch ((eLightControllerType)LightParam.ControllerType[iLoopCount])
+                {
+                    case eLightControllerType.Normal:
+                        {
+                            var ControlTemp = LightControlList[iLoopCount] as LightController;
+
+                            ControlTemp.SetCommand(LightCommand.LightAllOff);
+                            ControlTemp.DeInitialize();
+                        }
+                        break;
+
+                    case eLightControllerType.JV501:
+                        {
+                            var ControlTemp = LightControlList[iLoopCount] as JV501Controller;
+
+                            ControlTemp.SetCommand(LightCommand.LightAllOff);
+                            ControlTemp.DeInitialize();
+                        }
+                        break;
+                }
+            }
+
+            LightWnd.DeInitialize();
         }
 
         private void SetLightParam()
@@ -83,33 +115,15 @@ namespace LightManager
             LightWnd.ShowDialog();
         }
 
-        public void DeInitialize()
+        public void RecipeChange(string _RecipeName, string _SrcRecipeName)
         {
-            for (int iLoopCount = 0; iLoopCount< LightControlList.Count; iLoopCount++)
-            {
-                switch ((eLightControllerType)LightParam.ControllerType[iLoopCount])
-                {
-                    case eLightControllerType.Normal:
-                        {
-                            var ControlTemp = LightControlList[iLoopCount] as LightController;
+            LightParameterFullPath = LightParameterFolderPath + "\\" + _RecipeName + ".sys";
 
-                            ControlTemp.SetCommand(LightCommand.LightAllOff);
-                            ControlTemp.DeInitialize();
-                        }
-                        break;
+            if (_SrcRecipeName != "") CopyLightParameter(_RecipeName, _SrcRecipeName);
 
-                    case eLightControllerType.JV501:
-                        {
-                            var ControlTemp = LightControlList[iLoopCount] as JV501Controller;
-
-                            ControlTemp.SetCommand(LightCommand.LightAllOff);
-                            ControlTemp.DeInitialize();
-                        }
-                        break;
-                }
-            }
-
-            LightWnd.DeInitialize();
+            ReadLightParameters();
+            SetLightParam();
+            SetLightWindow();
         }
 
         private void CheckComportNum()
@@ -295,8 +309,27 @@ namespace LightManager
             _XmlWriter.WriteEndDocument();
             _XmlWriter.Close();
         }
+
+        public void CopyLightParameter(string _NewRecipeName, string _SrcRecipeName)
+        {
+            string _NewRecipePath = LightParameterFolderPath + "\\" + _NewRecipeName + ".sys";
+            string _SrcRecipePath = LightParameterFolderPath + "\\" + _SrcRecipeName + ".sys";
+
+            FileInfo CopyFile = new FileInfo(_SrcRecipePath);
+
+            if (!CopyFile.Exists) return;
+
+            try
+            {
+                CopyFile.CopyTo(_NewRecipePath);
+            }
+            catch
+            {
+
+            }
+
+
+        }
         #endregion Read & Write Light Parameter
-
-
     }
 }

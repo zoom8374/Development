@@ -41,9 +41,9 @@
             // 
             this.btnRecipeCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnRecipeCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecipeCancel.Location = new System.Drawing.Point(218, 117);
+            this.btnRecipeCancel.Location = new System.Drawing.Point(254, 108);
             this.btnRecipeCancel.Name = "btnRecipeCancel";
-            this.btnRecipeCancel.Size = new System.Drawing.Size(111, 36);
+            this.btnRecipeCancel.Size = new System.Drawing.Size(129, 33);
             this.btnRecipeCancel.TabIndex = 22;
             this.btnRecipeCancel.Text = "Cancel";
             this.btnRecipeCancel.UseVisualStyleBackColor = true;
@@ -53,9 +53,9 @@
             // 
             this.btnRecipeConfirm.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnRecipeConfirm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecipeConfirm.Location = new System.Drawing.Point(101, 117);
+            this.btnRecipeConfirm.Location = new System.Drawing.Point(118, 108);
             this.btnRecipeConfirm.Name = "btnRecipeConfirm";
-            this.btnRecipeConfirm.Size = new System.Drawing.Size(111, 36);
+            this.btnRecipeConfirm.Size = new System.Drawing.Size(129, 33);
             this.btnRecipeConfirm.TabIndex = 23;
             this.btnRecipeConfirm.Text = "Confirm";
             this.btnRecipeConfirm.UseVisualStyleBackColor = true;
@@ -65,9 +65,9 @@
             // 
             this.textBoxCurrentRecipe.Enabled = false;
             this.textBoxCurrentRecipe.Font = new System.Drawing.Font("나눔바른고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxCurrentRecipe.Location = new System.Drawing.Point(102, 40);
+            this.textBoxCurrentRecipe.Location = new System.Drawing.Point(119, 37);
             this.textBoxCurrentRecipe.Name = "textBoxCurrentRecipe";
-            this.textBoxCurrentRecipe.Size = new System.Drawing.Size(227, 26);
+            this.textBoxCurrentRecipe.Size = new System.Drawing.Size(264, 26);
             this.textBoxCurrentRecipe.TabIndex = 21;
             // 
             // labelTitle
@@ -78,7 +78,7 @@
             this.labelTitle.ForeColor = System.Drawing.Color.White;
             this.labelTitle.Location = new System.Drawing.Point(0, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(334, 33);
+            this.labelTitle.Size = new System.Drawing.Size(390, 30);
             this.labelTitle.TabIndex = 20;
             this.labelTitle.Text = " New Name";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -88,9 +88,9 @@
             // textBoxNewRecipe
             // 
             this.textBoxNewRecipe.Font = new System.Drawing.Font("나눔바른고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxNewRecipe.Location = new System.Drawing.Point(102, 75);
+            this.textBoxNewRecipe.Location = new System.Drawing.Point(119, 69);
             this.textBoxNewRecipe.Name = "textBoxNewRecipe";
-            this.textBoxNewRecipe.Size = new System.Drawing.Size(227, 26);
+            this.textBoxNewRecipe.Size = new System.Drawing.Size(264, 26);
             this.textBoxNewRecipe.TabIndex = 21;
             // 
             // labelTrainImage
@@ -98,11 +98,11 @@
             this.labelTrainImage.BackColor = System.Drawing.Color.Black;
             this.labelTrainImage.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelTrainImage.ForeColor = System.Drawing.Color.White;
-            this.labelTrainImage.Location = new System.Drawing.Point(5, 40);
+            this.labelTrainImage.Location = new System.Drawing.Point(6, 37);
             this.labelTrainImage.Name = "labelTrainImage";
-            this.labelTrainImage.Size = new System.Drawing.Size(92, 28);
+            this.labelTrainImage.Size = new System.Drawing.Size(107, 26);
             this.labelTrainImage.TabIndex = 24;
-            this.labelTrainImage.Text = "Current Recipe";
+            this.labelTrainImage.Text = "Selected Recipe";
             this.labelTrainImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
@@ -110,19 +110,19 @@
             this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(5, 76);
+            this.label1.Location = new System.Drawing.Point(6, 70);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 28);
+            this.label1.Size = new System.Drawing.Size(107, 26);
             this.label1.TabIndex = 24;
             this.label1.Text = "New Recipe";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // RecipeNewName
+            // RecipeNewNameWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(80)))), ((int)(((byte)(120)))));
-            this.ClientSize = new System.Drawing.Size(334, 164);
+            this.ClientSize = new System.Drawing.Size(390, 151);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelTrainImage);
             this.Controls.Add(this.btnRecipeCancel);
@@ -131,7 +131,7 @@
             this.Controls.Add(this.textBoxCurrentRecipe);
             this.Controls.Add(this.labelTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RecipeNewName";
+            this.Name = "RecipeNewNameWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RecipeNewName";
             this.TopMost = true;

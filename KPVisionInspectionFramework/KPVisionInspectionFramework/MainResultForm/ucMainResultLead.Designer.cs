@@ -60,6 +60,7 @@
             this.gradientLabel2 = new CustomControl.GradientLabel();
             this.gradientLabel1 = new CustomControl.GradientLabel();
             this.gradientLabelTeaching = new CustomControl.GradientLabel();
+            this.gradientLabel5 = new CustomControl.GradientLabel();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuickGridViewLeadResult)).BeginInit();
             this.SuspendLayout();
@@ -81,6 +82,7 @@
             this.panelMain.Controls.Add(this.gradientLabelNeedleAlignX1);
             this.panelMain.Controls.Add(this.gradientLabel3);
             this.panelMain.Controls.Add(this.gradientLabel2);
+            this.panelMain.Controls.Add(this.gradientLabel5);
             this.panelMain.Controls.Add(this.gradientLabel1);
             this.panelMain.Controls.Add(this.gradientLabelTeaching);
             this.panelMain.Location = new System.Drawing.Point(0, 0);
@@ -107,6 +109,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.QuickGridViewLeadResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.QuickGridViewLeadResult.ColumnHeadersHeight = 22;
+            this.QuickGridViewLeadResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.QuickGridViewLeadResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridLeadNum,
             this.gridLeadBent,
@@ -136,6 +139,7 @@
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.QuickGridViewLeadResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.QuickGridViewLeadResult.RowHeadersVisible = false;
+            this.QuickGridViewLeadResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.QuickGridViewLeadResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.QuickGridViewLeadResult.Size = new System.Drawing.Size(416, 512);
             this.QuickGridViewLeadResult.TabIndex = 32;
@@ -248,7 +252,7 @@
             this.gradientLabelResult.BackColor = System.Drawing.Color.DarkGreen;
             this.gradientLabelResult.ColorBottom = System.Drawing.Color.White;
             this.gradientLabelResult.ColorTop = System.Drawing.Color.White;
-            this.gradientLabelResult.Font = new System.Drawing.Font("HY견고딕", 36F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold);
             this.gradientLabelResult.ForeColor = System.Drawing.Color.Lime;
             this.gradientLabelResult.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
             this.gradientLabelResult.Location = new System.Drawing.Point(117, 34);
@@ -266,9 +270,9 @@
             this.gradientLabelNeedleAlignY2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabelNeedleAlignY2.ForeColor = System.Drawing.Color.Black;
             this.gradientLabelNeedleAlignY2.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelNeedleAlignY2.Location = new System.Drawing.Point(117, 287);
+            this.gradientLabelNeedleAlignY2.Location = new System.Drawing.Point(273, 178);
             this.gradientLabelNeedleAlignY2.Name = "gradientLabelNeedleAlignY2";
-            this.gradientLabelNeedleAlignY2.Size = new System.Drawing.Size(302, 30);
+            this.gradientLabelNeedleAlignY2.Size = new System.Drawing.Size(145, 30);
             this.gradientLabelNeedleAlignY2.TabIndex = 27;
             this.gradientLabelNeedleAlignY2.Text = "0.0001";
             this.gradientLabelNeedleAlignY2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -296,9 +300,9 @@
             this.gradientLabelNeedleAlignX2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabelNeedleAlignX2.ForeColor = System.Drawing.Color.Black;
             this.gradientLabelNeedleAlignX2.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelNeedleAlignX2.Location = new System.Drawing.Point(117, 252);
+            this.gradientLabelNeedleAlignX2.Location = new System.Drawing.Point(273, 143);
             this.gradientLabelNeedleAlignX2.Name = "gradientLabelNeedleAlignX2";
-            this.gradientLabelNeedleAlignX2.Size = new System.Drawing.Size(302, 30);
+            this.gradientLabelNeedleAlignX2.Size = new System.Drawing.Size(145, 30);
             this.gradientLabelNeedleAlignX2.TabIndex = 25;
             this.gradientLabelNeedleAlignX2.Text = "0.0001";
             this.gradientLabelNeedleAlignX2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -328,7 +332,7 @@
             this.gradientLabelNeedleAlignY1.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
             this.gradientLabelNeedleAlignY1.Location = new System.Drawing.Point(117, 178);
             this.gradientLabelNeedleAlignY1.Name = "gradientLabelNeedleAlignY1";
-            this.gradientLabelNeedleAlignY1.Size = new System.Drawing.Size(302, 30);
+            this.gradientLabelNeedleAlignY1.Size = new System.Drawing.Size(145, 30);
             this.gradientLabelNeedleAlignY1.TabIndex = 23;
             this.gradientLabelNeedleAlignY1.Text = "0.0001";
             this.gradientLabelNeedleAlignY1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -358,7 +362,7 @@
             this.gradientLabelNeedleAlignX1.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
             this.gradientLabelNeedleAlignX1.Location = new System.Drawing.Point(117, 143);
             this.gradientLabelNeedleAlignX1.Name = "gradientLabelNeedleAlignX1";
-            this.gradientLabelNeedleAlignX1.Size = new System.Drawing.Size(302, 30);
+            this.gradientLabelNeedleAlignX1.Size = new System.Drawing.Size(145, 30);
             this.gradientLabelNeedleAlignX1.TabIndex = 22;
             this.gradientLabelNeedleAlignX1.Text = "0.0001";
             this.gradientLabelNeedleAlignX1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -416,12 +420,27 @@
             this.gradientLabelTeaching.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabelTeaching.ForeColor = System.Drawing.Color.White;
             this.gradientLabelTeaching.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabelTeaching.Location = new System.Drawing.Point(3, 110);
+            this.gradientLabelTeaching.Location = new System.Drawing.Point(117, 110);
             this.gradientLabelTeaching.Name = "gradientLabelTeaching";
-            this.gradientLabelTeaching.Size = new System.Drawing.Size(416, 30);
+            this.gradientLabelTeaching.Size = new System.Drawing.Size(145, 30);
             this.gradientLabelTeaching.TabIndex = 20;
             this.gradientLabelTeaching.Text = " Needle Align1 Result";
             this.gradientLabelTeaching.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // gradientLabel5
+            // 
+            this.gradientLabel5.BackColor = System.Drawing.Color.White;
+            this.gradientLabel5.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabel5.ColorTop = System.Drawing.Color.SteelBlue;
+            this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel5.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel5.Location = new System.Drawing.Point(273, 110);
+            this.gradientLabel5.Name = "gradientLabel5";
+            this.gradientLabel5.Size = new System.Drawing.Size(145, 30);
+            this.gradientLabel5.TabIndex = 20;
+            this.gradientLabel5.Text = " Needle Align2 Result";
+            this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ucMainResultLead
             // 
@@ -463,5 +482,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadWidth;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadPitch;
+        private CustomControl.GradientLabel gradientLabel5;
     }
 }

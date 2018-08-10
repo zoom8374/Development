@@ -35,6 +35,21 @@ namespace DIOControlManager
             _ReturnBit = OutCmdArray[_BitNumber];
             return _ReturnBit;
         }
+
+        public int OutputBitIndexCheck(int _CheckBit)
+        {
+            int _ReternIndex = 7;
+            
+            for (int iLoopCount = 0; iLoopCount < OutCmdArray.Length; ++iLoopCount)
+            {
+                if (OutCmdArray[iLoopCount] == _CheckBit)
+                {
+                    _ReternIndex = iLoopCount;
+                    break;
+                }
+            }
+            return _ReternIndex;
+        }
     }
 
     public class AirBlowCmd : DIOBaseCommand

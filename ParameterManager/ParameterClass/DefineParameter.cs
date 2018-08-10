@@ -25,6 +25,8 @@ namespace ParameterManager
     /// </summary>
     public enum eCameraType { Dalsa, Euresys, BaslerGE }
 
+    public enum eMainProcCmd { TRG = 1, RCP_CHANGE }
+
     /// <summary>
     /// Inspection Window Command
     /// </summary>
@@ -63,8 +65,8 @@ namespace ParameterManager
 
         public const int OUT_LIVE = 0;
         public const int OUT_AUTO = 1;
-        public const int OUT_READY = 2;
-        public const int OUT_COMPLETE = 3;
+        public const int OUT_READY = 3;
+        public const int OUT_COMPLETE = 4;
         public const int OUT_ALARM = 7;
 
         public const int IN_LIVE = 0;
