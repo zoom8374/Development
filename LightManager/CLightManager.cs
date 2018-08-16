@@ -87,8 +87,7 @@ namespace LightManager
                             var ControlTemp = LightControlList[SelectLight] as LightController;
 
                             ControlTemp.SetLightChannel(LightParam.LightChannel[iLoopCount]);
-                            ControlTemp.SetLightValue(LightParam.LightChannel[iLoopCount]);
-                            ControlTemp.SetCommand(LightCommand.LightAllOff);
+                            ControlTemp.SetLightValue(LightParam.LightValues[iLoopCount]);
                         }
                         break;
 
@@ -97,7 +96,8 @@ namespace LightManager
                             var ControlTemp = LightControlList[SelectLight] as JV501Controller;
 
                             ControlTemp.SetLightChannel(LightParam.LightChannel[iLoopCount]);
-                            ControlTemp.SetLightValue(LightParam.LightChannel[iLoopCount]);
+                            ControlTemp.SetLightValue(LightParam.LightValues[iLoopCount]);
+                            System.Threading.Thread.Sleep(50);
                             ControlTemp.SetCommand(LightCommand.LightAllOff);
                         }
                         break;
@@ -107,7 +107,8 @@ namespace LightManager
 
         private void SetLightWindow()
         {
-            LightWnd.Initialize(LightParam.LightValues);
+            if((eLightControllerType)LightParam.ControllerType[0] == eLightControllerType.Normal) LightWnd.Initialize(LightParam.LightValues, 2500);
+            else LightWnd.Initialize(LightParam.LightValues);
         }
 
         public void ShowLightWindow()
@@ -162,7 +163,7 @@ namespace LightManager
             }
         }
 
-        private void SetLightCommand(int _LightNum, LightCommand _Command, int _LightValue)
+        private void SetLightCommand(int _LightNum, LightCommand _Command, int _LightValue = 0)
         {
             int SelectLightNum = ComportNum[LightParam.ComportNum[_LightNum]];
 
@@ -179,16 +180,17 @@ namespace LightManager
                         var ControlTemp = LightControlList[SelectLightNum] as LightController;
 
                         ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
-                        ControlTemp.SetLightValue(_LightValue);
+                        if (_LightValue != 0) ControlTemp.SetLightValue(_LightValue);
+                        if (_LightValue != 0) ControlTemp.SetLightValue(LightParam.LightValues);
                         ControlTemp.SetCommand(_Command);
                     }
                     break;
                 case eLightControllerType.JV501:
                     {
-                        var ControlTemp = LightControlList[_LightNum] as JV501Controller;
+                        var ControlTemp = LightControlList[SelectLightNum] as JV501Controller;
 
                         ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
-                        ControlTemp.SetLightValue(_LightValue);
+                        if (_LightValue != 0) ControlTemp.SetLightValue(_LightValue);
                         ControlTemp.SetCommand(_Command);
                     }
                     break;
@@ -331,5 +333,52 @@ namespace LightManager
 
         }
         #endregion Read & Write Light Parameter
+
+        public void LightControl(int _LightNum, bool _IsLightOn)
+        {
+            if (_IsLightOn == true) SetLightCommand(_LightNum, LightCommand.LightOn);
+            else                    SetLightCommand(_LightNum, LightCommand.LightOff);
+
+            //switch ((eLightControllerType)LightParam.ControllerType[_LightNum])
+            //{
+            //    case eLightControllerType.Normal:
+            //        break;
+
+                //    case eLightControllerType.JV501:
+                //        var ControlTemp = LightControlList[_LightNum] as JV501Controller;
+                //        ControlTemp.SetCommand(LightCommand.LightOn);
+                //        break;
+                //}
+
+
+                //switch ((eLightControllerType)LightParam.ControllerType[_LightNum])
+                //{
+                //    case eLightControllerType.Normal:
+                //        {
+                //            var ControlTemp = LightControlList[SelectLightNum] as LightController;
+
+                //            ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
+                //            ControlTemp.SetLightValue(_LightValue);
+                //            ControlTemp.SetLightValue(LightParam.LightValues);
+                //            ControlTemp.SetCommand(_Command);
+                //        }
+                //        break;
+                //    case eLightControllerType.JV501:
+                //        {
+                //            //var ControlTemp = LightControlList[_LightNum] as JV501Controller;
+                //            var ControlTemp = LightControlList[SelectLightNum] as JV501Controller;
+
+                //            ControlTemp.SetLightChannel(LightParam.LightChannel[_LightNum]);
+                //            ControlTemp.SetLightValue(_LightValue);
+                //            ControlTemp.SetCommand(_Command);
+                //        }
+                //        break;
+                //}
+        }
+
+        public void AllLightOff()
+        {
+
+        }
     }
 }

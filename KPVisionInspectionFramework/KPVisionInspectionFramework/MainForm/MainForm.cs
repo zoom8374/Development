@@ -243,11 +243,19 @@ namespace KPVisionInspectionFramework
         #region Riboon Button Event
         private void rbStart_Click(object sender, EventArgs e)
         {
+            for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
+                InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
+
+            CParameterManager.SystemMode = eSysMode.AUTO_MODE;
             MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, true);
         }
 
         private void rbStop_Click(object sender, EventArgs e)
         {
+            for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
+                InspSysManager[iLoopCount].SetSystemMode(eSysMode.MANUAL_MODE);
+
+            CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, false);
         }
         private void rbEthernet_Click(object sender, EventArgs e)
@@ -330,6 +338,7 @@ namespace KPVisionInspectionFramework
                 case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value));     break;
                 case eISMCMD.TEACHING_SAVE:     TeachingParameterSave(Convert.ToInt32(_Value));     break;
                 case eISMCMD.SEND_DATA:         SendResultData(_Value);                             break;
+                case eISMCMD.LIGHT_CONTROL:     LightControl(_Value);                               break;
             }
         }
 
@@ -343,6 +352,7 @@ namespace KPVisionInspectionFramework
                 ribbonPanelData.Enabled = false;
                 ribbonPanelStatus.Enabled = false;
                 ribbonPanelSystem.Enabled = false;
+                CParameterManager.SystemMode = eSysMode.TEACH_MODE;
             }
 
             else
@@ -352,6 +362,7 @@ namespace KPVisionInspectionFramework
                 ribbonPanelData.Enabled = true;
                 ribbonPanelStatus.Enabled = true;
                 ribbonPanelSystem.Enabled = true;
+                CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             }
         }
 
@@ -447,6 +458,12 @@ namespace KPVisionInspectionFramework
             SendResultParameter _SendResParam = _Result as SendResultParameter;
             ResultBaseWnd.SetResultData(_SendResParam);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
+        }
+
+        private void LightControl(object _LightOnOff)
+        {
+            if ((bool)_LightOnOff == true) LightControlManager.LightControl(0, true);
+            else                              LightControlManager.LightControl(0, false);
         }
         #endregion Main Process
     }

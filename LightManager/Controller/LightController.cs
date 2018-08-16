@@ -20,11 +20,12 @@ namespace LightManager
         private SerialPort SerialLight;
 
         private int LightChannel = 0;
+        private int[] LightValues;
 
         public LightController()
         {
             SerialLight = new SerialPort();
-            SerialLight.BaudRate = 19200;
+            SerialLight.BaudRate = 9600;
             SerialLight.DataBits = (int)8;
             SerialLight.Parity = Parity.None;
             SerialLight.StopBits = StopBits.One;
@@ -52,7 +53,7 @@ namespace LightManager
 
         public void DeInitialize()
         {
-            if(SerialLight != null && SerialLight.IsOpen)
+            if (SerialLight != null && SerialLight.IsOpen)
             {
                 SerialLight.Close();
                 SerialLight.Dispose();
@@ -62,17 +63,35 @@ namespace LightManager
 
         public void SetCommand(LightCommand _Command)
         {
-            string _SendCommand = "";
-
             switch (_Command)
             {
-                case LightCommand.LightOn: _SendCommand = String.Format("{0}{1}{2}{3:D3}{4}", STX, ADJ, LightChannel, ON, ETX); break;
-                case LightCommand.LightOff: _SendCommand = String.Format("{0}{1}{2}{3:D3}{4}", STX, ADJ, LightChannel, OFF, ETX); break;
-                case LightCommand.LightAllOn: _SendCommand = String.Format("{0}{1}{2}{3:D3}{4}", STX, ADJ, "a", ON, ETX); break;
-                case LightCommand.LightAllOff: _SendCommand = String.Format("{0}{1}{2}{3:D3}{4}", STX, ADJ, "a", OFF, ETX); break;
+                case LightCommand.LightOn: SetPacket("TI" + LightChannel); break;
+                case LightCommand.SaveValue: WriteEEPROM(); break;
             }
+        }
 
-            if (true == SerialLight.IsOpen) SerialLight.Write(_SendCommand);
+        private void SetPacket(string _OutputCommand)
+        {
+            char[] OutputCommand = _OutputCommand.ToCharArray();
+
+            byte[] PacketTemp = new byte[128];
+            byte BLRC = 0;
+            int idx = 0;
+
+            PacketTemp[idx++] = 0x02;
+            for (int iLoopCount = 0; iLoopCount < OutputCommand.Count(); iLoopCount++)
+            {
+                PacketTemp[idx++] = Convert.ToByte(OutputCommand[iLoopCount]);
+            }
+            PacketTemp[idx++] = 0x03;
+
+            for (int iLoopCount = 0; iLoopCount < idx; iLoopCount++)
+            {
+                BLRC ^= PacketTemp[iLoopCount];
+            }
+            PacketTemp[idx++] = BLRC;
+
+            SerialLight.Write(PacketTemp, 0, idx);
         }
 
         public void SetLightChannel(int LightNum)
@@ -82,12 +101,38 @@ namespace LightManager
 
         public void SetLightValue(int _LightValue)
         {
-            string _Command = String.Format("{0}{1}{2}{3:D3}{4}", STX, ADJ, LightChannel, _LightValue, ETX);
-            SerialLight.Write(_Command);
+            string LightValueTemp = _LightValue.ToString().PadLeft(5, '0');
+            SetPacket("TO" + LightChannel + LightValueTemp);
             System.Threading.Thread.Sleep(100);
+        }
 
-            string _Commands = String.Format("{0}{1}{2}", STX, SAV, ETX);
-            if (true == SerialLight.IsOpen) SerialLight.Write(_Commands);
+        public void SetLightValue(int[] _LightValues)
+        {
+            LightValues = new int[_LightValues.Count()];
+
+            for (int iLoopCount = 0; iLoopCount < _LightValues.Count(); iLoopCount++)
+            {
+                LightValues[iLoopCount] = _LightValues[iLoopCount];
+            }
+        }
+
+        private void WriteEEPROM()
+        {
+            int CurrentConfigurationMode = 1;
+            string LightValueTemp = "W" + CurrentConfigurationMode;
+            for (int iLoopCount = 0; iLoopCount < LightValues.Count(); iLoopCount++)
+            {
+                LightValueTemp = LightValueTemp + LightValues[iLoopCount].ToString().PadLeft(11, '0');
+            }
+
+            // 사용하는 조명이 4개 이하일 경우 CH4까지 나머지 0으로 채우기 
+            for (int iLoopCount = 0; iLoopCount < 4 - LightValues.Count(); iLoopCount++)
+            {
+                int LightZero = 0;
+                LightValueTemp = LightValueTemp + LightZero.ToString().PadLeft(11, '0');
+            }
+            SetPacket(LightValueTemp);
+            System.Threading.Thread.Sleep(100);
         }
     }
 }

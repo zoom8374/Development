@@ -76,7 +76,7 @@ namespace LightManager
 
         public void SetLightChannel(int LightNum)
         {
-            LightChannel = LightNum + 1;
+            LightChannel = LightNum;
         }
 
         public void SetLightValue(int _LightValue)

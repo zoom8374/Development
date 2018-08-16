@@ -19,6 +19,8 @@ namespace ParameterManager
         public InspectionParameter[]                InspParam;
         public InspectionSystemManagerParameter[]   InspSysManagerParam;
 
+        public static eSysMode SystemMode;
+
         private string ProjectName;
         private string InspectionDefaultPath;
         private string ISMParameterFullPath;
@@ -32,6 +34,7 @@ namespace ParameterManager
         #region Initialize & DeInitialize
         public CParameterManager()
         {
+            SystemMode = eSysMode.MANUAL_MODE;
             SystemParam = new SystemParameter();
 
             ProjectName             = "CIPOSLeadInspection";

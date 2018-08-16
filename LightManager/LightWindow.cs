@@ -26,11 +26,13 @@ namespace LightManager
             InitializeComponent();
         }
 
-        public void Initialize(int[] _LightValue)
+        public void Initialize(int[] _LightValue, int MaxLightValue = 255)
         {
             LightValue = new List<int>();
 
             comboBoxLight.Items.Clear();
+            numericUpDownLightValue.Maximum = MaxLightValue;
+
             SetLightCombobox(_LightValue);
         }
 
@@ -83,7 +85,8 @@ namespace LightManager
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            SetLightCommandEvent(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
+            var _SetLightCommandEvent = SetLightCommandEvent;
+            _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
             this.Close();
         }
 

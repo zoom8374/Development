@@ -21,11 +21,11 @@ namespace InspectionSystemManager
         private bool IsThreadInspectionExit = false;
         private bool IsThreadInspectionTrigger = false;
 
-        public int ID = 0;
-        public bool IsSimulationMode = false;
-        public eProjectType ProjectType = 0;
-        public eProjectItem ProjectItem = 0;
+        private  int  ID = 0;
+        private  bool IsSimulationMode = false;
         private string CameraType;
+        private eProjectType ProjectType = 0;
+        private eProjectItem ProjectItem = 0;
 
         private Point WndLocation = new Point(0, 0);
 
@@ -64,6 +64,11 @@ namespace InspectionSystemManager
         {
             InspWnd.InspectionWindowEvent -= new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
             InspWnd.Deinitialize();
+        }
+
+        public void SetSystemMode(eSysMode _SystemMode)
+        {
+            InspWnd.SetSystemMode(_SystemMode);
         }
 
         public void GetDisplayWindowInfo(out double _DisplayZoom, out double _DisplayPanX, out double _DisplayPanY)
@@ -197,7 +202,7 @@ namespace InspectionSystemManager
                 case eIWCMD.TEACHING:       Teaching(_Value);           break;
                 case eIWCMD.TEACH_OK:       TeachingComplete(_Value);   break;
                 case eIWCMD.TEACH_SAVE:     TeachingSave(_Value);       break;
-                case eIWCMD.ONESHOT_INSP:   OneShotInspection();        break;
+                case eIWCMD.LIGHT_CONTROL:  LightControl(_Value);       break;
                 case eIWCMD.SEND_DATA:      SendResultData(_Value);     break;
             }
         }
@@ -221,14 +226,10 @@ namespace InspectionSystemManager
             _InspSysManagerEvent?.Invoke(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
         }
 
-        private void OneShotInspection()
+        private void LightControl(object _Value)
         {
-            if ("Basler" == CameraType)
-            {
-                //Light ON
-                ImageGrab();
-                //Light OFF
-            }
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            _InspSysManagerEvent?.Invoke(eISMCMD.LIGHT_CONTROL, Convert.ToBoolean(_Value));
         }
 
         private void SendResultData(object _Value)

@@ -74,5 +74,10 @@ namespace CameraManager
             if (CameraType == eCameraType.Euresys.ToString())       objEuresysManager.SetActive(_IsLive);
             else if (CameraType == eCameraType.BaslerGE.ToString()) objBaslerManager.Continuous(_IsLive);
         }
+
+        public void CameraGrab()
+        {
+            if (CameraType == eCameraType.BaslerGE.ToString()) objBaslerManager.OneShot();
+        }
     }
 }

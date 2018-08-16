@@ -224,6 +224,33 @@ namespace InspectionSystemManager
             //Reference File(VPP) Load
         }
 
+        public void SetSystemMode(eSysMode _SystemMode)
+        {
+            if (_SystemMode == eSysMode.AUTO_MODE)
+            {
+                btnInspection.Enabled = false;
+                btnOneShot.Enabled = false;
+                btnRecipe.Enabled = false;
+                btnRecipeSave.Enabled = false;
+                btnLive.Enabled = false;
+                btnImageLoad.Enabled = false;
+                btnImageSave.Enabled = false;
+                btnConfigSave.Enabled = false;
+            }
+
+            else
+            {
+                btnInspection.Enabled = true;
+                btnOneShot.Enabled = true;
+                btnRecipe.Enabled = true;
+                btnRecipeSave.Enabled = true;
+                btnLive.Enabled = true;
+                btnImageLoad.Enabled = true;
+                btnImageSave.Enabled = true;
+                btnConfigSave.Enabled = true;
+            }
+        }
+
         public void FreeInspectionParameters(ref InspectionParameter _InspParam)
         {
             for (int iLoopCount = 0; iLoopCount < _InspParam.InspAreaParam.Count; ++iLoopCount)
@@ -370,7 +397,14 @@ namespace InspectionSystemManager
         private void btnOneShot_Click(object sender, EventArgs e)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1));
-            InspectionWindowEvent(eIWCMD.ONESHOT_INSP);
+
+            CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
+            InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, true);
+            Thread.Sleep(50);
+
+            CameraManager.CameraGrab();
+            IsThreadInspectionProcessTrigger = true;
+            InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, false);
         }
 
         private void btnRecipe_Click(object sender, EventArgs e)
@@ -388,6 +422,7 @@ namespace InspectionSystemManager
         private void btnLive_Click(object sender, EventArgs e)
         {
             if (IsSimulationMode) return;
+            kpCogDisplayMain.ClearDisplay();
             IsCamLiveFlag = !IsCamLiveFlag;
             CameraManager.CamLive(IsCamLiveFlag);            
         }
@@ -431,6 +466,11 @@ namespace InspectionSystemManager
         {
             kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1));
+
+            OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
+            //kpCogDisplayMain.ClearDisplay();
+            //kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
+            GC.Collect();
 
             //Auto / Manual Mode 구분
             //Inspection();

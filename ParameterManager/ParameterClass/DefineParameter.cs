@@ -5,6 +5,8 @@ using System.Text;
 
 namespace ParameterManager
 {
+    public enum eSysMode { AUTO_MODE = 1, MANUAL_MODE = 2, ONESHOT_MODE = 3, TEACH_MODE = 4, LIVE_MODE }
+
     /// <summary>
     /// Project Type
     /// </summary>
@@ -25,17 +27,20 @@ namespace ParameterManager
     /// </summary>
     public enum eCameraType { Dalsa, Euresys, BaslerGE }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum eMainProcCmd { TRG = 1, RCP_CHANGE }
 
     /// <summary>
     /// Inspection Window Command
     /// </summary>
-    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SEND_DATA  }
+    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SEND_DATA, LIGHT_CONTROL  }
 
     /// <summary>
     /// Inspection System Manager To Main Command
     /// </summary>
-    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, SEND_DATA }
+    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, SEND_DATA, LIGHT_CONTROL }
 
     /// <summary>
     /// Teaching Step
