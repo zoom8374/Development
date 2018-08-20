@@ -58,7 +58,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("나눔바른고딕", 14F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(392, 279);
+            this.label1.Location = new System.Drawing.Point(351, 216);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 27);
             this.label1.TabIndex = 35;
@@ -73,9 +73,9 @@
             this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel5.ForeColor = System.Drawing.Color.White;
             this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel5.Location = new System.Drawing.Point(3, 110);
+            this.gradientLabel5.Location = new System.Drawing.Point(3, 89);
             this.gradientLabel5.Name = "gradientLabel5";
-            this.gradientLabel5.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel5.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel5.TabIndex = 28;
             this.gradientLabel5.Text = "Data";
             this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -85,12 +85,12 @@
             this.gradientLabelDataMatrix.BackColor = System.Drawing.Color.White;
             this.gradientLabelDataMatrix.ColorBottom = System.Drawing.Color.White;
             this.gradientLabelDataMatrix.ColorTop = System.Drawing.Color.White;
-            this.gradientLabelDataMatrix.Font = new System.Drawing.Font("HY견고딕", 20F);
+            this.gradientLabelDataMatrix.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.gradientLabelDataMatrix.ForeColor = System.Drawing.Color.Black;
             this.gradientLabelDataMatrix.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelDataMatrix.Location = new System.Drawing.Point(117, 110);
+            this.gradientLabelDataMatrix.Location = new System.Drawing.Point(103, 89);
             this.gradientLabelDataMatrix.Name = "gradientLabelDataMatrix";
-            this.gradientLabelDataMatrix.Size = new System.Drawing.Size(302, 30);
+            this.gradientLabelDataMatrix.Size = new System.Drawing.Size(275, 24);
             this.gradientLabelDataMatrix.TabIndex = 27;
             this.gradientLabelDataMatrix.Text = "BARCODE";
             this.gradientLabelDataMatrix.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -100,12 +100,12 @@
             this.gradientLabelResult.BackColor = System.Drawing.Color.DarkGreen;
             this.gradientLabelResult.ColorBottom = System.Drawing.Color.White;
             this.gradientLabelResult.ColorTop = System.Drawing.Color.White;
-            this.gradientLabelResult.Font = new System.Drawing.Font("HY견고딕", 36F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold);
             this.gradientLabelResult.ForeColor = System.Drawing.Color.Lime;
             this.gradientLabelResult.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabelResult.Location = new System.Drawing.Point(117, 34);
+            this.gradientLabelResult.Location = new System.Drawing.Point(103, 34);
             this.gradientLabelResult.Name = "gradientLabelResult";
-            this.gradientLabelResult.Size = new System.Drawing.Size(302, 69);
+            this.gradientLabelResult.Size = new System.Drawing.Size(275, 51);
             this.gradientLabelResult.TabIndex = 27;
             this.gradientLabelResult.Text = "GOOD";
             this.gradientLabelResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -120,14 +120,14 @@
             this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.gradientLabel4.Location = new System.Drawing.Point(2, 1);
             this.gradientLabel4.Name = "gradientLabel4";
-            this.gradientLabel4.Size = new System.Drawing.Size(417, 30);
+            this.gradientLabel4.Size = new System.Drawing.Size(376, 30);
             this.gradientLabel4.TabIndex = 29;
             this.gradientLabel4.Text = " Data Matrix Data";
             this.gradientLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SevenSegGood
             // 
-            this.SevenSegGood.ArrayCount = 12;
+            this.SevenSegGood.ArrayCount = 13;
             this.SevenSegGood.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegGood.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegGood.ColorLight = System.Drawing.Color.Lime;
@@ -135,16 +135,16 @@
             this.SevenSegGood.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegGood.ElementWidth = 10;
             this.SevenSegGood.ItalicFactor = -0.04F;
-            this.SevenSegGood.Location = new System.Drawing.Point(117, 203);
+            this.SevenSegGood.Location = new System.Drawing.Point(103, 159);
             this.SevenSegGood.Name = "SevenSegGood";
-            this.SevenSegGood.Size = new System.Drawing.Size(302, 30);
+            this.SevenSegGood.Size = new System.Drawing.Size(275, 24);
             this.SevenSegGood.TabIndex = 30;
             this.SevenSegGood.TabStop = false;
             this.SevenSegGood.Value = "000000";
             // 
             // SevenSegNg
             // 
-            this.SevenSegNg.ArrayCount = 12;
+            this.SevenSegNg.ArrayCount = 13;
             this.SevenSegNg.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegNg.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegNg.ColorLight = System.Drawing.Color.Red;
@@ -152,9 +152,9 @@
             this.SevenSegNg.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegNg.ElementWidth = 10;
             this.SevenSegNg.ItalicFactor = -0.04F;
-            this.SevenSegNg.Location = new System.Drawing.Point(117, 239);
+            this.SevenSegNg.Location = new System.Drawing.Point(103, 187);
             this.SevenSegNg.Name = "SevenSegNg";
-            this.SevenSegNg.Size = new System.Drawing.Size(302, 30);
+            this.SevenSegNg.Size = new System.Drawing.Size(275, 24);
             this.SevenSegNg.TabIndex = 30;
             this.SevenSegNg.TabStop = false;
             this.SevenSegNg.Value = "000000";
@@ -169,14 +169,14 @@
             this.gradientLabel7.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
             this.gradientLabel7.Location = new System.Drawing.Point(3, 34);
             this.gradientLabel7.Name = "gradientLabel7";
-            this.gradientLabel7.Size = new System.Drawing.Size(110, 69);
+            this.gradientLabel7.Size = new System.Drawing.Size(94, 51);
             this.gradientLabel7.TabIndex = 31;
             this.gradientLabel7.Text = "Result";
             this.gradientLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SevenSegCodeErr
             // 
-            this.SevenSegCodeErr.ArrayCount = 12;
+            this.SevenSegCodeErr.ArrayCount = 13;
             this.SevenSegCodeErr.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegCodeErr.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegCodeErr.ColorLight = System.Drawing.Color.Cyan;
@@ -184,16 +184,16 @@
             this.SevenSegCodeErr.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegCodeErr.ElementWidth = 10;
             this.SevenSegCodeErr.ItalicFactor = -0.04F;
-            this.SevenSegCodeErr.Location = new System.Drawing.Point(117, 345);
+            this.SevenSegCodeErr.Location = new System.Drawing.Point(103, 260);
             this.SevenSegCodeErr.Name = "SevenSegCodeErr";
-            this.SevenSegCodeErr.Size = new System.Drawing.Size(302, 30);
+            this.SevenSegCodeErr.Size = new System.Drawing.Size(275, 24);
             this.SevenSegCodeErr.TabIndex = 30;
             this.SevenSegCodeErr.TabStop = false;
             this.SevenSegCodeErr.Value = "000000";
             // 
             // SevenSegYield
             // 
-            this.SevenSegYield.ArrayCount = 11;
+            this.SevenSegYield.ArrayCount = 12;
             this.SevenSegYield.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegYield.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegYield.ColorLight = System.Drawing.Color.Yellow;
@@ -201,16 +201,16 @@
             this.SevenSegYield.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegYield.ElementWidth = 10;
             this.SevenSegYield.ItalicFactor = -0.04F;
-            this.SevenSegYield.Location = new System.Drawing.Point(117, 275);
+            this.SevenSegYield.Location = new System.Drawing.Point(103, 215);
             this.SevenSegYield.Name = "SevenSegYield";
-            this.SevenSegYield.Size = new System.Drawing.Size(278, 30);
+            this.SevenSegYield.Size = new System.Drawing.Size(252, 24);
             this.SevenSegYield.TabIndex = 30;
             this.SevenSegYield.TabStop = false;
             this.SevenSegYield.Value = "00000";
             // 
             // SevenSegBlankErr
             // 
-            this.SevenSegBlankErr.ArrayCount = 12;
+            this.SevenSegBlankErr.ArrayCount = 13;
             this.SevenSegBlankErr.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegBlankErr.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegBlankErr.ColorLight = System.Drawing.Color.Cyan;
@@ -218,9 +218,9 @@
             this.SevenSegBlankErr.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegBlankErr.ElementWidth = 10;
             this.SevenSegBlankErr.ItalicFactor = -0.04F;
-            this.SevenSegBlankErr.Location = new System.Drawing.Point(117, 381);
+            this.SevenSegBlankErr.Location = new System.Drawing.Point(103, 288);
             this.SevenSegBlankErr.Name = "SevenSegBlankErr";
-            this.SevenSegBlankErr.Size = new System.Drawing.Size(302, 30);
+            this.SevenSegBlankErr.Size = new System.Drawing.Size(275, 24);
             this.SevenSegBlankErr.TabIndex = 30;
             this.SevenSegBlankErr.TabStop = false;
             this.SevenSegBlankErr.Value = "000000";
@@ -230,19 +230,19 @@
             this.gradientLabel9.BackColor = System.Drawing.Color.White;
             this.gradientLabel9.ColorBottom = System.Drawing.Color.LightGreen;
             this.gradientLabel9.ColorTop = System.Drawing.Color.Green;
-            this.gradientLabel9.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel9.ForeColor = System.Drawing.Color.White;
             this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel9.Location = new System.Drawing.Point(3, 203);
+            this.gradientLabel9.Location = new System.Drawing.Point(3, 159);
             this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel9.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel9.TabIndex = 31;
             this.gradientLabel9.Text = "Good";
             this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SevenSegMixErr
             // 
-            this.SevenSegMixErr.ArrayCount = 12;
+            this.SevenSegMixErr.ArrayCount = 13;
             this.SevenSegMixErr.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegMixErr.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegMixErr.ColorLight = System.Drawing.Color.Cyan;
@@ -250,16 +250,16 @@
             this.SevenSegMixErr.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegMixErr.ElementWidth = 10;
             this.SevenSegMixErr.ItalicFactor = -0.04F;
-            this.SevenSegMixErr.Location = new System.Drawing.Point(117, 417);
+            this.SevenSegMixErr.Location = new System.Drawing.Point(103, 316);
             this.SevenSegMixErr.Name = "SevenSegMixErr";
-            this.SevenSegMixErr.Size = new System.Drawing.Size(302, 30);
+            this.SevenSegMixErr.Size = new System.Drawing.Size(275, 24);
             this.SevenSegMixErr.TabIndex = 30;
             this.SevenSegMixErr.TabStop = false;
             this.SevenSegMixErr.Value = "000000";
             // 
             // SevenSegTotal
             // 
-            this.SevenSegTotal.ArrayCount = 12;
+            this.SevenSegTotal.ArrayCount = 13;
             this.SevenSegTotal.ColorBackground = System.Drawing.Color.DimGray;
             this.SevenSegTotal.ColorDark = System.Drawing.Color.Gray;
             this.SevenSegTotal.ColorLight = System.Drawing.Color.White;
@@ -267,9 +267,9 @@
             this.SevenSegTotal.ElementPadding = new System.Windows.Forms.Padding(2);
             this.SevenSegTotal.ElementWidth = 10;
             this.SevenSegTotal.ItalicFactor = -0.04F;
-            this.SevenSegTotal.Location = new System.Drawing.Point(117, 164);
+            this.SevenSegTotal.Location = new System.Drawing.Point(103, 131);
             this.SevenSegTotal.Name = "SevenSegTotal";
-            this.SevenSegTotal.Size = new System.Drawing.Size(302, 30);
+            this.SevenSegTotal.Size = new System.Drawing.Size(275, 24);
             this.SevenSegTotal.TabIndex = 30;
             this.SevenSegTotal.TabStop = false;
             this.SevenSegTotal.Value = "000000";
@@ -279,12 +279,12 @@
             this.gradientLabel11.BackColor = System.Drawing.Color.White;
             this.gradientLabel11.ColorBottom = System.Drawing.Color.LightCoral;
             this.gradientLabel11.ColorTop = System.Drawing.Color.DarkRed;
-            this.gradientLabel11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel11.ForeColor = System.Drawing.Color.White;
             this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel11.Location = new System.Drawing.Point(3, 239);
+            this.gradientLabel11.Location = new System.Drawing.Point(3, 187);
             this.gradientLabel11.Name = "gradientLabel11";
-            this.gradientLabel11.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel11.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel11.TabIndex = 31;
             this.gradientLabel11.Text = "NG";
             this.gradientLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -294,12 +294,12 @@
             this.gradientLabel14.BackColor = System.Drawing.Color.White;
             this.gradientLabel14.ColorBottom = System.Drawing.Color.LightSeaGreen;
             this.gradientLabel14.ColorTop = System.Drawing.Color.DarkCyan;
-            this.gradientLabel14.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel14.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel14.ForeColor = System.Drawing.Color.White;
             this.gradientLabel14.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel14.Location = new System.Drawing.Point(3, 345);
+            this.gradientLabel14.Location = new System.Drawing.Point(3, 260);
             this.gradientLabel14.Name = "gradientLabel14";
-            this.gradientLabel14.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel14.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel14.TabIndex = 31;
             this.gradientLabel14.Text = "      Code Err";
             this.gradientLabel14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -309,12 +309,12 @@
             this.gradientLabel15.BackColor = System.Drawing.Color.White;
             this.gradientLabel15.ColorBottom = System.Drawing.Color.LightSeaGreen;
             this.gradientLabel15.ColorTop = System.Drawing.Color.DarkCyan;
-            this.gradientLabel15.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel15.ForeColor = System.Drawing.Color.White;
             this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel15.Location = new System.Drawing.Point(3, 381);
+            this.gradientLabel15.Location = new System.Drawing.Point(3, 288);
             this.gradientLabel15.Name = "gradientLabel15";
-            this.gradientLabel15.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel15.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel15.TabIndex = 31;
             this.gradientLabel15.Text = "      Blank Err";
             this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -324,12 +324,12 @@
             this.gradientLabel16.BackColor = System.Drawing.Color.White;
             this.gradientLabel16.ColorBottom = System.Drawing.Color.LightSeaGreen;
             this.gradientLabel16.ColorTop = System.Drawing.Color.DarkCyan;
-            this.gradientLabel16.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel16.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel16.ForeColor = System.Drawing.Color.White;
             this.gradientLabel16.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel16.Location = new System.Drawing.Point(3, 417);
+            this.gradientLabel16.Location = new System.Drawing.Point(3, 316);
             this.gradientLabel16.Name = "gradientLabel16";
-            this.gradientLabel16.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel16.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel16.TabIndex = 31;
             this.gradientLabel16.Text = "      Mix Err";
             this.gradientLabel16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -339,12 +339,12 @@
             this.gradientLabel12.BackColor = System.Drawing.Color.White;
             this.gradientLabel12.ColorBottom = System.Drawing.Color.LemonChiffon;
             this.gradientLabel12.ColorTop = System.Drawing.Color.Gold;
-            this.gradientLabel12.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel12.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel12.ForeColor = System.Drawing.Color.Black;
             this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel12.Location = new System.Drawing.Point(3, 275);
+            this.gradientLabel12.Location = new System.Drawing.Point(3, 215);
             this.gradientLabel12.Name = "gradientLabel12";
-            this.gradientLabel12.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel12.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel12.TabIndex = 31;
             this.gradientLabel12.Text = "Yield";
             this.gradientLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -354,19 +354,19 @@
             this.gradientLabel13.BackColor = System.Drawing.Color.White;
             this.gradientLabel13.ColorBottom = System.Drawing.Color.LightGray;
             this.gradientLabel13.ColorTop = System.Drawing.Color.DimGray;
-            this.gradientLabel13.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradientLabel13.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
             this.gradientLabel13.ForeColor = System.Drawing.Color.White;
             this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel13.Location = new System.Drawing.Point(3, 166);
+            this.gradientLabel13.Location = new System.Drawing.Point(3, 131);
             this.gradientLabel13.Name = "gradientLabel13";
-            this.gradientLabel13.Size = new System.Drawing.Size(110, 30);
+            this.gradientLabel13.Size = new System.Drawing.Size(94, 24);
             this.gradientLabel13.TabIndex = 31;
             this.gradientLabel13.Text = "Total";
             this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnResultTest
             // 
-            this.btnResultTest.Location = new System.Drawing.Point(2, 488);
+            this.btnResultTest.Location = new System.Drawing.Point(2, 370);
             this.btnResultTest.Name = "btnResultTest";
             this.btnResultTest.Size = new System.Drawing.Size(121, 43);
             this.btnResultTest.TabIndex = 33;
@@ -376,7 +376,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(123, 488);
+            this.button1.Location = new System.Drawing.Point(123, 370);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(121, 43);
             this.button1.TabIndex = 34;
@@ -410,7 +410,7 @@
             this.panelMain.Controls.Add(this.label1);
             this.panelMain.Location = new System.Drawing.Point(0, 0);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(421, 733);
+            this.panelMain.Size = new System.Drawing.Size(377, 813);
             this.panelMain.TabIndex = 13;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
@@ -422,7 +422,7 @@
             this.Controls.Add(this.panelMain);
             this.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F);
             this.Name = "ucMainResultID";
-            this.Size = new System.Drawing.Size(421, 738);
+            this.Size = new System.Drawing.Size(378, 820);
             this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

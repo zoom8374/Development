@@ -7,17 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using CustomControl;
 using ParameterManager;
+using LogMessageManager;
+using HistoryManager;
 
 namespace KPVisionInspectionFramework
 {
     public partial class ucMainResultLead : UserControl
     {
+        //LDH, 2018.08.14, History 입력용 string 
+        string[] HistoryParam;
+        string LastRecipeName;
+        string LastResult;
+
+        public delegate void ScreenshotHandler(string ScreenshotImagePath);
+        public event ScreenshotHandler ScreenshotEvent;
+
         #region Initialize & DeInitialize
-        public ucMainResultLead()
+        public ucMainResultLead(string _LastRecipeName)
         {
+            LastRecipeName = _LastRecipeName;
+
             InitializeComponent();
             InitializeControl();
             this.Location = new Point(1, 1);
@@ -48,6 +61,13 @@ namespace KPVisionInspectionFramework
                 QuickGridViewLeadResult.Rows.Add(_GridRow);
             }
             QuickGridViewLeadResult.ClearSelection();
+
+            //LDH, 2018.08.14, Hitory Parameter용 배열 초기화
+            HistoryParam = new string[4];
+            for (int iLoopCount = 0; iLoopCount < HistoryParam.Count(); iLoopCount++)
+            {
+                HistoryParam[iLoopCount] = "-";
+            }
         }
 
         public void DeInitialize()
@@ -79,6 +99,7 @@ namespace KPVisionInspectionFramework
 
                 if (_ResultParam.IsGood)
                 {
+                    LastResult = "GOOD";
                     ControlInvoke.GradientLabelText(gradientLabelResult, "GOOD", Color.Lime);
                 }
 
@@ -86,13 +107,15 @@ namespace KPVisionInspectionFramework
                 {
                     if (eNgType.NDL_FIND == _ResultParam.NgType)
                     {
-                        ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
+                        LastResult = "Not Found";
                     }
 
                     else if (eNgType.NDL_CENTER == _ResultParam.NgType)
                     {
-                        ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
+                        LastResult = "Not Found";
                     }
+
+                    ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
                 }
             }
 
@@ -112,6 +135,7 @@ namespace KPVisionInspectionFramework
 
                 if (_ResultParam.IsGood)
                 {
+                    LastResult = "GOOD";
                     ControlInvoke.GradientLabelText(gradientLabelResult, "GOOD", Color.Lime);
                 }
 
@@ -119,13 +143,15 @@ namespace KPVisionInspectionFramework
                 {
                     if (eNgType.NDL_FIND == _ResultParam.NgType)
                     {
-                        ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
+                        LastResult = "Not Found";
                     }
 
                     else if (eNgType.NDL_CENTER == _ResultParam.NgType)
                     {
-                        ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
+                        LastResult = "Not Found";
                     }
+
+                    ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
                 }
             }
 
@@ -133,6 +159,8 @@ namespace KPVisionInspectionFramework
             {
                 //LOG
             }
+
+            InspectionHistory(_ResultParam.ID, LastResult);
         }
 
         public void SetLeadResultData(SendResultParameter _ResultParam)
@@ -157,6 +185,7 @@ namespace KPVisionInspectionFramework
 
                 if (_ResultParam.IsGood)
                 {
+                    LastResult = "GOOD";
                     ControlInvoke.GradientLabelText(gradientLabelResult, "GOOD", Color.Lime);
                 }
 
@@ -164,11 +193,44 @@ namespace KPVisionInspectionFramework
                 {
                     if (eNgType.LEAD_BENT == _ResultParam.NgType)
                     {
+                        LastResult = "LEAD BENT";
                         ControlInvoke.GradientLabelText(gradientLabelResult, "LEAD BENT", Color.Red);
                     }
                 }
             }
+
+            InspectionHistory(_ResultParam.ID, LastResult);
             QuickGridViewLeadResult.ClearSelection();
+        }
+
+        //LDH, 2018.08.13, History 추가용 함수
+        private void InspectionHistory(int ID, string _Result)
+        {
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"));
+
+            DateTime dateTime = DateTime.Now;
+            string InspScreenshotPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData\Screenshot\";
+            string ImageSaveFolder = String.Format("{0}{1:D4}\\{2:D2}\\{3:D2}", InspScreenshotPath, dateTime.Year, dateTime.Month, dateTime.Day);
+
+            if (false == Directory.Exists(ImageSaveFolder)) Directory.CreateDirectory(ImageSaveFolder);
+
+            string ImageSaveFile;
+            ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.bmp", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+
+            //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
+            HistoryParam[0] = LastRecipeName;
+            HistoryParam[1] = ID.ToString();
+            HistoryParam[2] = _Result;
+            HistoryParam[3] = ImageSaveFile;
+
+            CHistoryManager.AddLEADHistory(HistoryParam);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"));
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot Start"));
+            var _ScreenshotEvent = ScreenshotEvent;
+            _ScreenshotEvent?.Invoke(ImageSaveFile);
+            //ScreenshotEvent(ImageSaveFile);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot End"));
         }
     }
 }

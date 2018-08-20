@@ -211,6 +211,10 @@
       <Project>{a34d8ba3-047b-41a3-88fa-20dc46ec5306}</Project>
       <Name>EthernetManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\HistoryManager\HistoryManager.csproj">
+      <Project>{fb91e730-19be-4fc3-b73e-2f791f7c39b7}</Project>
+      <Name>HistoryManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\InspectionSystemManager\InspectionSystemManager.csproj">
       <Project>{050e0042-7f11-4e6d-8369-6d7db086d70d}</Project>
       <Name>InspectionSystemManager</Name>

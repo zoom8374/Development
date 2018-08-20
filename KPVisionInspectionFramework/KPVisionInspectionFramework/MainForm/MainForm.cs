@@ -15,6 +15,7 @@ using LoadingManager;
 using DIOControlManager;
 using LightManager;
 using SerialManager;
+using HistoryManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -27,6 +28,7 @@ namespace KPVisionInspectionFramework
 		private CLightManager               LightControlManager;
         private RecipeWindow                RecipeWnd;
         private MainProcessBase             MainProcess;
+        private CHistoryManager             HistoryManager;
 
         private int ISMModuleCount = 1;
 
@@ -79,7 +81,7 @@ namespace KPVisionInspectionFramework
             RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
 
             //Result Initialize
-            ResultBaseWnd = new MainResultBase();
+            ResultBaseWnd = new MainResultBase(ParamManager.SystemParam.LastRecipeName);
             ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
@@ -94,6 +96,9 @@ namespace KPVisionInspectionFramework
                 //SerialWnd.SerialReceiveEvent += new SerialWindow.SerialReceiveHandler(RecipeChange);
                 //SerialWnd.Initialize("COM1");
             }
+
+            HistoryManager = new CHistoryManager(ParamManager.SystemParam.ProjectType);
+
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
 
@@ -166,7 +171,9 @@ namespace KPVisionInspectionFramework
             string content = System.IO.File.ReadAllText("MainTheme2.ini");
             Theme.ColorTable.ReadThemeIniFile(content);
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Text = "KP - CIPOS Inspection Program";
+
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.DISPENSER)     this.Text = "KP Vision - CIPOS Inspection Program";
+            else if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BLOWER)   this.Text = "KP Vision - Air Blower Inspection Program";
 
             string _CompileMode = "";
 #if DEBUG
@@ -301,7 +308,7 @@ namespace KPVisionInspectionFramework
 
         private void rbHistory_Click(object sender, EventArgs e)
         {
-
+            HistoryManager.ShowHistoryWindow();
         }
 
         private void rbFolder_Click(object sender, EventArgs e)

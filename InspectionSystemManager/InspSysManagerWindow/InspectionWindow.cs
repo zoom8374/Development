@@ -473,7 +473,7 @@ namespace InspectionSystemManager
             GC.Collect();
 
             //Auto / Manual Mode 구분
-            //Inspection();
+            Inspection();
         }
 
         private void SetDisplayGrabIntPtrImage(IntPtr _Image)

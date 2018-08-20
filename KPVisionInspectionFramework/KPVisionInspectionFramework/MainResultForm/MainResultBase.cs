@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 using ParameterManager;
 
@@ -24,12 +25,14 @@ namespace KPVisionInspectionFramework
         private Point LastPosition = new Point(0, 0);
 
         #region Initialize & DeInitialize
-        public MainResultBase()
+        public MainResultBase(string _LastRecipeName)
         {
             InitializeComponent();
 
-            MainResultIDWnd = new ucMainResultID();
-            MainResultLeadWnd = new ucMainResultLead();
+            MainResultIDWnd = new ucMainResultID(_LastRecipeName);
+            MainResultLeadWnd = new ucMainResultLead(_LastRecipeName);
+
+            MainResultIDWnd.ScreenshotEvent += new ucMainResultID.ScreenshotHandler(ScreenShot);
         }
 
         public void Initialize(Object _OwnerForm, int _ProjectType)
@@ -177,6 +180,24 @@ namespace KPVisionInspectionFramework
             else if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN) MainResultLeadWnd.SetNeedleResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)    MainResultLeadWnd.SetLeadResultData(_ResultParam);
 
+        }
+
+        //LDH, 2018.08.10, 전체화면 Screenshot
+        private void ScreenShot(string ImageSaveFile)
+        {
+            try
+            {
+                Rectangle Wndbounds = this.Bounds;
+                Bitmap printScreen = new Bitmap(Wndbounds.Width - 16, Wndbounds.Height - 165);
+                Graphics graphics = Graphics.FromImage(printScreen as Image);
+                graphics.CopyFromScreen(new Point(Wndbounds.Left + 8, Wndbounds.Top + 150), Point.Empty, Wndbounds.Size);
+                printScreen.Save(ImageSaveFile, ImageFormat.Jpeg);
+                printScreen.Dispose();
+            }
+            catch (System.Exception ex)
+            {
+
+            }
         }
     }
 }

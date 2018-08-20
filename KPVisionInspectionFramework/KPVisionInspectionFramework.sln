@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightManager", "..\LightMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialManager", "..\SerialManager\SerialManager.csproj", "{97E36043-35EA-451C-B633-C8FE6A0267BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoryManager", "..\HistoryManager\HistoryManager.csproj", "{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,14 @@ Global
 		{97E36043-35EA-451C-B633-C8FE6A0267BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97E36043-35EA-451C-B633-C8FE6A0267BE}.Release|x64.ActiveCfg = Release|Any CPU
 		{97E36043-35EA-451C-B633-C8FE6A0267BE}.Release|x64.Build.0 = Release|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Debug|x64.Build.0 = Debug|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|x64.ActiveCfg = Release|Any CPU
+		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
