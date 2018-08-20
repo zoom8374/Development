@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SQLite;
+using System.IO;
 
 namespace HistoryManager
 {
@@ -15,38 +17,49 @@ namespace HistoryManager
         public enum LOG_TYPE { INFO = 0, WARN, ERR }
         private static string[] LogType = new string[3] { "INFO", "WARN", "ERR" };
 
-        public CHistoryManager(int _ProjectType)
+        static string INSERT_string = "";
+        static string CreateComm = "";
+
+        public CHistoryManager(string _ProjectType)
         {
             //Screenshot Path 번호 지정
             HistoryWnd.Initialize(_ProjectType);
+
+            if (_ProjectType == "DISPENSER")
+            {
+                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, ID, LastResult, InspImagePath) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');";
+                CreateComm = string.Format("{0} (Date Datetime, RecipeName char, ID char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+            }
+
+            else if (_ProjectType == "BLOWER")
+            {
+                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, LastResult, IDResult, InspImagePath) ";
+                CreateComm = string.Format("{0} (Date Datetime, RecipeName char, LastResult char, IDResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+            }
         }
 
         /// <summary>
         /// AddHistory(RecipeName, LastResult, ID Result, InspImagePath) 
         /// </summary>
         /// <param name="HistoryItem"></param>
-        public static void AddIDHistory(string[] HistoryItem)
+        public static void AddHistory(string[] HistoryItem)
         {
-            string INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, LastResult, IDResult, InspImagePath) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');";
 
             DateTime _NowDate = DateTime.Now;
             string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
 
-            SqlQuery.HistoryInsertQuery(string.Format(INSERT_string, _NowDateFormat, HistoryItem[0], HistoryItem[1], HistoryItem[2], HistoryItem[3]));
-        }
+            bool CreateTable = CheckDBFile();
 
-        /// <summary>
-        /// AddHistory(RecipeName, LastResult, ID Result, InspImagePath) 
-        /// </summary>
-        /// <param name="HistoryItem"></param>
-        public static void AddLEADHistory(string[] HistoryItem)
-        {
-            string INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, LastResult, IDResult, InspImagePath) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');";
+            string SendQuery = string.Format("VALUES ('{0}', ", _NowDateFormat);
+            for(int iLoopCount = 0; iLoopCount < HistoryItem.Count(); iLoopCount++)
+            {
+                if(iLoopCount < HistoryItem.Count() - 1) SendQuery = SendQuery + "'" + HistoryItem[iLoopCount] + "',";
+                else                                     SendQuery = SendQuery + "'" + HistoryItem[iLoopCount] + "');";
+            }
 
-            DateTime _NowDate = DateTime.Now;
-            string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
+            SendQuery = INSERT_string + SendQuery;
 
-            SqlQuery.HistoryInsertQuery(string.Format(INSERT_string, _NowDateFormat, HistoryItem[0], HistoryItem[1], HistoryItem[2], HistoryItem[3]));
+            SqlQuery.HistoryInsertQuery(SendQuery, CreateTable, CreateComm);
         }
 
         public void ShowLogWindow(bool _IsShow)
@@ -72,6 +85,25 @@ namespace HistoryManager
                 HistoryWnd.ClearSearchOption();
                 HistoryWnd.ShowDialog();
             }
+        }
+
+        private static bool CheckDBFile()
+        {
+            bool CreateTable = false;
+            string connStrFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData";
+
+            if (false == Directory.Exists(connStrFolderPath))
+            {
+                Directory.CreateDirectory(connStrFolderPath);
+                CreateTable = true;
+            }
+            string StrFilePath = String.Format(@"{0}\History.db", connStrFolderPath);
+            if (false == File.Exists(StrFilePath))
+            {
+                CreateTable = true;
+            }
+
+            return CreateTable;
         }
     }
 }

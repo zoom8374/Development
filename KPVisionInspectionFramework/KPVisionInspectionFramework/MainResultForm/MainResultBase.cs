@@ -33,6 +33,7 @@ namespace KPVisionInspectionFramework
             MainResultLeadWnd = new ucMainResultLead(_LastRecipeName);
 
             MainResultIDWnd.ScreenshotEvent += new ucMainResultID.ScreenshotHandler(ScreenShot);
+            MainResultLeadWnd.ScreenshotEvent += new ucMainResultLead.ScreenshotHandler(ScreenShot);
         }
 
         public void Initialize(Object _OwnerForm, int _ProjectType)
@@ -187,10 +188,10 @@ namespace KPVisionInspectionFramework
         {
             try
             {
-                Rectangle Wndbounds = this.Bounds;
-                Bitmap printScreen = new Bitmap(Wndbounds.Width - 16, Wndbounds.Height - 165);
+                Size Wondbounds = new Size(1280, 1024 - 150);
+                Bitmap printScreen = new Bitmap(1280, 1024 - 150);
                 Graphics graphics = Graphics.FromImage(printScreen as Image);
-                graphics.CopyFromScreen(new Point(Wndbounds.Left + 8, Wndbounds.Top + 150), Point.Empty, Wndbounds.Size);
+                graphics.CopyFromScreen(new Point(8, 150), Point.Empty, Wondbounds);
                 printScreen.Save(ImageSaveFile, ImageFormat.Jpeg);
                 printScreen.Dispose();
             }

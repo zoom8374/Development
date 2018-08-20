@@ -8,8 +8,7 @@ namespace HistoryManager
     public class SqlDefine
     {
         string InspType = "";
-        internal const string INSERT_HISTORY = "INSERT INTO HistoryFile (Date, RecipeName, Result, ResultX, ResultTheta, InspResult, SendResult, InspImagePath) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');";
-        internal const string CREATE_TABLE = "CREATE TABLE HistoryFile (Date Datetime, RecipeName char, Result char, ResultX char, ResultTheta char, InspResult char, SendResult char, InspImagePath char);";
+        internal const string CREATE_TABLE = "CREATE TABLE HistoryFile";
         internal const string SELECT = "SELECT * FROM HistoryFile";
         internal const string SEARCH_DATE = "SELECT * FROM HistoryFile WHERE";
         internal const string SEARCH_RECIPENAME = "RecipeName in";

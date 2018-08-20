@@ -22,7 +22,7 @@ namespace HistoryManager
         static string RecipeName;
         bool SelectRecipeFlag = false;
         int Recipecount = 0;
-        int ProjectType;
+        string ProjectType;
         int ScreenshotIndex = 0;
 
         Panel RecipePanel = new Panel();
@@ -33,12 +33,12 @@ namespace HistoryManager
             InitializeComponent();
         }
 
-        public void Initialize(int _ProjectType)
+        public void Initialize(string _ProjectType)
         {
             ProjectType = _ProjectType;
         
-            if (ProjectType == 2) ScreenshotIndex = 4;
-            else                  ScreenshotIndex = 4;
+            if (ProjectType == "DISPENSER") ScreenshotIndex = 4;
+            else                            ScreenshotIndex = 4;
 
             DateTime TimeNow = DateTime.Now;
             SelectDateFrom = String.Format("{0:D4}-{1:D2}-{2:D2}", TimeNow.Year, TimeNow.Month, TimeNow.Day);

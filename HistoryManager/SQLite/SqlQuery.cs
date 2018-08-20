@@ -15,9 +15,9 @@ namespace HistoryManager
         /// <param name="strErrMsg"></param>
         /// <returns></returns>
 
-        public static int HistoryInsertQuery(string HistoryItem)
+        public static int HistoryInsertQuery(string HistoryItem, bool _CreateTable, string _CreateComm = "")
         {            
-            return SqliteManager.SqlExecute(HistoryItem);
+            return SqliteManager.SqlExecute(HistoryItem, _CreateTable, _CreateComm);
         }
     }
 }

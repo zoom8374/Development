@@ -183,7 +183,7 @@ namespace KPVisionInspectionFramework
             HistoryParam[2] = _ResultParam.ReadCode;
             HistoryParam[3] = ImageSaveFile;
 
-            CHistoryManager.AddIDHistory(HistoryParam);
+            CHistoryManager.AddHistory(HistoryParam);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"));
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot Start"));

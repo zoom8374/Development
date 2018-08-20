@@ -98,26 +98,11 @@ namespace HistoryManager
         /// </summary>
         /// <param name="_sql">완성된 Insert,update,delete 문</param>
         /// <returns></returns>
-        public static int SqlExecute(string SqlQuery)
+        public static int SqlExecute(string _SqlQuery, bool _CreateTable, string _CreateComm = "")
         {
             try
             {
-                //DateTime TimeNow = DateTime.Now;
-                string connStrFolder;
-                bool CreateTable = false;
-                //connStrFolder = String.Format(@"{0}\{1:D4}\{2:D2}\{3:D2}", connStrFolderPath, TimeNow.Year, TimeNow.Month, TimeNow.Day);
-                connStrFolder = String.Format(@"{0}", connStrFolderPath);
-                if (false == Directory.Exists(connStrFolder))
-                {
-                    Directory.CreateDirectory(connStrFolder);
-                    CreateTable = true;
-                }
-                string StrFilePath = String.Format(@"{0}\History.db", connStrFolder);
-                if (false == File.Exists(StrFilePath))
-                {
-                    CreateTable = true;
-                }
-
+                string StrFilePath = String.Format(@"{0}\History.db", connStrFolderPath);
                 StrFilePath = String.Format(@"{0}{1}; PRAGMA Journa_Mode=WAL", connStr, StrFilePath);
                 using (SQLiteConnection SQLiteConnection = new SQLiteConnection(StrFilePath))
                 {
@@ -125,13 +110,15 @@ namespace HistoryManager
                     SQLiteCommand SQLiteComm;
                     int iRet = 0;
 
-                    if (CreateTable == true)
+                    if (_CreateTable == true)
                     {
-                        SQLiteComm = new SQLiteCommand(SqlDefine.CREATE_TABLE, SQLiteConnection);
+                        //    string CreateComm = "";
+                        //    CreateComm = string.Format("{0} (Date Datetime, RecipeName char, Result char, ResultX char, ResultTheta char, InspResult char, SendResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+                        SQLiteComm = new SQLiteCommand(_CreateComm, SQLiteConnection);
                         iRet = SQLiteComm.ExecuteNonQuery();
                     }
 
-                    SQLiteComm = new SQLiteCommand(SqlQuery, SQLiteConnection);
+                    SQLiteComm = new SQLiteCommand(_SqlQuery, SQLiteConnection);
                     iRet = SQLiteComm.ExecuteNonQuery();
                     SQLiteConnection.Close();
                     return iRet;

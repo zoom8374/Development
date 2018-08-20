@@ -97,7 +97,7 @@ namespace KPVisionInspectionFramework
                 //SerialWnd.Initialize("COM1");
             }
 
-            HistoryManager = new CHistoryManager(ParamManager.SystemParam.ProjectType);
+            HistoryManager = new CHistoryManager(((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
 
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
@@ -172,8 +172,8 @@ namespace KPVisionInspectionFramework
             Theme.ColorTable.ReadThemeIniFile(content);
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
 
-            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.DISPENSER)     this.Text = "KP Vision - CIPOS Inspection Program";
-            else if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BLOWER)   this.Text = "KP Vision - Air Blower Inspection Program";
+            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.DISPENSER)     this.Text = "(주)KP Vision - CIPOS Inspection Program";
+            else if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BLOWER)   this.Text = "(주)KP Vision - Air Blower Inspection Program";
 
             string _CompileMode = "";
 #if DEBUG
