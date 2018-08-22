@@ -64,6 +64,9 @@ namespace DIOControlManager
         {
             this.Show();
             this.Location = _Position;
+            //this.ActiveControl = txtNaming;
+            txtNaming.Focus();
+            txtNaming.SelectAll();
         }
 
         private void btnOK_Click(object sender, EventArgs e)

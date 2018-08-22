@@ -152,5 +152,10 @@ namespace SerialManager
                 this.textBoxRecvString.Text += (_Data + " ");
             }
         }
+
+        public void SendSequenceData(string _SendData)
+        {
+
+        }
     }
 }

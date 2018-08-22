@@ -121,6 +121,9 @@
   <data name="OneShot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OneShot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ConfigSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConfigSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Recipe" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Recipe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -157,6 +160,9 @@
   <data name="Camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ConfigSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConfigSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CameraOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CameraOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -169,10 +175,13 @@
   <data name="ImageLoad" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ImageLoad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ConfigSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ConfigSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ImageAutoSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageAutoSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ConfigSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ConfigSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ImageAutoSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageAutoSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ImageAutoSaveStop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageAutoSaveStop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

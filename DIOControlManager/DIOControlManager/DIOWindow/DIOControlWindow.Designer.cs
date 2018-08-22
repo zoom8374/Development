@@ -98,6 +98,7 @@
             this.btnOutput17 = new CPressingButton.PressButton();
             this.btnOutput16 = new CPressingButton.PressButton();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.btnRequest = new System.Windows.Forms.Button();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,6 +140,7 @@
             this.btnInput4.Tag = "4";
             this.btnInput4.Text = "DI4";
             this.btnInput4.UseVisualStyleBackColor = false;
+            this.btnInput4.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput3
             // 
@@ -153,6 +155,7 @@
             this.btnInput3.Tag = "3";
             this.btnInput3.Text = "DI3";
             this.btnInput3.UseVisualStyleBackColor = false;
+            this.btnInput3.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput2
             // 
@@ -167,6 +170,7 @@
             this.btnInput2.Tag = "2";
             this.btnInput2.Text = "DI2";
             this.btnInput2.UseVisualStyleBackColor = false;
+            this.btnInput2.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput1
             // 
@@ -181,6 +185,7 @@
             this.btnInput1.Tag = "1";
             this.btnInput1.Text = "DI1";
             this.btnInput1.UseVisualStyleBackColor = false;
+            this.btnInput1.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput0
             // 
@@ -210,6 +215,7 @@
             this.btnInput5.Tag = "5";
             this.btnInput5.Text = "DI5";
             this.btnInput5.UseVisualStyleBackColor = false;
+            this.btnInput5.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput7
             // 
@@ -224,6 +230,7 @@
             this.btnInput7.Tag = "7";
             this.btnInput7.Text = "DI7";
             this.btnInput7.UseVisualStyleBackColor = false;
+            this.btnInput7.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput6
             // 
@@ -238,6 +245,7 @@
             this.btnInput6.Tag = "6";
             this.btnInput6.Text = "DI6";
             this.btnInput6.UseVisualStyleBackColor = false;
+            this.btnInput6.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnOutput7
             // 
@@ -520,6 +528,7 @@
             this.btnInput15.Tag = "4";
             this.btnInput15.Text = "DI15";
             this.btnInput15.UseVisualStyleBackColor = false;
+            this.btnInput15.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput14
             // 
@@ -534,6 +543,7 @@
             this.btnInput14.Tag = "4";
             this.btnInput14.Text = "DI14";
             this.btnInput14.UseVisualStyleBackColor = false;
+            this.btnInput14.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput13
             // 
@@ -548,6 +558,7 @@
             this.btnInput13.Tag = "6";
             this.btnInput13.Text = "DI13";
             this.btnInput13.UseVisualStyleBackColor = false;
+            this.btnInput13.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput12
             // 
@@ -562,6 +573,7 @@
             this.btnInput12.Tag = "4";
             this.btnInput12.Text = "DI12";
             this.btnInput12.UseVisualStyleBackColor = false;
+            this.btnInput12.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput11
             // 
@@ -576,6 +588,7 @@
             this.btnInput11.Tag = "3";
             this.btnInput11.Text = "DI11";
             this.btnInput11.UseVisualStyleBackColor = false;
+            this.btnInput11.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput10
             // 
@@ -590,6 +603,7 @@
             this.btnInput10.Tag = "2";
             this.btnInput10.Text = "DI10";
             this.btnInput10.UseVisualStyleBackColor = false;
+            this.btnInput10.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput9
             // 
@@ -604,6 +618,7 @@
             this.btnInput9.Tag = "1";
             this.btnInput9.Text = "Vision1 Data Request";
             this.btnInput9.UseVisualStyleBackColor = false;
+            this.btnInput9.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput8
             // 
@@ -618,6 +633,7 @@
             this.btnInput8.Tag = "0";
             this.btnInput8.Text = "Vision1 Reset";
             this.btnInput8.UseVisualStyleBackColor = false;
+            this.btnInput8.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // labelInputTitle
             // 
@@ -662,6 +678,7 @@
             this.btnInput31.Tag = "4";
             this.btnInput31.Text = "DI31";
             this.btnInput31.UseVisualStyleBackColor = false;
+            this.btnInput31.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput30
             // 
@@ -676,6 +693,7 @@
             this.btnInput30.Tag = "4";
             this.btnInput30.Text = "DI30";
             this.btnInput30.UseVisualStyleBackColor = false;
+            this.btnInput30.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput29
             // 
@@ -690,6 +708,7 @@
             this.btnInput29.Tag = "6";
             this.btnInput29.Text = "DI29";
             this.btnInput29.UseVisualStyleBackColor = false;
+            this.btnInput29.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput28
             // 
@@ -704,6 +723,7 @@
             this.btnInput28.Tag = "4";
             this.btnInput28.Text = "DI28";
             this.btnInput28.UseVisualStyleBackColor = false;
+            this.btnInput28.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput27
             // 
@@ -718,6 +738,7 @@
             this.btnInput27.Tag = "3";
             this.btnInput27.Text = "DI27";
             this.btnInput27.UseVisualStyleBackColor = false;
+            this.btnInput27.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput26
             // 
@@ -732,6 +753,7 @@
             this.btnInput26.Tag = "2";
             this.btnInput26.Text = "DI26";
             this.btnInput26.UseVisualStyleBackColor = false;
+            this.btnInput26.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput25
             // 
@@ -746,6 +768,7 @@
             this.btnInput25.Tag = "1";
             this.btnInput25.Text = "Vision3 Data Request";
             this.btnInput25.UseVisualStyleBackColor = false;
+            this.btnInput25.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput24
             // 
@@ -760,6 +783,7 @@
             this.btnInput24.Tag = "0";
             this.btnInput24.Text = "Vision3 Reset";
             this.btnInput24.UseVisualStyleBackColor = false;
+            this.btnInput24.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput23
             // 
@@ -774,6 +798,7 @@
             this.btnInput23.Tag = "4";
             this.btnInput23.Text = "DI23";
             this.btnInput23.UseVisualStyleBackColor = false;
+            this.btnInput23.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput22
             // 
@@ -788,6 +813,7 @@
             this.btnInput22.Tag = "4";
             this.btnInput22.Text = "DI22";
             this.btnInput22.UseVisualStyleBackColor = false;
+            this.btnInput22.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput21
             // 
@@ -802,6 +828,7 @@
             this.btnInput21.Tag = "6";
             this.btnInput21.Text = "DI21";
             this.btnInput21.UseVisualStyleBackColor = false;
+            this.btnInput21.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput20
             // 
@@ -816,6 +843,7 @@
             this.btnInput20.Tag = "4";
             this.btnInput20.Text = "DI20";
             this.btnInput20.UseVisualStyleBackColor = false;
+            this.btnInput20.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput19
             // 
@@ -830,6 +858,7 @@
             this.btnInput19.Tag = "3";
             this.btnInput19.Text = "DI19";
             this.btnInput19.UseVisualStyleBackColor = false;
+            this.btnInput19.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput18
             // 
@@ -844,6 +873,7 @@
             this.btnInput18.Tag = "2";
             this.btnInput18.Text = "DI18";
             this.btnInput18.UseVisualStyleBackColor = false;
+            this.btnInput18.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput17
             // 
@@ -858,6 +888,7 @@
             this.btnInput17.Tag = "1";
             this.btnInput17.Text = "Vision2 Data Request";
             this.btnInput17.UseVisualStyleBackColor = false;
+            this.btnInput17.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnInput16
             // 
@@ -872,6 +903,7 @@
             this.btnInput16.Tag = "0";
             this.btnInput16.Text = "Vision2 Reset";
             this.btnInput16.UseVisualStyleBackColor = false;
+            this.btnInput16.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
             // 
             // btnOutput31
             // 
@@ -1131,6 +1163,7 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.btnRequest);
             this.panelMain.Controls.Add(this.labelInputTitle);
             this.panelMain.Controls.Add(this.btnOutput31);
             this.panelMain.Controls.Add(this.btnTrigger);
@@ -1203,6 +1236,16 @@
             this.panelMain.Size = new System.Drawing.Size(728, 672);
             this.panelMain.TabIndex = 334;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
+            // 
+            // btnRequest
+            // 
+            this.btnRequest.Location = new System.Drawing.Point(99, 324);
+            this.btnRequest.Name = "btnRequest";
+            this.btnRequest.Size = new System.Drawing.Size(87, 25);
+            this.btnRequest.TabIndex = 334;
+            this.btnRequest.Text = "Request";
+            this.btnRequest.UseVisualStyleBackColor = true;
+            this.btnRequest.Click += new System.EventHandler(this.btnRequest_Click);
             // 
             // DIOControlWindow
             // 
@@ -1298,6 +1341,7 @@
         private CPressingButton.PressButton btnOutput18;
         private CPressingButton.PressButton btnOutput17;
         private CPressingButton.PressButton btnOutput16;
+        private System.Windows.Forms.Button btnRequest;
     }
 }
 

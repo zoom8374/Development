@@ -12,10 +12,10 @@ namespace EthernetManager
 {
     public class CEthernetManager
     {
-        //private const char STX = (char)0x02;
-        //private const char ETX = (char)0x03;
-        private const string STX = "2";
-        private const string ETX = "3";
+        private const char STX = (char)0x02;
+        private const char ETX = (char)0x03;
+        //private const string STX = "2";
+        //private const string ETX = "3";
 
         private Socket SockClient;
         private SocketAsyncEventArgs SockArgs;

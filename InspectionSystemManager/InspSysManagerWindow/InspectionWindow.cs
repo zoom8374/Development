@@ -43,6 +43,7 @@ namespace InspectionSystemManager
         private eProjectItem ProjectItem;
         public eInspMode InspMode = eInspMode.TRI_INSP;
         private string FormName;
+        private string RecipeName;
         private bool ResizingFlag = false;
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
@@ -78,7 +79,12 @@ namespace InspectionSystemManager
         private Thread ThreadLiveCheck;
         private bool IsThreadLiveCheckExit = false;
 
-        public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null);
+        private Thread ThreadImageSave;
+        private bool IsThreadImageSaveExit = false;
+        public bool IsThreadImageSaveTrigger = false;
+        eSaveMode ImageAutoSaveMode = eSaveMode.ALL;
+
+        public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null, int _ID = 0);
         public event InspectionWindowHandler InspectionWindowEvent;
 
         #region Initialize & DeInitialize
@@ -111,14 +117,18 @@ namespace InspectionSystemManager
             btnConfigSave.ButtonImage = InspectionSystemManager.Properties.Resources.ConfigSave;
             btnConfigSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ConfigSaveOver;
             btnConfigSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ConfigSaveOver;
+            btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageAutoSave;
+            btnImageAutoSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageAutoSaveOver;
+            btnImageAutoSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageAutoSaveOver;
             #endregion Set Button Image Resource
         }
 
-        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName, bool _IsSimulationMode)
+        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName,string _RecipeName, bool _IsSimulationMode)
         {
             ID = _ID;
             ProjectItem = _ProjectItem;
             FormName = _FormName;
+            RecipeName = _RecipeName;
             IsSimulationMode = _IsSimulationMode;
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
@@ -155,6 +165,12 @@ namespace InspectionSystemManager
             ThreadLiveCheck.IsBackground = true;
             IsThreadLiveCheckExit = false;
             ThreadLiveCheck.Start();
+
+            ThreadImageSave = new Thread(ThreadImageSaveFunction);
+            ThreadImageSave.IsBackground = true;
+            IsThreadImageSaveExit = false;
+            IsThreadImageSaveTrigger = false;
+            ThreadImageSave.Start();
 
             TeachWnd = new TeachingWindow();
         }
@@ -399,12 +415,7 @@ namespace InspectionSystemManager
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1));
 
             CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
-            InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, true);
-            Thread.Sleep(50);
-
-            CameraManager.CameraGrab();
-            IsThreadInspectionProcessTrigger = true;
-            InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, false);
+            GrabAndInspection();
         }
 
         private void btnRecipe_Click(object sender, EventArgs e)
@@ -437,7 +448,22 @@ namespace InspectionSystemManager
 
         private void btnImageSave_Click(object sender, EventArgs e)
         {
-            SaveCogImage();
+            SaveCogImage("M");
+        }
+
+        //LDH, 2018.08.21, Image 자동 저장 버튼 설정
+        private void btnImageAutoSave_Click(object sender, EventArgs e)
+        {
+            if (eSaveMode.ALL == ImageAutoSaveMode)
+            {
+                ImageAutoSaveMode = eSaveMode.ONLY_NG;
+                btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageAutoSaveStop;
+            }
+            else
+            {
+                ImageAutoSaveMode = eSaveMode.ALL;
+                btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageAutoSave;
+            }
         }
 
         private void btnConfigSave_Click(object sender, EventArgs e)
@@ -473,7 +499,16 @@ namespace InspectionSystemManager
             GC.Collect();
 
             //Auto / Manual Mode 구분
-            Inspection();
+            if (ProjectType == eProjectType.BLOWER)
+            {
+                if (CParameterManager.SystemMode == eSysMode.AUTO_MODE)
+                    Inspection();
+            }
+
+            else if (ProjectType == eProjectType.DISPENSER)
+            {
+
+            }
         }
 
         private void SetDisplayGrabIntPtrImage(IntPtr _Image)
@@ -521,10 +556,19 @@ namespace InspectionSystemManager
             return _ImageFileName;
         }
 
-        private void SaveCogImage(string _SaveDirectory = null)
+        private bool SaveCogImage(string _SaveType, string _SaveDirectory = null)
         {
+            bool _Result = false;
+
             if (_SaveDirectory == null) _SaveDirectory = @"D:\VisionInspectionData\" + FormName;
-            kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
+
+            if (_SaveType == "A" && ImageAutoSaveMode == eSaveMode.ONLY_NG)
+            {
+                if(SendResParam.IsGood == false) kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
+            }
+            else kpCogDisplayMain.SaveDisplayImage(_SaveDirectory);
+
+            return _Result;
         }
         #endregion Image Load & Save
 
@@ -550,6 +594,17 @@ namespace InspectionSystemManager
         #endregion Call Teaching  Window & Parameter Set
 
         #region Inspection Process
+        public void GrabAndInspection()
+        {
+            InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, true);
+            Thread.Sleep(50);
+
+            CameraManager.CameraGrab();
+            InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, false);
+            IsThreadInspectionProcessTrigger = true;
+            
+        }
+
         private bool Inspection()
         {
             bool _Result = false;
@@ -562,9 +617,14 @@ namespace InspectionSystemManager
                 if (false == InspectionResultClear()) break;
                 if (false == InspectionProcess()) break;
                 if (false == InpsectionResultAnalysis()) break;
-                if (false == InspectionDataSend()) break;
+                if (ProjectType != eProjectType.DISPENSER)
+                    if (false == InspectionDataSend()) break;
+                if (false == InspectionDataSet()) break;
                 if (false == InspectionResultDsiplay()) break;
+                if (false == InspectionComplete(true)) break;
+				IsThreadImageSaveTrigger = true;
 
+                if (false == InspectionComplete(false)) break;
                 _Result = true;
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID + 1));
             } while (false);
@@ -834,7 +894,7 @@ namespace InspectionSystemManager
             
             DisplayLastResultMessage(_IsLastGood);
 
-            return _IsLastGood;
+            return true;
         }
 
         public void DisplayClear(bool _StaticClear, bool _InteractiveClear)
@@ -1015,6 +1075,16 @@ namespace InspectionSystemManager
         }
         #endregion Algorithm 별 Display
 
+        private bool InspectionComplete(bool _Flag)
+        {
+            bool _Result = true;
+
+            if (false == _Flag) Thread.Sleep(500);
+            InspectionWindowEvent(eIWCMD.INSP_COMPLETE, _Flag, ID);
+
+            return _Result;
+        }
+
         #region Display Result function
         public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood)
         {
@@ -1084,6 +1154,16 @@ namespace InspectionSystemManager
             return _Result;
         }
 
+        private bool InspectionDataSet()
+        {
+            bool _Result = true;
+
+            var _InspectionWindowEvent = InspectionWindowEvent;
+            _InspectionWindowEvent?.Invoke(eIWCMD.SET_RESULT, SendResParam);
+
+            return _Result;
+        }
+
         public bool InspectionDataSend()
         {
             bool _Result = true;
@@ -1132,6 +1212,28 @@ namespace InspectionSystemManager
             catch
             {
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadLiveCheckFunction Exception", ID + 1));
+
+            }
+        }
+
+        private void ThreadImageSaveFunction()
+        {
+            try
+            {
+                while (false == IsThreadImageSaveExit)
+                {
+                    if (true == IsThreadImageSaveTrigger)
+                    {
+                        IsThreadImageSaveTrigger = false;
+
+                        SaveCogImage("A");
+                    }
+                    Thread.Sleep(10);
+                }
+            }
+
+            catch
+            {
 
             }
         }

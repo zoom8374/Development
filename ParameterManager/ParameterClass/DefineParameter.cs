@@ -30,17 +30,17 @@ namespace ParameterManager
     /// <summary>
     /// 
     /// </summary>
-    public enum eMainProcCmd { TRG = 1, RCP_CHANGE }
+    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE }
 
     /// <summary>
     /// Inspection Window Command
     /// </summary>
-    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SEND_DATA, LIGHT_CONTROL  }
+    public enum eIWCMD      { TEACHING = 1, TEACH_OK, TEACH_SAVE, ONESHOT_INSP, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL  }
 
     /// <summary>
     /// Inspection System Manager To Main Command
     /// </summary>
-    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, SEND_DATA, LIGHT_CONTROL }
+    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL }
 
     /// <summary>
     /// Teaching Step
@@ -64,22 +64,37 @@ namespace ParameterManager
 
     public enum eReferAction        { ADD = 0, DEL, MODIFY };
 
+    public enum eSaveMode           { ALL = 0, ONLY_NG };
+
     public static class DIO_DEF
     {
         public const int NONE = -1;
 
         public const int OUT_LIVE = 0;
         public const int OUT_AUTO = 1;
-        public const int OUT_READY = 3;
-        public const int OUT_COMPLETE = 4;
-        public const int OUT_ALARM = 7;
+        public const int OUT_ALARM = 2;
 
-        public const int IN_LIVE = 0;
-        public const int IN_TRG1 = 1;
-        public const int IN_ALARM_OFF = 2;
-        public const int IN_MODE = 3;
-        public const int IN_REQUEST = 4;
-        public const int IN_RESET = 5;
+        public const int OUT_READY      = 3;
+        public const int OUT_COMPLETE   = 4;
+        public const int OUT_READY_2    = 5;
+        public const int OUT_COMPLETE_2 = 6;
+        public const int OUT_READY_3    = 7;
+        public const int OUT_COMPLETE_3 = 8;
+
+
+        public const int IN_LIVE        = 0;
+        public const int IN_ALARM_OFF   = 1;
+        public const int IN_MODE        = 2;
+
+        public const int IN_RESET       = 3;
+        public const int IN_TRG         = 4;
+        public const int IN_REQUEST     = 5;
+        public const int IN_RESET_2     = 6;
+        public const int IN_TRG_2       = 7;
+        public const int IN_REQUEST_2   = 8;
+        public const int IN_RESET_3     = 9;
+        public const int IN_TRG_3       = 10;
+        public const int IN_REQUEST_3   = 11;
     }
 
     public static class SIGNAL

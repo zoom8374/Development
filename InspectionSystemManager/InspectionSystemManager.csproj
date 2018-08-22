@@ -248,6 +248,11 @@
   <ItemGroup>
     <None Include="Resources\ConfigSaveOver.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ImageAutoSave.png" />
+    <Content Include="Resources\ImageAutoSaveOver.png" />
+    <Content Include="Resources\ImageAutoSaveStop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -26,7 +26,7 @@ namespace DIOControlManager
         private readonly int ALIVE_SIGNAL_TIME = 0;
         private readonly int ALIVE_CHECK_TIME = 0;
 
-        private short IOCnt = 32;
+        private short IOCnt = 16;
         private List<string> InputNameList;
         private List<string> OutputNameList;
 
@@ -74,8 +74,8 @@ namespace DIOControlManager
             ALIVE_SIGNAL_TIME = 50;
             ALIVE_CHECK_TIME = 500;
 
-            if (ProjectType == eProjectType.DISPENSER)   DioBaseCmd = new LeadCmd();
-            else if (ProjectType == eProjectType.BLOWER) DioBaseCmd = new AirBlowCmd();
+            if (ProjectType == eProjectType.DISPENSER)   DioBaseCmd = new DispenserCmd(IOCnt);
+            else if (ProjectType == eProjectType.BLOWER) DioBaseCmd = new AirBlowCmd(IOCnt);
         }
 
         public void InitializeControl()
@@ -361,11 +361,20 @@ namespace DIOControlManager
         private void btnTrigger_Click(object sender, EventArgs e)
         {
             //int _BitCommand = AirBlowCmd.BitCheck(5);
-            int _BitCommand = DioBaseCmd.InputBitCheck(2);
+            int _BitCommand = DioBaseCmd.InputBitCheck(DispenserCmd.IN_TRIGGER);
             if (_BitCommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;
             _InputChangedEvent?.Invoke((short)_BitCommand, true); // 6.0부터
+        }
+
+        private void btnRequest_Click(object sender, EventArgs e)
+        {
+            int _Bitcommand = DioBaseCmd.InputBitCheck(DispenserCmd.IN_REQUEST);
+            if (_Bitcommand == DIO_DEF.NONE) return;
+
+            var _InputChangedEvent = InputChangedEvent;
+            _InputChangedEvent?.Invoke((short)_Bitcommand, true);
         }
 
         public void ChangeNameEventFunction(string _ChangeName)
@@ -397,7 +406,12 @@ namespace DIOControlManager
 
         private void btnInput_MousePressing(object sender, EventArgs e)
         {
+            short _Tag = Convert.ToInt16(((Button)sender).Tag);
+            DioNamingWnd.SetCurrentName(btnInputSignal[_Tag].Text);
+            CurrentButton = btnInputSignal[_Tag];
 
+            Point _Position = Cursor.Position;
+            DioNamingWnd.ShowWindow(_Position);
         }
 
         private void labelExit_Click(object sender, EventArgs e)
@@ -497,13 +511,13 @@ namespace DIOControlManager
                     var _InputChangedEvent = InputChangedEvent;
                     InputChangedEvent?.Invoke(DIO_DEF.IN_LIVE, false);
 
-                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "DIO Alive Check Count : " + InputAliveCheckCount);
+                    //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "DIO Alive Check Count : " + InputAliveCheckCount);
 
                     InputAliveCheckFlag = false;
                     InputAliveCheckCount = 0;
                     _Result = false;
 
-                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "DIO Alive Check OFF");
+                    //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "DIO Alive Check OFF");
                 }
             }
             else

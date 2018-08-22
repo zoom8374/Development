@@ -51,6 +51,11 @@ namespace KPVisionInspectionFramework
         {
 
         }
+
+        public virtual void SendSerialData(string _SendData)
+        {
+
+        }
         #endregion Serial Window Function
 
         protected virtual void OnMainProcessCommand(eMainProcCmd _MainCmd, object _Value)
@@ -66,6 +71,26 @@ namespace KPVisionInspectionFramework
         }
 
         public virtual bool Reset()
+        {
+            return true;
+        }
+
+        public virtual bool DataRequest(int _ID)
+        {
+            return true;
+        }
+
+        public virtual bool SendResultData(SendResultParameter _ResultParam)
+        {
+            return true;
+        }
+
+        public virtual bool InspectionComplete(int _ID, bool _Flag)
+        {
+            return true;
+        }
+
+        public virtual bool AutoMode(bool _Flag)
         {
             return true;
         }

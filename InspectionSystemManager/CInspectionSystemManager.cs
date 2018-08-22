@@ -29,7 +29,7 @@ namespace InspectionSystemManager
 
         private Point WndLocation = new Point(0, 0);
 
-        public delegate void InspSysManagerHandler(eISMCMD _Command, object _Value = null);
+        public delegate void InspSysManagerHandler(eISMCMD _Command, object _Value = null, int _ID = 0);
         public event InspSysManagerHandler InspSysManagerEvent;
 
         #region Initialize & DeInitialize
@@ -47,7 +47,7 @@ namespace InspectionSystemManager
             ThreadInspection.Start();
         }
 
-        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParam)
+        public void Initialize(Object _OwnerForm, int _ProjectType, InspectionSystemManagerParameter _InspSysManagerParam, InspectionParameter _InspParam, string _RecipeName)
         {
             ProjectType = (eProjectType)_ProjectType;
             ProjectItem = (eProjectItem)_InspSysManagerParam.ProjectItem;
@@ -55,7 +55,7 @@ namespace InspectionSystemManager
             SetISMParameter(_InspSysManagerParam);
             SetInspectionParameter(_InspParam);
 
-            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName, IsSimulationMode);
+            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName, _RecipeName, IsSimulationMode);
             InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
         }
@@ -177,9 +177,10 @@ namespace InspectionSystemManager
 
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} ImageGrabSnap Complete", ID + 1));
+            CParameterManager.SystemMode = eSysMode.AUTO_MODE;
+            InspWnd.GrabAndInspection();
 
-
-            InspWnd.IsThreadInspectionProcessTrigger = true;
+            //InspWnd.IsThreadInspectionProcessTrigger = true;
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ISM{0} IsThreadInspectionProcessTrigger = true");
         }
 
@@ -195,15 +196,17 @@ namespace InspectionSystemManager
         #endregion Vision Management
 
         #region Event : Inspection Window Event & Function
-        private void InspectionWindowEventFunction(eIWCMD _Command, object _Value)
+        private void InspectionWindowEventFunction(eIWCMD _Command, object _Value = null, int _ID = 0)
         {
             switch (_Command)
             {
-                case eIWCMD.TEACHING:       Teaching(_Value);           break;
-                case eIWCMD.TEACH_OK:       TeachingComplete(_Value);   break;
-                case eIWCMD.TEACH_SAVE:     TeachingSave(_Value);       break;
-                case eIWCMD.LIGHT_CONTROL:  LightControl(_Value);       break;
-                case eIWCMD.SEND_DATA:      SendResultData(_Value);     break;
+                case eIWCMD.TEACHING:       Teaching(_Value);                break;
+                case eIWCMD.TEACH_OK:       TeachingComplete(_Value);        break;
+                case eIWCMD.TEACH_SAVE:     TeachingSave(_Value);            break;
+                case eIWCMD.LIGHT_CONTROL:  LightControl(_Value);            break;
+                case eIWCMD.SEND_DATA:      SendResultData(_Value);          break;
+                case eIWCMD.SET_RESULT:     SetResultData(_Value);           break;
+                case eIWCMD.INSP_COMPLETE:  InspectionComplete(_Value, _ID); break;
             }
         }
 
@@ -236,6 +239,16 @@ namespace InspectionSystemManager
         {
             InspSysManagerEvent(eISMCMD.SEND_DATA, _Value);
         }
+
+        private void SetResultData(object _Value)
+        {
+            InspSysManagerEvent(eISMCMD.SET_RESULT, _Value);
+        }
+
+        private void InspectionComplete(object _Value, int _ID)
+        {
+            InspSysManagerEvent(eISMCMD.INSP_COMPLETE, _Value, _ID);
+        }
         #endregion Event : Inspection Window Event
 
         public void TriggerOn()
@@ -245,6 +258,11 @@ namespace InspectionSystemManager
             InspWnd.InspMode = eInspMode.TRI_INSP;
             InspWnd.IsInspectionComplete = false;
             IsThreadInspectionTrigger = true;
+        }
+
+        public void DataSend()
+        {
+            InspWnd.InspectionDataSend();
         }
 
         private void ThreadInspectionFunction()

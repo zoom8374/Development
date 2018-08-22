@@ -22,12 +22,11 @@ namespace HistoryManager
 
         public CHistoryManager(string _ProjectType)
         {
-            //Screenshot Path 번호 지정
             HistoryWnd.Initialize(_ProjectType);
 
             if (_ProjectType == "DISPENSER")
             {
-                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, ID, LastResult, InspImagePath) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');";
+                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, ID, LastResult, InspImagePath) ";
                 CreateComm = string.Format("{0} (Date Datetime, RecipeName char, ID char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
             }
 

@@ -31,6 +31,7 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnImageAutoSave = new CustomControl.ImageButton();
             this.btnConfigSave = new CustomControl.ImageButton();
             this.btnImageSave = new CustomControl.ImageButton();
             this.btnImageLoad = new CustomControl.ImageButton();
@@ -70,6 +71,7 @@
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.panelMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenu.Controls.Add(this.btnImageAutoSave);
             this.panelMenu.Controls.Add(this.btnConfigSave);
             this.panelMenu.Controls.Add(this.btnImageSave);
             this.panelMenu.Controls.Add(this.btnImageLoad);
@@ -83,6 +85,24 @@
             this.panelMenu.Size = new System.Drawing.Size(616, 38);
             this.panelMenu.TabIndex = 0;
             // 
+            // btnImageAutoSave
+            // 
+            this.btnImageAutoSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageAutoSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ImageAutoSave;
+            this.btnImageAutoSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnImageAutoSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageAutoSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageAutoSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageAutoSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageAutoSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImageAutoSave.ForeColor = System.Drawing.Color.White;
+            this.btnImageAutoSave.Location = new System.Drawing.Point(201, 1);
+            this.btnImageAutoSave.Name = "btnImageAutoSave";
+            this.btnImageAutoSave.Size = new System.Drawing.Size(34, 34);
+            this.btnImageAutoSave.TabIndex = 15;
+            this.btnImageAutoSave.UseVisualStyleBackColor = false;
+            this.btnImageAutoSave.Click += new System.EventHandler(this.btnImageAutoSave_Click);
+            // 
             // btnConfigSave
             // 
             this.btnConfigSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
@@ -94,7 +114,7 @@
             this.btnConfigSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnConfigSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConfigSave.ForeColor = System.Drawing.Color.White;
-            this.btnConfigSave.Location = new System.Drawing.Point(233, 1);
+            this.btnConfigSave.Location = new System.Drawing.Point(264, 1);
             this.btnConfigSave.Name = "btnConfigSave";
             this.btnConfigSave.Size = new System.Drawing.Size(34, 34);
             this.btnConfigSave.TabIndex = 14;
@@ -112,7 +132,7 @@
             this.btnImageSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnImageSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImageSave.ForeColor = System.Drawing.Color.White;
-            this.btnImageSave.Location = new System.Drawing.Point(201, 1);
+            this.btnImageSave.Location = new System.Drawing.Point(232, 1);
             this.btnImageSave.Name = "btnImageSave";
             this.btnImageSave.Size = new System.Drawing.Size(34, 34);
             this.btnImageSave.TabIndex = 13;
@@ -285,5 +305,6 @@
         private CustomControl.ImageButton btnImageSave;
         private CustomControl.ImageButton btnImageLoad;
         private CustomControl.ImageButton btnConfigSave;
+        private CustomControl.ImageButton btnImageAutoSave;
     }
 }

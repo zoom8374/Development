@@ -184,6 +184,11 @@ namespace CameraManager
                 MC.SetParam(channel, "TrigMode", "IMMEDIATE");
                 //MC.SetParam(channel, "NextTrigMode", "REPEAT");
                 MC.SetParam(channel, "NextTrigMode", "SAME");
+
+                String channelState;
+                MC.GetParam(channel, "ChannelState", out channelState);
+                if (channelState != "ACTIVE")
+                    MC.SetParam(channel, "ChannelState", "ACTIVE");
             }
             else
             {
@@ -195,11 +200,6 @@ namespace CameraManager
 
             MC.SetParam(channel, MC.SignalEnable + MC.SIG_SURFACE_PROCESSING, "ON");
             Thread.Sleep(50);
-
-            String channelState;
-            MC.GetParam(channel, "ChannelState", out channelState);
-            if (channelState != "ACTIVE")
-                MC.SetParam(channel, "ChannelState", "ACTIVE");
         }
 
         public void SetImageSize(int Width, int Height)

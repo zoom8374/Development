@@ -107,7 +107,7 @@ namespace KPVisionInspectionFramework
         {
             switch (_BitNum)
             {
-                case DIO_DEF.IN_TRG1:   TriggerOn(0); break;
+                case DIO_DEF.IN_TRG:   TriggerOn(0); break;
                 case DIO_DEF.IN_RESET:  Reset(); break;
             }
         }
@@ -119,6 +119,12 @@ namespace KPVisionInspectionFramework
             _SerialDatas[1] = _SubData;
             OnMainProcessCommand(eMainProcCmd.RCP_CHANGE, _SerialDatas);
             return true;
+        }
+
+        //LDH, 2018.08.20, Serial Data Send
+        public override void SendSerialData(string _SendData)
+        {
+            SerialWnd.SendSequenceData(_SendData);
         }
         #endregion Communication Event Function
     }

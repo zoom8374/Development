@@ -88,13 +88,9 @@ namespace KPVisionInspectionFramework
 
             //Light Initialize
             LightControlManager = new CLightManager();
-            //SerialWnd = new SerialWindow();
             if (!ParamManager.SystemParam.IsSimulationMode)
             {
                 LightControlManager.Initialize(ParamManager.SystemParam.LastRecipeName);
-
-                //SerialWnd.SerialReceiveEvent += new SerialWindow.SerialReceiveHandler(RecipeChange);
-                //SerialWnd.Initialize("COM1");
             }
 
             HistoryManager = new CHistoryManager(((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
@@ -103,16 +99,9 @@ namespace KPVisionInspectionFramework
             #endregion SubWindow 생성 및 Event 등록
 
             #region Project 별 MainProcess Setting
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
-            {
-                MainProcess = new MainProcessDispensor();
-            }
-
-            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
-            {
-                MainProcess = new MainProcessID();
-                MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            }
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    MainProcess = new MainProcessDispensor();
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  MainProcess = new MainProcessID();
+            MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             #endregion MainProcess Setting
 
             #region InspSysManager Initialize
@@ -122,7 +111,7 @@ namespace KPVisionInspectionFramework
             {
                 InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, "Vision" + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
                 InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
-                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount]);
+                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName);
             }
 
             TimerShowWindow.Tick += new EventHandler(TimerShowWindowTick);
@@ -149,15 +138,9 @@ namespace KPVisionInspectionFramework
             //SerialWnd.SerialReceiveEvent -= new SerialWindow.SerialReceiveHandler(RecipeChange);
             //SerialWnd.DeInitialize();
 
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
-            {
-                
-            }
-
-            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
-            {
-                MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            }
+            MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    ((MainProcessDispensor)MainProcess).DeInitialize();
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  ((MainProcessID)MainProcess).DeInitialize();
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].InspSysManagerEvent -= new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
@@ -254,7 +237,9 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
 
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
-            MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, true);
+            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, true);
+            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_READY, true);
+            MainProcess.AutoMode(true);
         }
 
         private void rbStop_Click(object sender, EventArgs e)
@@ -263,7 +248,9 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.MANUAL_MODE);
 
             CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
-            MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, false);
+            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, false);
+            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_READY, false);
+            MainProcess.AutoMode(false);
         }
         private void rbEthernet_Click(object sender, EventArgs e)
         {
@@ -338,14 +325,16 @@ namespace KPVisionInspectionFramework
         #endregion Riboon Button Event
 
         #region Event : Inspection System Manager Event & Function
-        private void InspectionSystemManagerEventFunction(eISMCMD _Command, object _Value = null)
+        private void InspectionSystemManagerEventFunction(eISMCMD _Command, object _Value = null, int _ID = 0)
         {
             switch (_Command)
             {
-                case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value));     break;
-                case eISMCMD.TEACHING_SAVE:     TeachingParameterSave(Convert.ToInt32(_Value));     break;
-                case eISMCMD.SEND_DATA:         SendResultData(_Value);                             break;
-                case eISMCMD.LIGHT_CONTROL:     LightControl(_Value);                               break;
+                case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value)); break;
+                case eISMCMD.TEACHING_SAVE:     TeachingParameterSave(Convert.ToInt32(_Value)); break;
+                case eISMCMD.SEND_DATA:         SendResultData(_Value);                         break;
+                case eISMCMD.SET_RESULT:        SetResultData(_Value);                          break;
+                case eISMCMD.INSP_COMPLETE:     InspectionComplete(_Value, _ID);                break;
+                case eISMCMD.LIGHT_CONTROL:     LightControl(_Value);                           break;
             }
         }
 
@@ -426,8 +415,9 @@ namespace KPVisionInspectionFramework
         {
             switch (_MainProcCmd)
             {
-                case eMainProcCmd.TRG:          MainProcessTriggerOn(_Value); break;
-                case eMainProcCmd.RCP_CHANGE:   MainProcessRcpChange(_Value); break;
+                case eMainProcCmd.TRG:          MainProcessTriggerOn(_Value);    break;
+                case eMainProcCmd.REQUEST:      MainProcessDataRequest(_Value); break;
+                case eMainProcCmd.RCP_CHANGE:   MainProcessRcpChange(_Value);    break;
             }
         }
 
@@ -446,9 +436,18 @@ namespace KPVisionInspectionFramework
             string _RecipeName = _SerialDatas[0];
             string _SrcRecipe = _SerialDatas[1];
 
-            RecipeChange(_RecipeName, _SrcRecipe);
+            _Result = RecipeChange(_RecipeName, _SrcRecipe);
+
+            if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType) MainProcess.SendSerialData("@R");
 
             return _Result;
+        }
+
+        private void MainProcessDataRequest(object _Value)
+        {
+            int _ID = Convert.ToInt32(_Value);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Data Request{0} Event", _ID + 1));
+            InspSysManager[_ID].DataSend();
         }
 
         //private void EventInspectionTriggerOn(object _Value)
@@ -463,6 +462,15 @@ namespace KPVisionInspectionFramework
         private void SendResultData(object _Result)
         {
             SendResultParameter _SendResParam = _Result as SendResultParameter;
+
+            MainProcess.SendResultData(_SendResParam);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
+        }
+
+        private void SetResultData(object _Result)
+        {
+            SendResultParameter _SendResParam = _Result as SendResultParameter;
             ResultBaseWnd.SetResultData(_SendResParam);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
         }
@@ -471,6 +479,12 @@ namespace KPVisionInspectionFramework
         {
             if ((bool)_LightOnOff == true) LightControlManager.LightControl(0, true);
             else                              LightControlManager.LightControl(0, false);
+        }
+
+        private void InspectionComplete(object _Value, int _ID)
+        {
+            bool _Flag = Convert.ToBoolean(_Value);
+            MainProcess.InspectionComplete(_ID, _Flag);
         }
         #endregion Main Process
     }
