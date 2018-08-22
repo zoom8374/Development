@@ -51,6 +51,12 @@
     <Compile Include="LogClass\ILogInterface.cs" />
     <Compile Include="LogClass\LogSystem.cs" />
     <Compile Include="LogClass\LogInspection.cs" />
+    <Compile Include="LogSettingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogSettingWindow.Designer.cs">
+      <DependentUpon>LogSettingWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogWindowSE.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LogSettingWindow.resx">
+      <DependentUpon>LogSettingWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogWindowSE.resx">
       <DependentUpon>LogWindowSE.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Documents.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Config.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

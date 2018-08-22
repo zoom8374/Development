@@ -7,6 +7,7 @@ using Cognex.VisionPro;
 using Cognex.VisionPro.Blob;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -53,8 +54,9 @@ namespace InspectionSystemManager
                 BlobResults = BlobProc.Execute(_SrcImage, _InspArea);
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionBlob - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _Result = false;
             }
 

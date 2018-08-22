@@ -10,6 +10,7 @@ using Cognex.VisionPro.ImageProcessing;
 using Cognex.VisionPro.Caliper;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -331,6 +332,7 @@ namespace InspectionSystemManager
             catch
             {
                 _CogLeadResult.LeadPitchAvg = 0;
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "ApplyLeadInspValueFunction Exception", CLogManager.LOG_LEVEL.LOW);
             }
             #endregion Pitch Average 측정
 
@@ -355,6 +357,7 @@ namespace InspectionSystemManager
             catch
             {
                 _CogLeadResult.LeadAngleAvg = 0;
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "ApplyLeadInspValueFunction Exception", CLogManager.LOG_LEVEL.LOW);
             }
             #endregion Lead Angle Average 측정
         }

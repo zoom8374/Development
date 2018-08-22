@@ -9,6 +9,10 @@ namespace LogMessageManager
     {
         public enum LOG_TYPE { INFO = 0, WARN, ERR }
 
+        //LDH, 2018.08.22, Log 레벨설정용
+        public enum LOG_LEVEL { HIGH = 0, MID = 1, LOW = 2 }
+        public static int LogLevel = 0;
+
         private static LogSystem     LogSystemTool;
         private static LogInspection LogInspectionTool;
 
@@ -45,15 +49,20 @@ namespace LogMessageManager
             LogSystemTool = new LogSystem(_LogDefaultPath);
         }
 
-        public static void AddSystemLog(LOG_TYPE _Type, string _ErrMessage)
+        public static void AddSystemLog(LOG_TYPE _Type, string _ErrMessage, LOG_LEVEL _AddLogLevel = LOG_LEVEL.LOW)
         {
             if (null == LogSystemTool) return;
-            LogSystemTool.AddLogMessage(_Type, _ErrMessage);
 
-            DateTime _NowDate = DateTime.Now;
-            string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
-            string _LogMessage = String.Format(@"[SYS] {0} {1} : {2}", _NowDateFormat, _Type.ToString(), _ErrMessage);
-            LogWnd.AddLogMessage(_LogMessage);
+            //LDH, 2018.08.22, LogLevel 기능 추가
+            if ((int)_AddLogLevel >= LogLevel)
+            {
+                LogSystemTool.AddLogMessage(_Type, _ErrMessage);
+
+                DateTime _NowDate = DateTime.Now;
+                string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
+                string _LogMessage = String.Format(@"[SYS] {0} {1} : {2}", _NowDateFormat, _Type.ToString(), _ErrMessage);
+                LogWnd.AddLogMessage(_LogMessage);
+            }
         }
         #endregion System Log
 
@@ -63,15 +72,25 @@ namespace LogMessageManager
             LogInspectionTool = new LogInspection(_LogDefaultPath);
         }
 
-        public static void AddInspectionLog(LOG_TYPE _Type, string _ErrMessage)
+        public static void AddInspectionLog(LOG_TYPE _Type, string _ErrMessage, LOG_LEVEL _AddLogLevel = LOG_LEVEL.LOW)
         {
-            LogInspectionTool.AddLogMessage(_Type, _ErrMessage);
+            //LDH, 2018.08.22, LogLevel 기능 추가
+            if ((int)_AddLogLevel >= LogLevel)
+            {
+                LogInspectionTool.AddLogMessage(_Type, _ErrMessage);
 
-            DateTime _NowDate = DateTime.Now;
-            string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
-            string _LogMessage = String.Format(@"[INS] {0} {1} : {2}", _NowDateFormat, _Type.ToString(), _ErrMessage);
-            LogWnd.AddLogMessage(_LogMessage);
+                DateTime _NowDate = DateTime.Now;
+                string _NowDateFormat = _NowDate.ToString("yyyy-MM-dd HH:mm:ss.ffff");
+                string _LogMessage = String.Format(@"[INS] {0} {1} : {2}", _NowDateFormat, _Type.ToString(), _ErrMessage);
+                LogWnd.AddLogMessage(_LogMessage);
+            }
         }
         #endregion Inspection Log
+
+        //LDH, 2018.08.22, LogLevel 설정
+        public static void SetLogLevel(int _LogLevel)
+        {
+            LogLevel = _LogLevel;
+        }
     }
 }

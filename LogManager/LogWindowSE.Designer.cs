@@ -32,8 +32,9 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.listBoxConfigLog = new System.Windows.Forms.ListBox();
             this.labelLogClear = new System.Windows.Forms.Label();
-            this.btnLogFolderOpen = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnSetLog = new System.Windows.Forms.Button();
+            this.btnLogFolderOpen = new System.Windows.Forms.Button();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,23 +84,12 @@
             this.labelLogClear.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelLogClear.Font = new System.Drawing.Font("나눔바른고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelLogClear.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.labelLogClear.Location = new System.Drawing.Point(771, 4);
+            this.labelLogClear.Location = new System.Drawing.Point(744, 5);
             this.labelLogClear.Name = "labelLogClear";
             this.labelLogClear.Size = new System.Drawing.Size(22, 22);
             this.labelLogClear.TabIndex = 12;
             this.labelLogClear.Text = "C";
             this.labelLogClear.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelLogClear_MouseDoubleClick);
-            // 
-            // btnLogFolderOpen
-            // 
-            this.btnLogFolderOpen.BackgroundImage = global::LogMessageManager.Properties.Resources.Documents;
-            this.btnLogFolderOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnLogFolderOpen.Location = new System.Drawing.Point(797, 4);
-            this.btnLogFolderOpen.Name = "btnLogFolderOpen";
-            this.btnLogFolderOpen.Size = new System.Drawing.Size(28, 28);
-            this.btnLogFolderOpen.TabIndex = 13;
-            this.btnLogFolderOpen.UseVisualStyleBackColor = true;
-            this.btnLogFolderOpen.Click += new System.EventHandler(this.btnLogFolderOpen_Click);
             // 
             // btnClose
             // 
@@ -113,6 +103,28 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnSetLog
+            // 
+            this.btnSetLog.BackgroundImage = global::LogMessageManager.Properties.Resources.Config;
+            this.btnSetLog.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSetLog.Location = new System.Drawing.Point(769, 4);
+            this.btnSetLog.Name = "btnSetLog";
+            this.btnSetLog.Size = new System.Drawing.Size(28, 28);
+            this.btnSetLog.TabIndex = 15;
+            this.btnSetLog.UseVisualStyleBackColor = true;
+            this.btnSetLog.Click += new System.EventHandler(this.btnSetLog_Click);
+            // 
+            // btnLogFolderOpen
+            // 
+            this.btnLogFolderOpen.BackgroundImage = global::LogMessageManager.Properties.Resources.Documents;
+            this.btnLogFolderOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnLogFolderOpen.Location = new System.Drawing.Point(797, 4);
+            this.btnLogFolderOpen.Name = "btnLogFolderOpen";
+            this.btnLogFolderOpen.Size = new System.Drawing.Size(28, 28);
+            this.btnLogFolderOpen.TabIndex = 13;
+            this.btnLogFolderOpen.UseVisualStyleBackColor = true;
+            this.btnLogFolderOpen.Click += new System.EventHandler(this.btnLogFolderOpen_Click);
+            // 
             // LogWindowSE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -120,6 +132,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.ClientSize = new System.Drawing.Size(857, 508);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSetLog);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnLogFolderOpen);
             this.Controls.Add(this.labelLogClear);
@@ -152,5 +165,6 @@
         private System.Windows.Forms.Label labelLogClear;
         private System.Windows.Forms.Button btnLogFolderOpen;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnSetLog;
     }
 }

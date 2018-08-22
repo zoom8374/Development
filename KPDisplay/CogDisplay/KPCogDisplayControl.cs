@@ -15,6 +15,8 @@ using Cognex.VisionPro.Display;
 using System.Drawing.Imaging;
 using Cognex.VisionPro.ImageFile;
 
+using LogMessageManager;
+
 namespace KPDisplay
 {
     public partial class KPCogDisplayControl: UserControl
@@ -584,7 +586,7 @@ namespace KPDisplay
             }
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImage(CogImage8Grey) Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -607,7 +609,7 @@ namespace KPDisplay
             }
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImage(byte[]) Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -629,7 +631,7 @@ namespace KPDisplay
             }
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImage(byte[]) Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -706,7 +708,7 @@ namespace KPDisplay
             }
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "SetDisplayImage(string) Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
         }
 

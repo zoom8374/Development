@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -197,7 +198,7 @@ namespace KPVisionInspectionFramework
             }
             catch (System.Exception ex)
             {
-
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Screenshot Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
             }
         }
     }

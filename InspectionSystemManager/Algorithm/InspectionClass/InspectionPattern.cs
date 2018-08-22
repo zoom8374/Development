@@ -9,6 +9,7 @@ using Cognex.VisionPro.PMAlign;
 using Cognex.VisionPro.ImageProcessing;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -115,8 +116,9 @@ namespace InspectionSystemManager
                 GetResult();
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionPattern - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _Result = false;
             }
 

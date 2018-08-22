@@ -315,11 +315,3 @@ F:\[Project]\2018\삼성전기_Air Blower\Program\CIPOSLeadInspection\HistoryMan
 F:\[Project]\2018\삼성전기_Air Blower\Program\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.csproj.GenerateResource.Cache
 F:\[Project]\2018\삼성전기_Air Blower\Program\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.dll
 F:\[Project]\2018\삼성전기_Air Blower\Program\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\bin\Debug\HistoryManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\bin\Debug\HistoryManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.HistoryWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Debug\HistoryManager.pdb

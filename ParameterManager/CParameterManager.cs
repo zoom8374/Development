@@ -11,6 +11,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Cognex.VisionPro;
 using Cognex.VisionPro.PMAlign;
 
+using LogMessageManager;
+
 namespace ParameterManager
 {
     public class CParameterManager
@@ -96,8 +98,9 @@ namespace ParameterManager
                 _XmlNodeList = _XmlRoot.ChildNodes;
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "GetNodeList Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _XmlNodeList = null;
             }
 
@@ -141,8 +144,9 @@ namespace ParameterManager
                 }
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ReadSystemParameter Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _Result = false;
             }
 
@@ -248,8 +252,9 @@ namespace ParameterManager
                 }
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ReadISMParameter Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _Result = false;
             }
 
@@ -351,8 +356,9 @@ namespace ParameterManager
                 }
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ReadProjectItemParameter Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _Result = false;
             }
 

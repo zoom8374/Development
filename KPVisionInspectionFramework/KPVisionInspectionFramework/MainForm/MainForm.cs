@@ -319,6 +319,7 @@ namespace KPVisionInspectionFramework
 
             catch (Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "MainForm Exit : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 Environment.Exit(0);
             }
         }

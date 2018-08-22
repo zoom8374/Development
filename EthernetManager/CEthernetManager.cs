@@ -113,7 +113,7 @@ namespace EthernetManager
 
             catch
             {
-                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Connect Exception");
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Connect Exception", CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -132,7 +132,7 @@ namespace EthernetManager
 
             catch
             {
-                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Socket DisConnect Exception");
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Socket DisConnect Exception", CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -233,7 +233,7 @@ namespace EthernetManager
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SocketErrorCode : " + ex.ErrorCode.ToString());
                 if (ex.SocketErrorCode == SocketError.Interrupted)
                 {
-                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Blocking : " + SocketError.Interrupted.ToString());
+                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "Blocking : " + SocketError.Interrupted.ToString(), CLogManager.LOG_LEVEL.LOW);
                     IsInterrupt = true;
                 }
             }

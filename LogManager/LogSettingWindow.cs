@@ -6,36 +6,47 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace LogMessageManager
 {
-    public partial class LogWindowSE : Form
+    public partial class LogSettingWindow : Form
     {
         private bool ResizingFlag = false;
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
 
+        Button[] btnLogLevel;
+
         public delegate void LogWindoCloserwHandler();
         public LogWindoCloserwHandler LogWindoCloserEvent;
 
-        LogSettingWindow LogSettingWnd;
-
-        public LogWindowSE()
+        public LogSettingWindow()
         {
             InitializeComponent();
             LastPosition.X = this.Location.X;
             LastPosition.Y = this.Location.Y;
 
-            LogSettingWnd = new LogSettingWindow();
+            btnLogLevel = new Button[3]{ btnHigh, btnMid, btnLow };
+            InitializeLogLevel();
+        }
+
+        private void InitializeLogLevel()
+        {
+            RegistryKey _RegLogLevel = Registry.CurrentUser.CreateSubKey(@"KPVision\LogLevel");
+
+            if (null == _RegLogLevel.GetValue("Value")) { _RegLogLevel.SetValue("Value", "2", RegistryValueKind.DWord); }
+
+            SetLogLevel(Convert.ToInt32(_RegLogLevel.GetValue("Value")));
         }
 
         #region Control Default Event
-        private void LogWindowSE_KeyDown(object sender, KeyEventArgs e)
+        private void LogSettingWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Alt && e.KeyCode == Keys.F4) e.Handled = true;
         }
 
-        private void LogWindowSE_MouseMove(object sender, MouseEventArgs e)
+        private void LogSettingWindow_MouseMove(object sender, MouseEventArgs e)
         {
             if (false == ResizingFlag) { this.Cursor = Cursors.Default; return; }
 
@@ -67,18 +78,18 @@ namespace LogMessageManager
             }
         }
 
-        private void LogWindowSE_MouseDown(object sender, MouseEventArgs e)
+        private void LogSettingWindow_MouseDown(object sender, MouseEventArgs e)
         {
             this.IsResizing = true;
             this.LastPosition = e.Location;
         }
 
-        private void LogWindowSE_MouseUp(object sender, MouseEventArgs e)
+        private void LogSettingWindow_MouseUp(object sender, MouseEventArgs e)
         {
             this.IsResizing = false;
         }
 
-        private void LogWindowSE_Resize(object sender, EventArgs e)
+        private void LogSettingWindow_Resize(object sender, EventArgs e)
         {
             panelMain.Invalidate();
             labelTitle.Invalidate();
@@ -93,8 +104,6 @@ namespace LogMessageManager
 
             panelMain.Size = new Size(_TitleSize.Width - 6, this.Size.Height - _TitleSize.Height - 6);
             panelMain.Location = new Point(3, labelTitle.Location.Y + labelTitle.Height + 1);
-
-            listBoxConfigLog.Size = new Size(panelMain.Size.Width - 13, panelMain.Size.Height - 11);
         }
 
         private void labelTitle_MouseMove(object sender, MouseEventArgs e)
@@ -141,65 +150,32 @@ namespace LogMessageManager
         }
         #endregion Control Default Event
 
-        #region "Control Invoke"
-        /// <summary>
-        /// 컨트롤 Text 입력 Invoke
-        /// </summary>
-        /// <param name="_Control">Control </param>
-        /// <param name="_msg">text</param>
-        public static void ListBoxInvoke(ListBox _Control, string _Msg)
-        {
-            int LogCount = 300;
-
-            if (_Control.InvokeRequired)
-            {
-                _Control.Invoke(new MethodInvoker(delegate()
-                {
-
-                    if (_Control.Items.Count > LogCount) _Control.Items.RemoveAt(LogCount);
-                    _Control.Items.Insert(0, _Msg);
-                }
-                ));
-            }
-            else
-            {
-                if (_Control.Items.Count > LogCount) _Control.Items.RemoveAt(LogCount);
-                _Control.Items.Insert(0, _Msg);
-            }
-        }
-        #endregion
-
         #region Control Event
-        private void labelLogClear_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            listBoxConfigLog.Items.Clear();
-        }
-
-        private void btnLogFolderOpen_Click(object sender, EventArgs e)
-        {
-            string _LogFileFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\Log";
-
-            LogWindoCloserEvent();
-
-            System.Diagnostics.Process.Start(_LogFileFolderPath);
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
-            LogWindoCloserEvent();
+            this.Hide();
+        }
+
+        private void btnLogLevel_Click(object sender, EventArgs e)
+        {
+            Button btnLevel = (Button)sender;
+            SetLogLevel(Convert.ToInt32(btnLevel.Tag));
+        }
+
+        private void SetLogLevel(int _LevelNum)
+        {
+            for(int iLoopCount = 0; iLoopCount < btnLogLevel.Count(); iLoopCount++)
+            {
+                if (_LevelNum == iLoopCount) btnLogLevel[iLoopCount].BackColor = Color.Orange;
+                else                         btnLogLevel[iLoopCount].BackColor = Color.Gainsboro;
+            }
+
+            string _RegKeyLogLevelName = String.Format(@"KPVision\LogLevel");
+            RegistryKey _RegKeyLogLevel = Registry.CurrentUser.CreateSubKey(_RegKeyLogLevelName);
+            _RegKeyLogLevel.SetValue("Value", _LevelNum, RegistryValueKind.DWord);
+
+            CLogManager.SetLogLevel(_LevelNum);
         }
         #endregion Control Event
-
-        public void AddLogMessage(string _LogMessage)
-        {
-            if (_LogMessage == null) return;
-
-            ListBoxInvoke(listBoxConfigLog, _LogMessage);
-        }
-
-        private void btnSetLog_Click(object sender, EventArgs e)
-        {
-            LogSettingWnd.ShowDialog();
-        }
     }
 }

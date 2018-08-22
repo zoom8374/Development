@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using PylonC.NET;
+using LogMessageManager;
 
 namespace CameraManager
 {
@@ -72,6 +73,7 @@ namespace CameraManager
 
                 catch
                 {
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CBaslerManager Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
                     _Result = false;
                 }
             }

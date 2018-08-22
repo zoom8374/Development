@@ -9,6 +9,7 @@ using Cognex.VisionPro.Caliper;
 using Cognex.VisionPro.ImageProcessing;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -117,9 +118,9 @@ namespace InspectionSystemManager
                 FindLineProc.Run();
             }
 
-            catch
+            catch(System.Exception ex)
             {
-
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionLineFind - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
             }
 
             return _Result;

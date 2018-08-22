@@ -285,9 +285,9 @@ namespace InspectionSystemManager
                 }
             }
 
-            catch
+            catch(System.Exception ex)
             {
-                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, String.Format("Vision : ThreadInspectionFunction Exception!!"));
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadInspectionFunction Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
             }
         }
     }

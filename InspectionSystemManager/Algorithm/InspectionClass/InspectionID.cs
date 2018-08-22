@@ -8,6 +8,7 @@ using Cognex.VisionPro;
 using Cognex.VisionPro.ID;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -93,6 +94,7 @@ namespace InspectionSystemManager
             }
             catch (Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionID - Inspection Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 _Result = false;
             }
 

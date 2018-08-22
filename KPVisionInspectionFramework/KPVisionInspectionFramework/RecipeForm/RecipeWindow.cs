@@ -11,6 +11,8 @@ using System.IO;
 using System.Xml;
 using Microsoft.VisualBasic.FileIO;
 
+using LogMessageManager;
+
 namespace KPVisionInspectionFramework
 {
     public partial class RecipeWindow : Form
@@ -228,9 +230,9 @@ namespace KPVisionInspectionFramework
                         _XmlDoc.Save(_FInfo.FullName);
                     }
 
-                    catch
+                    catch(System.Exception ex)
                     {
-
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "RecipeCopyEventFunction Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                     }
                 }
             }

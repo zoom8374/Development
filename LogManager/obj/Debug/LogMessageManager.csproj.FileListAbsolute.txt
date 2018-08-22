@@ -1,9 +1,10 @@
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\LogMessageManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\LogMessageManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\log4net.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.LogWindowSE.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\bin\Debug\LogMessageManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\bin\Debug\LogMessageManager.pdb
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\bin\Debug\log4net.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.LogSettingWindow.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.LogWindowSE.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.Properties.Resources.resources
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.dll
+C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.pdb

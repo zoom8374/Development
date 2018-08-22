@@ -548,8 +548,9 @@ namespace InspectionSystemManager
                 } 
             }
 
-            catch
+            catch(System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionWindow - LoadCogImage Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 MessageBox.Show(new Form { TopMost = true }, "Could not open image file.");
             }
 
@@ -1194,7 +1195,7 @@ namespace InspectionSystemManager
 
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadInspectionProcessFunction Exception", ID + 1), CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -1211,8 +1212,7 @@ namespace InspectionSystemManager
 
             catch
             {
-                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadLiveCheckFunction Exception", ID + 1));
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadLiveCheckFunction Exception", ID + 1), CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -1234,7 +1234,7 @@ namespace InspectionSystemManager
 
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - ThreadImageSaveFunction Exception", ID + 1), CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -1249,13 +1249,13 @@ namespace InspectionSystemManager
                     ThreadInspectionProcess = new Thread(ThreadInspectionProcessFunction);
                     IsThreadInspectionProcessTrigger = false;
                     ThreadInspectionProcess.Start();
-                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.WARN, String.Format("ISM {0} - ThreadInspectionProcess Re-Start!!", ID + 1));
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.WARN, String.Format("ISM {0} - ThreadInspectionProcess Re-Start!!", ID + 1), CLogManager.LOG_LEVEL.LOW);
                 }
             }
 
             catch
             {
-                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - CheckInspectionProcessThreadAlive Exception", ID + 1));
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, String.Format("ISM {0} - CheckInspectionProcessThreadAlive Exception", ID + 1), CLogManager.LOG_LEVEL.LOW);
             }
         }
         #endregion Thread Funtion

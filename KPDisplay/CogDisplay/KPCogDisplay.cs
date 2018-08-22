@@ -9,6 +9,8 @@ using Cognex.VisionPro;
 using Cognex.VisionPro.Display;
 using Cognex.VisionPro.ImageFile;
 
+using LogMessageManager;
+
 namespace KPDisplay
 {
     public partial class KPCogDisplay : CogDisplay
@@ -53,6 +55,7 @@ namespace KPDisplay
                 }
                 catch 
                 {
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "OnContextMenuItemLoadImageClicked Exception!!", CLogManager.LOG_LEVEL.LOW);
                     MessageBox.Show("Loading image failed.");
                 }
             }
