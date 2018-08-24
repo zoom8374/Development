@@ -41,6 +41,10 @@
             this.numUpDownCaliperNumber = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel7 = new CustomControl.GradientLabel();
             this.graLabelSearchDirection = new CustomControl.GradientLabel();
+            this.numUpDownFilterHalfSizePixels = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel11 = new CustomControl.GradientLabel();
+            this.numUpDownContrastThreshold = new System.Windows.Forms.NumericUpDown();
+            this.gradientLabel10 = new CustomControl.GradientLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numUpDownEndY = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel8 = new CustomControl.GradientLabel();
@@ -53,31 +57,23 @@
             this.labelTitle = new CustomControl.GradientLabel();
             this.btnDrawCaliper = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
-            this.numUpDownContrastThreshold = new System.Windows.Forms.NumericUpDown();
-            this.gradientLabel10 = new CustomControl.GradientLabel();
-            this.numUpDownFilterHalfSizePixels = new System.Windows.Forms.NumericUpDown();
-            this.gradientLabel11 = new CustomControl.GradientLabel();
             this.ckUseAlignment = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownIgnoreNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownProjectionLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSearchLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownCaliperNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownFilterHalfSizePixels)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownContrastThreshold)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownEndY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownEndX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownStartY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownStartX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownContrastThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownFilterHalfSizePixels)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numUpDownFilterHalfSizePixels);
-            this.groupBox1.Controls.Add(this.gradientLabel11);
-            this.groupBox1.Controls.Add(this.numUpDownContrastThreshold);
-            this.groupBox1.Controls.Add(this.gradientLabel10);
             this.groupBox1.Controls.Add(this.numUpDownIgnoreNumber);
             this.groupBox1.Controls.Add(this.gradientLabel9);
             this.groupBox1.Controls.Add(this.gradientLabel6);
@@ -92,9 +88,9 @@
             this.groupBox1.Controls.Add(this.graLabelSearchDirection);
             this.groupBox1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(331, 33);
+            this.groupBox1.Location = new System.Drawing.Point(3, 196);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(292, 256);
+            this.groupBox1.Size = new System.Drawing.Size(287, 181);
             this.groupBox1.TabIndex = 53;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Caliper Setting ";
@@ -173,7 +169,7 @@
             // numUpDownProjectionLength
             // 
             this.numUpDownProjectionLength.DecimalPlaces = 2;
-            this.numUpDownProjectionLength.Location = new System.Drawing.Point(140, 84);
+            this.numUpDownProjectionLength.Location = new System.Drawing.Point(140, 85);
             this.numUpDownProjectionLength.Maximum = new decimal(new int[] {
             20000,
             0,
@@ -304,6 +300,78 @@
             this.graLabelSearchDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.graLabelSearchDirection.Visible = false;
             // 
+            // numUpDownFilterHalfSizePixels
+            // 
+            this.numUpDownFilterHalfSizePixels.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.numUpDownFilterHalfSizePixels.Location = new System.Drawing.Point(429, 76);
+            this.numUpDownFilterHalfSizePixels.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.numUpDownFilterHalfSizePixels.Name = "numUpDownFilterHalfSizePixels";
+            this.numUpDownFilterHalfSizePixels.Size = new System.Drawing.Size(68, 21);
+            this.numUpDownFilterHalfSizePixels.TabIndex = 75;
+            this.numUpDownFilterHalfSizePixels.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownFilterHalfSizePixels.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numUpDownFilterHalfSizePixels.Visible = false;
+            // 
+            // gradientLabel11
+            // 
+            this.gradientLabel11.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel11.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel11.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel11.Location = new System.Drawing.Point(299, 73);
+            this.gradientLabel11.Name = "gradientLabel11";
+            this.gradientLabel11.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel11.TabIndex = 74;
+            this.gradientLabel11.Text = "Filter half size pixels";
+            this.gradientLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabel11.Visible = false;
+            // 
+            // numUpDownContrastThreshold
+            // 
+            this.numUpDownContrastThreshold.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.numUpDownContrastThreshold.Location = new System.Drawing.Point(429, 43);
+            this.numUpDownContrastThreshold.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.numUpDownContrastThreshold.Name = "numUpDownContrastThreshold";
+            this.numUpDownContrastThreshold.Size = new System.Drawing.Size(68, 21);
+            this.numUpDownContrastThreshold.TabIndex = 73;
+            this.numUpDownContrastThreshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownContrastThreshold.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numUpDownContrastThreshold.Visible = false;
+            // 
+            // gradientLabel10
+            // 
+            this.gradientLabel10.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel10.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel10.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel10.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.gradientLabel10.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel10.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel10.Location = new System.Drawing.Point(299, 41);
+            this.gradientLabel10.Name = "gradientLabel10";
+            this.gradientLabel10.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel10.TabIndex = 72;
+            this.gradientLabel10.Text = "Contrast Threshold";
+            this.gradientLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabel10.Visible = false;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.numUpDownEndY);
@@ -371,7 +439,7 @@
             0,
             0,
             131072});
-            this.numUpDownEndX.Location = new System.Drawing.Point(143, 86);
+            this.numUpDownEndX.Location = new System.Drawing.Point(143, 85);
             this.numUpDownEndX.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -401,7 +469,7 @@
             this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel5.ForeColor = System.Drawing.Color.White;
             this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel5.Location = new System.Drawing.Point(13, 83);
+            this.gradientLabel5.Location = new System.Drawing.Point(13, 82);
             this.gradientLabel5.Name = "gradientLabel5";
             this.gradientLabel5.Size = new System.Drawing.Size(124, 26);
             this.gradientLabel5.TabIndex = 66;
@@ -416,7 +484,7 @@
             0,
             0,
             131072});
-            this.numUpDownStartY.Location = new System.Drawing.Point(143, 55);
+            this.numUpDownStartY.Location = new System.Drawing.Point(143, 54);
             this.numUpDownStartY.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -508,7 +576,7 @@
             this.labelTitle.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.labelTitle.Location = new System.Drawing.Point(2, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(818, 30);
+            this.labelTitle.Size = new System.Drawing.Size(497, 30);
             this.labelTitle.TabIndex = 13;
             this.labelTitle.Text = " Line Find Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -517,7 +585,7 @@
             // 
             this.btnDrawCaliper.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnDrawCaliper.ForeColor = System.Drawing.Color.Black;
-            this.btnDrawCaliper.Location = new System.Drawing.Point(708, 305);
+            this.btnDrawCaliper.Location = new System.Drawing.Point(293, 340);
             this.btnDrawCaliper.Name = "btnDrawCaliper";
             this.btnDrawCaliper.Size = new System.Drawing.Size(100, 37);
             this.btnDrawCaliper.TabIndex = 72;
@@ -529,7 +597,7 @@
             // 
             this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(708, 348);
+            this.btnSetting.Location = new System.Drawing.Point(395, 340);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(100, 37);
             this.btnSetting.TabIndex = 71;
@@ -537,76 +605,12 @@
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
-            // numUpDownContrastThreshold
-            // 
-            this.numUpDownContrastThreshold.Location = new System.Drawing.Point(140, 190);
-            this.numUpDownContrastThreshold.Maximum = new decimal(new int[] {
-            20000,
-            0,
-            0,
-            0});
-            this.numUpDownContrastThreshold.Name = "numUpDownContrastThreshold";
-            this.numUpDownContrastThreshold.Size = new System.Drawing.Size(128, 21);
-            this.numUpDownContrastThreshold.TabIndex = 73;
-            this.numUpDownContrastThreshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownContrastThreshold.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // gradientLabel10
-            // 
-            this.gradientLabel10.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel10.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel10.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel10.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel10.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel10.Location = new System.Drawing.Point(10, 187);
-            this.gradientLabel10.Name = "gradientLabel10";
-            this.gradientLabel10.Size = new System.Drawing.Size(124, 26);
-            this.gradientLabel10.TabIndex = 72;
-            this.gradientLabel10.Text = "Contrast Threshold";
-            this.gradientLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numUpDownFilterHalfSizePixels
-            // 
-            this.numUpDownFilterHalfSizePixels.Location = new System.Drawing.Point(140, 222);
-            this.numUpDownFilterHalfSizePixels.Maximum = new decimal(new int[] {
-            20000,
-            0,
-            0,
-            0});
-            this.numUpDownFilterHalfSizePixels.Name = "numUpDownFilterHalfSizePixels";
-            this.numUpDownFilterHalfSizePixels.Size = new System.Drawing.Size(128, 21);
-            this.numUpDownFilterHalfSizePixels.TabIndex = 75;
-            this.numUpDownFilterHalfSizePixels.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownFilterHalfSizePixels.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            // 
-            // gradientLabel11
-            // 
-            this.gradientLabel11.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel11.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel11.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel11.Location = new System.Drawing.Point(10, 219);
-            this.gradientLabel11.Name = "gradientLabel11";
-            this.gradientLabel11.Size = new System.Drawing.Size(124, 26);
-            this.gradientLabel11.TabIndex = 74;
-            this.gradientLabel11.Text = "Filter half size pixels";
-            this.gradientLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ckUseAlignment
             // 
             this.ckUseAlignment.AutoSize = true;
             this.ckUseAlignment.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.ckUseAlignment.ForeColor = System.Drawing.Color.White;
-            this.ckUseAlignment.Location = new System.Drawing.Point(16, 211);
+            this.ckUseAlignment.Location = new System.Drawing.Point(297, 312);
             this.ckUseAlignment.Name = "ckUseAlignment";
             this.ckUseAlignment.Size = new System.Drawing.Size(107, 18);
             this.ckUseAlignment.TabIndex = 73;
@@ -618,26 +622,30 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.Controls.Add(this.numUpDownFilterHalfSizePixels);
             this.Controls.Add(this.ckUseAlignment);
+            this.Controls.Add(this.gradientLabel11);
             this.Controls.Add(this.btnDrawCaliper);
+            this.Controls.Add(this.numUpDownContrastThreshold);
             this.Controls.Add(this.btnSetting);
+            this.Controls.Add(this.gradientLabel10);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelTitle);
             this.Name = "ucCogLineFind";
-            this.Size = new System.Drawing.Size(820, 388);
+            this.Size = new System.Drawing.Size(500, 388);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownIgnoreNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownProjectionLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSearchLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownCaliperNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownFilterHalfSizePixels)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownContrastThreshold)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownEndY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownEndX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownStartY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownStartX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownContrastThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUpDownFilterHalfSizePixels)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -30,12 +30,12 @@
         {
             this.gradientLabel1 = new CustomControl.GradientLabel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.numUpDownNumtoFind = new System.Windows.Forms.NumericUpDown();
+            this.comboBoxSymbology = new System.Windows.Forms.ComboBox();
             this.textBoxProcessingMode = new System.Windows.Forms.TextBox();
             this.gradientLabel12 = new CustomControl.GradientLabel();
             this.gradientLabel13 = new CustomControl.GradientLabel();
             this.gradientLabel14 = new CustomControl.GradientLabel();
-            this.comboBoxSymbology = new System.Windows.Forms.ComboBox();
-            this.numUpDownNumtoFind = new System.Windows.Forms.NumericUpDown();
             this.btnSetting = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownNumtoFind)).BeginInit();
@@ -51,7 +51,7 @@
             this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.gradientLabel1.Location = new System.Drawing.Point(2, 0);
             this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(950, 30);
+            this.gradientLabel1.Size = new System.Drawing.Size(497, 30);
             this.gradientLabel1.TabIndex = 13;
             this.gradientLabel1.Text = " ID Teaching Window";
             this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -72,6 +72,37 @@
             this.groupBox3.TabIndex = 73;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = " ID Setting";
+            // 
+            // numUpDownNumtoFind
+            // 
+            this.numUpDownNumtoFind.Location = new System.Drawing.Point(143, 87);
+            this.numUpDownNumtoFind.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numUpDownNumtoFind.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numUpDownNumtoFind.Name = "numUpDownNumtoFind";
+            this.numUpDownNumtoFind.Size = new System.Drawing.Size(128, 21);
+            this.numUpDownNumtoFind.TabIndex = 75;
+            this.numUpDownNumtoFind.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownNumtoFind.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // comboBoxSymbology
+            // 
+            this.comboBoxSymbology.FormattingEnabled = true;
+            this.comboBoxSymbology.Location = new System.Drawing.Point(143, 54);
+            this.comboBoxSymbology.Name = "comboBoxSymbology";
+            this.comboBoxSymbology.Size = new System.Drawing.Size(128, 22);
+            this.comboBoxSymbology.TabIndex = 74;
             // 
             // textBoxProcessingMode
             // 
@@ -132,42 +163,11 @@
             this.gradientLabel14.Text = " Processing Mode";
             this.gradientLabel14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBoxSymbology
-            // 
-            this.comboBoxSymbology.FormattingEnabled = true;
-            this.comboBoxSymbology.Location = new System.Drawing.Point(143, 54);
-            this.comboBoxSymbology.Name = "comboBoxSymbology";
-            this.comboBoxSymbology.Size = new System.Drawing.Size(128, 22);
-            this.comboBoxSymbology.TabIndex = 74;
-            // 
-            // numUpDownNumtoFind
-            // 
-            this.numUpDownNumtoFind.Location = new System.Drawing.Point(143, 87);
-            this.numUpDownNumtoFind.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.numUpDownNumtoFind.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numUpDownNumtoFind.Name = "numUpDownNumtoFind";
-            this.numUpDownNumtoFind.Size = new System.Drawing.Size(128, 21);
-            this.numUpDownNumtoFind.TabIndex = 75;
-            this.numUpDownNumtoFind.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numUpDownNumtoFind.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // btnSetting
             // 
             this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(716, 346);
+            this.btnSetting.Location = new System.Drawing.Point(395, 348);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(100, 37);
             this.btnSetting.TabIndex = 74;
@@ -184,7 +184,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.gradientLabel1);
             this.Name = "ucCogID";
-            this.Size = new System.Drawing.Size(820, 388);
+            this.Size = new System.Drawing.Size(500, 388);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownNumtoFind)).EndInit();

@@ -361,7 +361,7 @@ namespace DIOControlManager
         private void btnTrigger_Click(object sender, EventArgs e)
         {
             //int _BitCommand = AirBlowCmd.BitCheck(5);
-            int _BitCommand = DioBaseCmd.InputBitCheck(DispenserCmd.IN_TRIGGER);
+            int _BitCommand = DioBaseCmd.InputBitCheck(DispenserCmd.IN_TRIGGER_3);
             if (_BitCommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;

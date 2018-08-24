@@ -83,7 +83,7 @@
             this.labelTitle.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.labelTitle.Location = new System.Drawing.Point(2, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(818, 30);
+            this.labelTitle.Size = new System.Drawing.Size(497, 30);
             this.labelTitle.TabIndex = 12;
             this.labelTitle.Text = " Needle Find Teaching Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -92,7 +92,7 @@
             // 
             this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(708, 348);
+            this.btnSetting.Location = new System.Drawing.Point(395, 333);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(100, 37);
             this.btnSetting.TabIndex = 51;
@@ -116,7 +116,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(3, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(292, 178);
+            this.groupBox1.Size = new System.Drawing.Size(287, 150);
             this.groupBox1.TabIndex = 52;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Caliper Setting ";
@@ -168,7 +168,7 @@
             // numUpDownProjectionLength
             // 
             this.numUpDownProjectionLength.DecimalPlaces = 2;
-            this.numUpDownProjectionLength.Location = new System.Drawing.Point(140, 84);
+            this.numUpDownProjectionLength.Location = new System.Drawing.Point(140, 85);
             this.numUpDownProjectionLength.Maximum = new decimal(new int[] {
             20000,
             0,
@@ -294,9 +294,9 @@
             this.graLabelSearchDirection.ColorTop = System.Drawing.Color.Empty;
             this.graLabelSearchDirection.ForeColor = System.Drawing.Color.White;
             this.graLabelSearchDirection.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelSearchDirection.Location = new System.Drawing.Point(260, 113);
+            this.graLabelSearchDirection.Location = new System.Drawing.Point(261, 113);
             this.graLabelSearchDirection.Name = "graLabelSearchDirection";
-            this.graLabelSearchDirection.Size = new System.Drawing.Size(39, 26);
+            this.graLabelSearchDirection.Size = new System.Drawing.Size(27, 26);
             this.graLabelSearchDirection.TabIndex = 69;
             this.graLabelSearchDirection.Text = "0";
             this.graLabelSearchDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -306,7 +306,7 @@
             // 
             this.btnDrawCaliper.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnDrawCaliper.ForeColor = System.Drawing.Color.Black;
-            this.btnDrawCaliper.Location = new System.Drawing.Point(708, 305);
+            this.btnDrawCaliper.Location = new System.Drawing.Point(295, 333);
             this.btnDrawCaliper.Name = "btnDrawCaliper";
             this.btnDrawCaliper.Size = new System.Drawing.Size(100, 37);
             this.btnDrawCaliper.TabIndex = 70;
@@ -328,9 +328,9 @@
             this.groupBox2.Controls.Add(this.gradientLabel3);
             this.groupBox2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(331, 33);
+            this.groupBox2.Location = new System.Drawing.Point(3, 189);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(287, 178);
+            this.groupBox2.Size = new System.Drawing.Size(287, 181);
             this.groupBox2.TabIndex = 69;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Expected circular Arc ";
@@ -570,39 +570,39 @@
             this.groupBox3.Controls.Add(this.gradientLabel14);
             this.groupBox3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(3, 217);
+            this.groupBox3.Location = new System.Drawing.Point(295, 34);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(292, 168);
+            this.groupBox3.Size = new System.Drawing.Size(202, 148);
             this.groupBox3.TabIndex = 72;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = " Result & Condition";
+            this.groupBox3.Text = " Result Condition";
             // 
             // textBoxRadius
             // 
-            this.textBoxRadius.Location = new System.Drawing.Point(143, 86);
+            this.textBoxRadius.Location = new System.Drawing.Point(128, 86);
             this.textBoxRadius.Name = "textBoxRadius";
             this.textBoxRadius.ReadOnly = true;
-            this.textBoxRadius.Size = new System.Drawing.Size(128, 21);
+            this.textBoxRadius.Size = new System.Drawing.Size(69, 21);
             this.textBoxRadius.TabIndex = 68;
             this.textBoxRadius.Text = "0";
             this.textBoxRadius.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxCenterY
             // 
-            this.textBoxCenterY.Location = new System.Drawing.Point(143, 55);
+            this.textBoxCenterY.Location = new System.Drawing.Point(128, 55);
             this.textBoxCenterY.Name = "textBoxCenterY";
             this.textBoxCenterY.ReadOnly = true;
-            this.textBoxCenterY.Size = new System.Drawing.Size(128, 21);
+            this.textBoxCenterY.Size = new System.Drawing.Size(69, 21);
             this.textBoxCenterY.TabIndex = 68;
             this.textBoxCenterY.Text = "0";
             this.textBoxCenterY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxCenterX
             // 
-            this.textBoxCenterX.Location = new System.Drawing.Point(143, 24);
+            this.textBoxCenterX.Location = new System.Drawing.Point(128, 24);
             this.textBoxCenterX.Name = "textBoxCenterX";
             this.textBoxCenterX.ReadOnly = true;
-            this.textBoxCenterX.Size = new System.Drawing.Size(128, 21);
+            this.textBoxCenterX.Size = new System.Drawing.Size(69, 21);
             this.textBoxCenterX.TabIndex = 68;
             this.textBoxCenterX.Text = "0";
             this.textBoxCenterX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -616,9 +616,9 @@
             this.gradientLabel12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel12.ForeColor = System.Drawing.Color.White;
             this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel12.Location = new System.Drawing.Point(13, 83);
+            this.gradientLabel12.Location = new System.Drawing.Point(10, 83);
             this.gradientLabel12.Name = "gradientLabel12";
-            this.gradientLabel12.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel12.Size = new System.Drawing.Size(113, 26);
             this.gradientLabel12.TabIndex = 66;
             this.gradientLabel12.Text = "Radius";
             this.gradientLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -632,9 +632,9 @@
             this.gradientLabel13.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel13.ForeColor = System.Drawing.Color.White;
             this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel13.Location = new System.Drawing.Point(13, 52);
+            this.gradientLabel13.Location = new System.Drawing.Point(10, 52);
             this.gradientLabel13.Name = "gradientLabel13";
-            this.gradientLabel13.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel13.Size = new System.Drawing.Size(113, 26);
             this.gradientLabel13.TabIndex = 64;
             this.gradientLabel13.Text = " Center Y";
             this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -648,9 +648,9 @@
             this.gradientLabel14.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel14.ForeColor = System.Drawing.Color.White;
             this.gradientLabel14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel14.Location = new System.Drawing.Point(13, 21);
+            this.gradientLabel14.Location = new System.Drawing.Point(10, 21);
             this.gradientLabel14.Name = "gradientLabel14";
-            this.gradientLabel14.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel14.Size = new System.Drawing.Size(113, 26);
             this.gradientLabel14.TabIndex = 62;
             this.gradientLabel14.Text = " Center X";
             this.gradientLabel14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -667,7 +667,7 @@
             this.Controls.Add(this.btnSetting);
             this.Controls.Add(this.labelTitle);
             this.Name = "ucCogNeedleCircleFind";
-            this.Size = new System.Drawing.Size(820, 388);
+            this.Size = new System.Drawing.Size(500, 388);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownProjectionLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSearchLength)).EndInit();

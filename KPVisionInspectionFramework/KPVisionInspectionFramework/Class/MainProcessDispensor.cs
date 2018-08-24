@@ -168,6 +168,12 @@ namespace KPVisionInspectionFramework
                 case DIO_DEF.IN_RESET:      Reset();        break;
                 case DIO_DEF.IN_TRG:        TriggerOn(0);   break;
                 case DIO_DEF.IN_REQUEST:    DataRequest(0); break;
+                case DIO_DEF.IN_RESET_2:    Reset();        break;
+                case DIO_DEF.IN_TRG_2:      TriggerOn(1);   break;
+                case DIO_DEF.IN_REQUEST_2:  DataRequest(1); break;
+                case DIO_DEF.IN_RESET_3:    Reset();        break;
+                case DIO_DEF.IN_TRG_3:      TriggerOn(2);   break;
+                case DIO_DEF.IN_REQUEST_3:  DataRequest(2); break;
             }
         }
         #endregion Communication Event Function

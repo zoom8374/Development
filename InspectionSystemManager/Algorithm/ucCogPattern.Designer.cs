@@ -32,6 +32,7 @@
             this.btnPrev = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnShowArea = new System.Windows.Forms.Button();
             this.labelPatternCount = new System.Windows.Forms.Label();
             this.kpPatternDisplay = new KPDisplay.KPCogDisplayControl();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -55,7 +56,6 @@
             this.btnPatternModify = new System.Windows.Forms.Button();
             this.btnPatternDel = new System.Windows.Forms.Button();
             this.btnPatternAdd = new System.Windows.Forms.Button();
-            this.btnShowArea = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAllowedShiftY)).BeginInit();
@@ -75,18 +75,18 @@
             this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
             this.gradientLabel1.Location = new System.Drawing.Point(2, 0);
             this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(951, 30);
+            this.gradientLabel1.Size = new System.Drawing.Size(497, 30);
             this.gradientLabel1.TabIndex = 12;
             this.gradientLabel1.Text = " Pattern Reference Teaching Window";
             this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnPrev
             // 
-            this.btnPrev.Font = new System.Drawing.Font("나눔바른고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrev.Font = new System.Drawing.Font("나눔바른고딕", 10F, System.Drawing.FontStyle.Bold);
             this.btnPrev.ForeColor = System.Drawing.Color.Black;
             this.btnPrev.Location = new System.Drawing.Point(7, 314);
             this.btnPrev.Name = "btnPrev";
-            this.btnPrev.Size = new System.Drawing.Size(54, 33);
+            this.btnPrev.Size = new System.Drawing.Size(26, 33);
             this.btnPrev.TabIndex = 14;
             this.btnPrev.Text = "◀";
             this.btnPrev.UseVisualStyleBackColor = true;
@@ -94,11 +94,11 @@
             // 
             // btnNext
             // 
-            this.btnNext.Font = new System.Drawing.Font("나눔바른고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.Font = new System.Drawing.Font("나눔바른고딕", 10F, System.Drawing.FontStyle.Bold);
             this.btnNext.ForeColor = System.Drawing.Color.Black;
-            this.btnNext.Location = new System.Drawing.Point(248, 313);
+            this.btnNext.Location = new System.Drawing.Point(149, 314);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(54, 33);
+            this.btnNext.Size = new System.Drawing.Size(26, 33);
             this.btnNext.TabIndex = 15;
             this.btnNext.Text = "▶";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -106,6 +106,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnShowArea);
             this.groupBox1.Controls.Add(this.labelPatternCount);
             this.groupBox1.Controls.Add(this.kpPatternDisplay);
             this.groupBox1.Controls.Add(this.btnPrev);
@@ -114,19 +115,31 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(3, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(310, 352);
+            this.groupBox1.Size = new System.Drawing.Size(246, 352);
             this.groupBox1.TabIndex = 53;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Pattern ";
+            // 
+            // btnShowArea
+            // 
+            this.btnShowArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnShowArea.ForeColor = System.Drawing.Color.Black;
+            this.btnShowArea.Location = new System.Drawing.Point(180, 312);
+            this.btnShowArea.Name = "btnShowArea";
+            this.btnShowArea.Size = new System.Drawing.Size(60, 37);
+            this.btnShowArea.TabIndex = 75;
+            this.btnShowArea.Text = "New Area";
+            this.btnShowArea.UseVisualStyleBackColor = true;
+            this.btnShowArea.Click += new System.EventHandler(this.btnShowArea_Click);
             // 
             // labelPatternCount
             // 
             this.labelPatternCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelPatternCount.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelPatternCount.ForeColor = System.Drawing.Color.White;
-            this.labelPatternCount.Location = new System.Drawing.Point(67, 314);
+            this.labelPatternCount.Location = new System.Drawing.Point(38, 314);
             this.labelPatternCount.Name = "labelPatternCount";
-            this.labelPatternCount.Size = new System.Drawing.Size(175, 32);
+            this.labelPatternCount.Size = new System.Drawing.Size(107, 32);
             this.labelPatternCount.TabIndex = 16;
             this.labelPatternCount.Text = "0/0";
             this.labelPatternCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -138,7 +151,7 @@
             this.kpPatternDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.kpPatternDisplay.Location = new System.Drawing.Point(7, 15);
             this.kpPatternDisplay.Name = "kpPatternDisplay";
-            this.kpPatternDisplay.Size = new System.Drawing.Size(295, 295);
+            this.kpPatternDisplay.Size = new System.Drawing.Size(233, 295);
             this.kpPatternDisplay.TabIndex = 13;
             this.kpPatternDisplay.UseStatusBar = false;
             // 
@@ -162,9 +175,9 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(321, 33);
+            this.groupBox2.Location = new System.Drawing.Point(254, 33);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(496, 309);
+            this.groupBox2.Size = new System.Drawing.Size(241, 309);
             this.groupBox2.TabIndex = 70;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Condition Setting ";
@@ -172,14 +185,14 @@
             // numericUpDownAllowedShiftY
             // 
             this.numericUpDownAllowedShiftY.DecimalPlaces = 2;
-            this.numericUpDownAllowedShiftY.Location = new System.Drawing.Point(140, 190);
+            this.numericUpDownAllowedShiftY.Location = new System.Drawing.Point(119, 189);
             this.numericUpDownAllowedShiftY.Maximum = new decimal(new int[] {
             20000,
             0,
             0,
             0});
             this.numericUpDownAllowedShiftY.Name = "numericUpDownAllowedShiftY";
-            this.numericUpDownAllowedShiftY.Size = new System.Drawing.Size(128, 21);
+            this.numericUpDownAllowedShiftY.Size = new System.Drawing.Size(87, 21);
             this.numericUpDownAllowedShiftY.TabIndex = 70;
             this.numericUpDownAllowedShiftY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -192,9 +205,9 @@
             this.gradientLabel2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel2.ForeColor = System.Drawing.Color.White;
             this.gradientLabel2.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel2.Location = new System.Drawing.Point(10, 187);
+            this.gradientLabel2.Location = new System.Drawing.Point(7, 187);
             this.gradientLabel2.Name = "gradientLabel2";
-            this.gradientLabel2.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel2.Size = new System.Drawing.Size(107, 26);
             this.gradientLabel2.TabIndex = 69;
             this.gradientLabel2.Text = "Allowed Shift Y";
             this.gradientLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -202,14 +215,14 @@
             // numericUpDownAllowedShiftX
             // 
             this.numericUpDownAllowedShiftX.DecimalPlaces = 2;
-            this.numericUpDownAllowedShiftX.Location = new System.Drawing.Point(140, 160);
+            this.numericUpDownAllowedShiftX.Location = new System.Drawing.Point(119, 159);
             this.numericUpDownAllowedShiftX.Maximum = new decimal(new int[] {
             20000,
             0,
             0,
             0});
             this.numericUpDownAllowedShiftX.Name = "numericUpDownAllowedShiftX";
-            this.numericUpDownAllowedShiftX.Size = new System.Drawing.Size(128, 21);
+            this.numericUpDownAllowedShiftX.Size = new System.Drawing.Size(87, 21);
             this.numericUpDownAllowedShiftX.TabIndex = 68;
             this.numericUpDownAllowedShiftX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -222,9 +235,9 @@
             this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel3.ForeColor = System.Drawing.Color.White;
             this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel3.Location = new System.Drawing.Point(10, 157);
+            this.gradientLabel3.Location = new System.Drawing.Point(7, 157);
             this.gradientLabel3.Name = "gradientLabel3";
-            this.gradientLabel3.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel3.Size = new System.Drawing.Size(107, 26);
             this.gradientLabel3.TabIndex = 67;
             this.gradientLabel3.Text = "Allowed Shift X";
             this.gradientLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -234,7 +247,7 @@
             this.checkBoxShift.AutoSize = true;
             this.checkBoxShift.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.checkBoxShift.ForeColor = System.Drawing.Color.White;
-            this.checkBoxShift.Location = new System.Drawing.Point(10, 136);
+            this.checkBoxShift.Location = new System.Drawing.Point(7, 137);
             this.checkBoxShift.Name = "checkBoxShift";
             this.checkBoxShift.Size = new System.Drawing.Size(51, 18);
             this.checkBoxShift.TabIndex = 66;
@@ -244,14 +257,14 @@
             // numericUpDownAngleLimit
             // 
             this.numericUpDownAngleLimit.DecimalPlaces = 2;
-            this.numericUpDownAngleLimit.Location = new System.Drawing.Point(140, 84);
+            this.numericUpDownAngleLimit.Location = new System.Drawing.Point(119, 83);
             this.numericUpDownAngleLimit.Maximum = new decimal(new int[] {
             360,
             0,
             0,
             0});
             this.numericUpDownAngleLimit.Name = "numericUpDownAngleLimit";
-            this.numericUpDownAngleLimit.Size = new System.Drawing.Size(128, 21);
+            this.numericUpDownAngleLimit.Size = new System.Drawing.Size(87, 21);
             this.numericUpDownAngleLimit.TabIndex = 65;
             this.numericUpDownAngleLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownAngleLimit.Value = new decimal(new int[] {
@@ -269,23 +282,23 @@
             this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel5.ForeColor = System.Drawing.Color.White;
             this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel5.Location = new System.Drawing.Point(10, 81);
+            this.gradientLabel5.Location = new System.Drawing.Point(7, 81);
             this.gradientLabel5.Name = "gradientLabel5";
-            this.gradientLabel5.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel5.Size = new System.Drawing.Size(107, 26);
             this.gradientLabel5.TabIndex = 64;
             this.gradientLabel5.Text = "Angle Limit";
             this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // numericUpDownFindCount
             // 
-            this.numericUpDownFindCount.Location = new System.Drawing.Point(140, 54);
+            this.numericUpDownFindCount.Location = new System.Drawing.Point(119, 53);
             this.numericUpDownFindCount.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDownFindCount.Name = "numericUpDownFindCount";
-            this.numericUpDownFindCount.Size = new System.Drawing.Size(128, 21);
+            this.numericUpDownFindCount.Size = new System.Drawing.Size(87, 21);
             this.numericUpDownFindCount.TabIndex = 63;
             this.numericUpDownFindCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownFindCount.Value = new decimal(new int[] {
@@ -303,9 +316,9 @@
             this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel8.ForeColor = System.Drawing.Color.White;
             this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel8.Location = new System.Drawing.Point(10, 51);
+            this.gradientLabel8.Location = new System.Drawing.Point(7, 51);
             this.gradientLabel8.Name = "gradientLabel8";
-            this.gradientLabel8.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel8.Size = new System.Drawing.Size(107, 26);
             this.gradientLabel8.TabIndex = 62;
             this.gradientLabel8.Text = "Find Count";
             this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -313,9 +326,9 @@
             // numericUpDownFindScore
             // 
             this.numericUpDownFindScore.DecimalPlaces = 2;
-            this.numericUpDownFindScore.Location = new System.Drawing.Point(140, 24);
+            this.numericUpDownFindScore.Location = new System.Drawing.Point(119, 23);
             this.numericUpDownFindScore.Name = "numericUpDownFindScore";
-            this.numericUpDownFindScore.Size = new System.Drawing.Size(128, 21);
+            this.numericUpDownFindScore.Size = new System.Drawing.Size(87, 21);
             this.numericUpDownFindScore.TabIndex = 61;
             this.numericUpDownFindScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownFindScore.Value = new decimal(new int[] {
@@ -333,9 +346,9 @@
             this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel9.ForeColor = System.Drawing.Color.White;
             this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel9.Location = new System.Drawing.Point(10, 21);
+            this.gradientLabel9.Location = new System.Drawing.Point(7, 21);
             this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(124, 26);
+            this.gradientLabel9.Size = new System.Drawing.Size(107, 26);
             this.gradientLabel9.TabIndex = 60;
             this.gradientLabel9.Text = "Find Score";
             this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -345,7 +358,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(270, 192);
+            this.label11.Location = new System.Drawing.Point(209, 192);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(29, 14);
             this.label11.TabIndex = 71;
@@ -356,7 +369,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(270, 165);
+            this.label10.Location = new System.Drawing.Point(209, 165);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(29, 14);
             this.label10.TabIndex = 72;
@@ -367,7 +380,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(270, 89);
+            this.label9.Location = new System.Drawing.Point(209, 89);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(18, 14);
             this.label9.TabIndex = 73;
@@ -378,7 +391,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(269, 59);
+            this.label5.Location = new System.Drawing.Point(208, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(21, 14);
             this.label5.TabIndex = 74;
@@ -389,7 +402,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(270, 29);
+            this.label4.Location = new System.Drawing.Point(209, 29);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(18, 14);
             this.label4.TabIndex = 75;
@@ -398,20 +411,20 @@
             // btnFind
             // 
             this.btnFind.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnFind.Location = new System.Drawing.Point(741, 347);
+            this.btnFind.Location = new System.Drawing.Point(439, 343);
             this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(76, 37);
+            this.btnFind.Size = new System.Drawing.Size(56, 37);
             this.btnFind.TabIndex = 74;
-            this.btnFind.Text = "Find Check";
+            this.btnFind.Text = "Find";
             this.btnFind.UseVisualStyleBackColor = true;
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // btnPatternModify
             // 
             this.btnPatternModify.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternModify.Location = new System.Drawing.Point(660, 347);
+            this.btnPatternModify.Location = new System.Drawing.Point(378, 343);
             this.btnPatternModify.Name = "btnPatternModify";
-            this.btnPatternModify.Size = new System.Drawing.Size(76, 37);
+            this.btnPatternModify.Size = new System.Drawing.Size(56, 37);
             this.btnPatternModify.TabIndex = 73;
             this.btnPatternModify.Text = "Modify";
             this.btnPatternModify.UseVisualStyleBackColor = true;
@@ -420,9 +433,9 @@
             // btnPatternDel
             // 
             this.btnPatternDel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternDel.Location = new System.Drawing.Point(579, 347);
+            this.btnPatternDel.Location = new System.Drawing.Point(317, 343);
             this.btnPatternDel.Name = "btnPatternDel";
-            this.btnPatternDel.Size = new System.Drawing.Size(76, 37);
+            this.btnPatternDel.Size = new System.Drawing.Size(56, 37);
             this.btnPatternDel.TabIndex = 72;
             this.btnPatternDel.Text = "Del";
             this.btnPatternDel.UseVisualStyleBackColor = true;
@@ -431,31 +444,19 @@
             // btnPatternAdd
             // 
             this.btnPatternAdd.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnPatternAdd.Location = new System.Drawing.Point(498, 347);
+            this.btnPatternAdd.Location = new System.Drawing.Point(256, 343);
             this.btnPatternAdd.Name = "btnPatternAdd";
-            this.btnPatternAdd.Size = new System.Drawing.Size(76, 37);
+            this.btnPatternAdd.Size = new System.Drawing.Size(56, 37);
             this.btnPatternAdd.TabIndex = 71;
             this.btnPatternAdd.Text = "Add";
             this.btnPatternAdd.UseVisualStyleBackColor = true;
             this.btnPatternAdd.Click += new System.EventHandler(this.btnPatternAdd_Click);
-            // 
-            // btnShowArea
-            // 
-            this.btnShowArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnShowArea.Location = new System.Drawing.Point(319, 347);
-            this.btnShowArea.Name = "btnShowArea";
-            this.btnShowArea.Size = new System.Drawing.Size(76, 37);
-            this.btnShowArea.TabIndex = 75;
-            this.btnShowArea.Text = "New Area";
-            this.btnShowArea.UseVisualStyleBackColor = true;
-            this.btnShowArea.Click += new System.EventHandler(this.btnShowArea_Click);
             // 
             // ucCogPattern
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.Controls.Add(this.btnShowArea);
             this.Controls.Add(this.btnFind);
             this.Controls.Add(this.btnPatternModify);
             this.Controls.Add(this.btnPatternDel);
@@ -464,7 +465,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gradientLabel1);
             this.Name = "ucCogPattern";
-            this.Size = new System.Drawing.Size(820, 388);
+            this.Size = new System.Drawing.Size(500, 388);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
