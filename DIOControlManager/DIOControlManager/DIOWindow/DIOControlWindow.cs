@@ -8,11 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.IO;
+using System.Xml;
 
 using LogMessageManager;
 using ParameterManager;
-using System.IO;
-using System.Xml;
+
 
 namespace DIOControlManager
 {
@@ -42,7 +43,6 @@ namespace DIOControlManager
         private CPressingButton.PressButton[] btnOutputSignal;
 
         public DIOBaseCommand DioBaseCmd;
-
 
         public delegate void InputChangedHandler(short _BitNum, bool _Signal);
         public event InputChangedHandler InputChangedEvent;

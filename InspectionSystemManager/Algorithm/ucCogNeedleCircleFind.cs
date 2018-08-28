@@ -210,9 +210,9 @@ namespace InspectionSystemManager
 
             if (_CogNeedleFindResult.IsGood)
             {
-                textBoxCenterX.Text = (_CogNeedleFindResult.CenterX * ResolutionX).ToString("F3");
-                textBoxCenterY.Text = (_CogNeedleFindResult.CenterY * ResolutionY).ToString("F3");
-                textBoxRadius.Text = (_CogNeedleFindResult.Radius * ResolutionX).ToString("F3");
+                textBoxCenterX.Text = (_CogNeedleFindResult.CenterXReal).ToString("F3");
+                textBoxCenterY.Text = (_CogNeedleFindResult.CenterYReal).ToString("F3");
+                textBoxRadius.Text = (_CogNeedleFindResult.RadiusReal).ToString("F3");
             }
         }
 

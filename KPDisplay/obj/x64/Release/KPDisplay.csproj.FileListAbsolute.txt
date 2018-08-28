@@ -32,3 +32,6 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Release\
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Release\KPDisplay.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Release\KPDisplay.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Release\KPDisplay.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Release\LogMessageManager.pdb

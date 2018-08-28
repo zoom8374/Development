@@ -173,6 +173,7 @@
     <None Include="Resources\Recipe.png" />
     <None Include="Resources\Config.png" />
     <None Include="Resources\Align.png" />
+    <None Include="Resources\Serial.png" />
     <Content Include="VisionInspection.ico" />
   </ItemGroup>
   <ItemGroup>

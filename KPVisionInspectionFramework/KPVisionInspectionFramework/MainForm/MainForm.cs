@@ -66,10 +66,27 @@ namespace KPVisionInspectionFramework
         private void Initialize()
         {
             LoadDefaultRibbonTheme();
+
+            #region Ribbon Menu Setting
             UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName);
 
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
+            {
+                rbAlign.Visible = false;
+                rbSerial.Visible = false;
+                rbConfig.Visible = false;
+                rbLabelCode.Visible = false;
+            }
+
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            {
+                rbAlign.Visible = false;
+                rbConfig.Visible = false;
+            }
+            #endregion Ribbon Menu Setting
+
             #region Log Window Initialize
-            LogWnd = new CLogManager();
+                LogWnd = new CLogManager();
             CLogManager.LogSystemSetting(@"D:\VisionInspectionData\CIPOSLeadInspection\Log\SystemLog");
             CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\CIPOSLeadInspection\Log\InspectionLog");
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : CIPOS lead inspection program run!!");
@@ -134,9 +151,6 @@ namespace KPVisionInspectionFramework
             ParamManager.DeInitialize();
 
             LightControlManager.DeInitialize();
-
-            //SerialWnd.SerialReceiveEvent -= new SerialWindow.SerialReceiveHandler(RecipeChange);
-            //SerialWnd.DeInitialize();
 
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    ((MainProcessDispensor)MainProcess).DeInitialize();
@@ -237,8 +251,6 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
 
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
-            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, true);
-            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_READY, true);
             MainProcess.AutoMode(true);
         }
 
@@ -248,14 +260,29 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.MANUAL_MODE);
 
             CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
-            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_AUTO, false);
-            //MainProcess.SetDIOOutputSignal(DIO_DEF.OUT_READY, false);
             MainProcess.AutoMode(false);
         }
+
         private void rbEthernet_Click(object sender, EventArgs e)
         {
-            if (ParamManager.SystemParam.ProjectType == (int)eProjectType.BLOWER)       MainProcess.ShowSerialWindow();
-            //else if (ParamManager.SystemParam.ProjectType == (int)eProjectType.BLOWER)  MainProcess.
+            if (false == MainProcess.GetEhernetWindowShown())
+                MainProcess.ShowEthernetWindow();
+
+            else
+                MainProcess.SetEthernetWindowTopMost(true);
+
+            MainProcess.SetEthernetWindowTopMost(false);
+        }
+
+        private void rbSerial_Click(object sender, EventArgs e)
+        {
+            if (false == MainProcess.GetSerialWindowShown())
+                MainProcess.ShowSerialWindow();
+
+            else
+                MainProcess.SetSerialWindowTopMost(true);
+
+            MainProcess.SetSerialWindowTopMost(false);
         }
 
         private void rbLight_Click(object sender, EventArgs e)
@@ -266,14 +293,10 @@ namespace KPVisionInspectionFramework
         private void rbDIO_Click(object sender, EventArgs e)
         {
             if (false == MainProcess.GetDIOWindowShown())
-            {
                 MainProcess.ShowDIOWindow();
-            }
 
             else
-            {
                 MainProcess.SetDIOWindowTopMost(true);
-            }
 
             MainProcess.SetDIOWindowTopMost(false);
         }
@@ -301,6 +324,11 @@ namespace KPVisionInspectionFramework
         private void rbFolder_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void rbLabelCode_DoubleClick(object sender, EventArgs e)
+        {
+            MessageBox.Show("Code Change");
         }
 
         private void rbExit_Click(object sender, EventArgs e)

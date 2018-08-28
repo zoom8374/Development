@@ -175,8 +175,8 @@ namespace KPVisionInspectionFramework
                     else _Angle = -(90 + (_Result.LeadAngle[iLoopCount] * 180 / Math.PI));
 
                     QuickGridViewLeadResult[1, iLoopCount].Value = _Angle.ToString("F3");
-                    QuickGridViewLeadResult[2, iLoopCount].Value = _Result.LeadWidth[iLoopCount].ToString("F3");
-                    QuickGridViewLeadResult[3, iLoopCount].Value = _Result.LeadLength[iLoopCount].ToString("F3");
+                    QuickGridViewLeadResult[2, iLoopCount].Value = _Result.LeadWidthReal[iLoopCount].ToString("F3");
+                    QuickGridViewLeadResult[3, iLoopCount].Value = _Result.LeadLengthReal[iLoopCount].ToString("F3");
 
                     if (_Result.IsLeadBendGood[iLoopCount] && iLoopCount % 2 == 0) QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = Color.PowderBlue;
                     else if (_Result.IsLeadBendGood[iLoopCount] && iLoopCount % 2 == 1) QuickGridViewLeadResult[1, iLoopCount].Style.BackColor = Color.White;

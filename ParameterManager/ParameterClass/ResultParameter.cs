@@ -128,8 +128,13 @@ namespace ParameterManager
         public double CenterY;
         public double OriginX;
         public double OriginY;
-
         public double Radius;
+
+        public double CenterXReal;
+        public double CenterYReal;
+        public double OriginXReal;
+        public double OriginYReal;
+        public double RadiusReal;
     }
 
     public class CogLeadResult : Result
@@ -236,6 +241,9 @@ namespace ParameterManager
         public double[] LeadPitch;
         public double[] LeadPitchTopX;
         public double[] LeadPitchTopY;
+
+        public double[] LeadLengthReal;
+        public double[] LeadWidthReal;
     }
     #endregion Last Send Result Parameter
 }

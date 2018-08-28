@@ -7,3 +7,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Release\Log
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Release\LogMessageManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Release\LogMessageManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Release\LogMessageManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Release\LogMessageManager.LogSettingWindow.resources

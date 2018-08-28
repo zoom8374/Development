@@ -130,6 +130,10 @@ namespace InspectionSystemManager
             FormName = _FormName;
             RecipeName = _RecipeName;
             IsSimulationMode = _IsSimulationMode;
+
+            //ResolutionX = _InspParam.ResolutionX;
+            //ResolutionY = _InspParam.ResolutionY;
+
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
@@ -173,6 +177,16 @@ namespace InspectionSystemManager
             ThreadImageSave.Start();
 
             TeachWnd = new TeachingWindow();
+        }
+
+        public void InitializeResolution(double _ResolutionX, double _ResolutionY)
+        {
+            ResolutionX = _ResolutionX;
+            ResolutionY = _ResolutionY;
+
+            InspParam.ResolutionX = _ResolutionX;
+            InspParam.ResolutionY = _ResolutionY;
+
         }
 
         //LDH, 2018.07.04, Camera 초기화
@@ -471,6 +485,14 @@ namespace InspectionSystemManager
             DisplayZoomValue = kpCogDisplayMain.GetDisplayZoom();
             DisplayPanXValue = kpCogDisplayMain.GetDisplayPanX();
             DisplayPanYValue = kpCogDisplayMain.GetDisplayPanY();
+        }
+
+        private void btnCrossBar_Click(object sender, EventArgs e)
+        {
+            IsCrossLine = !IsCrossLine;
+            //kpCogDisplayMain.ClearDisplay();
+
+            if (IsCrossLine) kpCogDisplayMain.DrawCross(ImageSizeWidth / 2, ImageSizeHeight / 2, ImageSizeWidth, ImageSizeHeight, "Cross", CogColorConstants.Green);
         }
         #endregion Control Event
 
@@ -820,6 +842,9 @@ namespace InspectionSystemManager
             CogLeadResult _CogLeadResult = new CogLeadResult();
 
             bool _Result = InspLeadProc.Run(OriginImage, _InspRegion, _CogLeadAlgo, ref _CogLeadResult, AnyReferenceX, AnyReferenceY);
+
+
+
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LEAD, _CogLeadResult);
             AlgoResultParamList.Add(_AlgoResultParam);
 
@@ -832,6 +857,12 @@ namespace InspectionSystemManager
             CogNeedleFindResult _CogNeedleFindResult = new CogNeedleFindResult();
 
             bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult);
+
+            _CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
+            _CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
+            _CogNeedleFindResult.OriginXReal = (_CogNeedleFindResult.OriginX - (OriginImage.Width / 2)) * ResolutionX;
+            _CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
+            _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
             AlgoResultParamList.Add(_AlgoResultParam);
@@ -983,11 +1014,14 @@ namespace InspectionSystemManager
             //Parallel.For(0, _CogLeadResult.BlobCount, (iLoopCount) =>
             {
                 //Draw Boundary
+                //그리는 시간 때문에 주석 처리
+                /*
                 CogRectangleAffine _BlobRectAffine = new CogRectangleAffine();
                 CogPointMarker _CenterPoint = new CogPointMarker();
                 _BlobRectAffine.SetCenterLengthsRotationSkew(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], _CogLeadResult.PrincipalWidth[iLoopCount], _CogLeadResult.PrincipalHeight[iLoopCount], _CogLeadResult.Angle[iLoopCount], 0);
                 _CenterPoint.SetCenterRotationSize(_CogLeadResult.BlobCenterX[iLoopCount], _CogLeadResult.BlobCenterY[iLoopCount], 0, 2);
                 ResultDisplay(_BlobRectAffine, _CenterPoint, "Lead" + (iLoopCount + 1), _CogLeadResult.IsLeadBentGood[iLoopCount]);
+                */
 
                 //Draw Center Line
                 CogLineSegment _CenterLineStart = new CogLineSegment();
@@ -1029,8 +1063,9 @@ namespace InspectionSystemManager
                     _CirclePoint.SetCenterRotationSize(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, 0, 1);
                     ResultDisplay(_Circle, _CirclePoint, "NeedleCircle", _CogNeedleFindResult.IsGood);
 
-                    string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionY);
-                    ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 30, _CenterPointName, _CogNeedleFindResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    //string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionY);
+                    string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterXReal, _CogNeedleFindResult.CenterYReal, _CogNeedleFindResult.RadiusReal);
+                    ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 150, _CenterPointName, _CogNeedleFindResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
                 }
             }
 

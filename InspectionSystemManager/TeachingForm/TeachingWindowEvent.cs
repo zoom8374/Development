@@ -239,6 +239,12 @@ namespace InspectionSystemManager
 
             bool _Result = InspNeedleCircleFindProcess.Run(InspectionImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult);
 
+            _CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (InspectionImage.Width / 2)) * ResolutionX;
+            _CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (InspectionImage.Height / 2)) * ResolutionY;
+            _CogNeedleFindResult.OriginXReal = (_CogNeedleFindResult.OriginX - (InspectionImage.Width / 2)) * ResolutionX;
+            _CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (InspectionImage.Height / 2)) * ResolutionY;
+            _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
+
             CogCircle _CogCircle = new CogCircle();
             _CogCircle.SetCenterRadius(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, _CogNeedleFindResult.Radius);
             CogPointMarker _CogCenterPoint = new CogPointMarker();
@@ -246,8 +252,8 @@ namespace InspectionSystemManager
             kpTeachDisplay.DrawStaticShape(_CogCircle, "Circle", CogColorConstants.Green, 3);
             kpTeachDisplay.DrawStaticShape(_CogCenterPoint, "CirclePoint", CogColorConstants.Green);
 
-            string _CenterName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionX);
-            kpTeachDisplay.DrawText(_CenterName, _CogNeedleFindResult.CenterX , _CogNeedleFindResult.CenterY + 30, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            string _CenterName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterXReal, _CogNeedleFindResult.CenterYReal, _CogNeedleFindResult.RadiusReal);
+            kpTeachDisplay.DrawText(_CenterName, _CogNeedleFindResult.CenterX , _CogNeedleFindResult.CenterY + 150, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
         }
 
         private void DrawNeedleCircleFindCaliperFunction(CogNeedleFindAlgo _CogNeedleFindAlgo)

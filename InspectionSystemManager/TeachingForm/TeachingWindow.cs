@@ -144,13 +144,35 @@ namespace InspectionSystemManager
             ContextMenuAlgo = new ContextMenu();
             ContextMenuAlgo.MenuItems.Clear();
 
-            ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
-            ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
-            ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
-            ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
-            ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
-            ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
-            ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+            if (ProjectItem == eProjectItem.ID_INSP)
+            {
+                ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+            }
+
+            else if (ProjectItem == eProjectItem.LEAD_INSP)
+            {
+                ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
+            }
+
+            else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)
+            {
+                ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
+            }
+
+            else
+            {
+                ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+            }
         }
 
         private void SetInspectionParameter(InspectionParameter _InspParam = null)

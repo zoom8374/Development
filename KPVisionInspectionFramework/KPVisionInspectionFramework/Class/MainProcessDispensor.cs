@@ -25,7 +25,7 @@ namespace KPVisionInspectionFramework
             DIOWnd.Initialize();
 
             EthernetWnd = new EthernetWindow();
-            EthernetWnd.Initialize("192.168.0.100", 5050);
+            EthernetWnd.Initialize();
 
             int _AutoCmdBit     = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
@@ -72,6 +72,23 @@ namespace KPVisionInspectionFramework
         }
         #endregion DIO Window Function
 
+        #region Ethernet Window Function
+        public override void ShowEthernetWindow()
+        {
+            EthernetWnd.ShowEthernetWindow();
+        }
+
+        public override bool GetEhernetWindowShown()
+        {
+            return EthernetWnd.IsShowWindow;
+        }
+
+        public override void SetEthernetWindowTopMost(bool _IsTopMost)
+        {
+            EthernetWnd.TopMost = _IsTopMost;
+        }
+        #endregion Ethernet Window Function
+
         public override bool AutoMode(bool _Flag)
         {
             bool _Result = true;
@@ -94,15 +111,37 @@ namespace KPVisionInspectionFramework
             return _Result;
         }
 
-        public override bool Reset()
+        public override bool Reset(int _ID)
         {
             bool _Result = true;
+            int _CompleteCmdBit, _ReadyCmdBit;
 
-            int _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
-            int _ReadyCmdBit    = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
+            if (0 == _ID)
+            {
+                _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
+                _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
+            }
+
+            else if (1 == _ID)
+            {
+                _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE_2);
+                _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY_2);
+            }
+
+            else if (2 == _ID)
+            {
+                _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE_2);
+                _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY_2);
+            }
+
+            else
+            {
+                _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
+                _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
+            }
 
             if (_CompleteCmdBit >= 0)   DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
-            if (_ReadyCmdBit >= 0)      DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
+            if (_ReadyCmdBit >= 0)      DIOWnd.SetOutputSignal((short)_ReadyCmdBit, true);
 
             return _Result;
         }
@@ -165,13 +204,13 @@ namespace KPVisionInspectionFramework
         {
             switch (_BitNum)
             {
-                case DIO_DEF.IN_RESET:      Reset();        break;
+                case DIO_DEF.IN_RESET:      Reset(0);       break;
                 case DIO_DEF.IN_TRG:        TriggerOn(0);   break;
                 case DIO_DEF.IN_REQUEST:    DataRequest(0); break;
-                case DIO_DEF.IN_RESET_2:    Reset();        break;
+                case DIO_DEF.IN_RESET_2:    Reset(1);       break;
                 case DIO_DEF.IN_TRG_2:      TriggerOn(1);   break;
                 case DIO_DEF.IN_REQUEST_2:  DataRequest(1); break;
-                case DIO_DEF.IN_RESET_3:    Reset();        break;
+                case DIO_DEF.IN_RESET_3:    Reset(2);       break;
                 case DIO_DEF.IN_TRG_3:      TriggerOn(2);   break;
                 case DIO_DEF.IN_REQUEST_3:  DataRequest(2); break;
             }

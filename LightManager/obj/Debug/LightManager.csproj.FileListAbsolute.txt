@@ -13,3 +13,11 @@ C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightM
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.dll
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Debug\LightManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\bin\Debug\LightManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.LightWindow.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.Properties.Resources.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LightManager\obj\Debug\LightManager.pdb

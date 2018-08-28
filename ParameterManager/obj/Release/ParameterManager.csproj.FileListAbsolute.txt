@@ -15,3 +15,6 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Relea
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\obj\Release\ParameterManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\ParameterManager\bin\Release\LogMessageManager.pdb

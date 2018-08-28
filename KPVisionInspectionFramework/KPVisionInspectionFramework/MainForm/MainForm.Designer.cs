@@ -37,6 +37,7 @@
             this.ribbonPanelSetting = new System.Windows.Forms.RibbonPanel();
             this.rbAlign = new System.Windows.Forms.RibbonButton();
             this.rbEthernet = new System.Windows.Forms.RibbonButton();
+            this.rbSerial = new System.Windows.Forms.RibbonButton();
             this.rbLight = new System.Windows.Forms.RibbonButton();
             this.rbDIO = new System.Windows.Forms.RibbonButton();
             this.rbConfig = new System.Windows.Forms.RibbonButton();
@@ -50,6 +51,7 @@
             this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
             this.rbExit = new System.Windows.Forms.RibbonButton();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.rbLabelCode = new System.Windows.Forms.RibbonLabel();
             this.SuspendLayout();
             // 
             // ribbonMain
@@ -113,6 +115,7 @@
             // 
             this.ribbonPanelSetting.Items.Add(this.rbAlign);
             this.ribbonPanelSetting.Items.Add(this.rbEthernet);
+            this.ribbonPanelSetting.Items.Add(this.rbSerial);
             this.ribbonPanelSetting.Items.Add(this.rbLight);
             this.ribbonPanelSetting.Items.Add(this.rbDIO);
             this.ribbonPanelSetting.Items.Add(this.rbConfig);
@@ -132,6 +135,14 @@
             this.rbEthernet.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbEthernet.SmallImage")));
             this.rbEthernet.Text = " Ethernet";
             this.rbEthernet.Click += new System.EventHandler(this.rbEthernet_Click);
+            // 
+            // rbSerial
+            // 
+            this.rbSerial.Image = global::KPVisionInspectionFramework.Properties.Resources.Serial;
+            this.rbSerial.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbSerial.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbSerial.SmallImage")));
+            this.rbSerial.Text = "Serial ";
+            this.rbSerial.Click += new System.EventHandler(this.rbSerial_Click);
             // 
             // rbLight
             // 
@@ -200,6 +211,7 @@
             // ribbonPanelStatus
             // 
             this.ribbonPanelStatus.Items.Add(this.rbLabelCurrentRecipe);
+            this.ribbonPanelStatus.Items.Add(this.rbLabelCode);
             this.ribbonPanelStatus.Text = "Status";
             // 
             // rbLabelCurrentRecipe
@@ -226,6 +238,12 @@
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(1264, 846);
             this.panelMain.TabIndex = 2;
+            // 
+            // rbLabelCode
+            // 
+            this.rbLabelCode.Text = "CODE : -";
+            this.rbLabelCode.ToolTip = "CODE";
+            this.rbLabelCode.DoubleClick += new System.EventHandler(this.rbLabelCode_DoubleClick);
             // 
             // MainForm
             // 
@@ -272,6 +290,8 @@
         private System.Windows.Forms.RibbonLabel rbLabelCurrentRecipe;
         private System.Windows.Forms.RibbonButton rbConfig;
         private System.Windows.Forms.RibbonButton rbAlign;
+        private System.Windows.Forms.RibbonButton rbSerial;
+        private System.Windows.Forms.RibbonLabel rbLabelCode;
     }
 }
 

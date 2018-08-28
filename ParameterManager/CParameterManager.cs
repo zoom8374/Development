@@ -980,6 +980,9 @@ namespace ParameterManager
         {
             _DestParam.InspAreaParam.Clear();
 
+            _DestParam.ResolutionX = _SrcParam.ResolutionX;
+            _DestParam.ResolutionY = _SrcParam.ResolutionY;
+
             for (int iLoopCount = 0; iLoopCount < _SrcParam.InspAreaParam.Count; ++iLoopCount)
             {
                 InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();

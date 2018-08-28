@@ -26,8 +26,8 @@ namespace InspectionSystemManager
                     var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogNeedleFindResult;
                     SendNeedleAlignResult _SendResult = new SendNeedleAlignResult();
                     
-                    _SendResult.AlignX = (_AlgoResultParam.IsGood == true) ? _AlgoResultParam.CenterX : 0;
-                    _SendResult.AlignY = (_AlgoResultParam.IsGood == true) ? _AlgoResultParam.CenterY : 0;
+                    _SendResult.AlignX = (_AlgoResultParam.IsGood == true) ? _AlgoResultParam.CenterXReal : 0;
+                    _SendResult.AlignY = (_AlgoResultParam.IsGood == true) ? _AlgoResultParam.CenterYReal : 0;
 
                     _SendResParam.IsGood &= _AlgoResultParam.IsGood;
                     _SendResParam.SendResult = _SendResult;

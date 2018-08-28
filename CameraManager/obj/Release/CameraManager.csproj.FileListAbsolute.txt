@@ -40,3 +40,6 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\bin\Release\
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\obj\Release\CameraManager.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\obj\Release\CameraManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\obj\Release\CameraManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\bin\Release\LogMessageManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\bin\Release\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\CameraManager\bin\Release\LogMessageManager.pdb

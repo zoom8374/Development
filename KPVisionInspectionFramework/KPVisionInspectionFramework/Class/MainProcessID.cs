@@ -88,7 +88,7 @@ namespace KPVisionInspectionFramework
             return _Result;
         }
 
-        public override bool Reset()
+        public override bool Reset(int _ID)
         {
             bool _Result = false;
 
@@ -107,8 +107,8 @@ namespace KPVisionInspectionFramework
         {
             switch (_BitNum)
             {
-                case DIO_DEF.IN_TRG:   TriggerOn(0); break;
-                case DIO_DEF.IN_RESET:  Reset(); break;
+                case DIO_DEF.IN_TRG:    TriggerOn(0); break;
+                case DIO_DEF.IN_RESET:  Reset(0); break;
             }
         }
 

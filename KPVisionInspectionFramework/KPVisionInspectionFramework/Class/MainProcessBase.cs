@@ -36,6 +36,23 @@ namespace KPVisionInspectionFramework
         }
         #endregion DIO Window Function
 
+        #region Ethernet Window Function
+        public virtual void ShowEthernetWindow()
+        {
+
+        }
+        
+        public virtual bool GetEhernetWindowShown()
+        {
+            return true;
+        }
+
+        public virtual void SetEthernetWindowTopMost(bool _IsTopMost)
+        {
+
+        }
+        #endregion Ethernet Window Function
+
         #region Serial Window Function
         public virtual void ShowSerialWindow()
         {
@@ -58,6 +75,7 @@ namespace KPVisionInspectionFramework
         }
         #endregion Serial Window Function
 
+        #region Main sequence process
         protected virtual void OnMainProcessCommand(eMainProcCmd _MainCmd, object _Value)
         {
             var _MainProcessCommandEvent = MainProcessCommandEvent;
@@ -70,7 +88,7 @@ namespace KPVisionInspectionFramework
             return true;
         }
 
-        public virtual bool Reset()
+        public virtual bool Reset(int _ID)
         {
             return true;
         }
@@ -94,5 +112,6 @@ namespace KPVisionInspectionFramework
         {
             return true;
         }
+        #endregion Main sequence process
     }
 }

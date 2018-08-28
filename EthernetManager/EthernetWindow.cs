@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml;   
+
 using LogMessageManager;
 
 namespace EthernetManager
@@ -20,8 +23,8 @@ namespace EthernetManager
         private Queue<string> CommandQueue = new Queue<string>();
 
         private CEthernetManager ClientSock;
-        private string IPAddress;
-        private int PortNumber;
+        private string IPAddress = "192.168.0.1";
+        private short PortNumber = 5050;
 
         private bool IsConnected = false;
         private bool IsTryConnect = true;
@@ -29,19 +32,85 @@ namespace EthernetManager
 
         private Timer ConnectCheckTimer;
 
-        public delegate void SaveEthernetValueHandler(string _IPAdress, int _PortNumber);
-        public event SaveEthernetValueHandler SaveEthernetValueEvent;
-
         #region Initialize & DeInitialize
         public EthernetWindow()
         {
             InitializeComponent();
         }
 
-        public void Initialize(string _IPAddress, int _PortNumber)
+        #region Read & Write Ethernet Information
+        private XmlNodeList GetNodeList(string _XmlFilePath)
         {
-            IPAddress = _IPAddress;
-            PortNumber = _PortNumber;
+            XmlNodeList _XmlNodeList = null;
+
+            try
+            {
+                XmlDocument _XmlDocument = new XmlDocument();
+                _XmlDocument.Load(_XmlFilePath);
+                XmlElement _XmlRoot = _XmlDocument.DocumentElement;
+                _XmlNodeList = _XmlRoot.ChildNodes;
+            }
+
+            catch
+            {
+                _XmlNodeList = null;
+            }
+
+            return _XmlNodeList;
+        }
+
+        private void ReadEthernetInfoFile()
+        {
+            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            string _EthernetInfoFileName = @".\Common\EthernetInformation.xml";
+            if (false == File.Exists(_EthernetInfoFileName))
+            {
+                File.Create(_EthernetInfoFileName).Close();
+                WriteEthernetInfoFile();
+                System.Threading.Thread.Sleep(100);
+            }
+
+            else
+            {
+                XmlNodeList _XmlNodeList = GetNodeList(_EthernetInfoFileName);
+                if (null == _XmlNodeList) return;
+                foreach (XmlNode _Node in _XmlNodeList)
+                {
+                    if (null == _Node) return;
+                    switch(_Node.Name)
+                    {
+                        case "IPAddress":   IPAddress = _Node.InnerText; break;
+                        case "PortNumber":  PortNumber = Convert.ToInt16(_Node.InnerText);  break;
+                    }
+                }
+            }
+        }
+
+        private void WriteEthernetInfoFile()
+        {
+            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            string _EthernetInfoFileName = @".\Common\EthernetInformation.xml";
+            XmlTextWriter _XmlWriter = new XmlTextWriter(_EthernetInfoFileName, Encoding.Unicode);
+            _XmlWriter.Formatting = Formatting.Indented;
+            _XmlWriter.WriteStartDocument();
+            _XmlWriter.WriteStartElement("EthernetInformation");
+            {
+                _XmlWriter.WriteElementString("IPAddress", IPAddress);
+                _XmlWriter.WriteElementString("PortNumber", PortNumber.ToString());
+            }
+            _XmlWriter.WriteEndElement();
+            _XmlWriter.WriteEndDocument();
+            _XmlWriter.Close();
+        }
+        #endregion Read & Write Ethernet Information
+
+        public void Initialize()
+        {
+            ReadEthernetInfoFile();
 
             textBoxIPAddress.Text = IPAddress;
             textBoxPortNumber.Text = PortNumber.ToString();
@@ -115,7 +184,7 @@ namespace EthernetManager
         private void btnConnect_Click(object sender, EventArgs e)
         {
             IPAddress = textBoxIPAddress.Text;
-            PortNumber = Convert.ToInt32(textBoxPortNumber.Text);
+            PortNumber = Convert.ToInt16(textBoxPortNumber.Text);
 
             IsTryConnect = true;
             ClientSock.DeInitialize();
@@ -157,7 +226,7 @@ namespace EthernetManager
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SaveEthernetValueEvent(IPAddress, PortNumber);
+            WriteEthernetInfoFile();
 
             IsShowWindow = false;
             this.Hide();
