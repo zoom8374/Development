@@ -145,7 +145,7 @@ namespace CameraManager
 
             catch
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CBaslerManager ThreadContinuousGrabFunc Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
         }
     }

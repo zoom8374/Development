@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 
+using LogMessageManager;
+
 enum eSerialProtocol { STX = 0x02, ETX = 0x03 }
 namespace SerialManager
 {
@@ -18,7 +20,7 @@ namespace SerialManager
 
         delegate void SetTextCallback(string data);
 
-        public delegate bool SerialReceiveHandler(string _SerialData, string _SubData = "");
+        public delegate bool SerialReceiveHandler(string _SerialData);
         public event SerialReceiveHandler SerialReceiveEvent;
 
         public SerialWindow()
@@ -46,8 +48,9 @@ namespace SerialManager
                 SerialComm.Open();
             }
             catch
-            {
+            {                
                 _Result = false;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SerialWindow Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _Result;
@@ -101,7 +104,7 @@ namespace SerialManager
                 }
                 catch
                 {
-
+                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SerialWindow btnSend Exception!!", CLogManager.LOG_LEVEL.LOW);
                 }
 
                 SerialComm.Write(values, 0, 1);

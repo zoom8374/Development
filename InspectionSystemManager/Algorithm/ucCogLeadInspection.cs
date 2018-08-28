@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -143,6 +144,7 @@ namespace InspectionSystemManager
             else
             {
                 //LOG
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching LeadInspection SetAlgoRecipe", CLogManager.LOG_LEVEL.MID);
             }
         }
 
@@ -166,6 +168,8 @@ namespace InspectionSystemManager
             CogLeadAlgoRcp.LeadPitch = Convert.ToDouble(textBoxLeadPitch.Text);
             CogLeadAlgoRcp.LeadPitchMin = Convert.ToDouble(textBoxLeadPitchMin.Text);
             CogLeadAlgoRcp.LeadPitchMax = Convert.ToDouble(textBoxLeadPitchMax.Text);
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching LeadInspection SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         private void SetForegroundComboBox(int _RangeType)

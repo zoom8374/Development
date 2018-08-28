@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ParameterManager;
+using LogMessageManager;
 
 using Cognex.VisionPro;
 
@@ -187,6 +188,8 @@ namespace InspectionSystemManager
             CogPatternAlgoRcp.AllowedShiftX = Convert.ToDouble(numericUpDownAllowedShiftX.Value);
             CogPatternAlgoRcp.AllowedShiftY = Convert.ToDouble(numericUpDownAllowedShiftY.Value);
             CogPatternAlgoRcp.PatternCount = CogPatternAlgoRcp.ReferenceInfoList.Count;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogPattern SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         private void ShowPatternImageArea(int _PatternNumber)

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -159,6 +160,8 @@ namespace InspectionSystemManager
             CogNeedleFindAlgoRcp.OriginX        = Convert.ToDouble(textBoxCenterX.Text);
             CogNeedleFindAlgoRcp.OriginY        = Convert.ToDouble(textBoxCenterY.Text);
             CogNeedleFindAlgoRcp.OriginRadius   = Convert.ToDouble(textBoxRadius.Text);
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching NeedleCircleFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, eSearchDirection _eSearchDir)

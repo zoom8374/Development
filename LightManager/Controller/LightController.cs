@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.IO.Ports;
 
+using LogMessageManager;
+
 namespace LightManager
 {
     class LightController
@@ -46,6 +48,7 @@ namespace LightManager
             catch
             {
                 _Result = false;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "LightController Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _Result;

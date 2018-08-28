@@ -112,12 +112,9 @@ namespace KPVisionInspectionFramework
             }
         }
 
-        private bool SeraialReceiveEventFunction(string _SerialData, string _SubData = "")
+        private bool SeraialReceiveEventFunction(string _SerialData)
         {
-            string[] _SerialDatas = new string[2];
-            _SerialDatas[0] = _SerialData;
-            _SerialDatas[1] = _SubData;
-            OnMainProcessCommand(eMainProcCmd.RCP_CHANGE, _SerialDatas);
+            OnMainProcessCommand(eMainProcCmd.RCP_CHANGE, _SerialData);
             return true;
         }
 

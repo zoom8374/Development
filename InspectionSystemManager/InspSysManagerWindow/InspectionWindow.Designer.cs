@@ -31,7 +31,9 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnCrossBar = new CustomControl.ImageButton();
             this.btnImageAutoSave = new CustomControl.ImageButton();
+            this.btnAutoDelete = new CustomControl.ImageButton();
             this.btnConfigSave = new CustomControl.ImageButton();
             this.btnImageSave = new CustomControl.ImageButton();
             this.btnImageLoad = new CustomControl.ImageButton();
@@ -41,7 +43,6 @@
             this.btnInspection = new CustomControl.ImageButton();
             this.btnLive = new CustomControl.ImageButton();
             this.labelTitle = new System.Windows.Forms.Label();
-            this.btnCrossBar = new CustomControl.ImageButton();
             this.panelMain.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +75,7 @@
             this.panelMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMenu.Controls.Add(this.btnCrossBar);
             this.panelMenu.Controls.Add(this.btnImageAutoSave);
+            this.panelMenu.Controls.Add(this.btnAutoDelete);
             this.panelMenu.Controls.Add(this.btnConfigSave);
             this.panelMenu.Controls.Add(this.btnImageSave);
             this.panelMenu.Controls.Add(this.btnImageLoad);
@@ -86,6 +88,24 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(616, 38);
             this.panelMenu.TabIndex = 0;
+            // 
+            // btnCrossBar
+            // 
+            this.btnCrossBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnCrossBar.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ConfigSave;
+            this.btnCrossBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCrossBar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnCrossBar.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnCrossBar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnCrossBar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnCrossBar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCrossBar.ForeColor = System.Drawing.Color.White;
+            this.btnCrossBar.Location = new System.Drawing.Point(411, 1);
+            this.btnCrossBar.Name = "btnCrossBar";
+            this.btnCrossBar.Size = new System.Drawing.Size(34, 34);
+            this.btnCrossBar.TabIndex = 16;
+            this.btnCrossBar.UseVisualStyleBackColor = false;
+            this.btnCrossBar.Click += new System.EventHandler(this.btnCrossBar_Click);
             // 
             // btnImageAutoSave
             // 
@@ -104,6 +124,24 @@
             this.btnImageAutoSave.TabIndex = 15;
             this.btnImageAutoSave.UseVisualStyleBackColor = false;
             this.btnImageAutoSave.Click += new System.EventHandler(this.btnImageAutoSave_Click);
+            // 
+            // btnAutoDelete
+            // 
+            this.btnAutoDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnAutoDelete.BackgroundImage = global::InspectionSystemManager.Properties.Resources.trash;
+            this.btnAutoDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAutoDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnAutoDelete.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnAutoDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnAutoDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnAutoDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAutoDelete.ForeColor = System.Drawing.Color.White;
+            this.btnAutoDelete.Location = new System.Drawing.Point(298, 2);
+            this.btnAutoDelete.Name = "btnAutoDelete";
+            this.btnAutoDelete.Size = new System.Drawing.Size(33, 33);
+            this.btnAutoDelete.TabIndex = 14;
+            this.btnAutoDelete.UseVisualStyleBackColor = false;
+            this.btnAutoDelete.Click += new System.EventHandler(this.btnAutoDelete_Click);
             // 
             // btnConfigSave
             // 
@@ -265,24 +303,6 @@
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
-            // btnCrossBar
-            // 
-            this.btnCrossBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnCrossBar.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ConfigSave;
-            this.btnCrossBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnCrossBar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnCrossBar.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnCrossBar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnCrossBar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnCrossBar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCrossBar.ForeColor = System.Drawing.Color.White;
-            this.btnCrossBar.Location = new System.Drawing.Point(411, 1);
-            this.btnCrossBar.Name = "btnCrossBar";
-            this.btnCrossBar.Size = new System.Drawing.Size(34, 34);
-            this.btnCrossBar.TabIndex = 16;
-            this.btnCrossBar.UseVisualStyleBackColor = false;
-            this.btnCrossBar.Click += new System.EventHandler(this.btnCrossBar_Click);
-            // 
             // InspectionWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -327,5 +347,6 @@
         private CustomControl.ImageButton btnConfigSave;
         private CustomControl.ImageButton btnImageAutoSave;
         private CustomControl.ImageButton btnCrossBar;
+		private CustomControl.ImageButton btnAutoDelete;
     }
 }

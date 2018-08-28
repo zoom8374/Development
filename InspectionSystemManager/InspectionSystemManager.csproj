@@ -90,6 +90,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TeachingForm\ImageDeleteWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeachingForm\ImageDeleteWindow.designer.cs">
+      <DependentUpon>ImageDeleteWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeachingForm\TeachingWindowEvent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,10 @@
       <Project>{72a2c4a7-8c84-416f-a883-9cb823bc9155}</Project>
       <Name>ParameterManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowKeyPad\WindowKeyPad.csproj">
+      <Project>{50134b44-1952-4c24-8b1d-76f8b9b49fc1}</Project>
+      <Name>WindowKeyPad</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RecipeSave1.png" />
@@ -183,6 +193,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeachingForm\ImageDeleteWindow.resx">
+      <DependentUpon>ImageDeleteWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeachingForm\TeachingWindow.resx">
       <DependentUpon>TeachingWindow.cs</DependentUpon>
@@ -252,6 +265,7 @@
     <Content Include="Resources\ImageAutoSave.png" />
     <Content Include="Resources\ImageAutoSaveOver.png" />
     <Content Include="Resources\ImageAutoSaveStop.png" />
+    <None Include="Resources\trash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

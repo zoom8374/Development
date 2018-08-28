@@ -30,6 +30,7 @@ namespace InspectionSystemManager
         private CCameraManager CameraManager;
 
         private TeachingWindow TeachWnd;
+        private ImageDeleteWindow ImageDeleteWnd;
         private InspectionParameter InspParam = new InspectionParameter();
         public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
         public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
@@ -130,10 +131,6 @@ namespace InspectionSystemManager
             FormName = _FormName;
             RecipeName = _RecipeName;
             IsSimulationMode = _IsSimulationMode;
-
-            //ResolutionX = _InspParam.ResolutionX;
-            //ResolutionY = _InspParam.ResolutionY;
-
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
@@ -177,6 +174,9 @@ namespace InspectionSystemManager
             ThreadImageSave.Start();
 
             TeachWnd = new TeachingWindow();
+			
+			//LDH, 2018.08.28, Image Delete Event
+            ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
         }
 
         public void InitializeResolution(double _ResolutionX, double _ResolutionY)
@@ -420,13 +420,13 @@ namespace InspectionSystemManager
         #region Control Event
         private void btnInspection_Click(object sender, EventArgs e)
         {
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single Inspection Run", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
             Inspection();
         }
 
         private void btnOneShot_Click(object sender, EventArgs e)
         {
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
             GrabAndInspection();
@@ -449,7 +449,9 @@ namespace InspectionSystemManager
             if (IsSimulationMode) return;
             kpCogDisplayMain.ClearDisplay();
             IsCamLiveFlag = !IsCamLiveFlag;
-            CameraManager.CamLive(IsCamLiveFlag);            
+            CameraManager.CamLive(IsCamLiveFlag);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "CamLive : " + IsCamLiveFlag.ToString(), CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnImageLoad_Click(object sender, EventArgs e)
@@ -458,6 +460,11 @@ namespace InspectionSystemManager
             kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
             kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
             kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
+        }
+		
+		private void btnAutoDelete_Click(object sender, EventArgs e)
+        {
+            ImageDeleteWnd.ShowDialog();
         }
 
         private void btnImageSave_Click(object sender, EventArgs e)
@@ -513,7 +520,7 @@ namespace InspectionSystemManager
         private void SetDisplayGrabImage(byte[] Image)
         {
             kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
             //kpCogDisplayMain.ClearDisplay();
@@ -636,7 +643,7 @@ namespace InspectionSystemManager
 
             do
             {
-                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID + 1));
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID + 1), CLogManager.LOG_LEVEL.LOW);
                 if (false == InspectionResultClear()) break;
                 if (false == InspectionProcess()) break;
                 if (false == InpsectionResultAnalysis()) break;
@@ -649,7 +656,7 @@ namespace InspectionSystemManager
 
                 if (false == InspectionComplete(false)) break;
                 _Result = true;
-                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID + 1));
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID + 1), CLogManager.LOG_LEVEL.LOW);
             } while (false);
 
             GC.Collect();
@@ -667,7 +674,7 @@ namespace InspectionSystemManager
             AnyReferenceX = 0;
             AnyReferenceY = 0;
             DisplayClear(true, true);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Resut Clear", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Resut Clear", ID + 1), CLogManager.LOG_LEVEL.LOW);
             return _Result;
         }
 
@@ -676,7 +683,7 @@ namespace InspectionSystemManager
             bool _Result = true;
             System.Diagnostics.Stopwatch _ProcessWatch = new System.Diagnostics.Stopwatch();
             _ProcessWatch.Reset(); _ProcessWatch.Start();
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess Start", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess Start", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
             {
@@ -694,11 +701,11 @@ namespace InspectionSystemManager
             }
 
             IsInspectionComplete = true;
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess End", ID + 1));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - InspectionProcess End", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             _ProcessWatch.Stop();
             string _ProcessTime = String.Format("ISM {0} - InspectionProcess Time : {1} ms", ID + 1, _ProcessWatch.Elapsed.TotalSeconds.ToString());
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _ProcessTime);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _ProcessTime, CLogManager.LOG_LEVEL.LOW);
 
             return _Result;
         }
@@ -842,9 +849,6 @@ namespace InspectionSystemManager
             CogLeadResult _CogLeadResult = new CogLeadResult();
 
             bool _Result = InspLeadProc.Run(OriginImage, _InspRegion, _CogLeadAlgo, ref _CogLeadResult, AnyReferenceX, AnyReferenceY);
-
-
-
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LEAD, _CogLeadResult);
             AlgoResultParamList.Add(_AlgoResultParam);
 
@@ -954,6 +958,8 @@ namespace InspectionSystemManager
 
             if (_PatternResult.FindCount <= 0) _IsGood = false;
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultPatternMatching Complete", CLogManager.LOG_LEVEL.MID);
+
             return _IsGood;
         }
 
@@ -996,12 +1002,16 @@ namespace InspectionSystemManager
                 ResultDisplayMessage(_BlobReferResult.BlobMinX[0], _BlobReferResult.BlobMaxY[0] + 4, _Message, _IsGood);
             }
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultBlobReference Complete", CLogManager.LOG_LEVEL.MID);
+
             return _IsGood;
         }
 
         private bool DisplayResultBlob(Object _ResultParam, int _Index)
         {
             bool _IsGood = true;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultBlob Complete", CLogManager.LOG_LEVEL.MID);
 
             return _IsGood;
         }
@@ -1045,6 +1055,8 @@ namespace InspectionSystemManager
             }
             //});
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultLeadMeasure Complete", CLogManager.LOG_LEVEL.MID);
+
             return _CogLeadResult.IsGood;
         }
 
@@ -1074,6 +1086,8 @@ namespace InspectionSystemManager
                 //LOG
             }
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultNeedleFind Complete", CLogManager.LOG_LEVEL.MID);
+
             return _CogNeedleFindResult.IsGood;
         }
 
@@ -1096,6 +1110,8 @@ namespace InspectionSystemManager
 
             }
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultBarcodeIDFind Complete", CLogManager.LOG_LEVEL.MID);
+
             return _CogBarCodeIDResult.IsGood;
         }
 
@@ -1106,6 +1122,8 @@ namespace InspectionSystemManager
             CogLineSegment _CogLine = new CogLineSegment();
             _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
             ResultDisplay(_CogLine, "LineFind", CogColorConstants.Green);
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultLineFind Complete", CLogManager.LOG_LEVEL.MID);
 
             return _CogLineFindResult.IsGood;
         }
@@ -1197,6 +1215,8 @@ namespace InspectionSystemManager
             var _InspectionWindowEvent = InspectionWindowEvent;
             _InspectionWindowEvent?.Invoke(eIWCMD.SET_RESULT, SendResParam);
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - InspectionDataSet Complete", CLogManager.LOG_LEVEL.MID);
+
             return _Result;
         }
 
@@ -1206,6 +1226,8 @@ namespace InspectionSystemManager
 
             var _InspectionWindowEvent = InspectionWindowEvent;
             _InspectionWindowEvent?.Invoke(eIWCMD.SEND_DATA, SendResParam);
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - InspectionDataSend Complete", CLogManager.LOG_LEVEL.MID);
 
             return _Result;
         }

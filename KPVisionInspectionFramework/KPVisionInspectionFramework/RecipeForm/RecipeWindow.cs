@@ -77,8 +77,13 @@ namespace KPVisionInspectionFramework
         private void btnRecipeChange_Click(object sender, EventArgs e)
         {
             this.Hide();
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange_Click", CLogManager.LOG_LEVEL.LOW);
+
             if (listBoxRecipe.SelectedItem == null) { MessageBox.Show(new Form { TopMost = true }, "Select the recipe you want to change."); return; }
             RecipeChange(listBoxRecipe.SelectedItem.ToString());
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange Complete : " + listBoxRecipe.SelectedItem.ToString(), CLogManager.LOG_LEVEL.LOW);
             this.Show();
         }
 
@@ -102,6 +107,8 @@ namespace KPVisionInspectionFramework
                 RecipeChange(_RcpNewNameWnd.NewRecipeName, "[Default]");
                 this.Show();
             }
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeAdd Complete", CLogManager.LOG_LEVEL.LOW);
 
             _RcpNewNameWnd.RecipeCopyEvent -= new RecipeNewNameWindow.RecipeCopyHandler(RecipeCopyEventFunction);
             IsRecipeNew = false;
@@ -142,6 +149,9 @@ namespace KPVisionInspectionFramework
                 }
                 else return;
             }
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeDelete Complete : " + listBoxRecipe.SelectedItem, CLogManager.LOG_LEVEL.LOW);
+
             LoadRecipeList();
         }
 
@@ -236,6 +246,8 @@ namespace KPVisionInspectionFramework
                     }
                 }
             }
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeCopy Complete", CLogManager.LOG_LEVEL.LOW);
 
             RecipeChange(_NewRecipeName, _SrcRecipeName);
             LoadRecipeList();

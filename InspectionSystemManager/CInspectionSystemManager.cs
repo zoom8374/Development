@@ -180,12 +180,12 @@ namespace InspectionSystemManager
             //Camera 모듈 Check
 
 
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} ImageGrabSnap Complete", ID + 1));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} ImageGrabSnap Complete", ID + 1), CLogManager.LOG_LEVEL.LOW);
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
             InspWnd.GrabAndInspection();
 
             //InspWnd.IsThreadInspectionProcessTrigger = true;
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ISM{0} IsThreadInspectionProcessTrigger = true");
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "ISM{0} IsThreadInspectionProcessTrigger = true", CLogManager.LOG_LEVEL.LOW);
         }
 
         private void ImageGrabLive()
@@ -279,7 +279,7 @@ namespace InspectionSystemManager
                     {
                         IsThreadInspectionTrigger = false;
                         InspWnd.IsInspectionComplete = false;
-                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Vision : ISM{0} IsInspectionComplete false", ID + 1));
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Vision : ISM{0} IsInspectionComplete false", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
                         if (!IsSimulationMode)  ImageGrabSnap();
                         else                    InspWnd.IsThreadInspectionProcessTrigger = true;

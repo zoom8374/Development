@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Cognex.VisionPro;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -269,6 +270,8 @@ namespace InspectionSystemManager
             UpdateTeachingStatus(eTeachStep.AREA_CLEAR);
             gridViewAlgo.ClearSelection();
             gridViewAlgo.Rows.Clear();
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "TeachingWindow - InspectionAreaAdd", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnInspectionAreaDel_Click(object sender, EventArgs e)
@@ -353,11 +356,13 @@ namespace InspectionSystemManager
             UpdateTeachingStatus(eTeachStep.AREA_CLEAR);
             gridViewAlgo.ClearSelection();
             gridViewAlgo.Rows.Clear();
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "TeachingWindow - InspectionAreaDel", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnInspectionAreaCopy_Click(object sender, EventArgs e)
         {
-
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "TeachingWindow - InspectionAreaCopy", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnInspectionAreaSet_Click(object sender, EventArgs e)
@@ -420,6 +425,8 @@ namespace InspectionSystemManager
             ContextMenuAlgo.Show(btnInspectionAlgoAdd, _Position);
 
             UpdateTeachingStatus(eTeachStep.ALGO_CLEAR);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "TeachingWindow - InspectionAlgoAdd", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnInspectionAlgoDel_Click(object sender, EventArgs e)
@@ -487,11 +494,13 @@ namespace InspectionSystemManager
             _ResultIndex = _ResultIndex + InspAlgoSelected - 1;
             if (AlgoResParamList.Count > _ResultIndex && _ResultIndex >= 0)
                 AlgoResParamList.RemoveAt(_ResultIndex);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "TeachingWindow - InspectionAlgoDel", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnInspectionAlgoCopy_Click(object sender, EventArgs e)
         {
-
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "TeachingWindow - InspectionAlgoCopy", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnInspectionAlgoSet_Click(object sender, EventArgs e)

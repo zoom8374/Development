@@ -252,6 +252,7 @@ namespace KPVisionInspectionFramework
 
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
             MainProcess.AutoMode(true);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode ON", CLogManager.LOG_LEVEL.MID);
         }
 
         private void rbStop_Click(object sender, EventArgs e)
@@ -261,6 +262,8 @@ namespace KPVisionInspectionFramework
 
             CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             MainProcess.AutoMode(false);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode STOP", CLogManager.LOG_LEVEL.MID);
         }
 
         private void rbEthernet_Click(object sender, EventArgs e)
@@ -328,9 +331,21 @@ namespace KPVisionInspectionFramework
 
         private void rbLabelCode_DoubleClick(object sender, EventArgs e)
         {
-            MessageBox.Show("Code Change");
+            string code = "";
+            CodeSettingWindow CodeSettingWnd = new CodeSettingWindow();
+            CodeSettingWnd.BarcodeReaderEvent += new CodeSettingWindow.BarcodeReaderHandler(SetBarcodeTextbox);
+
+            CodeSettingWnd.ShowDialog();
+
+            CodeSettingWnd.BarcodeReaderEvent -= new CodeSettingWindow.BarcodeReaderHandler(SetBarcodeTextbox);
         }
 
+		private void SetBarcodeTextbox(string _ReadBarcode)
+        {
+            //rbTextBoxBarCode.TextBoxText = _ReadBarcode;
+			rbLabelCode.Text = "CODE : " + _ReadBarcode;
+        }
+		
         private void rbExit_Click(object sender, EventArgs e)
         {
             try
@@ -461,11 +476,9 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = true;
 
-            string[] _SerialDatas = _Value as string[];
-            string _RecipeName = _SerialDatas[0];
-            string _SrcRecipe = _SerialDatas[1];
+            string _RecipeName = _Value as string;
 
-            _Result = RecipeChange(_RecipeName, _SrcRecipe);
+            _Result = RecipeChange(_RecipeName);
 
             if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType) MainProcess.SendSerialData("@R");
 

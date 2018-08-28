@@ -50,7 +50,6 @@
             this.labelTitle.Text = "  Log Setting Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
-            this.labelTitle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDoubleClick);
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
@@ -127,7 +126,7 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // LogSettingWindow
+            // CodeSettingWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -140,7 +139,7 @@
             this.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Name = "LogSettingWindow";
+            this.Name = "CodeSettingWindow";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LogWindowSE";
@@ -149,7 +148,6 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LogSettingWindow_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LogSettingWindow_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LogSettingWindow_MouseUp);
-            this.Resize += new System.EventHandler(this.LogSettingWindow_Resize);
             this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

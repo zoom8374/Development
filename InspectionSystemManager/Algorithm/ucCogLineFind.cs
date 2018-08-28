@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -115,6 +116,8 @@ namespace InspectionSystemManager
             CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToInt32(numUpDownEndX.Value);
             CogLineFindAlgoRcp.CaliperLineEndY = Convert.ToInt32(numUpDownEndY.Value);
             CogLineFindAlgoRcp.UseAlignment = ckUseAlignment.Checked;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogLineFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, double _SearchDirection)

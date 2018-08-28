@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 
+using LogMessageManager;
+
 namespace LightManager
 {
     class JV501Controller
@@ -44,6 +46,7 @@ namespace LightManager
             catch
             {
                 _Result = false;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "JV501Controller Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _Result;

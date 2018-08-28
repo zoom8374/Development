@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -168,6 +169,8 @@ namespace InspectionSystemManager
             CogBlobReferAlgoRcp.UseBodyHeight = ckBodyHeight.Checked;
             CogBlobReferAlgoRcp.OriginX = OriginX;
             CogBlobReferAlgoRcp.OriginY = OriginY;
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching BlobReference SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         private void SetForegroundComboBox(int _RangeType)

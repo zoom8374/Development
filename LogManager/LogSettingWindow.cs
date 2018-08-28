@@ -130,13 +130,6 @@ namespace LogMessageManager
             ControlPaint.DrawBorder(e.Graphics, this.labelTitle.ClientRectangle, Color.White, ButtonBorderStyle.Solid);
         }
 
-        private void labelTitle_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ResizingFlag = !ResizingFlag;
-            if (true == ResizingFlag) labelTitle.ForeColor = Color.Chocolate;
-            else labelTitle.ForeColor = Color.WhiteSmoke;
-        }
-
         private void panelMain_MouseMove(object sender, MouseEventArgs e)
         {
             if (false == ResizingFlag) { this.Cursor = Cursors.Default; return; }

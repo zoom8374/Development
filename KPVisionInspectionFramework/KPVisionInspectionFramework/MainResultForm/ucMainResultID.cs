@@ -166,7 +166,7 @@ namespace KPVisionInspectionFramework
         //LDH, 2018.08.13, History 추가용 함수
         private void InspectionHistory(SendIDResult _ResultParam)
         {
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
 
             DateTime dateTime = DateTime.Now;
             string InspScreenshotPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData\Screenshot\";
@@ -184,11 +184,11 @@ namespace KPVisionInspectionFramework
             HistoryParam[3] = ImageSaveFile;
 
             CHistoryManager.AddHistory(HistoryParam);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"), CLogManager.LOG_LEVEL.LOW);
 
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot Start"));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot Start"), CLogManager.LOG_LEVEL.LOW);
             ScreenshotEvent(ImageSaveFile);
-            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot End"));
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot End"), CLogManager.LOG_LEVEL.LOW);
         }
     }
 }

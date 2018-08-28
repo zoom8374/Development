@@ -8,6 +8,8 @@ using System.Xml;
 using System.Collections;
 using Microsoft.VisualBasic.FileIO;
 
+using LogMessageManager;
+
 enum eLightControllerType { Normal, JV501, JV504 }
 namespace LightManager
 {
@@ -229,6 +231,7 @@ namespace LightManager
             catch
             {
                 _Result = false;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ReadLightParameters Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _Result;
@@ -249,6 +252,7 @@ namespace LightManager
             catch
             {
                 _XmlNodeList = null;
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "CLightManager - GetNodeList Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _XmlNodeList;
@@ -327,7 +331,7 @@ namespace LightManager
             }
             catch
             {
-
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "CopyLightParameter Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
 

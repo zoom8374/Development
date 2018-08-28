@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Euresys.MultiCam;
 
+using LogMessageManager;
+
 namespace CameraManager
 {
     public class CEuresysManager
@@ -78,9 +80,10 @@ namespace CameraManager
                 MC.SetParam(channel, "ChannelState", "READY");
                 MC.SetParam(channel, "ChannelState", "ACTIVE");
             }
-            catch (Euresys.MultiCamException exc)
+			
+            catch (Euresys.MultiCamException ex)
             {
-                
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "cEuresysManager() Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -146,11 +149,11 @@ namespace CameraManager
             }
             catch (Euresys.MultiCamException exc)
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CEuresysManager ProcessingCallback Exception!! : MultiCanException" , CLogManager.LOG_LEVEL.LOW);
             }
             catch (System.Exception exc)
             {
-                
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CEuresysManager Initialize Exception!! : SystemException", CLogManager.LOG_LEVEL.LOW);
             }
             // - DominoSnapshot Sample Program
         }
@@ -167,7 +170,7 @@ namespace CameraManager
             }
             catch (System.Exception exc)
             {
-
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CEuresysManager AcqFailureCallback Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             // - DominoSnapshot Sample Program

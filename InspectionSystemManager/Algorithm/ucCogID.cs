@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ParameterManager;
+using LogMessageManager;
 
 namespace InspectionSystemManager
 {
@@ -45,6 +46,8 @@ namespace InspectionSystemManager
         {
             CogBarCodeIDAlgoRcp.Symbology = comboBoxSymbology.Text;
             CogBarCodeIDAlgoRcp.FindCount = Convert.ToInt32(numUpDownNumtoFind.Value);
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogID SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         private void btnSetting_Click(object sender, EventArgs e)

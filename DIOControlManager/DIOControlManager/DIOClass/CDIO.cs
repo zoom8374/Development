@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using LogMessageManager;
+
 public enum DIOEnum
 {
     IO_CHANNEL = 16,
@@ -40,6 +42,7 @@ namespace DIOControlManager
             catch
             {
                 iResult = (int)CDioConst.DIO_ERR_INI_RESOURCE;
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "CDIO Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
             return iResult;
         }

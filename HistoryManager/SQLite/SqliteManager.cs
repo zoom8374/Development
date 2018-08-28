@@ -6,6 +6,8 @@ using System.Data.SQLite;
 using System.IO;
 using System.Threading;
 
+using LogMessageManager;
+
 namespace HistoryManager
 {
     public class SqliteManager
@@ -80,6 +82,7 @@ namespace HistoryManager
                 }
                 catch (Exception _e)
                 {
+                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SqliteManager SqlSelect Exception!!", CLogManager.LOG_LEVEL.LOW);
                 }
                 finally
                 {
@@ -126,6 +129,7 @@ namespace HistoryManager
             }
             catch (System.Exception ex)
             {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SqliteManager SqlExecute Exception!!", CLogManager.LOG_LEVEL.LOW);
                 return 0;
             }
         }

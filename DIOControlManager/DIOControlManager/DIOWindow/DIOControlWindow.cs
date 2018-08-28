@@ -146,6 +146,7 @@ namespace DIOControlManager
             catch
             {
                 _XmlNodeList = null;
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "DIOControlWindow GetNodeList Exception!!", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _XmlNodeList;
@@ -551,8 +552,7 @@ namespace DIOControlManager
             }
             catch(Exception ex)
             {
-                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadInputIOCheckFunc Err");
-                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadInputIOCheckFunc Err : " + ex.Message);
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadInputIOCheckFunc Err : " + ex.Message, CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -583,9 +583,9 @@ namespace DIOControlManager
                     Thread.Sleep(10);
                 }
             }
-            catch
+            catch(System.Exception ex)
             {
-
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadVisionAliveSignalFunc Err : " + ex.Message, CLogManager.LOG_LEVEL.LOW);
             }
         }
 
@@ -600,9 +600,9 @@ namespace DIOControlManager
                 }
             }
 
-            catch
+            catch(System.Exception ex)
             {
-
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadInputAliveCheckFunc Err : " + ex.Message, CLogManager.LOG_LEVEL.LOW);
             }
         }
     }
