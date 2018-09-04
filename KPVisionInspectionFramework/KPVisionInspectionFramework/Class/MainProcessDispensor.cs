@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using InspectionSystemManager;
@@ -17,6 +18,20 @@ namespace KPVisionInspectionFramework
         private DIOControlWindow DIOWnd;
         private EthernetWindow   EthernetWnd;
 
+        private AckStruct[] AckStructs;
+
+        private bool AckFlag = false;
+        public bool NakFlag = false;
+
+        private Thread ThreadAckSignalCheck;
+        private bool IsThreadAckSignalCheckExit;
+        private bool IsThreadAckSignalTrigger;
+        private bool AckSignal = false;
+
+        private short WaitingPeriod = 50;
+        private short WaitingLimitTime = 5000;
+        private short WaitingTime = 0;
+        
         #region Initialize & DeInitialize
         public MainProcessDispensor()
         {
@@ -26,6 +41,7 @@ namespace KPVisionInspectionFramework
 
             EthernetWnd = new EthernetWindow();
             EthernetWnd.Initialize();
+            EthernetWnd.ReceiveStringEvent += new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
 
             int _AutoCmdBit     = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
@@ -34,6 +50,14 @@ namespace KPVisionInspectionFramework
             if (_AutoCmdBit >= 0)     DIOWnd.SetOutputSignal((short)_AutoCmdBit, false);
             if (_CompleteCmdBit >= 0) DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
             if (_ReadyCmdBit >= 0)    DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
+
+            AckStructs = new AckStruct[3];
+            for (int iLoopCount = 0; iLoopCount < 3; ++iLoopCount) AckStructs[iLoopCount] = new AckStruct(); ;
+
+            ThreadAckSignalCheck = new Thread(ThreadAckSignalCheckFunc);
+            ThreadAckSignalCheck.IsBackground = true;
+            IsThreadAckSignalCheckExit = false;
+            IsThreadAckSignalTrigger = false;
         }
 
         public void DeInitialize()
@@ -48,6 +72,9 @@ namespace KPVisionInspectionFramework
 
             DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.DeInitialize();
+
+            EthernetWnd.ReceiveStringEvent -= new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
+            EthernetWnd.DeInitialize();
         }
         #endregion Initialize & DeInitialize
 
@@ -141,7 +168,7 @@ namespace KPVisionInspectionFramework
             }
 
             if (_CompleteCmdBit >= 0)   DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
-            if (_ReadyCmdBit >= 0)      DIOWnd.SetOutputSignal((short)_ReadyCmdBit, true);
+            if (_ReadyCmdBit >= 0)      DIOWnd.SetOutputSignal((short)_ReadyCmdBit, true, 250);
 
             return _Result;
         }
@@ -166,6 +193,12 @@ namespace KPVisionInspectionFramework
 
                 string _ResultDataString = String.Format("{0},{1},{2},{3}", _VisionString, _ResultString, _SendResult.AlignX, _SendResult.AlignY);
                 EthernetWnd.SendResultData(_ResultDataString);
+
+                //AckStructs[_ResultParam.ID].WaitTime = 0;
+                //AckStructs[_ResultParam.ID].AckRequest = true;
+                //AckStructs[_ResultParam.ID].AckComplete = false;
+                //AckStructs[_ResultParam.ID].AckStatus = ACK_STATUS.WAIT;
+                AckStructs[_ResultParam.ID].Initialize();
             }
 
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)
@@ -184,7 +217,6 @@ namespace KPVisionInspectionFramework
 
             return _Result;
         }
-
         public override bool InspectionComplete(int _ID, bool _Flag)
         {
             bool _Result = true;
@@ -194,12 +226,17 @@ namespace KPVisionInspectionFramework
             else if (_ID == 1)  _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE_2);
             else if (_ID == 2)  _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE_3);
 
-            DIOWnd.SetOutputSignal((short)_CompleteCmdBit, _Flag);
+            DIOWnd.SetOutputSignal((short)_CompleteCmdBit, _Flag, 250);
 
             return _Result;
         }
 
         #region Communication Event Function
+        /// <summary>
+        /// DIO => MainProcess Event
+        /// </summary>
+        /// <param name="_BitNum"></param>
+        /// <param name="_Signal"></param>
         private void InputChangeEventFunction(short _BitNum, bool _Signal)
         {
             switch (_BitNum)
@@ -215,6 +252,64 @@ namespace KPVisionInspectionFramework
                 case DIO_DEF.IN_REQUEST_3:  DataRequest(2); break;
             }
         }
+
+        /// <summary>
+        /// Ethernet => MainProcess Event
+        /// </summary>
+        /// <param name="_RecvMessage"></param>
+        private void ReceiveStringEventFunction(string[] _RecvMessage)
+        {
+            if (_RecvMessage[1] == "V1") AckStructs[0].AckComplete = true;
+            else if (_RecvMessage[1] == "V2") AckStructs[1].AckComplete = true;
+            else if (_RecvMessage[1] == "V3") AckStructs[2].AckComplete = true;
+        }
         #endregion Communication Event Function
+
+        private void ThreadAckSignalCheckFunc()
+        {
+            try
+            {
+                while (false == IsThreadAckSignalCheckExit)
+                {
+                    Thread.Sleep(WaitingPeriod);
+
+                    for (int iLoopCount = 0; iLoopCount < AckStructs.Length; ++iLoopCount)
+                    {
+                        if (true == AckStructs[iLoopCount].AckRequest)      AckStructs[iLoopCount].WaitTime += WaitingPeriod;
+                        if (true == AckStructs[iLoopCount].AckComplete)     AckStructs[iLoopCount].SetStatus(ACK_STATUS.COMPLETE, false);
+                        if (AckStructs[iLoopCount].WaitTime >= WaitingTime) AckStructs[iLoopCount].SetStatus(ACK_STATUS.TIME_OVER, false);
+                    }
+                }
+            }
+
+            catch
+            {
+
+            }
+        }
     }
+
+    public class AckStruct
+    {
+        public ACK_STATUS AckStatus = ACK_STATUS.WAIT;
+        public bool AckRequest = false;
+        public bool AckComplete = false;
+        public short WaitTime = 0;
+
+        public void Initialize()
+        {
+            WaitTime = 0;
+            AckRequest = true;
+            AckComplete = false;
+            AckStatus = ACK_STATUS.WAIT;
+        }
+
+        public void SetStatus(ACK_STATUS _AckStatus, bool _AckRequest)
+        {
+            AckStatus = _AckStatus;
+            AckRequest = _AckRequest;
+        }
+    }
+
+    public enum ACK_STATUS { TIME_OVER, COMPLETE, FAIL, WAIT }
 }

@@ -481,11 +481,3 @@ F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspect
 F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspectionProject\HistoryManager\obj\Release\HistoryManager.csproj.GenerateResource.Cache
 F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspectionProject\HistoryManager\obj\Release\HistoryManager.dll
 F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspectionProject\HistoryManager\obj\Release\HistoryManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\bin\Release\HistoryManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\bin\Release\HistoryManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Release\HistoryManager.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Release\HistoryManager.HistoryWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Release\HistoryManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Release\HistoryManager.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Release\HistoryManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\HistoryManager\obj\Release\HistoryManager.pdb

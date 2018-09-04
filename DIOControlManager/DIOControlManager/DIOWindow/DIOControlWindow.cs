@@ -21,8 +21,12 @@ namespace DIOControlManager
     {
         private DIONamingWindow DioNamingWnd;
         private CDIO DigitalIO = new CDIO();
+        public DIOBaseCommand DioBaseCmd;
 
         private eProjectType ProjectType = eProjectType.NONE;
+
+        private List<SignalToggleData> SignalToggleList;
+        private short SleepTime = 10;
 
         private readonly int ALIVE_SIGNAL_TIME = 0;
         private readonly int ALIVE_CHECK_TIME = 0;
@@ -42,11 +46,6 @@ namespace DIOControlManager
         private CPressingButton.PressButton[] btnInputSignal;
         private CPressingButton.PressButton[] btnOutputSignal;
 
-        public DIOBaseCommand DioBaseCmd;
-
-        public delegate void InputChangedHandler(short _BitNum, bool _Signal);
-        public event InputChangedHandler InputChangedEvent;
-
         private Thread ThreadInputIOCheck;
         private bool IsThreadInputIOCheckExit;
         private Thread ThreadOutputIOCheck;
@@ -61,6 +60,12 @@ namespace DIOControlManager
         private bool IsThreadInputAliveCheckExit;
         private int InputAliveCheckCount = 0;
         private bool InputAliveCheckFlag = false;
+
+        private Thread ThreadSignalToggle;
+        private bool IsThreadSignalToggleExit;
+
+        public delegate void InputChangedHandler(short _BitNum, bool _Signal);
+        public event InputChangedHandler InputChangedEvent;
 
         #region Initialize & DeInitialize
         public DIOControlWindow(int _ProjectType = 0)
@@ -278,6 +283,8 @@ namespace DIOControlManager
 
             IsInitialize = InitializeIOBoard();
 
+            SignalToggleList = new List<SignalToggleData>();
+
             if (!IsInitialize) return false;
 
             #region Initialize Thread
@@ -300,6 +307,11 @@ namespace DIOControlManager
             IsThreadInputAliveCheckExit = false;
             ThreadOutputIOCheck.IsBackground = true;
             ThreadInputAliveCheck.Start();
+
+            ThreadSignalToggle = new Thread(ThreadSignalToggleFunc);
+            IsThreadSignalToggleExit = false;
+            ThreadSignalToggle.IsBackground = true;
+            ThreadSignalToggle.Start();
             #endregion Initialize Thread
 
             return _Result;
@@ -359,6 +371,7 @@ namespace DIOControlManager
         }
         #endregion Control Default Event
 
+        #region Control Event
         private void btnTrigger_Click(object sender, EventArgs e)
         {
             //int _BitCommand = AirBlowCmd.BitCheck(5);
@@ -420,14 +433,27 @@ namespace DIOControlManager
             IsShowWindow = false;
             this.Hide();
         }
+        #endregion Control Event
 
-        public void SetOutputSignal(short _BitNumber, bool _Signal)
+        private void SetSignalToggleVariable(short _BitNumber, bool _Signal, short _ToggleTime)
+        {
+            if (_ToggleTime == 0) return;
+
+            SignalToggleData _SignalToggleData = new SignalToggleData();
+            _SignalToggleData.Signal = _BitNumber;
+            _SignalToggleData.ToggleTime = _ToggleTime;
+            _SignalToggleData.CurrentSignal = _Signal;
+            SignalToggleList.Add(_SignalToggleData);
+        }
+
+        public void SetOutputSignal(short _BitNumber, bool _Signal, short _ToggleTime = 0)
         {
             if (false == IsInitialize) return;
 
             OutputSignalFlag[_BitNumber] = _Signal;
             byte _Data = Convert.ToByte(OutputSignalFlag[_BitNumber]);
             DigitalIO.OutputBitData(_BitNumber, _Data);
+            SetSignalToggleVariable(_BitNumber, _Signal, _ToggleTime);
         }
 
         private void InputSignalCheck()
@@ -603,6 +629,34 @@ namespace DIOControlManager
             catch(System.Exception ex)
             {
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadInputAliveCheckFunc Err : " + ex.Message, CLogManager.LOG_LEVEL.LOW);
+            }
+        }
+
+        private void ThreadSignalToggleFunc()
+        {
+            try
+            {
+                SleepTime = 10;
+                while (false == IsThreadSignalToggleExit)
+                {
+                    for (int iLoopCount = SignalToggleList.Count - 1; iLoopCount >= 0; --iLoopCount)
+                    {
+                        SignalToggleList[iLoopCount].ToggleTime -= SleepTime;
+
+                        if (SignalToggleList[iLoopCount].ToggleTime <= 0)
+                        {
+                            byte _Data = Convert.ToByte(!SignalToggleList[iLoopCount].CurrentSignal);
+                            DigitalIO.OutputBitData(SignalToggleList[iLoopCount].Signal, _Data);
+                            SignalToggleList.RemoveAt(iLoopCount);
+                        }
+                    }
+                    Thread.Sleep(SleepTime);
+                }
+            }
+
+            catch (System.Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ThreadSignalToggleFunc Err : " + ex.Message, CLogManager.LOG_LEVEL.LOW);
             }
         }
     }

@@ -32,6 +32,9 @@ namespace EthernetManager
 
         private Timer ConnectCheckTimer;
 
+        public delegate void ReceiveStringHandler(string[] _ReceiveMsasage);
+        public event ReceiveStringHandler ReceiveStringEvent;
+
         #region Initialize & DeInitialize
         public EthernetWindow()
         {
@@ -350,6 +353,9 @@ namespace EthernetManager
             //LaserProtocol.Data3 = Convert.ToDouble(_Datas[3]);
             //LaserProtocol.Data4 = Convert.ToDouble(_Datas[4]);
             //LaserProtocol.Status = true;
+
+            var _ReceiveStringEvent = ReceiveStringEvent;
+            _ReceiveStringEvent?.Invoke(_Datas);
 
             return true;
         }

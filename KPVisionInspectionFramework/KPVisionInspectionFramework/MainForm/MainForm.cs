@@ -504,9 +504,7 @@ namespace KPVisionInspectionFramework
         private void SendResultData(object _Result)
         {
             SendResultParameter _SendResParam = _Result as SendResultParameter;
-
             MainProcess.SendResultData(_SendResParam);
-
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
         }
 

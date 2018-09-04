@@ -8,6 +8,12 @@ using ParameterManager;
 
 namespace DIOControlManager
 {
+    public class SignalToggleData
+    {
+        public short Signal;
+        public int ToggleTime;
+        public bool  CurrentSignal;
+    }
 
     public class DIOBaseCommand
     {

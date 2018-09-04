@@ -41,6 +41,8 @@ namespace InspectionSystemManager
             ThreadImageAutoDelete = new Thread(ThreadImageAutoDeleteFunc);
             IsThreadImageAutoDeleteExit = false;
             IsThreadImageAutoDeleteTrigger = false;
+            ThreadImageAutoDelete.IsBackground = true;
+            ThreadImageAutoDelete.Start();
 
             GetDeleteDateFromRegistry();
         }

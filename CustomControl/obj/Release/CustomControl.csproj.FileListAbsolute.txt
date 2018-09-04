@@ -458,10 +458,3 @@ F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspect
 F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspectionProject\CustomControl\obj\Release\CustomControl.csproj.GenerateResource.Cache
 F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspectionProject\CustomControl\obj\Release\CustomControl.dll
 F:\[Project]\2017\DMS\프로그램\Vision SW_20180310_4\KPSolarCellVisionInspectionProject\CustomControl\obj\Release\CustomControl.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\bin\Release\CustomControl.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\bin\Release\CustomControl.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Release\CustomControl.GridViewManager.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Release\CustomControl.ImageButton.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Release\CustomControl.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Release\CustomControl.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Release\CustomControl.pdb

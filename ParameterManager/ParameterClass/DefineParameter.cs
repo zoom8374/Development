@@ -30,7 +30,7 @@ namespace ParameterManager
     /// <summary>
     /// 
     /// </summary>
-    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE }
+    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, ACK_COMPLETE, ACK_FAIL }
 
     /// <summary>
     /// Inspection Window Command

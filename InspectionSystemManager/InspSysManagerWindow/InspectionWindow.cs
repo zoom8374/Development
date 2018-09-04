@@ -654,7 +654,7 @@ namespace InspectionSystemManager
                 if (false == InspectionComplete(true)) break;
 				IsThreadImageSaveTrigger = true;
 
-                if (false == InspectionComplete(false)) break;
+                //if (false == InspectionComplete(false)) break;    //Autu Toggle로 변경
                 _Result = true;
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection End", ID + 1), CLogManager.LOG_LEVEL.LOW);
             } while (false);
