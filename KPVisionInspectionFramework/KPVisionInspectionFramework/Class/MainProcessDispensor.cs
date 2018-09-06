@@ -9,14 +9,16 @@ using InspectionSystemManager;
 using LogMessageManager;
 using ParameterManager;
 using DIOControlManager;
-using EthernetManager;
+using EthernetServerManager;
+//using EthernetManager;
 
 namespace KPVisionInspectionFramework
 {
     public class MainProcessDispensor : MainProcessBase
     {
-        private DIOControlWindow DIOWnd;
-        private EthernetWindow   EthernetWnd;
+        private DIOControlWindow    DIOWnd;
+        private EthernetWindow      EthernetServWnd;
+        //private EthernetWindow   EthernetWnd;
 
         private AckStruct[] AckStructs;
 
@@ -25,12 +27,10 @@ namespace KPVisionInspectionFramework
 
         private Thread ThreadAckSignalCheck;
         private bool IsThreadAckSignalCheckExit;
-        private bool IsThreadAckSignalTrigger;
         private bool AckSignal = false;
 
         private short WaitingPeriod = 50;
         private short WaitingLimitTime = 5000;
-        private short WaitingTime = 0;
         
         #region Initialize & DeInitialize
         public MainProcessDispensor()
@@ -39,9 +39,9 @@ namespace KPVisionInspectionFramework
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.Initialize();
 
-            EthernetWnd = new EthernetWindow();
-            EthernetWnd.Initialize();
-            EthernetWnd.ReceiveStringEvent += new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
+            EthernetServWnd = new EthernetWindow();
+            EthernetServWnd.Initialize();
+            EthernetServWnd.ReceiveStringEvent += new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
 
             int _AutoCmdBit     = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
@@ -57,7 +57,6 @@ namespace KPVisionInspectionFramework
             ThreadAckSignalCheck = new Thread(ThreadAckSignalCheckFunc);
             ThreadAckSignalCheck.IsBackground = true;
             IsThreadAckSignalCheckExit = false;
-            IsThreadAckSignalTrigger = false;
         }
 
         public void DeInitialize()
@@ -73,8 +72,8 @@ namespace KPVisionInspectionFramework
             DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.DeInitialize();
 
-            EthernetWnd.ReceiveStringEvent -= new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
-            EthernetWnd.DeInitialize();
+            EthernetServWnd.ReceiveStringEvent -= new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
+            EthernetServWnd.DeInitialize();
         }
         #endregion Initialize & DeInitialize
 
@@ -102,17 +101,17 @@ namespace KPVisionInspectionFramework
         #region Ethernet Window Function
         public override void ShowEthernetWindow()
         {
-            EthernetWnd.ShowEthernetWindow();
+            EthernetServWnd.ShowEthernetWindow();
         }
 
         public override bool GetEhernetWindowShown()
         {
-            return EthernetWnd.IsShowWindow;
+            return EthernetServWnd.IsShowWindow;
         }
 
         public override void SetEthernetWindowTopMost(bool _IsTopMost)
         {
-            EthernetWnd.TopMost = _IsTopMost;
+            EthernetServWnd.TopMost = _IsTopMost;
         }
         #endregion Ethernet Window Function
 
@@ -191,8 +190,12 @@ namespace KPVisionInspectionFramework
                 //_DataStringHiY = String.Format("{0:D2}", _SendResult.AlignY);
                 //_DataStringLowY = String.Format("{0:F2", _SendResult.AlignY);
 
-                string _ResultDataString = String.Format("{0},{1},{2},{3}", _VisionString, _ResultString, _SendResult.AlignX, _SendResult.AlignY);
-                EthernetWnd.SendResultData(_ResultDataString);
+                //string _ResultDataString = String.Format("{0},{1},{2},{3}", _VisionString, _ResultString, _SendResult.AlignX, _SendResult.AlignY);
+                //LDH, 2018.09.04, TILab 프로토콜 생성
+                string[] _DataStringAlign = ChangeResult(_SendResult.AlignX, _SendResult.AlignY);
+                string _ResultDataString = string.Format("{0},{1},{2},{3}", _VisionString, _ResultString, _DataStringAlign[0], _DataStringAlign[1]);
+
+                EthernetServWnd.SendResultData(_ResultDataString);
 
                 //AckStructs[_ResultParam.ID].WaitTime = 0;
                 //AckStructs[_ResultParam.ID].AckRequest = true;
@@ -209,6 +212,33 @@ namespace KPVisionInspectionFramework
             return _Result;
         }
 
+        private string[] ChangeResult(double _ResultX, double _ResultY)
+        {
+            string[] LastResult = new string[2];
+            int[] ResultTemp = new int[2];
+
+            ResultTemp[0] = Convert.ToInt32(_ResultX * 100);
+            ResultTemp[1] = Convert.ToInt32(_ResultY * 100);
+
+            for (int iLoopCount = 0; iLoopCount < 2; iLoopCount++)
+            {
+                if (Math.Abs(ResultTemp[iLoopCount]) < 10000)
+                {
+                    if (ResultTemp[iLoopCount] < 0) { ResultTemp[iLoopCount] = -ResultTemp[iLoopCount]; LastResult[iLoopCount] = "0"; }
+                    else { LastResult[iLoopCount] = "1"; }
+
+                    for (int multipleCnt = 3; multipleCnt >= 0; multipleCnt--)
+                    {
+                        LastResult[iLoopCount] = LastResult[iLoopCount] + Math.Truncate(ResultTemp[iLoopCount] / Math.Pow(10, multipleCnt));
+                        ResultTemp[iLoopCount] = Convert.ToInt32(Math.Truncate(ResultTemp[iLoopCount] % Math.Pow(10, multipleCnt)));
+                    }
+                }
+                else LastResult[iLoopCount] = "00000";
+            }
+
+            return LastResult;
+        }
+
         public override bool DataRequest(int _ID)
         {
             bool _Result = true;
@@ -217,6 +247,7 @@ namespace KPVisionInspectionFramework
 
             return _Result;
         }
+
         public override bool InspectionComplete(int _ID, bool _Flag)
         {
             bool _Result = true;
@@ -259,9 +290,9 @@ namespace KPVisionInspectionFramework
         /// <param name="_RecvMessage"></param>
         private void ReceiveStringEventFunction(string[] _RecvMessage)
         {
-            if (_RecvMessage[1] == "V1") AckStructs[0].AckComplete = true;
-            else if (_RecvMessage[1] == "V2") AckStructs[1].AckComplete = true;
-            else if (_RecvMessage[1] == "V3") AckStructs[2].AckComplete = true;
+            if (_RecvMessage[0] == "V1")      AckStructs[0].AckComplete = true;
+            else if (_RecvMessage[0] == "V2") AckStructs[1].AckComplete = true;
+            else if (_RecvMessage[0] == "V3") AckStructs[2].AckComplete = true;
         }
         #endregion Communication Event Function
 
@@ -275,9 +306,9 @@ namespace KPVisionInspectionFramework
 
                     for (int iLoopCount = 0; iLoopCount < AckStructs.Length; ++iLoopCount)
                     {
-                        if (true == AckStructs[iLoopCount].AckRequest)      AckStructs[iLoopCount].WaitTime += WaitingPeriod;
-                        if (true == AckStructs[iLoopCount].AckComplete)     AckStructs[iLoopCount].SetStatus(ACK_STATUS.COMPLETE, false);
-                        if (AckStructs[iLoopCount].WaitTime >= WaitingTime) AckStructs[iLoopCount].SetStatus(ACK_STATUS.TIME_OVER, false);
+                        if (true == AckStructs[iLoopCount].AckRequest)           AckStructs[iLoopCount].WaitTime += WaitingPeriod;
+                        if (true == AckStructs[iLoopCount].AckComplete)          AckStructs[iLoopCount].SetStatus(ACK_STATUS.COMPLETE, false);
+                        if (AckStructs[iLoopCount].WaitTime >= WaitingLimitTime) AckStructs[iLoopCount].SetStatus(ACK_STATUS.TIME_OVER, false);
                     }
                 }
             }

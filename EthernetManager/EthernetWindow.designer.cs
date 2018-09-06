@@ -32,6 +32,11 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.btnReceive = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
+            this.btnConnect = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.picConnection = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,11 +48,6 @@
             this.textBoxPortNumber = new System.Windows.Forms.TextBox();
             this.textBoxIPAddress = new System.Windows.Forms.TextBox();
             this.textBoxSendString = new System.Windows.Forms.TextBox();
-            this.btnDisconnect = new System.Windows.Forms.Button();
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.picConnection = new System.Windows.Forms.PictureBox();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picConnection)).BeginInit();
             this.SuspendLayout();
@@ -118,6 +118,72 @@
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnDisconnect.Image = global::EthernetManager.Properties.Resources.Disconnect_Small;
+            this.btnDisconnect.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDisconnect.Location = new System.Drawing.Point(212, 164);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(100, 30);
+            this.btnDisconnect.TabIndex = 52;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnConnect.Image = global::EthernetManager.Properties.Resources.Ethernet_Small;
+            this.btnConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnConnect.Location = new System.Drawing.Point(106, 164);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(100, 30);
+            this.btnConnect.TabIndex = 51;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.Image = global::EthernetManager.Properties.Resources.Stop_Small;
+            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancel.Location = new System.Drawing.Point(106, 195);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 30);
+            this.btnCancel.TabIndex = 50;
+            this.btnCancel.Text = "  Cancel";
+            this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnOK
+            // 
+            this.btnOK.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnOK.Image = global::EthernetManager.Properties.Resources.Confirm;
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOK.Location = new System.Drawing.Point(212, 195);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(100, 30);
+            this.btnOK.TabIndex = 49;
+            this.btnOK.Text = "  OK";
+            this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // picConnection
+            // 
+            this.picConnection.BackColor = System.Drawing.Color.Green;
+            this.picConnection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picConnection.Location = new System.Drawing.Point(106, 4);
+            this.picConnection.Name = "picConnection";
+            this.picConnection.Size = new System.Drawing.Size(206, 21);
+            this.picConnection.TabIndex = 48;
+            this.picConnection.TabStop = false;
             // 
             // label3
             // 
@@ -234,72 +300,6 @@
             this.textBoxSendString.Size = new System.Drawing.Size(206, 21);
             this.textBoxSendString.TabIndex = 37;
             this.textBoxSendString.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // btnDisconnect
-            // 
-            this.btnDisconnect.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnDisconnect.Image = global::EthernetManager.Properties.Resources.Disconnect_Small;
-            this.btnDisconnect.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDisconnect.Location = new System.Drawing.Point(212, 164);
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(100, 30);
-            this.btnDisconnect.TabIndex = 52;
-            this.btnDisconnect.Text = "Disconnect";
-            this.btnDisconnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
-            // 
-            // btnConnect
-            // 
-            this.btnConnect.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnConnect.Image = global::EthernetManager.Properties.Resources.Ethernet_Small;
-            this.btnConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnConnect.Location = new System.Drawing.Point(106, 164);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(100, 30);
-            this.btnConnect.TabIndex = 51;
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnCancel.Image = global::EthernetManager.Properties.Resources.Stop_Small;
-            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCancel.Location = new System.Drawing.Point(106, 195);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 50;
-            this.btnCancel.Text = "  Cancel";
-            this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnOK
-            // 
-            this.btnOK.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnOK.Image = global::EthernetManager.Properties.Resources.Confirm;
-            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOK.Location = new System.Drawing.Point(212, 195);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 30);
-            this.btnOK.TabIndex = 49;
-            this.btnOK.Text = "  OK";
-            this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // picConnection
-            // 
-            this.picConnection.BackColor = System.Drawing.Color.Green;
-            this.picConnection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picConnection.Location = new System.Drawing.Point(106, 4);
-            this.picConnection.Name = "picConnection";
-            this.picConnection.Size = new System.Drawing.Size(206, 21);
-            this.picConnection.TabIndex = 48;
-            this.picConnection.TabStop = false;
             // 
             // EthernetWindow
             // 

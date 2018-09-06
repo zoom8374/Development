@@ -221,6 +221,10 @@
       <Project>{a34d8ba3-047b-41a3-88fa-20dc46ec5306}</Project>
       <Name>EthernetManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\EthernetServerManager\EthernetServerManager.csproj">
+      <Project>{fcee60f9-5586-4325-b5aa-8ad61e6ba769}</Project>
+      <Name>EthernetServerManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\HistoryManager\HistoryManager.csproj">
       <Project>{fb91e730-19be-4fc3-b73e-2f791f7c39b7}</Project>
       <Name>HistoryManager</Name>

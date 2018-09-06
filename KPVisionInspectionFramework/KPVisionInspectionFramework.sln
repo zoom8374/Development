@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialManager", "..\SerialM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoryManager", "..\HistoryManager\HistoryManager.csproj", "{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthernetServerManager", "..\EthernetServerManager\EthernetServerManager.csproj", "{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,14 @@ Global
 		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|x64.ActiveCfg = Release|Any CPU
 		{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}.Release|x64.Build.0 = Release|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Debug|x64.Build.0 = Debug|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|x64.ActiveCfg = Release|Any CPU
+		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
