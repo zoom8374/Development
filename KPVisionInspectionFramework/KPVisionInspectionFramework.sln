@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterManager", "..\Para
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InspectionSystemManager", "..\InspectionSystemManager\InspectionSystemManager.csproj", "{050E0042-7F11-4E6D-8369-6D7DB086D70D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPDisplay", "..\KPDisplay\KPDisplay.csproj", "{75AB941C-2786-416B-B183-E140799EB245}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMessageManager", "..\LogManager\LogMessageManager.csproj", "{635BF6D0-1B81-4B61-9F53-5E93C5335B28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthernetManager", "..\EthernetManager\EthernetManager.csproj", "{A34D8BA3-047B-41A3-88FA-20DC46EC5306}"
@@ -28,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoryManager", "..\HistoryManager\HistoryManager.csproj", "{FB91E730-19BE-4FC3-B73E-2F791F7C39B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EthernetServerManager", "..\EthernetServerManager\EthernetServerManager.csproj", "{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowKeyPad", "..\WindowKeyPad\WindowKeyPad.csproj", "{50134B44-1952-4C24-8B1D-76F8B9B49FC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPDisplay", "..\KPDisplay\KPDisplay.csproj", "{75AB941C-2786-416B-B183-E140799EB245}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,14 +63,6 @@ Global
 		{050E0042-7F11-4E6D-8369-6D7DB086D70D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{050E0042-7F11-4E6D-8369-6D7DB086D70D}.Release|x64.ActiveCfg = Release|Any CPU
 		{050E0042-7F11-4E6D-8369-6D7DB086D70D}.Release|x64.Build.0 = Release|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Debug|x64.Build.0 = Debug|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75AB941C-2786-416B-B183-E140799EB245}.Release|x64.ActiveCfg = Release|x64
-		{75AB941C-2786-416B-B183-E140799EB245}.Release|x64.Build.0 = Release|x64
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{635BF6D0-1B81-4B61-9F53-5E93C5335B28}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -141,6 +135,22 @@ Global
 		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|x64.ActiveCfg = Release|Any CPU
 		{FCEE60F9-5586-4325-B5AA-8AD61E6BA769}.Release|x64.Build.0 = Release|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Debug|x64.Build.0 = Debug|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Release|x64.ActiveCfg = Release|Any CPU
+		{50134B44-1952-4C24-8B1D-76F8B9B49FC1}.Release|x64.Build.0 = Release|Any CPU
+		{75AB941C-2786-416B-B183-E140799EB245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75AB941C-2786-416B-B183-E140799EB245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75AB941C-2786-416B-B183-E140799EB245}.Debug|x64.ActiveCfg = Debug|x64
+		{75AB941C-2786-416B-B183-E140799EB245}.Debug|x64.Build.0 = Debug|x64
+		{75AB941C-2786-416B-B183-E140799EB245}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75AB941C-2786-416B-B183-E140799EB245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75AB941C-2786-416B-B183-E140799EB245}.Release|x64.ActiveCfg = Release|x64
+		{75AB941C-2786-416B-B183-E140799EB245}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

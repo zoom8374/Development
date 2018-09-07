@@ -13,14 +13,3 @@ C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\Seria
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.dll
 C:\Users\Administrator\Desktop\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Debug\SerialManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Debug\SerialManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Debug\LogMessageManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Debug\log4net.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Debug\LogMessageManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.SerialWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Debug\SerialManager.pdb

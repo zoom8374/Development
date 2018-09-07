@@ -49,6 +49,8 @@ namespace EthernetServerManager
             ConnectCheckTimer.Tick += ConnectCheckTimer_Tick;
             ConnectCheckTimer.Interval = 250;
             ConnectCheckTimer.Start();
+
+            
         }
 
         public void DeInitialize()
@@ -248,6 +250,9 @@ namespace EthernetServerManager
 
             if (true == IsConnected)    ControlInvoke(picConnection, Color.Green);
             else                        ControlInvoke(picConnection, Color.Red);
+
+            if (true == ServerSock.GetServerAlready())  ControlInvoke(picServerStatus, Color.Green);
+            else                                        ControlInvoke(picServerStatus, Color.Red);
         }
 
         private void SetReceiveMessage(string _RecvMessage)

@@ -24,7 +24,7 @@ namespace EthernetServerManager
 
         private int ConnectPort = 5050;
         private string ConnectIP = "10.100.110.214";
-        private bool IsConnection = false;
+        private bool IsServerAlready = false;
 
         private string LastSendMessage;
         private Timer ConnectCheckTimer;
@@ -60,12 +60,12 @@ namespace EthernetServerManager
                 _SockArgs.Completed += new EventHandler<SocketAsyncEventArgs>(Accept_Completed);
                 SockServer.AcceptAsync(_SockArgs);
 
-                IsConnection = true;
+                IsServerAlready = true;
             }
 
             catch
             {
-                IsConnection = false;
+                IsServerAlready = false;
             }
 
             ConnectCheckTimer = new Timer();
@@ -133,7 +133,7 @@ namespace EthernetServerManager
         #region Connection & DisConnection
         public void Connection()
         {
-            if (true == IsConnection) { MessageBox.Show("Already connected"); return; }
+            if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
 
             SockClientList.Clear();
 
@@ -146,12 +146,12 @@ namespace EthernetServerManager
             _SockArgs.Completed += new EventHandler<SocketAsyncEventArgs>(Accept_Completed);
             SockServer.AcceptAsync(_SockArgs);
 
-            IsConnection = true;
+            IsServerAlready = true;
         }
 
         public void Connection(string _IPAddress, int _PortNumber)
         {
-            if (true == IsConnection) { MessageBox.Show("Already connected"); return; }
+            if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
 
             ConnectIP = _IPAddress;
             ConnectPort = _PortNumber;
@@ -167,7 +167,7 @@ namespace EthernetServerManager
             _SockArgs.Completed += new EventHandler<SocketAsyncEventArgs>(Accept_Completed);
             SockServer.AcceptAsync(_SockArgs);
 
-            IsConnection = true;
+            IsServerAlready = true;
         }
 
         public void DisConnection()
@@ -180,7 +180,12 @@ namespace EthernetServerManager
             SockServer.Dispose();
             SockClientList.Clear();
 
-            IsConnection = false;
+            IsServerAlready = false;
+        }
+
+        public bool GetServerAlready()
+        {
+            return IsServerAlready;
         }
         #endregion Connection & DisConnection
 

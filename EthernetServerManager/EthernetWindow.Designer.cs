@@ -48,15 +48,18 @@
             this.textBoxSendString = new System.Windows.Forms.TextBox();
             this.panelMain = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.picServerStatus = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picConnection)).BeginInit();
             this.panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picServerStatus)).BeginInit();
             this.SuspendLayout();
             // 
             // btnReceive
             // 
             this.btnReceive.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.btnReceive.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnReceive.Location = new System.Drawing.Point(8, 195);
+            this.btnReceive.Location = new System.Drawing.Point(8, 219);
             this.btnReceive.Name = "btnReceive";
             this.btnReceive.Size = new System.Drawing.Size(93, 30);
             this.btnReceive.TabIndex = 54;
@@ -66,7 +69,7 @@
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(266, 135);
+            this.btnSend.Location = new System.Drawing.Point(266, 159);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(46, 23);
             this.btnSend.TabIndex = 53;
@@ -77,8 +80,9 @@
             // btnDisconnect
             // 
             this.btnDisconnect.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnDisconnect.Image = global::EthernetServerManager.Properties.Resources.Disconnect_Small;
             this.btnDisconnect.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDisconnect.Location = new System.Drawing.Point(212, 164);
+            this.btnDisconnect.Location = new System.Drawing.Point(212, 188);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(100, 30);
             this.btnDisconnect.TabIndex = 52;
@@ -90,8 +94,9 @@
             // btnConnect
             // 
             this.btnConnect.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnConnect.Image = global::EthernetServerManager.Properties.Resources.Ethernet_Small;
             this.btnConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnConnect.Location = new System.Drawing.Point(106, 164);
+            this.btnConnect.Location = new System.Drawing.Point(106, 188);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(100, 30);
             this.btnConnect.TabIndex = 51;
@@ -103,8 +108,9 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.Image = global::EthernetServerManager.Properties.Resources.Stop_Small;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCancel.Location = new System.Drawing.Point(106, 195);
+            this.btnCancel.Location = new System.Drawing.Point(106, 219);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 50;
@@ -116,8 +122,9 @@
             // btnOK
             // 
             this.btnOK.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnOK.Image = global::EthernetServerManager.Properties.Resources.Confirm;
             this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOK.Location = new System.Drawing.Point(212, 195);
+            this.btnOK.Location = new System.Drawing.Point(212, 219);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(100, 30);
             this.btnOK.TabIndex = 49;
@@ -130,7 +137,7 @@
             // 
             this.picConnection.BackColor = System.Drawing.Color.Green;
             this.picConnection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picConnection.Location = new System.Drawing.Point(106, 4);
+            this.picConnection.Location = new System.Drawing.Point(106, 28);
             this.picConnection.Name = "picConnection";
             this.picConnection.Size = new System.Drawing.Size(206, 21);
             this.picConnection.TabIndex = 48;
@@ -140,7 +147,7 @@
             // 
             this.label3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(5, 3);
+            this.label3.Location = new System.Drawing.Point(5, 27);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 23);
             this.label3.TabIndex = 47;
@@ -151,7 +158,7 @@
             // 
             this.label6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(5, 137);
+            this.label6.Location = new System.Drawing.Point(5, 161);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 23);
             this.label6.TabIndex = 45;
@@ -162,7 +169,7 @@
             // 
             this.label2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(5, 112);
+            this.label2.Location = new System.Drawing.Point(5, 136);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 44;
@@ -173,7 +180,7 @@
             // 
             this.label5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(5, 56);
+            this.label5.Location = new System.Drawing.Point(5, 80);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 23);
             this.label5.TabIndex = 46;
@@ -184,7 +191,7 @@
             // 
             this.label4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(5, 27);
+            this.label4.Location = new System.Drawing.Point(5, 51);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 43;
@@ -195,7 +202,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(5, 83);
+            this.label1.Location = new System.Drawing.Point(5, 107);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 23);
             this.label1.TabIndex = 42;
@@ -206,7 +213,7 @@
             // 
             this.textBoxManualData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxManualData.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxManualData.Location = new System.Drawing.Point(106, 135);
+            this.textBoxManualData.Location = new System.Drawing.Point(106, 159);
             this.textBoxManualData.Name = "textBoxManualData";
             this.textBoxManualData.Size = new System.Drawing.Size(157, 23);
             this.textBoxManualData.TabIndex = 41;
@@ -215,7 +222,7 @@
             // textBoxRecvString
             // 
             this.textBoxRecvString.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxRecvString.Location = new System.Drawing.Point(106, 110);
+            this.textBoxRecvString.Location = new System.Drawing.Point(106, 134);
             this.textBoxRecvString.Name = "textBoxRecvString";
             this.textBoxRecvString.ReadOnly = true;
             this.textBoxRecvString.Size = new System.Drawing.Size(206, 21);
@@ -226,7 +233,7 @@
             // 
             this.textBoxPortNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxPortNumber.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxPortNumber.Location = new System.Drawing.Point(106, 57);
+            this.textBoxPortNumber.Location = new System.Drawing.Point(106, 81);
             this.textBoxPortNumber.Name = "textBoxPortNumber";
             this.textBoxPortNumber.Size = new System.Drawing.Size(206, 25);
             this.textBoxPortNumber.TabIndex = 39;
@@ -236,7 +243,7 @@
             // 
             this.textBoxIPAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxIPAddress.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxIPAddress.Location = new System.Drawing.Point(106, 29);
+            this.textBoxIPAddress.Location = new System.Drawing.Point(106, 53);
             this.textBoxIPAddress.Name = "textBoxIPAddress";
             this.textBoxIPAddress.Size = new System.Drawing.Size(206, 25);
             this.textBoxIPAddress.TabIndex = 38;
@@ -245,7 +252,7 @@
             // textBoxSendString
             // 
             this.textBoxSendString.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxSendString.Location = new System.Drawing.Point(106, 85);
+            this.textBoxSendString.Location = new System.Drawing.Point(106, 109);
             this.textBoxSendString.Name = "textBoxSendString";
             this.textBoxSendString.ReadOnly = true;
             this.textBoxSendString.Size = new System.Drawing.Size(206, 21);
@@ -260,6 +267,8 @@
             this.panelMain.Controls.Add(this.btnConnect);
             this.panelMain.Controls.Add(this.btnCancel);
             this.panelMain.Controls.Add(this.btnOK);
+            this.panelMain.Controls.Add(this.picServerStatus);
+            this.panelMain.Controls.Add(this.label7);
             this.panelMain.Controls.Add(this.picConnection);
             this.panelMain.Controls.Add(this.label3);
             this.panelMain.Controls.Add(this.label6);
@@ -275,7 +284,7 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelMain.Location = new System.Drawing.Point(0, 33);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(319, 229);
+            this.panelMain.Size = new System.Drawing.Size(319, 256);
             this.panelMain.TabIndex = 17;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
@@ -289,18 +298,39 @@
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(319, 30);
             this.labelTitle.TabIndex = 16;
-            this.labelTitle.Text = " Ethernet Setting Window";
+            this.labelTitle.Text = " Server Ethernet Setting Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(5, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(100, 23);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Server Status :";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // picServerStatus
+            // 
+            this.picServerStatus.BackColor = System.Drawing.Color.Green;
+            this.picServerStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picServerStatus.Location = new System.Drawing.Point(106, 3);
+            this.picServerStatus.Name = "picServerStatus";
+            this.picServerStatus.Size = new System.Drawing.Size(206, 21);
+            this.picServerStatus.TabIndex = 48;
+            this.picServerStatus.TabStop = false;
             // 
             // EthernetWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.ClientSize = new System.Drawing.Size(319, 262);
+            this.ClientSize = new System.Drawing.Size(319, 289);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.labelTitle);
             this.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
@@ -314,6 +344,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picConnection)).EndInit();
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picServerStatus)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -340,5 +371,7 @@
         private System.Windows.Forms.TextBox textBoxSendString;
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.PictureBox picServerStatus;
+        private System.Windows.Forms.Label label7;
     }
 }

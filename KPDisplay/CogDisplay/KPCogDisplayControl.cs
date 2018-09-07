@@ -366,6 +366,8 @@ namespace KPDisplay
 
         public void DrawCross(int _StartX, int _StartY, int _LengthX, int _LengthY, string _GroupName, CogColorConstants _Color)
         {
+            if (_LengthX == 0 || _LengthY == 0) return;
+
             staticGraphicHor.Color = staticGraphicVer.Color = _Color;
             staticGraphicHor.Interactive = staticGraphicVer.Interactive = false;
             staticGraphicHor.GraphicDOFEnable = staticGraphicVer.GraphicDOFEnable = CogLineSegmentDOFConstants.BothPoints;

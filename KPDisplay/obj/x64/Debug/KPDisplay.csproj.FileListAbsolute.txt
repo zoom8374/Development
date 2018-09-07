@@ -40,8 +40,3 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Debug\Co
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Debug\Cognex.VisionPro3D.Display.Controls.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Debug\Cognex.VisionPro.ToolGroup.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\bin\x64\Debug\Cognex.VisionPro3D.xml
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Debug\KPDisplay.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Debug\KPDisplay.KPCogDisplayControl.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Debug\KPDisplay.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Debug\KPDisplay.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPDisplay\obj\x64\Debug\KPDisplay.pdb

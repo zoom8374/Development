@@ -61,10 +61,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KPDisplay\KPDisplay.csproj">
-      <Project>{75AB941C-2786-416B-B183-E140799EB245}</Project>
-      <Name>KPDisplay</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LogManager\LogMessageManager.csproj">
       <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
       <Name>LogMessageManager</Name>

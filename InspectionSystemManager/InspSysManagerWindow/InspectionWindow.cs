@@ -21,6 +21,7 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
+        #region Inspection Variable
         private InspectionPattern InspPatternProc;
         private InspectionBlobReference InspBlobReferProc;
         private InspectionNeedleCircleFind InspNeedleCircleFindProc;
@@ -66,6 +67,7 @@ namespace InspectionSystemManager
         private int ImageSizeHeight = 0;
         private bool IsCamLiveFlag = false;
         private bool IsCrossLine = false;
+        private bool IsMenuHide = false;
 
         private double DisplayZoomValue = 1;
         private double DisplayPanXValue = 0;
@@ -87,41 +89,12 @@ namespace InspectionSystemManager
 
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null, int _ID = 0);
         public event InspectionWindowHandler InspectionWindowEvent;
+        #endregion Inspection Variable
 
         #region Initialize & DeInitialize
         public InspectionWindow()
         {
             InitializeComponent();
-
-            #region Set Button Image Resource
-            btnInspection.ButtonImage = InspectionSystemManager.Properties.Resources.Inspection;
-            btnInspection.ButtonImageOver = InspectionSystemManager.Properties.Resources.InspectionOver;
-            btnInspection.ButtonImageDown = InspectionSystemManager.Properties.Resources.InspectionOver;
-            btnOneShot.ButtonImage = InspectionSystemManager.Properties.Resources.OneShot;
-            btnOneShot.ButtonImageOver = InspectionSystemManager.Properties.Resources.OneShotOver;
-            btnOneShot.ButtonImageDown = InspectionSystemManager.Properties.Resources.OneShotOver;
-            btnRecipe.ButtonImage = InspectionSystemManager.Properties.Resources.Recipe;
-            btnRecipe.ButtonImageOver = InspectionSystemManager.Properties.Resources.RecipeOver;
-            btnRecipe.ButtonImageDown = InspectionSystemManager.Properties.Resources.RecipeOver;
-            btnRecipeSave.ButtonImage = InspectionSystemManager.Properties.Resources.RecipeSave;
-            btnRecipeSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.RecipeSaveOver;
-            btnRecipeSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.RecipeSaveOver;
-            btnLive.ButtonImage = InspectionSystemManager.Properties.Resources.Camera;
-            btnLive.ButtonImageOver = InspectionSystemManager.Properties.Resources.CameraOver;
-            btnLive.ButtonImageDown = InspectionSystemManager.Properties.Resources.CameraOver;
-            btnImageSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageSave;
-            btnImageSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageSaveOver;
-            btnImageSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageSaveOver;
-            btnImageLoad.ButtonImage = InspectionSystemManager.Properties.Resources.ImageLoad;
-            btnImageLoad.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageLoadOver;
-            btnImageLoad.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageLoadOver;
-            btnConfigSave.ButtonImage = InspectionSystemManager.Properties.Resources.ConfigSave;
-            btnConfigSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ConfigSaveOver;
-            btnConfigSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ConfigSaveOver;
-            btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageAutoSave;
-            btnImageAutoSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.ImageAutoSaveOver;
-            btnImageAutoSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.ImageAutoSaveOver;
-            #endregion Set Button Image Resource
         }
 
         public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName,string _RecipeName, bool _IsSimulationMode)
@@ -426,6 +399,8 @@ namespace InspectionSystemManager
 
         private void btnOneShot_Click(object sender, EventArgs e)
         {
+            if (true == IsSimulationMode) return;
+
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
@@ -478,12 +453,16 @@ namespace InspectionSystemManager
             if (eSaveMode.ALL == ImageAutoSaveMode)
             {
                 ImageAutoSaveMode = eSaveMode.ONLY_NG;
-                btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageAutoSaveStop;
+                btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.AutoStop;
+                btnImageAutoSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.AutoStopOver;
+                btnImageAutoSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.AutoStopDown;
             }
             else
             {
                 ImageAutoSaveMode = eSaveMode.ALL;
-                btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.ImageAutoSave;
+                btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.AutoSaveImage;
+                btnImageAutoSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.AutoSaveImageOver;
+                btnImageAutoSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.AutoSaveImageDown;
             }
         }
 
@@ -500,6 +479,36 @@ namespace InspectionSystemManager
             //kpCogDisplayMain.ClearDisplay();
 
             if (IsCrossLine) kpCogDisplayMain.DrawCross(ImageSizeWidth / 2, ImageSizeHeight / 2, ImageSizeWidth, ImageSizeHeight, "Cross", CogColorConstants.Green);
+        }
+
+        private void panelMenuHide_Click(object sender, EventArgs e)
+        {
+            IsMenuHide = !IsMenuHide;
+            double _PanX = kpCogDisplayMain.GetDisplayPanX();
+            double _PanY = kpCogDisplayMain.GetDisplayPanY();
+            double _Zoom = kpCogDisplayMain.GetDisplayZoom();
+
+            if (IsMenuHide)
+            {
+                kpCogDisplayMain.Location = new Point(kpCogDisplayMain.Location.X, kpCogDisplayMain.Location.Y - 47);
+                kpCogDisplayMain.Size = new Size(kpCogDisplayMain.Width, kpCogDisplayMain.Height + 47);
+                panelMenuHide.BackgroundImage = InspectionSystemManager.Properties.Resources.Arrow_Down;
+
+                kpCogDisplayMain.SetDisplayPanX(_PanX);
+                kpCogDisplayMain.SetDisplayPanY(_PanY);
+                kpCogDisplayMain.SetDisplayZoom(_Zoom);
+            }
+
+            else
+            {
+                kpCogDisplayMain.Location = new Point(kpCogDisplayMain.Location.X, kpCogDisplayMain.Location.Y + 47);
+                kpCogDisplayMain.Size = new Size(kpCogDisplayMain.Width, kpCogDisplayMain.Height - 47);
+                panelMenuHide.BackgroundImage = InspectionSystemManager.Properties.Resources.Arrow_Up;
+
+                kpCogDisplayMain.SetDisplayPanX(_PanX);
+                kpCogDisplayMain.SetDisplayPanY(_PanY);
+                kpCogDisplayMain.SetDisplayZoom(_Zoom);
+            }
         }
         #endregion Control Event
 

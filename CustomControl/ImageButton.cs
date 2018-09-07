@@ -9,9 +9,9 @@ namespace CustomControl
 {
     public class ImageButton : Button
     {
-        public Bitmap ButtonImage = null;
-        public Bitmap ButtonImageOver = null;
-        public Bitmap ButtonImageDown = null;
+        public Bitmap ButtonImage { get; set; }
+        public Bitmap ButtonImageOver { get; set; }
+        public Bitmap ButtonImageDown { get; set; }
 
         public ImageButton()
         {

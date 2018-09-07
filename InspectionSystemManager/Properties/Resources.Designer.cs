@@ -63,9 +63,99 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Arrow_Down {
+            get {
+                object obj = ResourceManager.GetObject("Arrow_Down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Arrow_Up {
+            get {
+                object obj = ResourceManager.GetObject("Arrow_Up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoSaveImage {
+            get {
+                object obj = ResourceManager.GetObject("AutoSaveImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoSaveImageDown {
+            get {
+                object obj = ResourceManager.GetObject("AutoSaveImageDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoSaveImageOver {
+            get {
+                object obj = ResourceManager.GetObject("AutoSaveImageOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoStop {
+            get {
+                object obj = ResourceManager.GetObject("AutoStop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoStopDown {
+            get {
+                object obj = ResourceManager.GetObject("AutoStopDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap AutoStopOver {
+            get {
+                object obj = ResourceManager.GetObject("AutoStopOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap Camera {
             get {
                 object obj = ResourceManager.GetObject("Camera", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap CameraDown {
+            get {
+                object obj = ResourceManager.GetObject("CameraDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,6 +183,16 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap ConfigSaveDown {
+            get {
+                object obj = ResourceManager.GetObject("ConfigSaveDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap ConfigSaveOver {
             get {
                 object obj = ResourceManager.GetObject("ConfigSaveOver", resourceCulture);
@@ -103,9 +203,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageAutoSave {
+        internal static System.Drawing.Bitmap Cross {
             get {
-                object obj = ResourceManager.GetObject("ImageAutoSave", resourceCulture);
+                object obj = ResourceManager.GetObject("Cross", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +213,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageAutoSaveOver {
+        internal static System.Drawing.Bitmap CrossDown {
             get {
-                object obj = ResourceManager.GetObject("ImageAutoSaveOver", resourceCulture);
+                object obj = ResourceManager.GetObject("CrossDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +223,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageAutoSaveStop {
+        internal static System.Drawing.Bitmap CrossOver {
             get {
-                object obj = ResourceManager.GetObject("ImageAutoSaveStop", resourceCulture);
+                object obj = ResourceManager.GetObject("CrossOver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +233,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageLoad {
+        internal static System.Drawing.Bitmap Delete {
             get {
-                object obj = ResourceManager.GetObject("ImageLoad", resourceCulture);
+                object obj = ResourceManager.GetObject("Delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +243,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageLoadOver {
+        internal static System.Drawing.Bitmap DeleteDown {
             get {
-                object obj = ResourceManager.GetObject("ImageLoadOver", resourceCulture);
+                object obj = ResourceManager.GetObject("DeleteDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +253,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageSave {
+        internal static System.Drawing.Bitmap DeleteOver {
             get {
-                object obj = ResourceManager.GetObject("ImageSave", resourceCulture);
+                object obj = ResourceManager.GetObject("DeleteOver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +263,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap ImageSaveOver {
+        internal static System.Drawing.Bitmap Image {
             get {
-                object obj = ResourceManager.GetObject("ImageSaveOver", resourceCulture);
+                object obj = ResourceManager.GetObject("Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +273,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Inspection {
+        internal static System.Drawing.Bitmap ImageDown {
             get {
-                object obj = ResourceManager.GetObject("Inspection", resourceCulture);
+                object obj = ResourceManager.GetObject("ImageDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +283,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap InspectionOver {
+        internal static System.Drawing.Bitmap ImageOver {
             get {
-                object obj = ResourceManager.GetObject("InspectionOver", resourceCulture);
+                object obj = ResourceManager.GetObject("ImageOver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +293,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap OneShot {
+        internal static System.Drawing.Bitmap InspStart {
             get {
-                object obj = ResourceManager.GetObject("OneShot", resourceCulture);
+                object obj = ResourceManager.GetObject("InspStart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +303,79 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap OneShotOver {
+        internal static System.Drawing.Bitmap InspStartDown {
             get {
-                object obj = ResourceManager.GetObject("OneShotOver", resourceCulture);
+                object obj = ResourceManager.GetObject("InspStartDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap InspStartOver {
+            get {
+                object obj = ResourceManager.GetObject("InspStartOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Live {
+            get {
+                object obj = ResourceManager.GetObject("Live", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap LiveDown {
+            get {
+                object obj = ResourceManager.GetObject("LiveDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap LiveOver {
+            get {
+                object obj = ResourceManager.GetObject("LiveOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap LoadImage {
+            get {
+                object obj = ResourceManager.GetObject("LoadImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap LoadImageDown {
+            get {
+                object obj = ResourceManager.GetObject("LoadImageDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap LoadImageOver {
+            get {
+                object obj = ResourceManager.GetObject("LoadImageOver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +393,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Recipe {
+        internal static System.Drawing.Bitmap SaveImage {
             get {
-                object obj = ResourceManager.GetObject("Recipe", resourceCulture);
+                object obj = ResourceManager.GetObject("SaveImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +403,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap RecipeOver {
+        internal static System.Drawing.Bitmap SaveImageDown {
             get {
-                object obj = ResourceManager.GetObject("RecipeOver", resourceCulture);
+                object obj = ResourceManager.GetObject("SaveImageDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +413,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap RecipeSave {
+        internal static System.Drawing.Bitmap SaveImageOver {
             get {
-                object obj = ResourceManager.GetObject("RecipeSave", resourceCulture);
+                object obj = ResourceManager.GetObject("SaveImageOver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +423,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap RecipeSaveOver {
+        internal static System.Drawing.Bitmap Train {
             get {
-                object obj = ResourceManager.GetObject("RecipeSaveOver", resourceCulture);
+                object obj = ResourceManager.GetObject("Train", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +433,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Save {
+        internal static System.Drawing.Bitmap TrainDown {
             get {
-                object obj = ResourceManager.GetObject("Save", resourceCulture);
+                object obj = ResourceManager.GetObject("TrainDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +443,9 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap SaveOver {
+        internal static System.Drawing.Bitmap TrainFileSave {
             get {
-                object obj = ResourceManager.GetObject("SaveOver", resourceCulture);
+                object obj = ResourceManager.GetObject("TrainFileSave", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,9 +453,29 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap trash {
+        internal static System.Drawing.Bitmap TrainFileSaveDown {
             get {
-                object obj = ResourceManager.GetObject("trash", resourceCulture);
+                object obj = ResourceManager.GetObject("TrainFileSaveDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrainFileSaveOver {
+            get {
+                object obj = ResourceManager.GetObject("TrainFileSaveOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrainOver {
+            get {
+                object obj = ResourceManager.GetObject("TrainOver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

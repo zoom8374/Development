@@ -118,73 +118,130 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="OneShot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OneShot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DeleteOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeleteOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LiveDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LiveDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ImageDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="InspStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\InspStart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="InspStartOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\InspStartOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CrossDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CrossDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrainOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoadImageDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LoadImageDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CameraDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CameraDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CrossOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CrossOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cross.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Train" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LiveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LiveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AutoStop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoStop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AutoSaveImageOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoSaveImageOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConfigSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConfigSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Recipe" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Recipe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ConfigSaveDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConfigSaveDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="InspectionOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\InspectionOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DeleteDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeleteDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ImageAutoSaveStop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageAutoSaveStop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Live" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Live.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Rang_Upper" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Rang_Upper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TrainFileSaveDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainFileSaveDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Inspection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Inspection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ImageSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="OneShotOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OneShotOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecipeSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecipeSaveOver1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ImageAutoSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageAutoSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ImageSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RecipeOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecipeOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LoadImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LoadImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ImageAutoSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageAutoSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TrainFileSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainFileSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrainDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConfigSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConfigSave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ImageOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CameraOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CameraOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ImageLoadOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageLoadOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SaveImageDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveImageDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RecipeSave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RecipeSave1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ImageLoad" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageLoad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AutoStopOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoStopOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="trash" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\trash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TrainFileSaveOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TrainFileSaveOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoadImageOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LoadImageOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AutoStopDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoStopDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveImageOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveImageOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AutoSaveImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoSaveImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AutoSaveImageDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoSaveImageDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="InspStartDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\InspStartDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rang_Upper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rang_Upper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Arrow_Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Arrow_Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

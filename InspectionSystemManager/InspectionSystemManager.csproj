@@ -169,9 +169,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RecipeSave1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Algorithm\ucCogBlob.resx">
       <DependentUpon>ucCogBlob.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,45 +211,6 @@
     <None Include="Resources\CameraOver.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Inspection.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\InspectionOver.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\OneShot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\OneShotOver.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Recipe.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\RecipeOver.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveOver.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\RecipeSaveOver1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ImageLoad.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ImageLoadOver.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ImageSave.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ImageSaveOver.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Rang_Upper.png" />
   </ItemGroup>
   <ItemGroup>
@@ -262,10 +220,55 @@
     <None Include="Resources\ConfigSaveOver.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\ImageAutoSave.png" />
-    <Content Include="Resources\ImageAutoSaveOver.png" />
-    <Content Include="Resources\ImageAutoSaveStop.png" />
-    <None Include="Resources\trash.png" />
+    <None Include="Resources\SaveImageOver.png" />
+    <None Include="Resources\SaveImageDown.png" />
+    <None Include="Resources\ImageOver.png" />
+    <None Include="Resources\ImageDown.png" />
+    <None Include="Resources\TrainFileSaveOver.png" />
+    <None Include="Resources\TrainFileSaveDown.png" />
+    <None Include="Resources\TrainOver.png" />
+    <None Include="Resources\TrainDown.png" />
+    <None Include="Resources\LiveOver.png" />
+    <None Include="Resources\LiveDown.png" />
+    <None Include="Resources\InspStartDown.png" />
+    <None Include="Resources\InspStartOver.png" />
+    <None Include="Resources\LoadImage.png" />
+    <None Include="Resources\SaveImage.png" />
+    <None Include="Resources\Live.png" />
+    <None Include="Resources\TrainFileSave.png" />
+    <None Include="Resources\Train.png" />
+    <None Include="Resources\Cross.png" />
+    <None Include="Resources\Image.png" />
+    <None Include="Resources\AutoSaveImage.png" />
+    <None Include="Resources\AutoSaveImageDown.png" />
+    <None Include="Resources\AutoSaveImageOver.png" />
+    <None Include="Resources\AutoStop.png" />
+    <None Include="Resources\AutoStopDown.png" />
+    <None Include="Resources\AutoStopOver.png" />
+    <None Include="Resources\Delete.png" />
+    <None Include="Resources\DeleteDown.png" />
+    <None Include="Resources\DeleteOver.png" />
+    <None Include="Resources\CrossDown.png" />
+    <None Include="Resources\CrossOver.png" />
+    <None Include="Resources\InspStart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CameraDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ConfigSaveDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoadImageDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoadImageOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow_Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow_Up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

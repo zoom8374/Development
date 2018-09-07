@@ -62,7 +62,7 @@
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(319, 30);
             this.labelTitle.TabIndex = 14;
-            this.labelTitle.Text = " Ethernet Setting Window";
+            this.labelTitle.Text = " Client Ethernet Setting Window";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.labelTitle_Paint);
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
