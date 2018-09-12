@@ -105,6 +105,8 @@ namespace InspectionSystemManager
             FormName = _FormName;
             RecipeName = _RecipeName;
             IsSimulationMode = _IsSimulationMode;
+
+            this.labelStatus.Text = "";
             this.labelTitle.Text = _FormName;
             this.Owner = (Form)_OwnerForm;
 
@@ -236,10 +238,11 @@ namespace InspectionSystemManager
                 btnOneShot.Enabled = false;
                 btnRecipe.Enabled = false;
                 btnRecipeSave.Enabled = false;
+                //btnRecipeSave.Enabled = false;
                 btnLive.Enabled = false;
                 btnImageLoad.Enabled = false;
-                btnImageSave.Enabled = false;
-                btnConfigSave.Enabled = false;
+                //btnImageSave.Enabled = false;
+                //btnConfigSave.Enabled = false;
             }
 
             else
@@ -248,10 +251,11 @@ namespace InspectionSystemManager
                 btnOneShot.Enabled = true;
                 btnRecipe.Enabled = true;
                 btnRecipeSave.Enabled = true;
+                //btnRecipeSave.Enabled = true;
                 btnLive.Enabled = true;
                 btnImageLoad.Enabled = true;
-                btnImageSave.Enabled = true;
-                btnConfigSave.Enabled = true;
+                //btnImageSave.Enabled = true;
+                //btnConfigSave.Enabled = true;
             }
         }
 
@@ -427,6 +431,8 @@ namespace InspectionSystemManager
             IsCamLiveFlag = !IsCamLiveFlag;
             CameraManager.CamLive(IsCamLiveFlag);
 
+            if (IsCamLiveFlag)  labelStatus.Text = "(Live)";
+            else                labelStatus.Text = "";
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "CamLive : " + IsCamLiveFlag.ToString(), CLogManager.LOG_LEVEL.MID);
         }
 
@@ -643,6 +649,13 @@ namespace InspectionSystemManager
             InspectionWindowEvent(eIWCMD.LIGHT_CONTROL, false);
             IsThreadInspectionProcessTrigger = true;
             
+        }
+
+        public void ContinuesGrabStop()
+        {
+            CameraManager.CamLive(false);
+            labelStatus.Text = "";
+            Thread.Sleep(100);
         }
 
         private bool Inspection()

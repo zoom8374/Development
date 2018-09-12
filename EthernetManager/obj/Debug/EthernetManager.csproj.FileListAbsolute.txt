@@ -20,3 +20,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\
 C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\CustonMsgBoxManager.dll

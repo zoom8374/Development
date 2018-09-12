@@ -55,6 +55,10 @@
     <ApplicationIcon>VisionInspection.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CustonMsgBoxManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustonMsgBoxManager.dll</HintPath>
+    </Reference>
     <Reference Include="LoadingManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\LoadingManager.dll</HintPath>

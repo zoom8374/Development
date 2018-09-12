@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
+using CustonMsgBoxManager;
+
 namespace EthernetServerManager
 {
     public class CEtherentServerManager
@@ -133,7 +135,8 @@ namespace EthernetServerManager
         #region Connection & DisConnection
         public void Connection()
         {
-            if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
+            //if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
+            if (true == IsServerAlready) { CMsgBoxManager.Show("Already connected", "", 2000); return; }
 
             SockClientList.Clear();
 
@@ -151,7 +154,8 @@ namespace EthernetServerManager
 
         public void Connection(string _IPAddress, int _PortNumber)
         {
-            if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
+            //if (true == IsServerAlready) { MessageBox.Show("Already connected"); return; }
+            if (true == IsServerAlready) { CMsgBoxManager.Show("Already connected", "", 2000); return; }
 
             ConnectIP = _IPAddress;
             ConnectPort = _PortNumber;

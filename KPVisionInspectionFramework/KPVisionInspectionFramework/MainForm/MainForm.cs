@@ -16,6 +16,7 @@ using DIOControlManager;
 using LightManager;
 using SerialManager;
 using HistoryManager;
+using CustonMsgBoxManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -44,6 +45,7 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public MainForm()
         {
+            CMsgBoxManager.Initialize();
             ProgramLogin();
 
             CLoadingManager.Show("Program Run", "Program Run Waiting...");
@@ -118,8 +120,9 @@ namespace KPVisionInspectionFramework
             #region Project 별 MainProcess Setting
             if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    MainProcess = new MainProcessDispensor();
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  MainProcess = new MainProcessID();
+
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType) ((MainProcessDispensor)MainProcess).Initialize();
+            MainProcess.Initialize();
             #endregion MainProcess Setting
 
             #region InspSysManager Initialize
@@ -154,6 +157,8 @@ namespace KPVisionInspectionFramework
             LightControlManager.DeInitialize();
 
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
+            MainProcess.DeInitialize();
+
             if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    ((MainProcessDispensor)MainProcess).DeInitialize();
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  ((MainProcessID)MainProcess).DeInitialize();
 
@@ -251,6 +256,8 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
 
+            rbStart.Enabled = false;
+
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
             MainProcess.AutoMode(true);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode ON", CLogManager.LOG_LEVEL.MID);
@@ -261,30 +268,25 @@ namespace KPVisionInspectionFramework
             for (int iLoopCount = 0; iLoopCount < ParamManager.SystemParam.InspSystemManagerCount; ++iLoopCount)
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.MANUAL_MODE);
 
+            rbStart.Enabled = true;
+
             CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             MainProcess.AutoMode(false);
-
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode STOP", CLogManager.LOG_LEVEL.MID);
         }
 
         private void rbEthernet_Click(object sender, EventArgs e)
         {
-            if (false == MainProcess.GetEhernetWindowShown())
-                MainProcess.ShowEthernetWindow();
-
-            else
-                MainProcess.SetEthernetWindowTopMost(true);
+            if (false == MainProcess.GetEhernetWindowShown())   MainProcess.ShowEthernetWindow();
+            else                                                MainProcess.SetEthernetWindowTopMost(true);
 
             //MainProcess.SetEthernetWindowTopMost(false);
         }
 
         private void rbSerial_Click(object sender, EventArgs e)
         {
-            if (false == MainProcess.GetSerialWindowShown())
-                MainProcess.ShowSerialWindow();
-
-            else
-                MainProcess.SetSerialWindowTopMost(true);
+            if (false == MainProcess.GetSerialWindowShown())    MainProcess.ShowSerialWindow();
+            else                                                MainProcess.SetSerialWindowTopMost(true);
 
             //MainProcess.SetSerialWindowTopMost(false);
         }
@@ -296,11 +298,8 @@ namespace KPVisionInspectionFramework
 
         private void rbDIO_Click(object sender, EventArgs e)
         {
-            if (false == MainProcess.GetDIOWindowShown())
-                MainProcess.ShowDIOWindow();
-
-            else
-                MainProcess.SetDIOWindowTopMost(true);
+            if (false == MainProcess.GetDIOWindowShown())   MainProcess.ShowDIOWindow();
+            else                                            MainProcess.SetDIOWindowTopMost(true);
 
             //MainProcess.SetDIOWindowTopMost(false);
         }
@@ -335,15 +334,12 @@ namespace KPVisionInspectionFramework
             string code = "";
             CodeSettingWindow CodeSettingWnd = new CodeSettingWindow();
             CodeSettingWnd.BarcodeReaderEvent += new CodeSettingWindow.BarcodeReaderHandler(SetBarcodeTextbox);
-
             CodeSettingWnd.ShowDialog();
-
             CodeSettingWnd.BarcodeReaderEvent -= new CodeSettingWindow.BarcodeReaderHandler(SetBarcodeTextbox);
         }
 
 		private void SetBarcodeTextbox(string _ReadBarcode)
         {
-            //rbTextBoxBarCode.TextBoxText = _ReadBarcode;
 			rbLabelCode.Text = "CODE : " + _ReadBarcode;
         }
 		
@@ -351,7 +347,7 @@ namespace KPVisionInspectionFramework
         {
             try
             {
-                //for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount) InspSysManager[iLoopCount].ImageGrabStop();
+                for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount) InspSysManager[iLoopCount].ImageContinuesGrabStop();
 
                 DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Do you want exit program ? ", "Exit Program", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
                 if (DialogResult.Yes != dlgResult) return;

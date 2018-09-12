@@ -153,6 +153,16 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap CameraDisable {
+            get {
+                object obj = ResourceManager.GetObject("CameraDisable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap CameraDown {
             get {
                 object obj = ResourceManager.GetObject("CameraDown", resourceCulture);
@@ -303,6 +313,16 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap InspStartDisable {
+            get {
+                object obj = ResourceManager.GetObject("InspStartDisable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap InspStartDown {
             get {
                 object obj = ResourceManager.GetObject("InspStartDown", resourceCulture);
@@ -333,6 +353,16 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap LiveDisable {
+            get {
+                object obj = ResourceManager.GetObject("LiveDisable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap LiveDown {
             get {
                 object obj = ResourceManager.GetObject("LiveDown", resourceCulture);
@@ -356,6 +386,16 @@ namespace InspectionSystemManager.Properties {
         internal static System.Drawing.Bitmap LoadImage {
             get {
                 object obj = ResourceManager.GetObject("LoadImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap LoadImageDisable {
+            get {
+                object obj = ResourceManager.GetObject("LoadImageDisable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -433,6 +473,16 @@ namespace InspectionSystemManager.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap TrainDisable {
+            get {
+                object obj = ResourceManager.GetObject("TrainDisable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap TrainDown {
             get {
                 object obj = ResourceManager.GetObject("TrainDown", resourceCulture);
@@ -446,6 +496,16 @@ namespace InspectionSystemManager.Properties {
         internal static System.Drawing.Bitmap TrainFileSave {
             get {
                 object obj = ResourceManager.GetObject("TrainFileSave", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrainFileSaveDisable {
+            get {
+                object obj = ResourceManager.GetObject("TrainFileSaveDisable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 
+using CustonMsgBoxManager;
+
 namespace EthernetServerManager
 {
     public partial class EthernetWindow : Form
@@ -185,7 +187,8 @@ namespace EthernetServerManager
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            if (false == IsConnected) { MessageBox.Show("Disconnected"); return; }
+            //if (false == IsConnected) { MessageBox.Show("Disconnected"); return; }
+            if (false == IsConnected) { CMsgBoxManager.Show("Disconnected", "", 2000); return; }
             ServerSock.Send(textBoxManualData.Text);
         }
 
@@ -306,7 +309,8 @@ namespace EthernetServerManager
 
         public void SendResultData(string _ResultDataString)
         {
-            if (false == IsConnected) { MessageBox.Show("Not connected"); return; }
+            //if (false == IsConnected) { MessageBox.Show("Not connected"); return; }
+            if (false == IsConnected) { CMsgBoxManager.Show("Not connected", "", 2000); return; }
             ServerSock.Send(_ResultDataString);
             //CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Receive Data : " + _ResultDataString);
         }

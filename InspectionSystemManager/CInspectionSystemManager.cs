@@ -72,6 +72,7 @@ namespace InspectionSystemManager
 
         public void SetSystemMode(eSysMode _SystemMode)
         {
+            ImageContinuesGrabStop();
             InspWnd.SetSystemMode(_SystemMode);
         }
 
@@ -170,15 +171,14 @@ namespace InspectionSystemManager
             ImageGrabSnap();
         }
 
-        private void ImageGrabStop()
+        public void ImageContinuesGrabStop()
         {
-
+            InspWnd.ContinuesGrabStop();
         }
 
         private void ImageGrabSnap()
         {
             //Camera 모듈 Check
-
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} ImageGrabSnap Complete", ID + 1), CLogManager.LOG_LEVEL.LOW);
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;

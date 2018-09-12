@@ -37,7 +37,7 @@ namespace KPVisionInspectionFramework
         {
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
             DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
@@ -63,7 +63,7 @@ namespace KPVisionInspectionFramework
             IsThreadAckSignalCheckExit = false;
         }
 
-        public void DeInitialize()
+        public override void DeInitialize()
         {
             int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);

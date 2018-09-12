@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 
+using CustonMsgBoxManager;
+
 namespace KPVisionInspectionFramework
 {
     static class Program
@@ -25,7 +27,9 @@ namespace KPVisionInspectionFramework
             }
             else
             {
-                MessageBox.Show(new Form { TopMost = true }, "The program is running.");
+                CMsgBoxManager.Initialize();
+                CMsgBoxManager.Show("The program is running.", "", 1000);
+                //MessageBox.Show(new Form { TopMost = true }, "The program is running.");
                 Application.Exit();
             }
         }

@@ -20,6 +20,11 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public MainProcessID()
         {
+            
+        }
+
+        public override void Initialize()
+        {
             DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.Initialize();
@@ -29,7 +34,7 @@ namespace KPVisionInspectionFramework
             SerialWnd.Initialize("COM1");
         }
 
-        public void DeInitialize()
+        public override void DeInitialize()
         {
             DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.DeInitialize();

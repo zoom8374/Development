@@ -6,3 +6,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\
 C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\obj\Debug\EthernetServerManager.csprojResolveAssemblyReference.cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetServerManager\bin\Debug\CustonMsgBoxManager.dll

@@ -27,6 +27,14 @@ namespace CustomControl
         }
         private Bitmap mouseOverImage;
 
+        [Category("DisableImage"), DefaultValue(null), Description("Diable Image")]
+        public Bitmap DisableImage
+        {
+            get { return disableImage;  }
+            set { disableImage = value; }
+        }
+        private Bitmap disableImage;
+
         [Category("BorderColor"), Browsable(true), DefaultValue(typeof(Color), "Black"), Description("Border Color")]
         public Color BorderColor
         {

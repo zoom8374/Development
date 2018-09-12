@@ -13,7 +13,7 @@ using System.Xml;
 
 using LogMessageManager;
 using ParameterManager;
-
+using CustonMsgBoxManager;
 
 namespace DIOControlManager
 {
@@ -335,7 +335,8 @@ namespace DIOControlManager
         {
             if((int)CDioConst.DIO_ERR_SUCCESS != DigitalIO.Initialize())
             {
-                MessageBox.Show("IO Board Initialize Error");
+                CMsgBoxManager.Show("IO Board Initialize Error", "", 2000);
+                //MessageBox.Show("IO Board Initialize Error");
                 return false;
             }
             return true;
