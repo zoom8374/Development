@@ -471,8 +471,10 @@ namespace DIOControlManager
 
             for(int iLoopCount = 0; iLoopCount < IOCnt; iLoopCount++)
             {
-                if (InputMultiSignal[iLoopCount] == (short)DIOEnum.ON)       btnInputSignal[iLoopCount].BackColor = Color.DarkGreen;
-                else if (InputMultiSignal[iLoopCount] == (short)DIOEnum.OFF) btnInputSignal[iLoopCount].BackColor = Color.Maroon;
+                if (InputMultiSignal[iLoopCount] == (short)DIOEnum.ON)
+                    ControlInvoke(btnInputSignal[iLoopCount], Color.DarkGreen);
+                else if (InputMultiSignal[iLoopCount] == (short)DIOEnum.OFF)
+                    ControlInvoke(btnInputSignal[iLoopCount], Color.Maroon);
             }
         }
 
@@ -480,16 +482,19 @@ namespace DIOControlManager
         {
             for(short iLoopCount = 0; iLoopCount < IOCnt; iLoopCount++)
             {
-                if(InputMultiSignal[iLoopCount] != InputMultiSignalPre[iLoopCount])
+                if (InputMultiSignal[iLoopCount] != InputMultiSignalPre[iLoopCount])
                 {
                     InputMultiSignalPre[iLoopCount] = InputMultiSignal[iLoopCount];
 
-                    //int _BitCommand = AirBlowCmd.BitCheck(iLoopCount);
-                    int _BitCommand = DioBaseCmd.InputBitCheck(iLoopCount);
-                    if (_BitCommand == DIO_DEF.IN_LIVE) continue;
-                    
-                    var _InputChangedEvent = InputChangedEvent;
-                    _InputChangedEvent?.Invoke(iLoopCount, Convert.ToBoolean(InputMultiSignal[iLoopCount]));
+                    if (InputMultiSignal[iLoopCount] == SIGNAL.ON)
+                    {
+                        //int _BitCommand = AirBlowCmd.BitCheck(iLoopCount);
+                        int _BitCommand = DioBaseCmd.InputBitCheck(iLoopCount);
+                        if (_BitCommand == DIO_DEF.IN_LIVE) continue;
+
+                        var _InputChangedEvent = InputChangedEvent;
+                        _InputChangedEvent?.Invoke(Convert.ToInt16(_BitCommand), Convert.ToBoolean(InputMultiSignal[iLoopCount]));
+                    }
                 }
             }
         }
@@ -510,8 +515,8 @@ namespace DIOControlManager
 
             for (int iLoopCount = 0; iLoopCount < IOCnt; iLoopCount++)
             {
-                if (_Data[iLoopCount] == (short)DIOEnum.ON)         { btnOutputSignal[iLoopCount].BackColor = Color.DarkGreen; OutputSignalFlag[iLoopCount] = true; }
-                else if (_Data[iLoopCount] == (short)DIOEnum.OFF)   { btnOutputSignal[iLoopCount].BackColor = Color.Maroon; OutputSignalFlag[iLoopCount] = false; }
+                if (_Data[iLoopCount] == (short)DIOEnum.ON)         { ControlInvoke(btnOutputSignal[iLoopCount], Color.DarkGreen);  OutputSignalFlag[iLoopCount] = true; }
+                else if (_Data[iLoopCount] == (short)DIOEnum.OFF)   { ControlInvoke(btnOutputSignal[iLoopCount], Color.Maroon);     OutputSignalFlag[iLoopCount] = false; }
             }
         }
 
@@ -564,6 +569,52 @@ namespace DIOControlManager
 
             return _Result;
         }
+		
+        #region "Control Invoke"
+        /// <summary>
+        /// 컨트롤 Text 입력 Invoke
+        /// </summary>
+        /// <param name="_Control">Control </param>
+        /// <param name="_msg">text</param>
+        private void ControlInvoke(Control _Control, string _Msg)
+        {
+            if (_Control.InvokeRequired)
+            {
+                _Control.Invoke(new MethodInvoker(delegate ()
+                {
+                    _Control.Text = _Msg;
+                }
+                ));
+            }
+            else
+            {
+                _Control.Text = _Msg;
+            }
+        }
+
+        /// <summary>
+        /// 컨트롤 BackColor 변경 Invoke
+        /// </summary>
+        /// <param name="_Control">Control </param>
+        /// <param name="_Color">변경 색</param>
+        private void ControlInvoke(Control _Control, Color _Color, string _Msg = null)
+        {
+            if (_Control.InvokeRequired)
+            {
+                _Control.Invoke(new MethodInvoker(delegate ()
+                {
+                    _Control.BackColor = _Color;
+                    if (_Msg != null) _Control.Text = _Msg;
+                }
+                ));
+            }
+            else
+            {
+                _Control.BackColor = _Color;
+                if (_Msg != null) _Control.Text = _Msg;
+            }
+        }
+        #endregion
 
         private void ThreadInputIOCheckFunc()
         {

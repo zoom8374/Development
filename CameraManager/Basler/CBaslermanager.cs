@@ -32,6 +32,7 @@ namespace CameraManager
 
         private ManualResetEvent PauseEvent = new ManualResetEvent(false);
 
+        private object GrabLock = new object();
         public CBaslerManager()
         {
             Environment.SetEnvironmentVariable("PYLON_GIGE_HEARTBEAT", "3000");
@@ -109,11 +110,14 @@ namespace CameraManager
 
         public void OneShot()
         {
-            PylonGrabResult_t _GrabResult;
-            bool _Result = Pylon.DeviceGrabSingleFrame(DeviceHandle, 0, ref GrabBuffer, out _GrabResult, 500);
+            lock (GrabLock)
+            {
+                PylonGrabResult_t _GrabResult;
+                bool _Result = Pylon.DeviceGrabSingleFrame(DeviceHandle, 0, ref GrabBuffer, out _GrabResult, 500);
 
-            var _BaslerGrabEvent = BaslerGrabEvent;
-            _BaslerGrabEvent?.Invoke(GrabBuffer.Array);
+                var _BaslerGrabEvent = BaslerGrabEvent;
+                _BaslerGrabEvent?.Invoke(GrabBuffer.Array);
+            }
         }
         public void Continuous(bool _Live)
         {
@@ -139,7 +143,7 @@ namespace CameraManager
                 while (false == IsThreadContinuousGrabExit)
                 {
                     if (IsThreadContinuousGrabTrigger)  OneShot();
-                    Thread.Sleep(3);
+                    Thread.Sleep(25);
                 }
             }
 

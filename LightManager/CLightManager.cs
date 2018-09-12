@@ -15,16 +15,17 @@ namespace LightManager
 {
     public class CLightManager
     {
-        LightParameter LightParam;
-        LightWindow LightWnd;
+        private LightParameter LightParam;
+        private LightWindow LightWnd;
+        public bool IsShowWindow = false;
 
         // LDH, 각 COM 번호에 해당하는 TotalLight가 생성된 번호를 담는다
-        int[] ComportNum = new int[15];
+        private int[] ComportNum = new int[15];
 
-        List<object> LightControlList = new List<object>();
+        private List<object> LightControlList = new List<object>();
 
-        string LightParameterFolderPath;
-        string LightParameterFullPath;
+        private string LightParameterFolderPath;
+        private string LightParameterFullPath;
 
         public CLightManager()
         {
@@ -115,7 +116,9 @@ namespace LightManager
 
         public void ShowLightWindow()
         {
-            LightWnd.ShowDialog();
+            LightWnd.TopMost = true;
+            IsShowWindow = true;
+            LightWnd.Show();
         }
 
         public void RecipeChange(string _RecipeName, string _SrcRecipeName)

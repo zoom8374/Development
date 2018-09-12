@@ -47,9 +47,9 @@
             this.textBoxIPAddress = new System.Windows.Forms.TextBox();
             this.textBoxSendString = new System.Windows.Forms.TextBox();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.labelTitle = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.picServerStatus = new System.Windows.Forms.PictureBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.labelTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picConnection)).BeginInit();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picServerStatus)).BeginInit();
@@ -288,6 +288,27 @@
             this.panelMain.TabIndex = 17;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
+            // picServerStatus
+            // 
+            this.picServerStatus.BackColor = System.Drawing.Color.Green;
+            this.picServerStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picServerStatus.Location = new System.Drawing.Point(106, 3);
+            this.picServerStatus.Name = "picServerStatus";
+            this.picServerStatus.Size = new System.Drawing.Size(206, 21);
+            this.picServerStatus.TabIndex = 48;
+            this.picServerStatus.TabStop = false;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(5, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(100, 23);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Server Status :";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // labelTitle
             // 
             this.labelTitle.BackColor = System.Drawing.Color.DarkSlateGray;
@@ -304,27 +325,6 @@
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(5, 3);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 23);
-            this.label7.TabIndex = 47;
-            this.label7.Text = "Server Status :";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // picServerStatus
-            // 
-            this.picServerStatus.BackColor = System.Drawing.Color.Green;
-            this.picServerStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picServerStatus.Location = new System.Drawing.Point(106, 3);
-            this.picServerStatus.Name = "picServerStatus";
-            this.picServerStatus.Size = new System.Drawing.Size(206, 21);
-            this.picServerStatus.TabIndex = 48;
-            this.picServerStatus.TabStop = false;
-            // 
             // EthernetWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -340,6 +340,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EthernetWindow";
+            this.TopMost = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EthernetWindow_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picConnection)).EndInit();
             this.panelMain.ResumeLayout(false);

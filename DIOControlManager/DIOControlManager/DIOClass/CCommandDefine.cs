@@ -94,25 +94,25 @@ namespace DIOControlManager
         //public static readonly int NONE = -1;
         public static readonly int IN_LIVE = 0;
         
-        public static readonly int IN_RESET        = 5;
-        public static readonly int IN_TRIGGER      = 6;
-        public static readonly int IN_REQUEST      = 7;
+        public static readonly int IN_RESET        = 4;
+        public static readonly int IN_TRIGGER      = 5;
+        public static readonly int IN_REQUEST      = 6;
         
         public static readonly int IN_RESET_2      = 8;
         public static readonly int IN_TRIGGER_2    = 9;
         public static readonly int IN_REQUEST_2    = 10;
-        public static readonly int IN_RESET_3      = 11;
-        public static readonly int IN_TRIGGER_3    = 12;
-        public static readonly int IN_REQUEST_3    = 13;
+        public static readonly int IN_RESET_3      = 12;
+        public static readonly int IN_TRIGGER_3    = 13;
+        public static readonly int IN_REQUEST_3    = 14;
         
         public static readonly int OUT_LIVE = 0;
         public static readonly int OUT_AUTO = 1;
 
-        public static readonly int OUT_READY        = 8;
-        public static readonly int OUT_COMPLETE     = 9;
+        public static readonly int OUT_READY        = 4;
+        public static readonly int OUT_COMPLETE     = 5;
 
-        public static readonly int OUT_READY_2      = 10;
-        public static readonly int OUT_COMPLETE_2   = 11;
+        public static readonly int OUT_READY_2      = 8;
+        public static readonly int OUT_COMPLETE_2   = 9;
         public static readonly int OUT_READY_3      = 12;
         public static readonly int OUT_COMPLETE_3   = 13;
 

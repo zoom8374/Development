@@ -11,10 +11,10 @@ namespace EthernetServerManager
 {
     public class CEtherentServerManager
     {
-        //public const char STX = (char)0x02;
-        //public const char ETX = (char)0x03;
-        public const string STX = "STX";
-        public const string ETX = "ETX";
+        public const char STX = (char)0x02;
+        public const char ETX = (char)0x03;
+        //public const string STX = "STX";
+        //public const string ETX = "ETX";
 
         private Socket SockServer;
         private IPEndPoint IPEndPoint;
@@ -22,7 +22,7 @@ namespace EthernetServerManager
         private List<Socket> SockClientList;
         private byte[] ReceiveData;
 
-        private int ConnectPort = 5050;
+        private int ConnectPort = 5000;
         private string ConnectIP = "10.100.110.214";
         private bool IsServerAlready = false;
 
@@ -109,7 +109,7 @@ namespace EthernetServerManager
             if (_SockClient.Connected && e.BytesTransferred > 0)
             {
                 byte[] _DataBuffer = e.Buffer;
-                string _DataString = Encoding.Unicode.GetString(_DataBuffer);
+                string _DataString = Encoding.ASCII.GetString(_DataBuffer);
 
                 string _TempText = _DataString.Trim();
 
@@ -194,8 +194,8 @@ namespace EthernetServerManager
             LastSendMessage = _Data;
 
             string _SendProtocol = String.Format("{0},{1},{2}", STX, LastSendMessage, ETX);
-            //byte[] _SendData = Encoding.ASCII.GetBytes(_SendProtocol);
-            byte[] _SendData = Encoding.Unicode.GetBytes(_SendProtocol);
+            byte[] _SendData = Encoding.ASCII.GetBytes(_SendProtocol);
+            //byte[] _SendData = Encoding.Unicode.GetBytes(_SendProtocol);
 
             SocketAsyncEventArgs _SockArgs = new SocketAsyncEventArgs();
             _SockArgs.SetBuffer(_SendData, 0, _SendData.Length);

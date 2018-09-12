@@ -31,9 +31,13 @@ namespace KPVisionInspectionFramework
 
         private short WaitingPeriod = 50;
         private short WaitingLimitTime = 5000;
-        
+
         #region Initialize & DeInitialize
         public MainProcessDispensor()
+        {
+        }
+
+        public void Initialize()
         {
             DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
@@ -43,13 +47,13 @@ namespace KPVisionInspectionFramework
             EthernetServWnd.Initialize();
             EthernetServWnd.ReceiveStringEvent += new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
 
-            int _AutoCmdBit     = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
+            int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
-            int _ReadyCmdBit    = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
+            int _ReadyCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
 
-            if (_AutoCmdBit >= 0)     DIOWnd.SetOutputSignal((short)_AutoCmdBit, false);
+            if (_AutoCmdBit >= 0) DIOWnd.SetOutputSignal((short)_AutoCmdBit, false);
             if (_CompleteCmdBit >= 0) DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
-            if (_ReadyCmdBit >= 0)    DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
+            if (_ReadyCmdBit >= 0) DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
 
             AckStructs = new AckStruct[3];
             for (int iLoopCount = 0; iLoopCount < 3; ++iLoopCount) AckStructs[iLoopCount] = new AckStruct(); ;
@@ -120,9 +124,7 @@ namespace KPVisionInspectionFramework
             bool _Result = true;
 
             int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
-            int _ReadyCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
             DIOWnd.SetOutputSignal((short)_AutoCmdBit, _Flag);
-            DIOWnd.SetOutputSignal((short)_ReadyCmdBit, _Flag);
 
             return _Result;
         }
@@ -156,8 +158,8 @@ namespace KPVisionInspectionFramework
 
             else if (2 == _ID)
             {
-                _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE_2);
-                _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY_2);
+                _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE_3);
+                _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY_3);
             }
 
             else
@@ -178,35 +180,48 @@ namespace KPVisionInspectionFramework
 
             if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN)
             {
-                string _VisionString, _ResultString, _DataStringLowX, _DataStringHiX, _DataStringLowY, _DataStringHiY;
+                string _VisionString, _ResultString;
                 _VisionString = String.Format("V{0}", _ResultParam.ID + 1);
 
                 if (_ResultParam.IsGood) _ResultString = "OK";
                 else                     _ResultString = "NG";
 
                 var _SendResult = _ResultParam.SendResult as SendNeedleAlignResult;
-                //_DataStringHiX = String.Format("{0:D2}", _SendResult.AlignX);
-                //_DataStringLowX = String.Format("{0:F2}", _SendResult.AlignX);
-                //_DataStringHiY = String.Format("{0:D2}", _SendResult.AlignY);
-                //_DataStringLowY = String.Format("{0:F2", _SendResult.AlignY);
 
-                //string _ResultDataString = String.Format("{0},{1},{2},{3}", _VisionString, _ResultString, _SendResult.AlignX, _SendResult.AlignY);
+                if (_SendResult == null)
+                {
+                    _SendResult = new SendNeedleAlignResult();
+                    _SendResult.AlignX = 0;
+                    _SendResult.AlignY = 0;
+                    _ResultString = "NG";
+                }
+                
                 //LDH, 2018.09.04, TILab 프로토콜 생성
                 string[] _DataStringAlign = ChangeResult(_SendResult.AlignX, _SendResult.AlignY);
                 string _ResultDataString = string.Format("{0},{1},{2},{3}", _VisionString, _ResultString, _DataStringAlign[0], _DataStringAlign[1]);
-
                 EthernetServWnd.SendResultData(_ResultDataString);
-
-                //AckStructs[_ResultParam.ID].WaitTime = 0;
-                //AckStructs[_ResultParam.ID].AckRequest = true;
-                //AckStructs[_ResultParam.ID].AckComplete = false;
-                //AckStructs[_ResultParam.ID].AckStatus = ACK_STATUS.WAIT;
                 AckStructs[_ResultParam.ID].Initialize();
             }
 
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)
             {
+                string _VisionString, _ResultString;
+                _VisionString = String.Format("V{0}", _ResultParam.ID + 1);
 
+                if (_ResultParam.IsGood) _ResultString = "OK";
+                else _ResultString = "NG";
+
+                var _SendResult = _ResultParam.SendResult as SendLeadResult;
+
+                if (_SendResult == null)
+                {
+                    _SendResult = new SendLeadResult();
+                    _ResultString = "NG";
+                }
+
+                string _ResultDataString = string.Format("{0},{1},00000,00000", _VisionString, _ResultString);
+                EthernetServWnd.SendResultData(_ResultDataString);
+                AckStructs[_ResultParam.ID].Initialize();
             }
 
             return _Result;

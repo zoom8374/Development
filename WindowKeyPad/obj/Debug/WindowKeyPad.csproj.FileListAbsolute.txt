@@ -399,3 +399,10 @@ C:\Users\Administrator\Desktop\Vision SW_20180409_1\KPSolarCellVisionInspectionP
 C:\Users\Administrator\Desktop\Vision SW_20180409_1\KPSolarCellVisionInspectionProject\WindowKeyPad\obj\Debug\WindowKeyPad.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\Vision SW_20180409_1\KPSolarCellVisionInspectionProject\WindowKeyPad\obj\Debug\WindowKeyPad.dll
 C:\Users\Administrator\Desktop\Vision SW_20180409_1\KPSolarCellVisionInspectionProject\WindowKeyPad\obj\Debug\WindowKeyPad.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\bin\Debug\WindowKeyPad.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\bin\Debug\WindowKeyPad.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.WindowKeypadControl.resources
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.csproj.GenerateResource.Cache
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.csprojResolveAssemblyReference.cache

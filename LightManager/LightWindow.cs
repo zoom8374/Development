@@ -87,7 +87,7 @@ namespace LightManager
         {
             var _SetLightCommandEvent = SetLightCommandEvent;
             _SetLightCommandEvent?.Invoke(comboBoxLight.SelectedIndex, LightCommand.LightAllOff);
-            this.Close();
+            this.Hide();
         }
 
         private void SetLightCombobox(int[] _LightValue)

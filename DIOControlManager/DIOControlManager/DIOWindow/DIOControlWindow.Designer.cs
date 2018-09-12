@@ -525,7 +525,7 @@
             this.btnInput15.Name = "btnInput15";
             this.btnInput15.Size = new System.Drawing.Size(173, 32);
             this.btnInput15.TabIndex = 299;
-            this.btnInput15.Tag = "4";
+            this.btnInput15.Tag = "15";
             this.btnInput15.Text = "DI15";
             this.btnInput15.UseVisualStyleBackColor = false;
             this.btnInput15.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -540,7 +540,7 @@
             this.btnInput14.Name = "btnInput14";
             this.btnInput14.Size = new System.Drawing.Size(173, 32);
             this.btnInput14.TabIndex = 298;
-            this.btnInput14.Tag = "4";
+            this.btnInput14.Tag = "14";
             this.btnInput14.Text = "DI14";
             this.btnInput14.UseVisualStyleBackColor = false;
             this.btnInput14.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -555,7 +555,7 @@
             this.btnInput13.Name = "btnInput13";
             this.btnInput13.Size = new System.Drawing.Size(173, 32);
             this.btnInput13.TabIndex = 297;
-            this.btnInput13.Tag = "6";
+            this.btnInput13.Tag = "13";
             this.btnInput13.Text = "DI13";
             this.btnInput13.UseVisualStyleBackColor = false;
             this.btnInput13.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -570,7 +570,7 @@
             this.btnInput12.Name = "btnInput12";
             this.btnInput12.Size = new System.Drawing.Size(173, 32);
             this.btnInput12.TabIndex = 296;
-            this.btnInput12.Tag = "4";
+            this.btnInput12.Tag = "12";
             this.btnInput12.Text = "DI12";
             this.btnInput12.UseVisualStyleBackColor = false;
             this.btnInput12.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -585,7 +585,7 @@
             this.btnInput11.Name = "btnInput11";
             this.btnInput11.Size = new System.Drawing.Size(173, 32);
             this.btnInput11.TabIndex = 295;
-            this.btnInput11.Tag = "3";
+            this.btnInput11.Tag = "11";
             this.btnInput11.Text = "DI11";
             this.btnInput11.UseVisualStyleBackColor = false;
             this.btnInput11.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -600,7 +600,7 @@
             this.btnInput10.Name = "btnInput10";
             this.btnInput10.Size = new System.Drawing.Size(173, 32);
             this.btnInput10.TabIndex = 294;
-            this.btnInput10.Tag = "2";
+            this.btnInput10.Tag = "10";
             this.btnInput10.Text = "DI10";
             this.btnInput10.UseVisualStyleBackColor = false;
             this.btnInput10.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -615,7 +615,7 @@
             this.btnInput9.Name = "btnInput9";
             this.btnInput9.Size = new System.Drawing.Size(173, 32);
             this.btnInput9.TabIndex = 293;
-            this.btnInput9.Tag = "1";
+            this.btnInput9.Tag = "9";
             this.btnInput9.Text = "Vision1 Data Request";
             this.btnInput9.UseVisualStyleBackColor = false;
             this.btnInput9.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -630,7 +630,7 @@
             this.btnInput8.Name = "btnInput8";
             this.btnInput8.Size = new System.Drawing.Size(173, 32);
             this.btnInput8.TabIndex = 292;
-            this.btnInput8.Tag = "0";
+            this.btnInput8.Tag = "8";
             this.btnInput8.Text = "Vision1 Reset";
             this.btnInput8.UseVisualStyleBackColor = false;
             this.btnInput8.MousePressing += new System.EventHandler(this.btnInput_MousePressing);
@@ -1264,6 +1264,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DIOControlWindow";
+            this.TopMost = true;
             this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -58,7 +58,7 @@ namespace InspectionSystemManager
             SetISMParameter(_InspSysManagerParam);
             SetInspectionParameter(_InspParam);
 
-            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectItem, InspWndName, _RecipeName, IsSimulationMode);
+            InspWnd.Initialize(_OwnerForm, ID, InspParam, ProjectType, ProjectItem, InspWndName, _RecipeName, IsSimulationMode);
             InspWnd.InitializeResolution(_InspSysManagerParam.ResolutionX, _InspSysManagerParam.ResolutionY);
             InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);

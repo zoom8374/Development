@@ -119,6 +119,7 @@ namespace KPVisionInspectionFramework
             if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    MainProcess = new MainProcessDispensor();
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  MainProcess = new MainProcessID();
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType) ((MainProcessDispensor)MainProcess).Initialize();
             #endregion MainProcess Setting
 
             #region InspSysManager Initialize
@@ -274,7 +275,7 @@ namespace KPVisionInspectionFramework
             else
                 MainProcess.SetEthernetWindowTopMost(true);
 
-            MainProcess.SetEthernetWindowTopMost(false);
+            //MainProcess.SetEthernetWindowTopMost(false);
         }
 
         private void rbSerial_Click(object sender, EventArgs e)
@@ -285,7 +286,7 @@ namespace KPVisionInspectionFramework
             else
                 MainProcess.SetSerialWindowTopMost(true);
 
-            MainProcess.SetSerialWindowTopMost(false);
+            //MainProcess.SetSerialWindowTopMost(false);
         }
 
         private void rbLight_Click(object sender, EventArgs e)
@@ -301,7 +302,7 @@ namespace KPVisionInspectionFramework
             else
                 MainProcess.SetDIOWindowTopMost(true);
 
-            MainProcess.SetDIOWindowTopMost(false);
+            //MainProcess.SetDIOWindowTopMost(false);
         }
 
         private void rbConfig_Click(object sender, EventArgs e)
@@ -467,6 +468,7 @@ namespace KPVisionInspectionFramework
 
         private void MainProcessTriggerOn(object _Value)
         {
+            if (CParameterManager.SystemMode != eSysMode.AUTO_MODE) return; 
             int _ID = Convert.ToInt32(_Value);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
             InspSysManager[_ID].TriggerOn();
@@ -487,6 +489,8 @@ namespace KPVisionInspectionFramework
 
         private void MainProcessDataRequest(object _Value)
         {
+            if (CParameterManager.SystemMode != eSysMode.AUTO_MODE) return;
+
             int _ID = Convert.ToInt32(_Value);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Data Request{0} Event", _ID + 1));
             InspSysManager[_ID].DataSend();

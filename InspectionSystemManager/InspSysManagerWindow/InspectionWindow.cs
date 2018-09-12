@@ -97,10 +97,11 @@ namespace InspectionSystemManager
             InitializeComponent();
         }
 
-        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectItem _ProjectItem, string _FormName,string _RecipeName, bool _IsSimulationMode)
+        public void Initialize(Object _OwnerForm, int _ID, InspectionParameter _InspParam, eProjectType _ProjectType, eProjectItem _ProjectItem, string _FormName,string _RecipeName, bool _IsSimulationMode)
         {
             ID = _ID;
             ProjectItem = _ProjectItem;
+            ProjectType = _ProjectType;
             FormName = _FormName;
             RecipeName = _RecipeName;
             IsSimulationMode = _IsSimulationMode;
@@ -904,7 +905,7 @@ namespace InspectionSystemManager
             CogImage8Grey _DestImage = new CogImage8Grey();
             bool _Result = InspLineFindProc.Run(OriginImage, ref _DestImage, _InspRegion, _CogLineFindAlgo, ref _CogLineFindResult);
 
-            if (_CogLineFindAlgo.UseAlignment)
+            if (_CogLineFindResult.IsGood == true && _CogLineFindAlgo.UseAlignment)
             {
                 OriginImage = _DestImage;
                 kpCogDisplayMain.SetDisplayImage(OriginImage);
@@ -1129,6 +1130,7 @@ namespace InspectionSystemManager
             CogLineFindResult _CogLineFindResult = _ResultParam as CogLineFindResult;
 
             CogLineSegment _CogLine = new CogLineSegment();
+            if (_CogLineFindResult.Length == 0 || _CogLineFindResult.Rotation == 0) return false;
             _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
             ResultDisplay(_CogLine, "LineFind", CogColorConstants.Green);
 

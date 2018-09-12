@@ -19,8 +19,9 @@ namespace EthernetServerManager
         private CEtherentServerManager ServerSock;
         private Queue<string> CmdQueue = new Queue<string>();
 
-        private string IPAddress = "127.0.0.1";
-        private short PortNumber = 5050;
+        private string IPAddress = "127.1.1.3";
+        private short PortNumber = 5000;
+        private string ClientIPAddress = "127.0.0.0";
 
         private bool IsConnected = false;
         private Timer ConnectCheckTimer;
@@ -106,6 +107,7 @@ namespace EthernetServerManager
                     {
                         case "IPAddress": IPAddress = _Node.InnerText; break;
                         case "PortNumber": PortNumber = Convert.ToInt16(_Node.InnerText); break;
+                        case "ClientIPAddress": ClientIPAddress = _Node.InnerText; break;
                     }
                 }
             }
@@ -124,6 +126,7 @@ namespace EthernetServerManager
             {
                 _XmlWriter.WriteElementString("IPAddress", IPAddress);
                 _XmlWriter.WriteElementString("PortNumber", PortNumber.ToString());
+                _XmlWriter.WriteElementString("ClientIPAddress", ClientIPAddress);
             }
             _XmlWriter.WriteEndElement();
             _XmlWriter.WriteEndDocument();
@@ -241,7 +244,7 @@ namespace EthernetServerManager
             IsConnected = false;
             for (int iLoopCount = 0; iLoopCount < _ConnectedList.Length; ++iLoopCount)
             {
-                if (_ConnectedList[iLoopCount] == IPAddress)
+                if (_ConnectedList[iLoopCount] == ClientIPAddress)
                 {
                     IsConnected = true;
                     break;

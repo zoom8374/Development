@@ -46,63 +46,71 @@ namespace InspectionSystemManager
             if (true == Inspection(_SrcImage)) GetResult();
             if (FindLineResults != null)
             {
-                _CogLineFindResult.StartX = FindLineResults.GetLineSegment().StartX;
-                _CogLineFindResult.StartY = FindLineResults.GetLineSegment().StartY;
-                _CogLineFindResult.EndX = FindLineResults.GetLineSegment().EndX;
-                _CogLineFindResult.EndY = FindLineResults.GetLineSegment().EndY;
-                _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
-                _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
-                _CogLineFindResult.PointCount = FindLineResults.Count;
-
-                if (_CogLineFindAlgo.UseAlignment)
+                try
                 {
-                    CogAffineTransformTool _CogTransForm = new CogAffineTransformTool();
-                    CogRectangleAffine _AffineRegion = new CogRectangleAffine();
-                    _AffineRegion.SetCenterLengthsRotationSkew(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height, _CogLineFindResult.Rotation, 0);
-                    _CogTransForm.InputImage = _SrcImage;
-                    _CogTransForm.Region = _AffineRegion;
-                    _CogTransForm.Run();
+                    _CogLineFindResult.StartX = FindLineResults.GetLineSegment().StartX;
+                    _CogLineFindResult.StartY = FindLineResults.GetLineSegment().StartY;
+                    _CogLineFindResult.EndX = FindLineResults.GetLineSegment().EndX;
+                    _CogLineFindResult.EndY = FindLineResults.GetLineSegment().EndY;
+                    _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
+                    _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
+                    _CogLineFindResult.PointCount = FindLineResults.Count;
 
-                    CogCopyRegionTool _CopyRegion = new CogCopyRegionTool();
-                    _CopyRegion.InputImage = _CogTransForm.OutputImage;
-                    _CopyRegion.DestinationImage = _SrcImage;
-                    _CopyRegion.RunParams.ImageAlignmentEnabled = true;
-                    _CopyRegion.Region = null;
-                    _CopyRegion.Run();
-
-                    _DestImage = (CogImage8Grey)_CopyRegion.OutputImage;
-
-                    if (true == Inspection(_DestImage)) GetResult();
-                    if (FindLineResults != null)
+                    if (_CogLineFindAlgo.UseAlignment)
                     {
-                        _CogLineFindResult.StartX = FindLineResults.GetLineSegment().StartX;
-                        _CogLineFindResult.StartY = FindLineResults.GetLineSegment().StartY;
-                        _CogLineFindResult.EndX = FindLineResults.GetLineSegment().EndX;
-                        _CogLineFindResult.EndY = FindLineResults.GetLineSegment().EndY;
-                        _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
-                        _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
-                        _CogLineFindResult.PointCount = FindLineResults.Count;
+                        CogAffineTransformTool _CogTransForm = new CogAffineTransformTool();
+                        CogRectangleAffine _AffineRegion = new CogRectangleAffine();
+                        _AffineRegion.SetCenterLengthsRotationSkew(_InspRegion.CenterX, _InspRegion.CenterY, _InspRegion.Width, _InspRegion.Height, _CogLineFindResult.Rotation, 0);
+                        _CogTransForm.InputImage = _SrcImage;
+                        _CogTransForm.Region = _AffineRegion;
+                        _CogTransForm.Run();
 
-                        _CogLineFindResult.IsGood = true;
+                        CogCopyRegionTool _CopyRegion = new CogCopyRegionTool();
+                        _CopyRegion.InputImage = _CogTransForm.OutputImage;
+                        _CopyRegion.DestinationImage = _SrcImage;
+                        _CopyRegion.RunParams.ImageAlignmentEnabled = true;
+                        _CopyRegion.Region = null;
+                        _CopyRegion.Run();
+
+                        _DestImage = (CogImage8Grey)_CopyRegion.OutputImage;
+
+                        if (true == Inspection(_DestImage)) GetResult();
+                        if (FindLineResults != null)
+                        {
+                            _CogLineFindResult.StartX = FindLineResults.GetLineSegment().StartX;
+                            _CogLineFindResult.StartY = FindLineResults.GetLineSegment().StartY;
+                            _CogLineFindResult.EndX = FindLineResults.GetLineSegment().EndX;
+                            _CogLineFindResult.EndY = FindLineResults.GetLineSegment().EndY;
+                            _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
+                            _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
+                            _CogLineFindResult.PointCount = FindLineResults.Count;
+
+                            _CogLineFindResult.IsGood = true;
+                        }
+
+                        else
+                        {
+                            _CogLineFindResult.IsGood = false;
+                        }
+
+                        GC.Collect();
                     }
 
                     else
                     {
-                        _CogLineFindResult.IsGood = false;
+                        _CogLineFindResult.IsGood = true;
                     }
-
-                    GC.Collect();
                 }
 
-                else
+                catch
                 {
-                    _CogLineFindResult.IsGood = true;
+                    _CogLineFindResult.IsGood = false;
                 }
             }
 
             else
             {
-                _CogLineFindResult.IsGood = false;;
+                _CogLineFindResult.IsGood = false;
             }
 
             return _Result;
