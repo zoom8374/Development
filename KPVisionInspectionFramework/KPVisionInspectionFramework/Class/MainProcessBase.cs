@@ -79,7 +79,7 @@ namespace KPVisionInspectionFramework
 
         }
 
-        public virtual void SendSerialData(string _SendData)
+        public virtual void SendSerialData(eMainProcCmd _SendCmd, string _SendData = "")
         {
 
         }

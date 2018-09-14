@@ -8,15 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Threading;
 
 using LogMessageManager;
 
-enum eSerialProtocol { STX = 0x02, ETX = 0x03 }
+enum eSerialProtocol { STX = '@', ETX = 'r' }
 namespace SerialManager
 {
     public partial class SerialWindow : Form
     {
         private SerialPort SerialComm;
+        public bool IsShowWindow;
 
         delegate void SetTextCallback(string data);
 
@@ -113,34 +115,30 @@ namespace SerialManager
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            IsShowWindow = false;
             this.Hide();
         }
 
         private void SerialDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if(SerialComm.IsOpen)
+            if (SerialComm.IsOpen)
             {
+                Thread.Sleep(50);
+
                 string data = SerialComm.ReadExisting();
-                string ReceiveData = "";
 
-                if(data != string.Empty)
+                if (data != string.Empty)
                 {
-                    char[] values = data.ToCharArray();
+                    string[] values = data.Split(',');
 
-                    if (values[0] != Convert.ToChar(eSerialProtocol.STX)) return;
-                    else if (values[values.Count() - 1] != Convert.ToChar(eSerialProtocol.ETX)) return;
-                    else 
+                    if (!values[0].Contains(Convert.ToChar(eSerialProtocol.STX))) return;
+                    else if (!values[values.Count() - 1].Contains(Convert.ToChar(eSerialProtocol.ETX))) return;
 
-                    foreach (char ValueData in values)
-                    {
-                        ReceiveData += ValueData;
-                    }
-
-                    SerialReceiveEvent(ReceiveData);
-                    SetText(ReceiveData);
+                    SerialReceiveEvent(data);
+                    SetText(data);
                 }
             }
-           }
+        }
 
         private void SetText(string _Data)
         {
@@ -158,7 +156,23 @@ namespace SerialManager
 
         public void SendSequenceData(string _SendData)
         {
+            byte[] SendData;
 
+            try
+            {
+                SendData = Encoding.ASCII.GetBytes(_SendData);
+                SerialComm.Write(SendData, 0, SendData.Count());
+            }
+            catch
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SerialWindow SendWequenceData Exception!!", CLogManager.LOG_LEVEL.LOW);
+            }
+        }
+
+        public void ShowSerialWindow()
+        {
+            IsShowWindow = true;
+            this.Show();
         }
     }
 }

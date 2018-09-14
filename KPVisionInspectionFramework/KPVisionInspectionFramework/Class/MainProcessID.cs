@@ -14,6 +14,8 @@ namespace KPVisionInspectionFramework
 {
     public class MainProcessID : MainProcessBase
     {
+        public const string CR = "cr";
+
         public DIOControlWindow DIOWnd;
         public SerialWindow     SerialWnd;
 
@@ -69,12 +71,13 @@ namespace KPVisionInspectionFramework
         #region Serial Window Function
         public override void ShowSerialWindow()
         {
-            SerialWnd.Show();
+            //SerialWnd.Show();
+            SerialWnd.ShowSerialWindow();
         }
 
         public override bool GetSerialWindowShown()
         {
-            return true;
+            return SerialWnd.IsShowWindow;
         }
 
         public override void SetSerialWindowTopMost(bool _IsTopMost)
@@ -83,6 +86,7 @@ namespace KPVisionInspectionFramework
         }
         #endregion Serial Window Function
 
+        //LDH, 내부 Test 용. 실제로는 Camera Trigger로 동작
         public override bool TriggerOn(int _ID)
         {
             bool _Result = false;
@@ -97,15 +101,43 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = false;
 
+            int _Result1Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1);
+            int _Result2Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT2);
+            int _Result3Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT3);
             int _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_COMPLETE);
-            int _ReadyCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_READY);
 
+            if (_Result1Bit >= 0) DIOWnd.SetOutputSignal((short)_Result1Bit, false);
+            if (_Result2Bit >= 0) DIOWnd.SetOutputSignal((short)_Result2Bit, false);
+            if (_Result3Bit >= 0) DIOWnd.SetOutputSignal((short)_Result3Bit, false);
             if (_CompleteCmdBit >= 0)   DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
-            if (_ReadyCmdBit >= 0)      DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
 
             return _Result;
         }
 
+        public override bool SendResultData(SendResultParameter _ResultParam)
+        {
+            bool _Result = true;
+
+            bool _ResultFlag = _ResultParam.IsGood;
+            int SendResultBit = 0;
+
+            if (!_ResultFlag)
+            {
+                switch (_ResultParam.NgType)
+                {
+                    case eNgType.REF_NG: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1); break;
+                    case eNgType.ID:     SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1); break;
+                    case eNgType.DEFECT: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT2); break;
+                }
+            }
+
+            DIOWnd.SetOutputSignal((short)SendResultBit, true);
+            InspectionComplete(0, true);
+
+            //AckStructs[_ResultParam.ID].Initialize();
+
+            return _Result;
+        }
 
         #region Communication Event Function
         private void InputChangeEventFunction(short _BitNum, bool _Signal)
@@ -119,14 +151,51 @@ namespace KPVisionInspectionFramework
 
         private bool SeraialReceiveEventFunction(string _SerialData)
         {
-            OnMainProcessCommand(eMainProcCmd.RCP_CHANGE, _SerialData);
+            string[] ReceiveData = _SerialData.Split(',');
+            eMainProcCmd ReceiveCmd = eMainProcCmd.LOT_CHANGE;
+
+            switch(ReceiveData[0])
+            {
+                case "@S": ReceiveCmd = eMainProcCmd.RCP_CHANGE; break;
+                case "@L": ReceiveCmd = eMainProcCmd.LOT_CHANGE; break;
+                case "@E": ReceiveCmd = eMainProcCmd.LOT_CHANGE; break;
+            }
+
+            OnMainProcessCommand(ReceiveCmd, ReceiveData[1]);
+
             return true;
         }
 
         //LDH, 2018.08.20, Serial Data Send
-        public override void SendSerialData(string _SendData)
+        public override void SendSerialData(eMainProcCmd _SendCmd, string _SendData = "")
         {
-            SerialWnd.SendSequenceData(_SendData);
+            string SendBit = "";
+
+            switch (_SendCmd)
+            {
+                case eMainProcCmd.RCP_CHANGE: SendBit = "@D_OK"; break;
+                case eMainProcCmd.LOT_CHANGE:
+                    {
+                        if (_SendData == "END") SendBit = "@E_OK";
+                        else                    SendBit = "@L_OK"; 
+                    }break;
+                case eMainProcCmd.REQUEST: SendBit = "@R_D"; break;
+            }
+
+            SerialWnd.SendSequenceData(SendBit + "," + CR);
+        }
+
+        public override bool InspectionComplete(int _ID, bool _Flag)
+        {
+            bool _Result = true;
+            int _CompleteCmdBit = 0;
+
+            _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
+
+
+            DIOWnd.SetOutputSignal((short)_CompleteCmdBit, _Flag);
+
+            return _Result;
         }
         #endregion Communication Event Function
     }

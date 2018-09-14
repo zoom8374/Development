@@ -459,6 +459,7 @@ namespace KPVisionInspectionFramework
                 case eMainProcCmd.TRG:          MainProcessTriggerOn(_Value);    break;
                 case eMainProcCmd.REQUEST:      MainProcessDataRequest(_Value); break;
                 case eMainProcCmd.RCP_CHANGE:   MainProcessRcpChange(_Value);    break;
+                case eMainProcCmd.LOT_CHANGE:   MainProcessLOTChange(_Value);   break;
             }
         }
 
@@ -478,7 +479,26 @@ namespace KPVisionInspectionFramework
 
             _Result = RecipeChange(_RecipeName);
 
-            if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType) MainProcess.SendSerialData("@R");
+            if (!_Result) return false;
+
+            if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType)
+                MainProcess.SendSerialData(eMainProcCmd.RCP_CHANGE);
+
+            return _Result;
+        }
+
+        private bool MainProcessLOTChange(object _Value)
+        {
+            bool _Result = true;
+
+            string _ReceiveData = _Value as string;
+
+            if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType)
+            {
+                if(_ReceiveData == "LotEnd") MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE, "END");
+                else
+                    MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE);
+            }
 
             return _Result;
         }
@@ -512,7 +532,7 @@ namespace KPVisionInspectionFramework
         {
             SendResultParameter _SendResParam = _Result as SendResultParameter;
             ResultBaseWnd.SetResultData(_SendResParam);
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SendResultData"));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SetResultData"));
         }
 
         private void LightControl(object _LightOnOff)
@@ -523,8 +543,11 @@ namespace KPVisionInspectionFramework
 
         private void InspectionComplete(object _Value, int _ID)
         {
-            bool _Flag = Convert.ToBoolean(_Value);
-            MainProcess.InspectionComplete(_ID, _Flag);
+            if ((eProjectType)ParamManager.SystemParam.ProjectType != eProjectType.BLOWER)
+            {
+                bool _Flag = Convert.ToBoolean(_Value);
+                MainProcess.InspectionComplete(_ID, _Flag);
+            }
         }
         #endregion Main Process
     }

@@ -194,8 +194,13 @@ namespace InspectionSystemManager
             InspNeedleCircleFindProc.DeInitialize();
             InspLeadProc.DeInitialize();
             InspLineFindProc.DeInitialize();
+            ImageDeleteWnd.DeInitialize();
 			CameraManager.DeInitialilze();
             CameraManager.ImageGrabEvent -= new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
+
+            if (ThreadInspectionProcess != null) { IsThreadInspectionProcessExit = true; Thread.Sleep(200); ThreadInspectionProcess.Abort(); ThreadInspectionProcess = null; }
+            if (ThreadLiveCheck != null) { IsThreadLiveCheckExit = true; Thread.Sleep(200); ThreadLiveCheck.Abort(); ThreadLiveCheck = null; }
+            if (ThreadImageSave != null) { IsThreadImageSaveExit = true; Thread.Sleep(200); ThreadImageSave.Abort(); ThreadImageSave = null; }
         }
 
         public void SetLocation(int _StartX, int _StartY)

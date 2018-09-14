@@ -30,7 +30,7 @@ namespace ParameterManager
     /// <summary>
     /// 
     /// </summary>
-    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, ACK_COMPLETE, ACK_FAIL }
+    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, LOT_CHANGE, ACK_COMPLETE, ACK_FAIL }
 
     /// <summary>
     /// Inspection Window Command
@@ -81,6 +81,9 @@ namespace ParameterManager
         public const int OUT_READY_3    = 7;
         public const int OUT_COMPLETE_3 = 8;
 
+        public const int OUT_RESULT_1   = 9;
+        public const int OUT_RESULT_2   = 10;
+        public const int OUT_RESULT_3   = 11;
 
         public const int IN_LIVE        = 0;
         public const int IN_ALARM_OFF   = 1;

@@ -62,29 +62,34 @@ namespace DIOControlManager
     {
         //private static readonly int NONE = -1;
         public static readonly int IN_LIVE = 0;
-        public static readonly int IN_TRIGGER = 5;
-        public static readonly int IN_REQUEST = 7;
+        public static readonly int IN_RESET = 1;
         
         public static readonly int OUT_LIVE = 0;
         public static readonly int OUT_AUTO = 1;
-        public static readonly int OUT_READY = 2;
-        public static readonly int OUT_COMPLETE = 3;
+        public static readonly int OUT_RESULT1 = 2;
+        public static readonly int OUT_RESULT2 = 3;
+        public static readonly int OUT_RESULT3 = 4;
+        public static readonly int OUT_COMPLETE = 5;
 
         public AirBlowCmd(int _IOCount)
         {
             IOCount = _IOCount;
 
             InCmdArray = new int[IOCount];
-            OutCmdArray = new int[IOCount];
             for (int iLoopCount = 0; iLoopCount < IOCount; ++iLoopCount) InCmdArray[iLoopCount] = DIO_DEF.NONE;
 
-            InCmdArray[IN_LIVE]       = DIO_DEF.IN_LIVE;
-            InCmdArray[IN_TRIGGER]    = DIO_DEF.IN_TRG;
-            InCmdArray[IN_REQUEST]    = DIO_DEF.IN_REQUEST;
+            InCmdArray[IN_LIVE]    = DIO_DEF.IN_LIVE;
+            InCmdArray[IN_RESET]   = DIO_DEF.IN_RESET;
 
-            OutCmdArray[OUT_LIVE]     = DIO_DEF.OUT_LIVE;
-            OutCmdArray[OUT_AUTO]     = DIO_DEF.OUT_AUTO;
-            OutCmdArray[OUT_READY]    = DIO_DEF.OUT_READY;
+
+            OutCmdArray = new int[IOCount];
+            for (int iLoopCount = 0; iLoopCount < IOCount; ++iLoopCount) OutCmdArray[iLoopCount] = DIO_DEF.NONE;
+
+            OutCmdArray[OUT_LIVE]  = DIO_DEF.OUT_LIVE;
+            OutCmdArray[OUT_AUTO]  = DIO_DEF.OUT_AUTO;
+            OutCmdArray[OUT_RESULT1]  = DIO_DEF.OUT_RESULT_1;
+            OutCmdArray[OUT_RESULT2]  = DIO_DEF.OUT_RESULT_2;
+            OutCmdArray[OUT_RESULT3]  = DIO_DEF.OUT_RESULT_3;
             OutCmdArray[OUT_COMPLETE] = DIO_DEF.OUT_COMPLETE;
         }
     }

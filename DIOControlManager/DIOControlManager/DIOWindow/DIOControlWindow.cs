@@ -325,6 +325,7 @@ namespace DIOControlManager
             if (ThreadOutputIOCheck != null)     { IsThreadOutputIOCheckExit = true; Thread.Sleep(100); ThreadOutputIOCheck.Abort(); ThreadOutputIOCheck = null; }
             if (ThreadVisionAliveSignal != null) { IsThreadVisionAliveSignalExit = true; Thread.Sleep(100); ThreadVisionAliveSignal.Abort(); ThreadVisionAliveSignal = null; }
             if (ThreadInputAliveCheck != null)   { IsThreadInputAliveCheckExit = true; Thread.Sleep(100); ThreadInputAliveCheck.Abort(); ThreadInputAliveCheck = null; }
+            if (ThreadSignalToggle != null)      { IsThreadSignalToggleExit = true; Thread.Sleep(100); ThreadSignalToggle.Abort(); ThreadSignalToggle = null; }
 
             DioNamingWnd.ChangeNameEvent -= new DIONamingWindow.ChangeNameHandler(ChangeNameEventFunction);
             WriteIOInfoFile();

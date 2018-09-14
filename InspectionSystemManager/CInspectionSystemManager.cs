@@ -68,6 +68,8 @@ namespace InspectionSystemManager
         {
             InspWnd.InspectionWindowEvent -= new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
             InspWnd.Deinitialize();
+
+            if (ThreadInspection != null) { IsThreadInspectionExit = true; Thread.Sleep(200); ThreadInspection.Abort(); ThreadInspection = null; }
         }
 
         public void SetSystemMode(eSysMode _SystemMode)

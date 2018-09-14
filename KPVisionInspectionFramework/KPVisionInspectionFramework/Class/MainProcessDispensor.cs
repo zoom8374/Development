@@ -78,6 +78,8 @@ namespace KPVisionInspectionFramework
 
             EthernetServWnd.ReceiveStringEvent -= new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
             EthernetServWnd.DeInitialize();
+
+            if (ThreadAckSignalCheck != null) { IsThreadAckSignalCheckExit = true; Thread.Sleep(200); ThreadAckSignalCheck.Abort(); ThreadAckSignalCheck = null; }
         }
         #endregion Initialize & DeInitialize
 

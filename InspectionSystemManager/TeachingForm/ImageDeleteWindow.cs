@@ -47,6 +47,11 @@ namespace InspectionSystemManager
             GetDeleteDateFromRegistry();
         }
 
+        public void DeInitialize()
+        {
+            if (ThreadImageAutoDelete != null) { IsThreadImageAutoDeleteExit = true; Thread.Sleep(200); ThreadImageAutoDelete.Abort(); ThreadImageAutoDelete = null; }
+        }
+
         public void SetDeleteDate(string _SavedDate)
         {
             //registry에서 받은 후 날짜 계산한다음 설정
