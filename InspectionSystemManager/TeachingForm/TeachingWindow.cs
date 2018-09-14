@@ -199,7 +199,7 @@ namespace InspectionSystemManager
         #region Conext Menu Function
         private void PatternFindAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_PATTERN);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_PATTERN, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_PATTERN);
@@ -207,7 +207,7 @@ namespace InspectionSystemManager
 
         private void BlobReferenceAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_BLOB_REFER);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_BLOB_REFER, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_BLOB_REFER);
@@ -215,7 +215,7 @@ namespace InspectionSystemManager
 
         private void BlobAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_BLOB);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_BLOB, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_BLOB);
@@ -223,7 +223,7 @@ namespace InspectionSystemManager
 
         private void NeedleCircleFindAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_NEEDLE_FIND);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_NEEDLE_FIND, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_NEEDLE_FIND);
@@ -231,7 +231,7 @@ namespace InspectionSystemManager
 
         private void LeadInspectionAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LEAD);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LEAD, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD);
@@ -239,7 +239,7 @@ namespace InspectionSystemManager
 
         private void BarCodeIDAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_ID);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_ID, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_ID);
@@ -247,7 +247,7 @@ namespace InspectionSystemManager
 
         private void LineFineAlgorithm(object sender, EventArgs e)
         {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LINE_FIND);
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LINE_FIND, ResolutionX, ResolutionY);
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LINE_FIND);

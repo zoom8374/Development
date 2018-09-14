@@ -58,47 +58,122 @@ namespace InspectionSystemManager
             SetMeasurement(CogBlobMeasureConstants.Area, CogBlobMeasureModeConstants.Filter, CogBlobFilterModeConstants.IncludeBlobsInRange, _CogBlobReferAlgo.BlobAreaMin, _CogBlobReferAlgo.BlobAreaMax);
 
             if (true == Inspection(_SrcImage, _InspRegion)) GetResult(true);
-            
+
+            List<int> _ResultIndexList = new List<int>();
             if (GetResults().BlobCount > 0)
             {
-                _CogBlobReferResult = GetResults();
+                CogBlobReferenceResult _CogBlobReferResultTemp = new CogBlobReferenceResult();
+                _CogBlobReferResultTemp = GetResults();
 
-                for (int iLoopCount = 0; iLoopCount < _CogBlobReferResult.BlobCount; ++iLoopCount)
+                double _ResolutionX = _CogBlobReferAlgo.ResolutionX;
+                double _ResolutionY = _CogBlobReferAlgo.ResolutionY;
+                for (int iLoopCount = 0; iLoopCount < _CogBlobReferResultTemp.BlobCount; ++iLoopCount)
                 {
-                    _CogBlobReferResult.IsGoods[iLoopCount] = true;
-                    if (_CogBlobReferAlgo.UseBodyArea)
+                    if (_CogBlobReferAlgo.WidthMin < _CogBlobReferResultTemp.Width[iLoopCount] * _ResolutionX && _CogBlobReferAlgo.WidthMax > _CogBlobReferResultTemp.Width[iLoopCount] * _ResolutionX &&
+                        _CogBlobReferAlgo.HeightMin < _CogBlobReferResultTemp.Height[iLoopCount] * _ResolutionY && _CogBlobReferAlgo.HeightMax > _CogBlobReferResultTemp.Height[iLoopCount] * _ResolutionY)
                     {
-                        double _BodyAreaGap = Math.Abs(_CogBlobReferResult.BlobArea[iLoopCount] - _CogBlobReferAlgo.BodyArea);
-                        if ((_CogBlobReferAlgo.BodyArea * _CogBlobReferAlgo.BodyAreaPermitPercent / 100) > _BodyAreaGap) { _CogBlobReferResult.IsGoods[iLoopCount] = false; continue; }
-                    }
+                        _CogBlobReferResultTemp.IsGoods[iLoopCount] = true;
+                        if (_CogBlobReferAlgo.UseBodyArea)
+                        {
+                            double _BodyAreaGap = Math.Abs(_CogBlobReferResultTemp.BlobArea[iLoopCount] - _CogBlobReferAlgo.BodyArea);
+                            if ((_CogBlobReferAlgo.BodyArea * _CogBlobReferAlgo.BodyAreaPermitPercent / 100) > _BodyAreaGap) { _CogBlobReferResultTemp.IsGoods[iLoopCount] = false; continue; }
+                        }
 
-                    if (_CogBlobReferAlgo.UseBodyWidth)
-                    {
-                        double _BodyWidthGap = Math.Abs(_CogBlobReferResult.Width[iLoopCount] - _CogBlobReferAlgo.BodyWidth);
-                        if ((_CogBlobReferAlgo.BodyWidth * _CogBlobReferAlgo.BodyWidthPermitPercent / 100) > _BodyWidthGap) { _CogBlobReferResult.IsGoods[iLoopCount] = false; continue; }
-                    }
+                        if (_CogBlobReferAlgo.UseBodyWidth)
+                        {
+                            double _BodyWidthGap = Math.Abs(_CogBlobReferResultTemp.Width[iLoopCount] - _CogBlobReferAlgo.BodyWidth);
+                            if ((_CogBlobReferAlgo.BodyWidth * _CogBlobReferAlgo.BodyWidthPermitPercent / 100) > _BodyWidthGap) { _CogBlobReferResultTemp.IsGoods[iLoopCount] = false; continue; }
+                        }
 
-                    if (_CogBlobReferAlgo.UseBodyHeight)
-                    {
-                        double _BodyHeightGap = Math.Abs(_CogBlobReferResult.Height[iLoopCount] - _CogBlobReferAlgo.BodyHeight);
-                        if ((_CogBlobReferAlgo.BodyHeight * _CogBlobReferAlgo.BodyHeightPermitPercent / 100) > _BodyHeightGap) { _CogBlobReferResult.IsGoods[iLoopCount] = false; continue; }
-                    }
+                        if (_CogBlobReferAlgo.UseBodyHeight)
+                        {
+                            double _BodyHeightGap = Math.Abs(_CogBlobReferResultTemp.Height[iLoopCount] - _CogBlobReferAlgo.BodyHeight);
+                            if ((_CogBlobReferAlgo.BodyHeight * _CogBlobReferAlgo.BodyHeightPermitPercent / 100) > _BodyHeightGap) { _CogBlobReferResultTemp.IsGoods[iLoopCount] = false; continue; }
+                        }
 
-                    eBenchMarkPosition _eBenchMark = (eBenchMarkPosition)_CogBlobReferAlgo.BenchMarkPosition;
-                    if (eBenchMarkPosition.TL == _eBenchMark) { _X = _CogBlobReferResult.BlobMinX[iLoopCount]; _Y = _CogBlobReferResult.BlobMinY[iLoopCount]; }
-                    else if (eBenchMarkPosition.TC == _eBenchMark) { _X = _CogBlobReferResult.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResult.BlobMinY[iLoopCount]; }
-                    else if (eBenchMarkPosition.TR == _eBenchMark) { _X = _CogBlobReferResult.BlobMaxX[iLoopCount]; _Y = _CogBlobReferResult.BlobMinY[iLoopCount]; }
-                    else if (eBenchMarkPosition.ML == _eBenchMark) { _X = _CogBlobReferResult.BlobMinX[iLoopCount]; _Y = _CogBlobReferResult.BlobCenterY[iLoopCount]; }
-                    else if (eBenchMarkPosition.MC == _eBenchMark) { _X = _CogBlobReferResult.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResult.BlobCenterY[iLoopCount]; }
-                    else if (eBenchMarkPosition.MR == _eBenchMark) { _X = _CogBlobReferResult.BlobMaxX[iLoopCount]; _Y = _CogBlobReferResult.BlobCenterY[iLoopCount]; }
-                    else if (eBenchMarkPosition.BL == _eBenchMark) { _X = _CogBlobReferResult.BlobMinX[iLoopCount]; _Y = _CogBlobReferResult.BlobMaxY[iLoopCount]; }
-                    else if (eBenchMarkPosition.BC == _eBenchMark) { _X = _CogBlobReferResult.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResult.BlobMaxY[iLoopCount]; }
-                    else if (eBenchMarkPosition.BR == _eBenchMark) { _X = _CogBlobReferResult.BlobMaxX[iLoopCount]; _Y = _CogBlobReferResult.BlobMaxY[iLoopCount]; }
-                    _CogBlobReferResult.OriginX[iLoopCount] = _X;
-                    _CogBlobReferResult.OriginY[iLoopCount] = _Y;
+                        eBenchMarkPosition _eBenchMark = (eBenchMarkPosition)_CogBlobReferAlgo.BenchMarkPosition;
+                        if (eBenchMarkPosition.TL == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMinX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMinY[iLoopCount]; }
+                        else if (eBenchMarkPosition.TC == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMinY[iLoopCount]; }
+                        else if (eBenchMarkPosition.TR == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMaxX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMinY[iLoopCount]; }
+                        else if (eBenchMarkPosition.ML == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMinX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobCenterY[iLoopCount]; }
+                        else if (eBenchMarkPosition.MC == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobCenterY[iLoopCount]; }
+                        else if (eBenchMarkPosition.MR == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMaxX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobCenterY[iLoopCount]; }
+                        else if (eBenchMarkPosition.BL == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMinX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMaxY[iLoopCount]; }
+                        else if (eBenchMarkPosition.BC == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobCenterX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMaxY[iLoopCount]; }
+                        else if (eBenchMarkPosition.BR == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMaxX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMaxY[iLoopCount]; }
+                        _CogBlobReferResultTemp.OriginX[iLoopCount] = _X;
+                        _CogBlobReferResultTemp.OriginY[iLoopCount] = _Y;
+
+                        _ResultIndexList.Add(iLoopCount);
+                    }
                 }
 
-                _CogBlobReferResult.IsGood = true;
+                if (_ResultIndexList.Count > 0)
+                {
+                    int _Count = _ResultIndexList.Count;
+                    _CogBlobReferResult.BlobCount = _Count;
+                    _CogBlobReferResult.BlobMessCenterX = new double[_Count];
+                    _CogBlobReferResult.BlobMessCenterY = new double[_Count];
+                    _CogBlobReferResult.BlobCenterX = new double[_Count];
+                    _CogBlobReferResult.BlobCenterY = new double[_Count];
+                    _CogBlobReferResult.BlobMinX = new double[_Count];
+                    _CogBlobReferResult.BlobMaxX = new double[_Count];
+                    _CogBlobReferResult.BlobMinY = new double[_Count];
+                    _CogBlobReferResult.BlobMaxY = new double[_Count];
+                    _CogBlobReferResult.Width = new double[_Count];
+                    _CogBlobReferResult.Height = new double[_Count];
+                    _CogBlobReferResult.BlobRatio = new double[_Count];
+                    _CogBlobReferResult.Angle = new double[_Count];
+                    _CogBlobReferResult.BlobXMinYMax = new double[_Count];
+                    _CogBlobReferResult.BlobXMaxYMin = new double[_Count];
+                    _CogBlobReferResult.BlobArea = new double[_Count];
+                    _CogBlobReferResult.OriginX = new double[_Count];
+                    _CogBlobReferResult.OriginY = new double[_Count];
+                    _CogBlobReferResult.IsGoods = new bool[_Count];
+
+                    for (int iLoopCount = 0; iLoopCount < _Count; ++iLoopCount)
+                    {
+                        _CogBlobReferResult.BlobMessCenterX[iLoopCount] = _CogBlobReferResultTemp.BlobMessCenterX[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobMessCenterY[iLoopCount] = _CogBlobReferResultTemp.BlobMessCenterY[_ResultIndexList[iLoopCount]];
+
+                        _CogBlobReferResult.BlobCenterX[iLoopCount] = _CogBlobReferResultTemp.BlobCenterX[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobCenterY[iLoopCount] = _CogBlobReferResultTemp.BlobCenterY[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobMinX[iLoopCount] = _CogBlobReferResultTemp.BlobMinX[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobMaxX[iLoopCount] = _CogBlobReferResultTemp.BlobMaxX[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobMinY[iLoopCount] = _CogBlobReferResultTemp.BlobMinY[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobMaxY[iLoopCount] = _CogBlobReferResultTemp.BlobMaxY[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.Width[iLoopCount] = _CogBlobReferResultTemp.Width[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.Height[iLoopCount] = _CogBlobReferResultTemp.Height[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.BlobArea[iLoopCount] = _CogBlobReferResultTemp.BlobArea[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.OriginX[iLoopCount] = _CogBlobReferResultTemp.OriginX[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.OriginY[iLoopCount] = _CogBlobReferResultTemp.OriginY[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.IsGoods[iLoopCount] = _CogBlobReferResultTemp.IsGoods[_ResultIndexList[iLoopCount]];
+                    }
+                    _CogBlobReferResult.IsGood = true;
+                }
+
+                else
+                {
+                    _CogBlobReferResult.BlobMinX = new double[1];
+                    _CogBlobReferResult.BlobMaxY = new double[1];
+                    _CogBlobReferResult.BlobCenterX = new double[1];
+                    _CogBlobReferResult.BlobCenterY = new double[1];
+                    _CogBlobReferResult.Width = new double[1];
+                    _CogBlobReferResult.Height = new double[1];
+                    _CogBlobReferResult.OriginX = new double[1];
+                    _CogBlobReferResult.OriginY = new double[1];
+                    _CogBlobReferResult.IsGoods = new bool[1];
+                    _CogBlobReferResult.BlobMinX[0] = _InspRegion.X;
+                    _CogBlobReferResult.BlobMaxY[0] = _InspRegion.Y + _InspRegion.Height;
+                    _CogBlobReferResult.BlobCenterX[0] = _InspRegion.CenterX;
+                    _CogBlobReferResult.BlobCenterY[0] = _InspRegion.CenterY;
+                    _CogBlobReferResult.Width[0] = _InspRegion.Width;
+                    _CogBlobReferResult.Height[0] = _InspRegion.Height;
+                    _CogBlobReferResult.OriginX[0] = _InspRegion.CenterX;
+                    _CogBlobReferResult.OriginY[0] = _InspRegion.CenterY;
+
+                    _CogBlobReferResult.IsGood = false;
+                }
             }
 
             else

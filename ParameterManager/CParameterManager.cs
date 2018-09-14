@@ -619,6 +619,8 @@ namespace ParameterManager
                     case "UseBodyArea":         _CogBlobRefer.UseBodyArea = Convert.ToBoolean(_NodeChild.InnerText); break;
                     case "UseBodyWidth":        _CogBlobRefer.UseBodyWidth = Convert.ToBoolean(_NodeChild.InnerText); break;
                     case "UseBodyHeight":       _CogBlobRefer.UseBodyHeight = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "ResolutionX":         _CogBlobRefer.ResolutionX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ResolutionY":         _CogBlobRefer.ResolutionY = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogBlobRefer;
@@ -890,6 +892,8 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("UseBodyArea", _CogBlobReferAlgo.UseBodyArea.ToString());
             _XmlWriter.WriteElementString("UseBodyWidth", _CogBlobReferAlgo.UseBodyWidth.ToString());
             _XmlWriter.WriteElementString("UseBodyHeight", _CogBlobReferAlgo.UseBodyHeight.ToString());
+            _XmlWriter.WriteElementString("ResolutionX", _CogBlobReferAlgo.ResolutionX.ToString());
+            _XmlWriter.WriteElementString("ResolutionY", _CogBlobReferAlgo.ResolutionY.ToString());
         }
 
         private void WriteBlobInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
@@ -1097,6 +1101,8 @@ namespace ParameterManager
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseBodyArea             = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseBodyArea;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseBodyWidth            = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseBodyWidth;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseBodyHeight           = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseBodyHeight;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionX             = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ResolutionX;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionY             = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ResolutionY;
                         #endregion Blob Reference Algorithm Copy
                     }
 

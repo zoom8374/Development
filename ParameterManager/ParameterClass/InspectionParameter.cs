@@ -91,7 +91,10 @@ namespace ParameterManager
 
         public int BenchMarkPosition;
 
-        public CogBlobReferenceAlgo()
+        public double ResolutionX;
+        public double ResolutionY;
+
+        public CogBlobReferenceAlgo(double _ResolutionX = 0, double _ResolutionY = 0)
         {
             ForeGround = 1;
             ThresholdMin = 80;
@@ -108,6 +111,9 @@ namespace ParameterManager
             BodyHeightPermitPercent = 85;
 
             BenchMarkPosition = 4;
+
+            ResolutionX = _ResolutionX;
+            ResolutionY = _ResolutionY;
         }
     }
 
@@ -308,15 +314,14 @@ namespace ParameterManager
 
         }
 
-        public InspectionAlgorithmParameter(eAlgoType _AlgoType)
+        public InspectionAlgorithmParameter(eAlgoType _AlgoType, double _ResolutionX = 0, double _ResolutionY = 0)
         {
             AlgoType = (int)_AlgoType;
             AlgoBenchMark = 0;
             AlgoEnable = true;
-
             if (_AlgoType == eAlgoType.C_PATTERN)           Algorithm = new CogPatternAlgo();
             else if (_AlgoType == eAlgoType.C_BLOB)         Algorithm = new CogBlobAlgo();
-            else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo();
+            else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo(_ResolutionX, _ResolutionY);
             else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadAlgo();
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)  Algorithm = new CogNeedleFindAlgo();
             else if (_AlgoType == eAlgoType.C_ID)           Algorithm = new CogBarCodeIDAlgo();

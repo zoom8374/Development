@@ -218,15 +218,26 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < _CogBlobReferResult.BlobCount; ++iLoopCount)
             {
-                CogRectangle _BlobRect = new CogRectangle();
-                _BlobRect.SetCenterWidthHeight(_CogBlobReferResult.BlobCenterX[iLoopCount], _CogBlobReferResult.BlobCenterY[iLoopCount], _CogBlobReferResult.Width[iLoopCount], _CogBlobReferResult.Height[iLoopCount]);
-                kpTeachDisplay.DrawStaticShape(_BlobRect, "BlobRect" + (iLoopCount + 1), CogColorConstants.Green);
-                kpTeachDisplay.DrawBlobResult(_CogBlobReferResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+                double _Width = _CogBlobReferResult.Width[iLoopCount] * ResolutionX;
+                double _Height = _CogBlobReferResult.Height[iLoopCount] * ResolutionX;
 
-                CogPointMarker _Point = new CogPointMarker();
-                _Point.X = _CogBlobReferResult.OriginX[iLoopCount];
-                _Point.Y = _CogBlobReferResult.OriginY[iLoopCount];
-                kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Green, 3);
+                if (_CogBlobReferAlgo.WidthMin < _Width && _CogBlobReferAlgo.WidthMax > _Width && _CogBlobReferAlgo.HeightMin < _Height && _CogBlobReferAlgo.HeightMax > _Height)
+                {
+                    CogRectangle _BlobRect = new CogRectangle();
+                    _BlobRect.SetCenterWidthHeight(_CogBlobReferResult.BlobCenterX[iLoopCount], _CogBlobReferResult.BlobCenterY[iLoopCount], _CogBlobReferResult.Width[iLoopCount], _CogBlobReferResult.Height[iLoopCount]);
+                    kpTeachDisplay.DrawStaticShape(_BlobRect, "BlobRect" + (iLoopCount + 1), CogColorConstants.Green);
+                    kpTeachDisplay.DrawBlobResult(_CogBlobReferResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+
+                    CogPointMarker _Point = new CogPointMarker();
+                    _Point.X = _CogBlobReferResult.OriginX[iLoopCount];
+                    _Point.Y = _CogBlobReferResult.OriginY[iLoopCount];
+                    kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Green, 5);
+
+                    string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm, Area : {2}", _Width, _Height, _CogBlobReferResult.BlobArea[iLoopCount]);
+                    kpTeachDisplay.DrawText(_RectSizeName, _CogBlobReferResult.BlobCenterX[iLoopCount] + _CogBlobReferResult.Width[iLoopCount] / 2 + 100,
+                                                           _CogBlobReferResult.BlobCenterY[iLoopCount] + _CogBlobReferResult.Height[iLoopCount] / 2 + 100, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+
+                }
             }
         }
         #endregion Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
