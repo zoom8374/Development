@@ -404,6 +404,7 @@ namespace InspectionSystemManager
         private void btnInspection_Click(object sender, EventArgs e)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
+            CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
             Inspection();
         }
 
@@ -544,15 +545,16 @@ namespace InspectionSystemManager
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
-            //kpCogDisplayMain.ClearDisplay();
-            //kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
             GC.Collect();
 
             //Auto / Manual Mode 구분
             if (ProjectType == eProjectType.BLOWER)
             {
                 if (CParameterManager.SystemMode == eSysMode.AUTO_MODE)
-                    Inspection();
+                {
+                    IsInspectionComplete = false;
+                    IsThreadInspectionProcessTrigger = true;
+                }
             }
 
             else if (ProjectType == eProjectType.DISPENSER)
@@ -1272,6 +1274,7 @@ namespace InspectionSystemManager
                 {
                     if (true == IsThreadInspectionProcessTrigger)
                     {
+                        IsInspectionComplete = false;
                         IsThreadInspectionProcessTrigger = false;
                         Inspection();
                     }

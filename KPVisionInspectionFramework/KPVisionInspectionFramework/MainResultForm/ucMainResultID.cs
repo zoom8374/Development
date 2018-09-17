@@ -38,7 +38,7 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public ucMainResultID(string _LastRecipeName)
         {
-            LastRecipeName = _LastRecipeName;
+            SetLastRecipeName(_LastRecipeName);
 
             InitializeComponent();
             InitializeControl();
@@ -82,6 +82,11 @@ namespace KPVisionInspectionFramework
         private void panelMain_Paint(object sender, PaintEventArgs e)
         {
             //ControlPaint.DrawBorder(e.Graphics, this.panelMain.ClientRectangle, Color.Green, ButtonBorderStyle.Solid);
+        }
+
+        public void SetLastRecipeName(string _LastRecipeName)
+        {
+            LastRecipeName = _LastRecipeName;
         }
 
         public void SetResultData(SendResultParameter _ResultParam)
@@ -148,7 +153,7 @@ namespace KPVisionInspectionFramework
                 ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Red);
             }
 
-            InspectionHistory(_Result);
+            InspectionHistory(_DataMatrixString);
         }
 
         private void SegmentValueInvoke(DmitryBrant.CustomControls.SevenSegmentArray _Control, string _Value)
@@ -164,7 +169,7 @@ namespace KPVisionInspectionFramework
         }
 
         //LDH, 2018.08.13, History 추가용 함수
-        private void InspectionHistory(SendIDResult _ResultParam)
+        private void InspectionHistory(string _ReadCodeData)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
 
@@ -180,7 +185,7 @@ namespace KPVisionInspectionFramework
             //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
             HistoryParam[0] = LastRecipeName;
             HistoryParam[1] = LastResult;
-            HistoryParam[2] = _ResultParam.ReadCode;
+            HistoryParam[2] = _ReadCodeData;
             HistoryParam[3] = ImageSaveFile;
 
             CHistoryManager.AddHistory(HistoryParam);

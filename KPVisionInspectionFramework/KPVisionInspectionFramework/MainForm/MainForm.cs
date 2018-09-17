@@ -433,6 +433,7 @@ namespace KPVisionInspectionFramework
 
             //LDH, 2018.07.26, Light File 따로 관리
             LightControlManager.RecipeChange(_RecipeName, _SrcRecipe);
+            ResultBaseWnd.SetLastRecipeName((eProjectType)ParamManager.SystemParam.ProjectType, _RecipeName);
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
             {

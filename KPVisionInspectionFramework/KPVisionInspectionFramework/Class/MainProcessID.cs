@@ -86,6 +86,16 @@ namespace KPVisionInspectionFramework
         }
         #endregion Serial Window Function
 
+        public override bool AutoMode(bool _Flag)
+        {
+            bool _Result = true;
+
+            int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
+            DIOWnd.SetOutputSignal((short)_AutoCmdBit, _Flag);
+
+            return _Result;
+        }
+
         //LDH, 내부 Test 용. 실제로는 Camera Trigger로 동작
         public override bool TriggerOn(int _ID)
         {

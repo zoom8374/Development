@@ -184,6 +184,12 @@ namespace KPVisionInspectionFramework
 
         }
 
+        public void SetLastRecipeName(eProjectType _ProjectType, string _LastRecipeName)
+        {
+            if (_ProjectType == eProjectType.BLOWER) MainResultIDWnd.SetLastRecipeName(_LastRecipeName);
+            else if (_ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetLastRecipeName(_LastRecipeName);
+        }
+
         //LDH, 2018.08.10, 전체화면 Screenshot
         private void ScreenShot(string ImageSaveFile)
         {

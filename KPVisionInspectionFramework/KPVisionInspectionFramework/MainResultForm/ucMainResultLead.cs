@@ -29,7 +29,7 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public ucMainResultLead(string _LastRecipeName)
         {
-            LastRecipeName = _LastRecipeName;
+            SetLastRecipeName(_LastRecipeName);
 
             InitializeComponent();
             InitializeControl();
@@ -79,6 +79,11 @@ namespace KPVisionInspectionFramework
         private void panelMain_Paint(object sender, PaintEventArgs e)
         {
             //ControlPaint.DrawBorder(e.Graphics, this.panelMain.ClientRectangle, Color.White, ButtonBorderStyle.Solid);
+        }
+
+        public void SetLastRecipeName(string _LastRecipeName)
+        {
+            LastRecipeName = _LastRecipeName;
         }
 
         public void SetNeedleResultData(SendResultParameter _ResultParam)

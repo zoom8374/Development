@@ -70,16 +70,38 @@ namespace ParameterManager
         public void RecipeReload(string _RecipeName)
         {
             //LDH, 2018.08.24, Air Blower용 Recipe명 받아오기
-            if (eProjectType.BLOWER == (eProjectType)SystemParam.ProjectType) _RecipeName = GetRecipeNameFromFolder();
+            if (eProjectType.BLOWER == (eProjectType)SystemParam.ProjectType) _RecipeName = GetRecipeNameFromFolder(_RecipeName);
             SystemParam.LastRecipeName = _RecipeName;
+
             ReadInspectionParameters();
         }
 
         //LDH, 2018.08.24, Air Blower는 Recipe 번호만 받기 때문에, Recipe 폴더에서 번호확인후 Recipe명 load
-        private string GetRecipeNameFromFolder()
+        private string GetRecipeNameFromFolder(string _RecipeName)
         {
             string GetRecipeName = "";
+            List<string> RecipeList = new List<string>();
 
+            DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath);
+            if (true == _DirInfo.Exists)
+            {
+                DirectoryInfo[] _DirInfos = _DirInfo.GetDirectories();
+                foreach (DirectoryInfo _DInfo in _DirInfos)
+                {
+                    RecipeList.Add(_DInfo.Name);
+                }
+            }
+
+            int NameCount = 0;
+            foreach (string RecipeName in RecipeList)
+            {
+                if(RecipeName.Contains("_"))
+                {
+                    if (RecipeName.Substring(0, RecipeName.IndexOf("_")) == _RecipeName) { GetRecipeName = RecipeList[NameCount]; break; }
+                }
+
+                NameCount++;
+            }
 
             return GetRecipeName;
         }
