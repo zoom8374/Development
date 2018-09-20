@@ -12,7 +12,7 @@ using System.Threading;
 
 using LogMessageManager;
 
-enum eSerialProtocol { STX = '@', ETX = 'r' }
+enum eSerialProtocol { STX = '@', ETX = '\r' }
 namespace SerialManager
 {
     public partial class SerialWindow : Form
@@ -30,10 +30,10 @@ namespace SerialManager
             InitializeComponent();
 
             SerialComm = new SerialPort();
-            SerialComm.BaudRate = 19200;
-            SerialComm.DataBits = (int)8;
-            SerialComm.Parity = Parity.None;
-            SerialComm.StopBits = StopBits.One;
+            SerialComm.BaudRate = 115200;
+            SerialComm.DataBits = (int)7;
+            SerialComm.Parity = Parity.Even;
+            SerialComm.StopBits = StopBits.Two;
             SerialComm.ReadTimeout = (int)500;
             SerialComm.WriteTimeout = (int)500;
         }
@@ -42,14 +42,14 @@ namespace SerialManager
         {
             bool _Result = true;
 
-            SerialComm.PortName = "COM2";
+            SerialComm.PortName = "COM5";
 
             try
             {
                 SerialComm.DataReceived += new SerialDataReceivedEventHandler(SerialDataReceived);
                 SerialComm.Open();
             }
-            catch
+            catch(Exception ex)
             {                
                 _Result = false;
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SerialWindow Initialize Exception!!", CLogManager.LOG_LEVEL.LOW);
@@ -98,18 +98,18 @@ namespace SerialManager
                     return;
                 }
 
-                byte[] values = new byte[1];
+                byte[] values = Encoding.ASCII.GetBytes(textBoxManualData.Text);
 
                 try
                 {
-                    values[0] = byte.Parse(textBoxManualData.Text);
+                    
                 }
                 catch
                 {
                     CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "SerialWindow btnSend Exception!!", CLogManager.LOG_LEVEL.LOW);
                 }
 
-                SerialComm.Write(values, 0, 1);
+                SerialComm.Write(values, 0, values.Count());
             }
         }
 

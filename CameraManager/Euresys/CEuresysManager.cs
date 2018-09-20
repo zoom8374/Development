@@ -47,9 +47,9 @@ namespace CameraManager
 
                 // Choose the CAM file
                 //MC.SetParam(channel, "CamFile", "XC-HR50_P60RA");
-                MC.SetParam(channel, "CamFile", "VCC-G20S20B_P15RA");
+                MC.SetParam(channel, "CamFile", "VCC-G20S20_P15RA");
                 // Choose the camera expose duration
-                MC.SetParam(channel, "Expose_us", 20000);
+                MC.SetParam(channel, "Expose_us", 1000);
                 // Choose the pixel color format
                 MC.SetParam(channel, "ColorFormat", "Y8");
 
@@ -61,12 +61,21 @@ namespace CameraManager
                 MC.SetParam(channel, "NextTrigMode", "COMBINED");
                 // Choose the number of images to acquire
 
-                MC.SetParam(channel, "TrigLine", "NOM");
-                MC.SetParam(channel, "TrigEdge", "GOHIGH");
-                MC.SetParam(channel, "TrigFilter", "ON");
-                MC.SetParam(channel, "TrigCtl", "LVDS");
+                //MC.SetParam(channel, "TrigLine", "NOM");
+                //MC.SetParam(channel, "TrigEdge", "GOHIGH");
+                //MC.SetParam(channel, "TrigFilter", "ON");
+                //MC.SetParam(channel, "TrigCtl", "LVDS");
 
-                MC.SetParam(channel, "SeqLength_Fr", MC.INDETERMINATE);
+                MC.SetParam(channel, "TrigCtl", "TTL");
+                MC.SetParam(channel, "TrigLine", "NOM");
+                MC.SetParam(channel, "TrigEdge", "GOLOW");
+                MC.SetParam(channel, "TrigFilter", "ON");
+
+                MC.SetParam(channel, "StrobeCtl", "OPTO");
+                MC.SetParam(channel, "StrobeMode", "AUTO");
+
+                //MC.SetParam(channel, "SeqLength_Fr", MC.INDETERMINATE);
+                MC.SetParam(channel, "SeqLength_Fr", -1);
 
                 // Register the callback function
                 multiCamCallback = new MC.CALLBACK(MultiCamCallback);
@@ -199,6 +208,11 @@ namespace CameraManager
                 //MC.SetParam(channel, "NextTrigMode", "COMBINED");
                 MC.SetParam(channel, "NextTrigMode", "SAME");
                 //MC.SetParam(channel, "ForceTrig", "TRIG");
+
+                String channelState2;
+                MC.GetParam(channel, "ChannelState", out channelState2);
+                MC.SetParam(channel, "ChannelState", "IDLE");
+                MC.SetParam(channel, "ChannelState", "ACTIVE");
             }
 
             MC.SetParam(channel, MC.SignalEnable + MC.SIG_SURFACE_PROCESSING, "ON");

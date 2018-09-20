@@ -138,6 +138,9 @@ namespace KPVisionInspectionFramework
             TimerShowWindow.Tick += new EventHandler(TimerShowWindowTick);
             TimerShowWindow.Interval = 500;
             #endregion InspSysManager Initialize
+
+            //LDH, 2018.09.19
+            if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType) MainProcess.SendSerialData(eMainProcCmd.REQUEST);
         }
 
         private void DeInitialize()

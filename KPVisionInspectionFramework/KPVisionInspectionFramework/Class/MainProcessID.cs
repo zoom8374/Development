@@ -27,7 +27,7 @@ namespace KPVisionInspectionFramework
 
         public override void Initialize()
         {
-            DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER);
+            DIOWnd = new DIOControlWindow((int)eProjectType.BLOWER);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.Initialize();
 
@@ -93,6 +93,9 @@ namespace KPVisionInspectionFramework
             int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             DIOWnd.SetOutputSignal((short)_AutoCmdBit, _Flag);
 
+            int _CompleteBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
+            DIOWnd.SetOutputSignal((short)_CompleteBit, false);
+
             return _Result;
         }
 
@@ -135,13 +138,12 @@ namespace KPVisionInspectionFramework
             {
                 switch (_ResultParam.NgType)
                 {
-                    case eNgType.REF_NG: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1); break;
-                    case eNgType.ID:     SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1); break;
-                    case eNgType.DEFECT: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT2); break;
+                    case eNgType.REF_NG: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_1); break;
+                    case eNgType.ID:     SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_1); break;
+                    case eNgType.DEFECT: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_1); break;
                 }
+                DIOWnd.SetOutputSignal((short)SendResultBit, true);
             }
-
-            DIOWnd.SetOutputSignal((short)SendResultBit, true);
             InspectionComplete(0, true);
 
             //AckStructs[_ResultParam.ID].Initialize();
@@ -192,7 +194,7 @@ namespace KPVisionInspectionFramework
                 case eMainProcCmd.REQUEST: SendBit = "@R_D"; break;
             }
 
-            SerialWnd.SendSequenceData(SendBit + "," + CR);
+            SerialWnd.SendSequenceData(SendBit + "," + '\r');
         }
 
         public override bool InspectionComplete(int _ID, bool _Flag)
