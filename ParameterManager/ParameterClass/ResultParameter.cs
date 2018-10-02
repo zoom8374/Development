@@ -120,6 +120,8 @@ namespace ParameterManager
         public double[] OriginY;
         public bool[] IsGoods;
         public CogCompositeShape[] ResultGraphic;
+        public double HistogramAvg;
+        public bool DummyStatus;
     }
 
     public class CogNeedleFindResult : Result

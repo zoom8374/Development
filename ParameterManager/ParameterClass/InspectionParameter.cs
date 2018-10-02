@@ -89,6 +89,9 @@ namespace ParameterManager
         public bool UseBodyWidth;
         public bool UseBodyHeight;
 
+        public bool UseDummyValue;
+        public double DummyHistoMeanValue;
+
         public int BenchMarkPosition;
 
         public double ResolutionX;
@@ -109,6 +112,9 @@ namespace ParameterManager
             BodyAreaPermitPercent = 85;
             BodyWidthPermitPercent = 85;
             BodyHeightPermitPercent = 85;
+
+            UseDummyValue = false;
+            DummyHistoMeanValue = 5;
 
             BenchMarkPosition = 4;
 

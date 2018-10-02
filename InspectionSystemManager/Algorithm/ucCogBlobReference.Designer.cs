@@ -31,8 +31,13 @@
             this.labelTitle = new CustomControl.GradientLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnDummyHistogramMean = new System.Windows.Forms.Button();
+            this.numUpDownDummyValue = new System.Windows.Forms.NumericUpDown();
+            this.ckDummyUsable = new System.Windows.Forms.CheckBox();
+            this.gradientLabel13 = new CustomControl.GradientLabel();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnGet = new System.Windows.Forms.Button();
             this.label19 = new CustomControl.GradientLabel();
             this.label20 = new CustomControl.GradientLabel();
             this.label21 = new CustomControl.GradientLabel();
@@ -55,7 +60,6 @@
             this.gradientLabel6 = new CustomControl.GradientLabel();
             this.rbForegroundWhite = new System.Windows.Forms.RadioButton();
             this.rbForegroundBlack = new System.Windows.Forms.RadioButton();
-            this.btnSetting = new System.Windows.Forms.Button();
             this.gradientLabel1 = new CustomControl.GradientLabel();
             this.rbRangeUpper = new System.Windows.Forms.RadioButton();
             this.hScrollBarThreshold = new System.Windows.Forms.HScrollBar();
@@ -63,18 +67,6 @@
             this.graLabelThresholdValue = new CustomControl.GradientLabel();
             this.graLabelForeground = new CustomControl.GradientLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.rbBenchMarkGravityCenter = new System.Windows.Forms.RadioButton();
-            this.textBoxBenchMarkPosition = new System.Windows.Forms.TextBox();
-            this.rbBenchMarkBottomRight = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkBottomCenter = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkBottomLeft = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkMiddleRight = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkMiddleCenter = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkMiddleLeft = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkTopCenter = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkTopRight = new System.Windows.Forms.RadioButton();
-            this.rbBenchMarkTopLeft = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.numUpDownBodyHeight = new System.Windows.Forms.NumericUpDown();
             this.numUpDownBodyWidth = new System.Windows.Forms.NumericUpDown();
@@ -94,16 +86,31 @@
             this.gradientLabel12 = new CustomControl.GradientLabel();
             this.gradientLabel11 = new CustomControl.GradientLabel();
             this.gradientLabel10 = new CustomControl.GradientLabel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnGet = new System.Windows.Forms.Button();
+            this.rbBenchMarkGravityCenter = new System.Windows.Forms.RadioButton();
+            this.textBoxBenchMarkPosition = new System.Windows.Forms.TextBox();
+            this.rbBenchMarkBottomRight = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkBottomCenter = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkBottomLeft = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkMiddleRight = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkMiddleCenter = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkMiddleLeft = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkTopCenter = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkTopRight = new System.Windows.Forms.RadioButton();
+            this.rbBenchMarkTopLeft = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDummyValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyArea)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -135,6 +142,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
@@ -145,12 +153,95 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Condition";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnDummyHistogramMean);
+            this.groupBox5.Controls.Add(this.numUpDownDummyValue);
+            this.groupBox5.Controls.Add(this.ckDummyUsable);
+            this.groupBox5.Controls.Add(this.gradientLabel13);
+            this.groupBox5.Controls.Add(this.btnSetting);
+            this.groupBox5.ForeColor = System.Drawing.Color.White;
+            this.groupBox5.Location = new System.Drawing.Point(7, 219);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(550, 73);
+            this.groupBox5.TabIndex = 22;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = " Dummy Condition ";
+            // 
+            // btnDummyHistogramMean
+            // 
+            this.btnDummyHistogramMean.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDummyHistogramMean.ForeColor = System.Drawing.Color.Black;
+            this.btnDummyHistogramMean.Location = new System.Drawing.Point(272, 17);
+            this.btnDummyHistogramMean.Name = "btnDummyHistogramMean";
+            this.btnDummyHistogramMean.Size = new System.Drawing.Size(79, 24);
+            this.btnDummyHistogramMean.TabIndex = 97;
+            this.btnDummyHistogramMean.Text = "Get";
+            this.btnDummyHistogramMean.UseVisualStyleBackColor = true;
+            this.btnDummyHistogramMean.Click += new System.EventHandler(this.btnDummyHistogramMean_Click);
+            // 
+            // numUpDownDummyValue
+            // 
+            this.numUpDownDummyValue.DecimalPlaces = 2;
+            this.numUpDownDummyValue.Location = new System.Drawing.Point(145, 19);
+            this.numUpDownDummyValue.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numUpDownDummyValue.Name = "numUpDownDummyValue";
+            this.numUpDownDummyValue.Size = new System.Drawing.Size(115, 21);
+            this.numUpDownDummyValue.TabIndex = 96;
+            this.numUpDownDummyValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numUpDownDummyValue.Value = new decimal(new int[] {
+            70,
+            0,
+            0,
+            0});
+            // 
+            // ckDummyUsable
+            // 
+            this.ckDummyUsable.AutoSize = true;
+            this.ckDummyUsable.BackColor = System.Drawing.Color.SteelBlue;
+            this.ckDummyUsable.Location = new System.Drawing.Point(19, 22);
+            this.ckDummyUsable.Name = "ckDummyUsable";
+            this.ckDummyUsable.Size = new System.Drawing.Size(15, 14);
+            this.ckDummyUsable.TabIndex = 94;
+            this.ckDummyUsable.UseVisualStyleBackColor = false;
+            this.ckDummyUsable.CheckedChanged += new System.EventHandler(this.ckDummyUsable_CheckedChanged);
+            // 
+            // gradientLabel13
+            // 
+            this.gradientLabel13.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel13.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel13.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel13.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel13.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel13.Location = new System.Drawing.Point(13, 17);
+            this.gradientLabel13.Name = "gradientLabel13";
+            this.gradientLabel13.Size = new System.Drawing.Size(126, 24);
+            this.gradientLabel13.TabIndex = 95;
+            this.gradientLabel13.Text = "Dummy Level";
+            this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSetting.ForeColor = System.Drawing.Color.Black;
+            this.btnSetting.Location = new System.Drawing.Point(427, 37);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(117, 30);
+            this.btnSetting.TabIndex = 50;
+            this.btnSetting.Text = "Setting";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
+            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnGet);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Controls.Add(this.btnSetting);
             this.groupBox2.Controls.Add(this.label21);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label13);
@@ -170,22 +261,10 @@
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(7, 104);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(550, 190);
+            this.groupBox2.Size = new System.Drawing.Size(550, 109);
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Inspection Condition ";
-            // 
-            // btnGet
-            // 
-            this.btnGet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnGet.ForeColor = System.Drawing.Color.Black;
-            this.btnGet.Location = new System.Drawing.Point(416, 154);
-            this.btnGet.Name = "btnGet";
-            this.btnGet.Size = new System.Drawing.Size(117, 30);
-            this.btnGet.TabIndex = 56;
-            this.btnGet.Text = "Get";
-            this.btnGet.UseVisualStyleBackColor = true;
-            this.btnGet.Click += new System.EventHandler(this.btnGet_Click);
             // 
             // label19
             // 
@@ -476,18 +555,6 @@
             this.rbForegroundBlack.UseVisualStyleBackColor = true;
             this.rbForegroundBlack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbForeground_MouseUp);
             // 
-            // btnSetting
-            // 
-            this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(293, 154);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(117, 30);
-            this.btnSetting.TabIndex = 50;
-            this.btnSetting.Text = "Setting";
-            this.btnSetting.UseVisualStyleBackColor = true;
-            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
-            // 
             // gradientLabel1
             // 
             this.gradientLabel1.BackColor = System.Drawing.Color.SteelBlue;
@@ -579,178 +646,6 @@
             this.tabPage2.Size = new System.Drawing.Size(572, 298);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Properties";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.rbBenchMarkGravityCenter);
-            this.groupBox4.Controls.Add(this.textBoxBenchMarkPosition);
-            this.groupBox4.Controls.Add(this.rbBenchMarkBottomRight);
-            this.groupBox4.Controls.Add(this.rbBenchMarkBottomCenter);
-            this.groupBox4.Controls.Add(this.rbBenchMarkBottomLeft);
-            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleRight);
-            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleCenter);
-            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleLeft);
-            this.groupBox4.Controls.Add(this.rbBenchMarkTopCenter);
-            this.groupBox4.Controls.Add(this.rbBenchMarkTopRight);
-            this.groupBox4.Controls.Add(this.rbBenchMarkTopLeft);
-            this.groupBox4.ForeColor = System.Drawing.Color.White;
-            this.groupBox4.Location = new System.Drawing.Point(6, 130);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(550, 162);
-            this.groupBox4.TabIndex = 2;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = " BenchMark Position ";
-            // 
-            // rbBenchMarkGravityCenter
-            // 
-            this.rbBenchMarkGravityCenter.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkGravityCenter.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkGravityCenter.Location = new System.Drawing.Point(161, 65);
-            this.rbBenchMarkGravityCenter.Name = "rbBenchMarkGravityCenter";
-            this.rbBenchMarkGravityCenter.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkGravityCenter.TabIndex = 32;
-            this.rbBenchMarkGravityCenter.Tag = "9";
-            this.rbBenchMarkGravityCenter.Text = "MC";
-            this.rbBenchMarkGravityCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkGravityCenter.UseVisualStyleBackColor = true;
-            // 
-            // textBoxBenchMarkPosition
-            // 
-            this.textBoxBenchMarkPosition.Location = new System.Drawing.Point(237, 77);
-            this.textBoxBenchMarkPosition.Name = "textBoxBenchMarkPosition";
-            this.textBoxBenchMarkPosition.Size = new System.Drawing.Size(34, 21);
-            this.textBoxBenchMarkPosition.TabIndex = 23;
-            this.textBoxBenchMarkPosition.Text = "0";
-            this.textBoxBenchMarkPosition.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxBenchMarkPosition.Visible = false;
-            // 
-            // rbBenchMarkBottomRight
-            // 
-            this.rbBenchMarkBottomRight.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkBottomRight.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkBottomRight.Location = new System.Drawing.Point(107, 109);
-            this.rbBenchMarkBottomRight.Name = "rbBenchMarkBottomRight";
-            this.rbBenchMarkBottomRight.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkBottomRight.TabIndex = 31;
-            this.rbBenchMarkBottomRight.Tag = "8";
-            this.rbBenchMarkBottomRight.Text = "BR";
-            this.rbBenchMarkBottomRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkBottomRight.UseVisualStyleBackColor = true;
-            this.rbBenchMarkBottomRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkBottomCenter
-            // 
-            this.rbBenchMarkBottomCenter.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkBottomCenter.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkBottomCenter.Location = new System.Drawing.Point(59, 109);
-            this.rbBenchMarkBottomCenter.Name = "rbBenchMarkBottomCenter";
-            this.rbBenchMarkBottomCenter.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkBottomCenter.TabIndex = 30;
-            this.rbBenchMarkBottomCenter.Tag = "7";
-            this.rbBenchMarkBottomCenter.Text = "BC";
-            this.rbBenchMarkBottomCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkBottomCenter.UseVisualStyleBackColor = true;
-            this.rbBenchMarkBottomCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkBottomLeft
-            // 
-            this.rbBenchMarkBottomLeft.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkBottomLeft.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkBottomLeft.Location = new System.Drawing.Point(12, 109);
-            this.rbBenchMarkBottomLeft.Name = "rbBenchMarkBottomLeft";
-            this.rbBenchMarkBottomLeft.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkBottomLeft.TabIndex = 29;
-            this.rbBenchMarkBottomLeft.Tag = "6";
-            this.rbBenchMarkBottomLeft.Text = "BL";
-            this.rbBenchMarkBottomLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkBottomLeft.UseVisualStyleBackColor = true;
-            this.rbBenchMarkBottomLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkMiddleRight
-            // 
-            this.rbBenchMarkMiddleRight.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkMiddleRight.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkMiddleRight.Location = new System.Drawing.Point(107, 65);
-            this.rbBenchMarkMiddleRight.Name = "rbBenchMarkMiddleRight";
-            this.rbBenchMarkMiddleRight.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkMiddleRight.TabIndex = 28;
-            this.rbBenchMarkMiddleRight.Tag = "5";
-            this.rbBenchMarkMiddleRight.Text = "MR";
-            this.rbBenchMarkMiddleRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkMiddleRight.UseVisualStyleBackColor = true;
-            this.rbBenchMarkMiddleRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkMiddleCenter
-            // 
-            this.rbBenchMarkMiddleCenter.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkMiddleCenter.Checked = true;
-            this.rbBenchMarkMiddleCenter.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkMiddleCenter.Location = new System.Drawing.Point(59, 65);
-            this.rbBenchMarkMiddleCenter.Name = "rbBenchMarkMiddleCenter";
-            this.rbBenchMarkMiddleCenter.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkMiddleCenter.TabIndex = 27;
-            this.rbBenchMarkMiddleCenter.TabStop = true;
-            this.rbBenchMarkMiddleCenter.Tag = "4";
-            this.rbBenchMarkMiddleCenter.Text = "MC";
-            this.rbBenchMarkMiddleCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkMiddleCenter.UseVisualStyleBackColor = true;
-            this.rbBenchMarkMiddleCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkMiddleLeft
-            // 
-            this.rbBenchMarkMiddleLeft.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkMiddleLeft.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkMiddleLeft.Location = new System.Drawing.Point(12, 65);
-            this.rbBenchMarkMiddleLeft.Name = "rbBenchMarkMiddleLeft";
-            this.rbBenchMarkMiddleLeft.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkMiddleLeft.TabIndex = 26;
-            this.rbBenchMarkMiddleLeft.Tag = "3";
-            this.rbBenchMarkMiddleLeft.Text = "ML";
-            this.rbBenchMarkMiddleLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkMiddleLeft.UseVisualStyleBackColor = true;
-            this.rbBenchMarkMiddleLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkTopCenter
-            // 
-            this.rbBenchMarkTopCenter.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkTopCenter.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkTopCenter.Location = new System.Drawing.Point(59, 20);
-            this.rbBenchMarkTopCenter.Name = "rbBenchMarkTopCenter";
-            this.rbBenchMarkTopCenter.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkTopCenter.TabIndex = 25;
-            this.rbBenchMarkTopCenter.Tag = "1";
-            this.rbBenchMarkTopCenter.Text = "TC";
-            this.rbBenchMarkTopCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkTopCenter.UseVisualStyleBackColor = true;
-            this.rbBenchMarkTopCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkTopRight
-            // 
-            this.rbBenchMarkTopRight.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkTopRight.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkTopRight.Location = new System.Drawing.Point(107, 20);
-            this.rbBenchMarkTopRight.Name = "rbBenchMarkTopRight";
-            this.rbBenchMarkTopRight.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkTopRight.TabIndex = 24;
-            this.rbBenchMarkTopRight.Tag = "2";
-            this.rbBenchMarkTopRight.Text = "TR";
-            this.rbBenchMarkTopRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkTopRight.UseVisualStyleBackColor = true;
-            this.rbBenchMarkTopRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // rbBenchMarkTopLeft
-            // 
-            this.rbBenchMarkTopLeft.Appearance = System.Windows.Forms.Appearance.Button;
-            this.rbBenchMarkTopLeft.ForeColor = System.Drawing.Color.Black;
-            this.rbBenchMarkTopLeft.Location = new System.Drawing.Point(12, 20);
-            this.rbBenchMarkTopLeft.Name = "rbBenchMarkTopLeft";
-            this.rbBenchMarkTopLeft.Size = new System.Drawing.Size(47, 43);
-            this.rbBenchMarkTopLeft.TabIndex = 23;
-            this.rbBenchMarkTopLeft.Tag = "0";
-            this.rbBenchMarkTopLeft.Text = "TL";
-            this.rbBenchMarkTopLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rbBenchMarkTopLeft.UseVisualStyleBackColor = true;
-            this.rbBenchMarkTopLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
             // 
             // groupBox3
             // 
@@ -1002,6 +897,190 @@
             this.gradientLabel10.TabIndex = 79;
             this.gradientLabel10.Text = "%";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnGet);
+            this.groupBox4.Controls.Add(this.rbBenchMarkGravityCenter);
+            this.groupBox4.Controls.Add(this.textBoxBenchMarkPosition);
+            this.groupBox4.Controls.Add(this.rbBenchMarkBottomRight);
+            this.groupBox4.Controls.Add(this.rbBenchMarkBottomCenter);
+            this.groupBox4.Controls.Add(this.rbBenchMarkBottomLeft);
+            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleRight);
+            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleCenter);
+            this.groupBox4.Controls.Add(this.rbBenchMarkMiddleLeft);
+            this.groupBox4.Controls.Add(this.rbBenchMarkTopCenter);
+            this.groupBox4.Controls.Add(this.rbBenchMarkTopRight);
+            this.groupBox4.Controls.Add(this.rbBenchMarkTopLeft);
+            this.groupBox4.ForeColor = System.Drawing.Color.White;
+            this.groupBox4.Location = new System.Drawing.Point(6, 130);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(550, 162);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = " BenchMark Position ";
+            // 
+            // btnGet
+            // 
+            this.btnGet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnGet.ForeColor = System.Drawing.Color.Black;
+            this.btnGet.Location = new System.Drawing.Point(422, 122);
+            this.btnGet.Name = "btnGet";
+            this.btnGet.Size = new System.Drawing.Size(117, 30);
+            this.btnGet.TabIndex = 57;
+            this.btnGet.Text = "Get";
+            this.btnGet.UseVisualStyleBackColor = true;
+            // 
+            // rbBenchMarkGravityCenter
+            // 
+            this.rbBenchMarkGravityCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkGravityCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkGravityCenter.Location = new System.Drawing.Point(161, 65);
+            this.rbBenchMarkGravityCenter.Name = "rbBenchMarkGravityCenter";
+            this.rbBenchMarkGravityCenter.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkGravityCenter.TabIndex = 32;
+            this.rbBenchMarkGravityCenter.Tag = "9";
+            this.rbBenchMarkGravityCenter.Text = "MC";
+            this.rbBenchMarkGravityCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkGravityCenter.UseVisualStyleBackColor = true;
+            // 
+            // textBoxBenchMarkPosition
+            // 
+            this.textBoxBenchMarkPosition.Location = new System.Drawing.Point(237, 77);
+            this.textBoxBenchMarkPosition.Name = "textBoxBenchMarkPosition";
+            this.textBoxBenchMarkPosition.Size = new System.Drawing.Size(34, 21);
+            this.textBoxBenchMarkPosition.TabIndex = 23;
+            this.textBoxBenchMarkPosition.Text = "0";
+            this.textBoxBenchMarkPosition.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBenchMarkPosition.Visible = false;
+            // 
+            // rbBenchMarkBottomRight
+            // 
+            this.rbBenchMarkBottomRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkBottomRight.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkBottomRight.Location = new System.Drawing.Point(107, 109);
+            this.rbBenchMarkBottomRight.Name = "rbBenchMarkBottomRight";
+            this.rbBenchMarkBottomRight.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkBottomRight.TabIndex = 31;
+            this.rbBenchMarkBottomRight.Tag = "8";
+            this.rbBenchMarkBottomRight.Text = "BR";
+            this.rbBenchMarkBottomRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkBottomRight.UseVisualStyleBackColor = true;
+            this.rbBenchMarkBottomRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkBottomCenter
+            // 
+            this.rbBenchMarkBottomCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkBottomCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkBottomCenter.Location = new System.Drawing.Point(59, 109);
+            this.rbBenchMarkBottomCenter.Name = "rbBenchMarkBottomCenter";
+            this.rbBenchMarkBottomCenter.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkBottomCenter.TabIndex = 30;
+            this.rbBenchMarkBottomCenter.Tag = "7";
+            this.rbBenchMarkBottomCenter.Text = "BC";
+            this.rbBenchMarkBottomCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkBottomCenter.UseVisualStyleBackColor = true;
+            this.rbBenchMarkBottomCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkBottomLeft
+            // 
+            this.rbBenchMarkBottomLeft.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkBottomLeft.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkBottomLeft.Location = new System.Drawing.Point(12, 109);
+            this.rbBenchMarkBottomLeft.Name = "rbBenchMarkBottomLeft";
+            this.rbBenchMarkBottomLeft.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkBottomLeft.TabIndex = 29;
+            this.rbBenchMarkBottomLeft.Tag = "6";
+            this.rbBenchMarkBottomLeft.Text = "BL";
+            this.rbBenchMarkBottomLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkBottomLeft.UseVisualStyleBackColor = true;
+            this.rbBenchMarkBottomLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkMiddleRight
+            // 
+            this.rbBenchMarkMiddleRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkMiddleRight.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkMiddleRight.Location = new System.Drawing.Point(107, 65);
+            this.rbBenchMarkMiddleRight.Name = "rbBenchMarkMiddleRight";
+            this.rbBenchMarkMiddleRight.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkMiddleRight.TabIndex = 28;
+            this.rbBenchMarkMiddleRight.Tag = "5";
+            this.rbBenchMarkMiddleRight.Text = "MR";
+            this.rbBenchMarkMiddleRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkMiddleRight.UseVisualStyleBackColor = true;
+            this.rbBenchMarkMiddleRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkMiddleCenter
+            // 
+            this.rbBenchMarkMiddleCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkMiddleCenter.Checked = true;
+            this.rbBenchMarkMiddleCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkMiddleCenter.Location = new System.Drawing.Point(59, 65);
+            this.rbBenchMarkMiddleCenter.Name = "rbBenchMarkMiddleCenter";
+            this.rbBenchMarkMiddleCenter.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkMiddleCenter.TabIndex = 27;
+            this.rbBenchMarkMiddleCenter.TabStop = true;
+            this.rbBenchMarkMiddleCenter.Tag = "4";
+            this.rbBenchMarkMiddleCenter.Text = "MC";
+            this.rbBenchMarkMiddleCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkMiddleCenter.UseVisualStyleBackColor = true;
+            this.rbBenchMarkMiddleCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkMiddleLeft
+            // 
+            this.rbBenchMarkMiddleLeft.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkMiddleLeft.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkMiddleLeft.Location = new System.Drawing.Point(12, 65);
+            this.rbBenchMarkMiddleLeft.Name = "rbBenchMarkMiddleLeft";
+            this.rbBenchMarkMiddleLeft.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkMiddleLeft.TabIndex = 26;
+            this.rbBenchMarkMiddleLeft.Tag = "3";
+            this.rbBenchMarkMiddleLeft.Text = "ML";
+            this.rbBenchMarkMiddleLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkMiddleLeft.UseVisualStyleBackColor = true;
+            this.rbBenchMarkMiddleLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkTopCenter
+            // 
+            this.rbBenchMarkTopCenter.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkTopCenter.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkTopCenter.Location = new System.Drawing.Point(59, 20);
+            this.rbBenchMarkTopCenter.Name = "rbBenchMarkTopCenter";
+            this.rbBenchMarkTopCenter.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkTopCenter.TabIndex = 25;
+            this.rbBenchMarkTopCenter.Tag = "1";
+            this.rbBenchMarkTopCenter.Text = "TC";
+            this.rbBenchMarkTopCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkTopCenter.UseVisualStyleBackColor = true;
+            this.rbBenchMarkTopCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkTopRight
+            // 
+            this.rbBenchMarkTopRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkTopRight.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkTopRight.Location = new System.Drawing.Point(107, 20);
+            this.rbBenchMarkTopRight.Name = "rbBenchMarkTopRight";
+            this.rbBenchMarkTopRight.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkTopRight.TabIndex = 24;
+            this.rbBenchMarkTopRight.Tag = "2";
+            this.rbBenchMarkTopRight.Text = "TR";
+            this.rbBenchMarkTopRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkTopRight.UseVisualStyleBackColor = true;
+            this.rbBenchMarkTopRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
+            // rbBenchMarkTopLeft
+            // 
+            this.rbBenchMarkTopLeft.Appearance = System.Windows.Forms.Appearance.Button;
+            this.rbBenchMarkTopLeft.ForeColor = System.Drawing.Color.Black;
+            this.rbBenchMarkTopLeft.Location = new System.Drawing.Point(12, 20);
+            this.rbBenchMarkTopLeft.Name = "rbBenchMarkTopLeft";
+            this.rbBenchMarkTopLeft.Size = new System.Drawing.Size(47, 43);
+            this.rbBenchMarkTopLeft.TabIndex = 23;
+            this.rbBenchMarkTopLeft.Tag = "0";
+            this.rbBenchMarkTopLeft.Text = "TL";
+            this.rbBenchMarkTopLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rbBenchMarkTopLeft.UseVisualStyleBackColor = true;
+            this.rbBenchMarkTopLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
+            // 
             // ucCogBlobReference
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1013,17 +1092,20 @@
             this.Size = new System.Drawing.Size(583, 358);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownDummyValue)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownBodyArea)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1076,7 +1158,6 @@
         private System.Windows.Forms.RadioButton rbBenchMarkTopCenter;
         private System.Windows.Forms.RadioButton rbBenchMarkTopRight;
         private System.Windows.Forms.RadioButton rbBenchMarkTopLeft;
-        private System.Windows.Forms.Button btnGet;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.NumericUpDown numUpDownBodyHeight;
         private System.Windows.Forms.NumericUpDown numUpDownBodyWidth;
@@ -1096,5 +1177,11 @@
         private CustomControl.GradientLabel gradientLabel12;
         private CustomControl.GradientLabel gradientLabel11;
         private CustomControl.GradientLabel gradientLabel10;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btnGet;
+        private System.Windows.Forms.Button btnDummyHistogramMean;
+        private System.Windows.Forms.NumericUpDown numUpDownDummyValue;
+        private System.Windows.Forms.CheckBox ckDummyUsable;
+        private CustomControl.GradientLabel gradientLabel13;
     }
 }

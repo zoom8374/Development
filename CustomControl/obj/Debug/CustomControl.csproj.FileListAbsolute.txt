@@ -337,9 +337,9 @@ C:\Zoom\Source management\Development\KPVisionFramework\VisionFramework\CustomCo
 C:\Zoom\Source management\Development\KPVisionFramework\VisionFramework\CustomControl\obj\Debug\CustomControl.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\bin\Debug\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\bin\Debug\CustomControl.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.GridViewManager.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.ImageButton.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.csprojResolveAssemblyReference.cache

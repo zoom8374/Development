@@ -11,6 +11,8 @@ namespace InspectionSystemManager
 {
     public partial class InspectionWindow : Form
     {
+        private bool IsDummyData = false;
+
         private SendResultParameter GetIDReadResultAnalysis()
         {
             SendResultParameter _SendResParam = new SendResultParameter();
@@ -19,6 +21,7 @@ namespace InspectionSystemManager
             _SendResParam.IsGood = true;
             _SendResParam.ProjectItem = ProjectItem;
 
+            IsDummyData = false;
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
                 if (eAlgoType.C_ID == AlgoResultParamList[iLoopCount].ResultAlgoType)
@@ -44,6 +47,9 @@ namespace InspectionSystemManager
                     _SendResParam.IsGood &= _AlgoResultParam.IsGood;
                     if (_SendResParam.NgType == eNgType.GOOD)
                         _SendResParam.NgType = (_AlgoResultParam.BlobCount > 0) ? eNgType.GOOD : eNgType.EMPTY;
+
+                    if (true == _AlgoResultParam.DummyStatus) IsDummyData = true;
+                    //if (_AlgoResultParam.HistogramAvg > 68) IsDummyData = true;
                 }
 
                 else if (eAlgoType.C_PATTERN == AlgoResultParamList[iLoopCount].ResultAlgoType)
@@ -53,7 +59,14 @@ namespace InspectionSystemManager
                     _SendResParam.IsGood &= _AlgoResultParam.IsGood;
                     if (_SendResParam.NgType == eNgType.GOOD)
                         _SendResParam.NgType = (_AlgoResultParam.IsGood == true) ? eNgType.GOOD : eNgType.REF_NG;
-                }
+                } 
+            }
+
+            //Mergy Result 
+            if (true == IsDummyData)
+            {
+                _SendResParam.IsGood = true;
+                _SendResParam.NgType = eNgType.DUMMY;
             }
 
             return _SendResParam;

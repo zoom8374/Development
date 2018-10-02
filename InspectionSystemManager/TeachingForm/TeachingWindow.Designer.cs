@@ -73,6 +73,7 @@
             this.gridAlgoName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gridAlgoBenchMark = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.gridAlgoEnable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.btnShowAlgorithmMoveButton = new CPressingButton.PressButton();
             this.tabControlTeach.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -274,6 +275,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.btnShowAlgorithmMoveButton);
             this.panel3.Controls.Add(this.btnAlgorithmIndexMoveDown);
             this.panel3.Controls.Add(this.btnAlgorithmIndexMoveUp);
             this.panel3.Controls.Add(this.btnInspectionAlgoCopy);
@@ -295,6 +297,8 @@
             this.btnAlgorithmIndexMoveDown.TabIndex = 11;
             this.btnAlgorithmIndexMoveDown.Text = "▼";
             this.btnAlgorithmIndexMoveDown.UseVisualStyleBackColor = true;
+            this.btnAlgorithmIndexMoveDown.Visible = false;
+            this.btnAlgorithmIndexMoveDown.Click += new System.EventHandler(this.btnAlgorithmIndexMoveDown_Click);
             // 
             // btnAlgorithmIndexMoveUp
             // 
@@ -304,6 +308,8 @@
             this.btnAlgorithmIndexMoveUp.TabIndex = 10;
             this.btnAlgorithmIndexMoveUp.Text = "▲";
             this.btnAlgorithmIndexMoveUp.UseVisualStyleBackColor = true;
+            this.btnAlgorithmIndexMoveUp.Visible = false;
+            this.btnAlgorithmIndexMoveUp.Click += new System.EventHandler(this.btnAlgorithmIndexMoveUp_Click);
             // 
             // btnInspectionAlgoCopy
             // 
@@ -565,6 +571,21 @@
             this.gridAlgoEnable.Name = "gridAlgoEnable";
             this.gridAlgoEnable.ReadOnly = true;
             this.gridAlgoEnable.Width = 80;
+			//
+			// btnShowAlgorithmMoveButton
+            // 
+            this.btnShowAlgorithmMoveButton.BackColor = System.Drawing.Color.Maroon;
+            this.btnShowAlgorithmMoveButton.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnShowAlgorithmMoveButton.ForeColor = System.Drawing.Color.White;
+            this.btnShowAlgorithmMoveButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnShowAlgorithmMoveButton.Location = new System.Drawing.Point(552, 273);
+            this.btnShowAlgorithmMoveButton.Name = "btnShowAlgorithmMoveButton";
+            this.btnShowAlgorithmMoveButton.Size = new System.Drawing.Size(20, 20);
+            this.btnShowAlgorithmMoveButton.TabIndex = 263;
+            this.btnShowAlgorithmMoveButton.Tag = "0";
+            this.btnShowAlgorithmMoveButton.Text = "!";
+            this.btnShowAlgorithmMoveButton.UseVisualStyleBackColor = false;
+            this.btnShowAlgorithmMoveButton.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btnShowAlgorithmMoveButton_KeyPress);
             // 
             // TeachingWindow
             // 
@@ -640,5 +661,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gridAlgoName;
         private System.Windows.Forms.DataGridViewComboBoxColumn gridAlgoBenchMark;
         private System.Windows.Forms.DataGridViewCheckBoxColumn gridAlgoEnable;
+        private CPressingButton.PressButton btnShowAlgorithmMoveButton;
     }
 }

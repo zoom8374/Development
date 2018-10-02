@@ -20,6 +20,7 @@ namespace KPVisionInspectionFramework
         private ucMainResultLead    MainResultLeadWnd;
 
         private eProjectType ProjectType;
+        private string LastRecipeName;
 
         private bool ResizingFlag = false;
         private bool IsResizing = false;
@@ -28,13 +29,14 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public MainResultBase(string _LastRecipeName)
         {
+            LastRecipeName = _LastRecipeName;
             InitializeComponent();
 
-            MainResultIDWnd = new ucMainResultID(_LastRecipeName);
-            MainResultLeadWnd = new ucMainResultLead(_LastRecipeName);
+            
+            
 
-            MainResultIDWnd.ScreenshotEvent += new ucMainResultID.ScreenshotHandler(ScreenShot);
-            MainResultLeadWnd.ScreenshotEvent += new ucMainResultLead.ScreenshotHandler(ScreenShot);
+            
+            
         }
 
         public void Initialize(Object _OwnerForm, int _ProjectType)
@@ -42,8 +44,19 @@ namespace KPVisionInspectionFramework
             this.Owner = (Form)_OwnerForm;
             ProjectType = (eProjectType)_ProjectType;
 
-            if (ProjectType == eProjectType.BLOWER)         panelMain.Controls.Add(MainResultIDWnd);
-            else if (ProjectType == eProjectType.DISPENSER) panelMain.Controls.Add(MainResultLeadWnd);
+            if (ProjectType == eProjectType.BLOWER)
+            {
+                MainResultIDWnd = new ucMainResultID(LastRecipeName);
+                MainResultIDWnd.ScreenshotEvent += new ucMainResultID.ScreenshotHandler(ScreenShot);
+                panelMain.Controls.Add(MainResultIDWnd);
+            }
+
+            else if (ProjectType == eProjectType.DISPENSER)
+            {
+                MainResultLeadWnd = new ucMainResultLead(LastRecipeName);
+                MainResultLeadWnd.ScreenshotEvent += new ucMainResultLead.ScreenshotHandler(ScreenShot);
+                panelMain.Controls.Add(MainResultLeadWnd);
+            }
 
             SetWindowLocation(1482, 148);
         }

@@ -52,8 +52,8 @@ namespace KPVisionInspectionFramework
             InitializeComponent();
             Initialize();
             CLoadingManager.Hide();
+            System.Threading.Thread.Sleep(200);
 
-            System.Threading.Thread.Sleep(150);
             TimerShowWindow.Start();
         }
 

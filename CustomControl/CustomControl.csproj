@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileManager.cs" />
     <Compile Include="Invoke\ControlInvoke.cs" />
     <Compile Include="CSVManager.cs" />
     <Compile Include="GradientLabel.cs">

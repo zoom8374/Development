@@ -8,6 +8,7 @@ using Cognex.VisionPro.Blob;
 
 using ParameterManager;
 using LogMessageManager;
+using Cognex.VisionPro.ImageProcessing;
 
 namespace InspectionSystemManager
 {
@@ -47,6 +48,17 @@ namespace InspectionSystemManager
         }
         #endregion Initialize & Deinitialize
 
+        public double GetHistogramStandardDeviatioValue(CogImage8Grey _SrcImage, CogRectangle _InspRegion)
+        {
+            CogHistogramTool _CogHistoTool = new CogHistogramTool();
+            _CogHistoTool.InputImage = _SrcImage;
+            _CogHistoTool.Region = _InspRegion;
+            _CogHistoTool.Run();
+            double _HistoDeviation = _CogHistoTool.Result.StandardDeviation;
+
+            return _HistoDeviation;
+        }
+
         public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult, int _NgNumber = 0)
         {
             bool _Result = true;
@@ -56,12 +68,24 @@ namespace InspectionSystemManager
             SetConnectivityMinimum((int)_CogBlobReferAlgo.BlobAreaMin);
             SetPolarity(Convert.ToBoolean(_CogBlobReferAlgo.ForeGround));
             SetMeasurement(CogBlobMeasureConstants.Area, CogBlobMeasureModeConstants.Filter, CogBlobFilterModeConstants.IncludeBlobsInRange, _CogBlobReferAlgo.BlobAreaMin, _CogBlobReferAlgo.BlobAreaMax);
-
             if (true == Inspection(_SrcImage, _InspRegion)) GetResult(true);
 
             List<int> _ResultIndexList = new List<int>();
             if (GetResults().BlobCount > 0)
             {
+                if (_CogBlobReferAlgo.UseDummyValue)
+                {
+                    //Histogram check
+                    CogHistogramTool _CogHistoTool = new CogHistogramTool();
+                    _CogHistoTool.InputImage = _SrcImage;
+                    _CogHistoTool.Region = _InspRegion;
+                    _CogHistoTool.Run();
+                    double _HistoAvg = _CogHistoTool.Result.StandardDeviation;
+                    _CogBlobReferResult.HistogramAvg = _HistoAvg;
+                    if (_CogBlobReferAlgo.DummyHistoMeanValue + 5 > _HistoAvg && _CogBlobReferAlgo.DummyHistoMeanValue - 5 < _HistoAvg)
+                        _CogBlobReferResult.DummyStatus = true;
+                }
+
                 CogBlobReferenceResult _CogBlobReferResultTemp = new CogBlobReferenceResult();
                 _CogBlobReferResultTemp = GetResults();
 
@@ -130,6 +154,7 @@ namespace InspectionSystemManager
                     _CogBlobReferResult.OriginX = new double[_Count];
                     _CogBlobReferResult.OriginY = new double[_Count];
                     _CogBlobReferResult.IsGoods = new bool[_Count];
+                    _CogBlobReferResult.ResultGraphic = new CogCompositeShape[_Count];
 
                     for (int iLoopCount = 0; iLoopCount < _Count; ++iLoopCount)
                     {
@@ -148,6 +173,7 @@ namespace InspectionSystemManager
                         _CogBlobReferResult.OriginX[iLoopCount] = _CogBlobReferResultTemp.OriginX[_ResultIndexList[iLoopCount]];
                         _CogBlobReferResult.OriginY[iLoopCount] = _CogBlobReferResultTemp.OriginY[_ResultIndexList[iLoopCount]];
                         _CogBlobReferResult.IsGoods[iLoopCount] = _CogBlobReferResultTemp.IsGoods[_ResultIndexList[iLoopCount]];
+                        _CogBlobReferResult.ResultGraphic[iLoopCount] = _CogBlobReferResultTemp.ResultGraphic[iLoopCount];
                     }
                     _CogBlobReferResult.IsGood = true;
                 }

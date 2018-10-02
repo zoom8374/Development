@@ -23,6 +23,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOContr
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\DIOControlManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CPressingButton.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustomControl.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustonMsgBoxManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\LogMessageManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\ParameterManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\log4net.dll
@@ -44,4 +45,3 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOContr
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\obj\Debug\DIOControlManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\DIOControlManager\DIOControlManager\bin\Debug\CustonMsgBoxManager.dll

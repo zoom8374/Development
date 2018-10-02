@@ -28,6 +28,10 @@ namespace InspectionSystemManager
         public delegate void ApplyBlobReferValueHandler(CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult);
         public event ApplyBlobReferValueHandler ApplyBlobReferValueEvent;
 
+        public delegate double GetHistogramValueHandler();
+        public event GetHistogramValueHandler GetHistogramValueEvent;
+
+
         #region Initialize & DeInitialize
         public ucCogBlobReference()
         {
@@ -103,6 +107,20 @@ namespace InspectionSystemManager
         {
             numUpDownBodyHeight.Enabled = ckBodyHeight.Checked;
         }
+
+        private void btnDummyHistogramMean_Click(object sender, EventArgs e)
+        {
+            var _GetHistogramValueEvent = GetHistogramValueEvent;
+            double? _HistoMeanValue = _GetHistogramValueEvent?.Invoke();
+
+            numUpDownDummyValue.Value = Convert.ToDecimal(_HistoMeanValue);
+        }
+
+        private void ckDummyUsable_CheckedChanged(object sender, EventArgs e)
+        {
+            numUpDownDummyValue.Enabled = ckDummyUsable.Checked;
+            btnDummyHistogramMean.Enabled = ckDummyUsable.Checked;
+        }
         #endregion Control Event
 
         public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
@@ -130,12 +148,16 @@ namespace InspectionSystemManager
                 numUpDownBodyArea.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyAreaPermitPercent);
                 numUpDownBodyWidth.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyWidthPermitPercent);
                 numUpDownBodyHeight.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.BodyHeightPermitPercent);
+                numUpDownDummyValue.Value = Convert.ToDecimal(CogBlobReferAlgoRcp.DummyHistoMeanValue);
                 ckBodyArea.Checked = CogBlobReferAlgoRcp.UseBodyArea;
                 ckBodyWidth.Checked = CogBlobReferAlgoRcp.UseBodyWidth;
                 ckBodyHeight.Checked = CogBlobReferAlgoRcp.UseBodyHeight;
+                ckDummyUsable.Checked = CogBlobReferAlgoRcp.UseDummyValue;
                 numUpDownBodyArea.Enabled = CogBlobReferAlgoRcp.UseBodyArea;
                 numUpDownBodyWidth.Enabled = CogBlobReferAlgoRcp.UseBodyWidth;
                 numUpDownBodyHeight.Enabled = CogBlobReferAlgoRcp.UseBodyHeight;
+                numUpDownDummyValue.Enabled = CogBlobReferAlgoRcp.UseDummyValue;
+                btnDummyHistogramMean.Enabled = CogBlobReferAlgoRcp.UseDummyValue;
 
                 SetForegroundComboBox(CogBlobReferAlgoRcp.ForeGround);
                 SetBenchMarkPositionComboBox(CogBlobReferAlgoRcp.BenchMarkPosition);
@@ -164,9 +186,11 @@ namespace InspectionSystemManager
             CogBlobReferAlgoRcp.BodyAreaPermitPercent = Convert.ToDouble(numUpDownBodyArea.Value);
             CogBlobReferAlgoRcp.BodyWidthPermitPercent = Convert.ToDouble(numUpDownBodyWidth.Value);
             CogBlobReferAlgoRcp.BodyHeightPermitPercent = Convert.ToDouble(numUpDownBodyHeight.Value);
+            CogBlobReferAlgoRcp.DummyHistoMeanValue = Convert.ToDouble(numUpDownDummyValue.Value);
             CogBlobReferAlgoRcp.UseBodyArea = ckBodyArea.Checked;
             CogBlobReferAlgoRcp.UseBodyWidth = ckBodyWidth.Checked;
             CogBlobReferAlgoRcp.UseBodyHeight = ckBodyHeight.Checked;
+            CogBlobReferAlgoRcp.UseDummyValue = ckDummyUsable.Checked;
             CogBlobReferAlgoRcp.OriginX = OriginX;
             CogBlobReferAlgoRcp.OriginY = OriginY;
 
@@ -225,7 +249,9 @@ namespace InspectionSystemManager
             _CogBlobReferAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
             _CogBlobReferAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             _CogBlobReferAlgoRcp.BenchMarkPosition = Convert.ToInt32(textBoxBenchMarkPosition.Text);
-            
+            _CogBlobReferAlgoRcp.ResolutionX = ResolutionX;
+            _CogBlobReferAlgoRcp.ResolutionY = ResolutionY;
+
             var _ApplyBlobReferValueEvent = ApplyBlobReferValueEvent;
             if (_ApplyBlobReferValueEvent != null)
                 _ApplyBlobReferValueEvent(_CogBlobReferAlgoRcp, ref _CogBlobReferResult);

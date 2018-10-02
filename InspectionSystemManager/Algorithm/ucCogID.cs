@@ -37,7 +37,7 @@ namespace InspectionSystemManager
         public void SetAlgoRecipe(Object _Algorithm)
         {
             CogBarCodeIDAlgoRcp = _Algorithm as CogBarCodeIDAlgo;
-
+            comboBoxSymbology.Text = "";
             comboBoxSymbology.SelectedText = CogBarCodeIDAlgoRcp.Symbology;
             numUpDownNumtoFind.Value = CogBarCodeIDAlgoRcp.FindCount;
         }

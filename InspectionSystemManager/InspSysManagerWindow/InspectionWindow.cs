@@ -955,9 +955,13 @@ namespace InspectionSystemManager
                 else if (eAlgoType.C_ID == _AlgoType)           _IsGood = DisplayResultBarCodeIDFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
                 else if (eAlgoType.C_LINE_FIND == _AlgoType)    _IsGood = DisplayResultLineFind(AlgoResultParamList[iLoopCount].ResultParam, iLoopCount);
 
-                if (true == _IsLastGood) _IsLastGood = _IsGood;
+                //LJH 2018.09.28 SendResultParam에서 결과값 가져오기
+                //if (true == _IsLastGood) _IsLastGood = _IsGood;
             }
-            
+
+            //LJH 2018.09.28 SendResultParam에서 결과값 가져오기
+            _IsLastGood = SendResParam.IsGood;
+
             DisplayLastResultMessage(_IsLastGood);
 
             return true;

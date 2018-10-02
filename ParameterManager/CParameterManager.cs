@@ -638,9 +638,11 @@ namespace ParameterManager
                     case "BodyAreaPermitPercent":   _CogBlobRefer.BodyAreaPermitPercent = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "BodyWidthPermitPercent":  _CogBlobRefer.BodyWidthPermitPercent = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "BodyHeightPermitPercent": _CogBlobRefer.BodyHeightPermitPercent = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "DummyHistoMeanValue":     _CogBlobRefer.DummyHistoMeanValue = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "UseBodyArea":         _CogBlobRefer.UseBodyArea = Convert.ToBoolean(_NodeChild.InnerText); break;
                     case "UseBodyWidth":        _CogBlobRefer.UseBodyWidth = Convert.ToBoolean(_NodeChild.InnerText); break;
                     case "UseBodyHeight":       _CogBlobRefer.UseBodyHeight = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "UseDummyValue":       _CogBlobRefer.UseDummyValue = Convert.ToBoolean(_NodeChild.InnerText); break;
                     case "ResolutionX":         _CogBlobRefer.ResolutionX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ResolutionY":         _CogBlobRefer.ResolutionY = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
@@ -911,9 +913,11 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("BodyAreaPermitPercent", _CogBlobReferAlgo.BodyAreaPermitPercent.ToString());
             _XmlWriter.WriteElementString("BodyWidthPermitPercent", _CogBlobReferAlgo.BodyWidthPermitPercent.ToString());
             _XmlWriter.WriteElementString("BodyHeightPermitPercent", _CogBlobReferAlgo.BodyHeightPermitPercent.ToString());
+            _XmlWriter.WriteElementString("DummyHistoMeanValue", _CogBlobReferAlgo.DummyHistoMeanValue.ToString());
             _XmlWriter.WriteElementString("UseBodyArea", _CogBlobReferAlgo.UseBodyArea.ToString());
             _XmlWriter.WriteElementString("UseBodyWidth", _CogBlobReferAlgo.UseBodyWidth.ToString());
             _XmlWriter.WriteElementString("UseBodyHeight", _CogBlobReferAlgo.UseBodyHeight.ToString());
+            _XmlWriter.WriteElementString("UseDummyValue", _CogBlobReferAlgo.UseDummyValue.ToString());
             _XmlWriter.WriteElementString("ResolutionX", _CogBlobReferAlgo.ResolutionX.ToString());
             _XmlWriter.WriteElementString("ResolutionY", _CogBlobReferAlgo.ResolutionY.ToString());
         }
@@ -1120,9 +1124,11 @@ namespace ParameterManager
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BodyAreaPermitPercent   = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BodyAreaPermitPercent;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BodyWidthPermitPercent  = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BodyWidthPermitPercent;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BodyHeightPermitPercent = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BodyHeightPermitPercent;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).DummyHistoMeanValue     = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).DummyHistoMeanValue;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseBodyArea             = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseBodyArea;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseBodyWidth            = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseBodyWidth;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseBodyHeight           = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseBodyHeight;
+                        ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).UseDummyValue           = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).UseDummyValue;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionX             = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ResolutionX;
                         ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionY             = ((CogBlobReferenceAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ResolutionY;
                         #endregion Blob Reference Algorithm Copy

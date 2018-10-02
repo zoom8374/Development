@@ -127,6 +127,14 @@ namespace InspectionSystemManager
                         IDProc.QRCode.MaxGridSize = 49;
                     }
                     break;
+
+                default:
+                    {
+                        //Default는 DataMatrix로
+                        IDProc.DataMatrix.Enabled = true;
+                        IDProc.DataMatrix.ProcessControlMetrics = CogIDDataMatrixProcessControlMetricsConstants.None;
+                    }
+                    break;
             }
         }
 

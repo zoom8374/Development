@@ -32,6 +32,13 @@ namespace KPVisionInspectionFramework
         string LastRecipeName;
         string LastResult;
 
+        //LDH, 2018.09.28, InData용
+        List<string> InDataList = new List<string>();
+        List<string> OutDataList = new List<string>();
+        int InDataLimitCount = 0;
+        string NowInspectionID;
+        
+
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
         public event ScreenshotHandler ScreenshotEvent;
 
@@ -64,6 +71,10 @@ namespace KPVisionInspectionFramework
             SevenSegCodeErr.Value = CodeErrCount.ToString();
             SevenSegBlankErr.Value = BlankErrCount.ToString();
             SevenSegMixErr.Value = MixErrCount.ToString();
+
+            //LDH, 2018.09.27, InData List 
+            ReadInData(@"D:\MITfileTest.txt");
+            InDataLimitCount = 13;
 
             //LDH, 2018.08.13, Hitory Parameter용 배열 초기화
             HistoryParam = new string[4];
@@ -109,8 +120,18 @@ namespace KPVisionInspectionFramework
                 SegmentValueInvoke(SevenSegGood, GoodCount.ToString());
                 SegmentValueInvoke(SevenSegYield, Yield.ToString("F2"));
 
+                //LDH, 2018.09.27, AirBlower file 관리 
+                //NowInspectionID = _DataMatrixString;
+                //SetOutData(_DataMatrixString);
+
                 LastResult = "GOOD";
-                ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
+                if (eNgType.DUMMY == _ResultParam.NgType)   {   LastResult = "DUMMY"; }
+                else                                        {   NowInspectionID = _DataMatrixString;    LastResult = SetOutData(_DataMatrixString);  }
+
+                if (LastResult == "OK")         ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
+                else if (LastResult == "DUMMY") ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
+                else                            ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Red);
+
             }
 
             else
@@ -166,6 +187,89 @@ namespace KPVisionInspectionFramework
             {
                 _Control.Value = _Value;
             }
+        }
+
+        //LDH, 2018.09.27, InData 읽어오기
+        private void ReadInData(string InDataFilePath)
+        {
+            FileManager objFileManager = new FileManager();
+            List<string> FileReadTemp;
+
+            FileReadTemp = objFileManager.txtFileRead(InDataFilePath);
+
+            for(int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
+            {
+                InDataList.Add(FileReadTemp[iLoopCount]);
+                OutDataList.Add(FileReadTemp[iLoopCount]);
+            }
+        }
+
+        //LDH, 2018.09.28, OutData 쓰기
+        private void WriteOutData(string OutDataFilePath)
+        {
+            FileManager objFileManager = new FileManager();
+
+            objFileManager.txtFileWrite(OutDataFilePath, OutDataList);
+        }
+
+        //LDH, 2018.09.27, Outdata 추가
+        private string SetOutData(string ResultID)
+        {
+            int IDIndex = -1;
+            int ErrorCode = 0;
+            string Result = "OK";
+
+            string TempInData;
+            string[] ArrInData;
+
+            try
+            {
+                IDIndex = InDataList.FindIndex(FindText);
+
+                TempInData = InDataList[IDIndex];
+                ArrInData = InDataList[IDIndex].Split(',');
+
+                if (ResultID.Contains(ArrInData[1]))
+                {
+                    if (!(InDataLimitCount >= Convert.ToInt32(ArrInData[2]))) ErrorCode = 1;
+                }
+                else ErrorCode = 2;
+            }
+            catch
+            {
+                TempInData = InDataList[1];
+                ArrInData = TempInData.Split(',');
+
+                if (ResultID.Contains(ArrInData[1])) ErrorCode = 3;
+                else ErrorCode = 2;
+            }
+
+            if (ErrorCode != 0) Result = "NG";
+
+            try
+            {
+                if (ErrorCode != 3)
+                {
+                    ArrInData[9] = ErrorCode.ToString();
+                    OutDataList[IDIndex] = string.Join(",", ArrInData);
+                }
+
+				//WriteOutData(@"F:\MITfileTest_Out.txt");
+                WriteOutData(@"D:\MITfileTest_Out.txt");
+            }
+
+            catch
+            {
+                Result = "NG";
+            }
+
+            return Result;
+        }
+
+        private bool FindText(string Text)
+        {
+            if (Text.Contains(NowInspectionID)) return true;
+            return false;
         }
 
         //LDH, 2018.08.13, History 추가용 함수

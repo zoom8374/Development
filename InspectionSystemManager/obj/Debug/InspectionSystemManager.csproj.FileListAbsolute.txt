@@ -42,6 +42,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bi
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageFile.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.ImageProcessing.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\CPressingButton.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\KPDisplay.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\LogMessageManager.dll

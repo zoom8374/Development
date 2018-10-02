@@ -11,10 +11,10 @@ C:\Users\Administrator\Desktop\CIPOSLeadInspection\LogManager\obj\Debug\LogMessa
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\LogMessageManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\LogMessageManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\bin\Debug\log4net.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.LogSettingWindow.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.LogWindowSE.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.Properties.Resources.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\LogManager\obj\Debug\LogMessageManager.csprojResolveAssemblyReference.cache

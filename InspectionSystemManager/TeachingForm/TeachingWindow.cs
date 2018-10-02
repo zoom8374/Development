@@ -147,9 +147,13 @@ namespace InspectionSystemManager
 
             if (ProjectItem == eProjectItem.ID_INSP)
             {
-                ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+
+                ContextMenuAlgo.MenuItems.Add("PCB 유무 검사", new EventHandler(BlobReferenceAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("코드 검사", new EventHandler(BarCodeIDAlgorithm));
             }
 
             else if (ProjectItem == eProjectItem.LEAD_INSP)
@@ -689,6 +693,68 @@ namespace InspectionSystemManager
                 case eAlgoType.C_LINE_FIND:     ucCogLineFindWnd.SaveAlgoRecipe();   break;
             }
         }
+
+        private void btnAlgorithmIndexMoveUp_Click(object sender, EventArgs e)
+        {
+            if (gridViewArea.RowCount <= 0) return;
+            if (gridViewArea.SelectedRows.Count == 0) return;
+
+            int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
+            if (0 == _ID) return;
+
+            List<int> _BenchMarkList = new List<int>();
+            for (int iLoopCount = 0; iLoopCount < gridViewArea.RowCount; ++iLoopCount)
+            {
+                int _Benchmark = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark;
+
+                if (false == _BenchMarkList.Contains(_Benchmark) && _Benchmark != 0)
+                    _BenchMarkList.Add(_Benchmark);
+            }
+
+            int _IDChange = _ID - 1;
+
+            InspectionAlgorithmParameter _Temp = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID];
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID] = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_IDChange];
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_IDChange] = _Temp;
+
+            UpdateInspectionAlgoList(InspAreaSelected);
+            gridViewAlgo.Rows[_IDChange].Selected = true;
+        }
+
+        private void btnAlgorithmIndexMoveDown_Click(object sender, EventArgs e)
+        {
+            if (gridViewArea.RowCount <= 0) return;
+            if (gridViewArea.SelectedRows.Count == 0) return;
+
+            int _ID = Convert.ToInt32(gridViewAlgo.SelectedRows[0].Cells[(int)eAlgoList.ID].Value) - 1;
+            if (gridViewArea.RowCount < _ID) return;
+
+            List<int> _BenchMarkList = new List<int>();
+            for (int iLoopCount = 0; iLoopCount < gridViewArea.RowCount; ++iLoopCount)
+            {
+                int _Benchmark = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark;
+
+                if (false == _BenchMarkList.Contains(_Benchmark) && _Benchmark != 0)
+                    _BenchMarkList.Add(_Benchmark);
+            }
+
+            int _IDChange = _ID + 1;
+            if (_IDChange < InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Count)
+            {
+                InspectionAlgorithmParameter _Temp = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID];
+                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID] = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_IDChange];
+                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_IDChange] = _Temp;
+
+                UpdateInspectionAlgoList(InspAreaSelected);
+                gridViewAlgo.Rows[_IDChange].Selected = true;
+            }
+        }
+
+        private void btnShowAlgorithmMoveButton_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            btnAlgorithmIndexMoveUp.Visible = !btnAlgorithmIndexMoveUp.Visible;
+            btnAlgorithmIndexMoveDown.Visible = !btnAlgorithmIndexMoveDown.Visible;
+        }
         #endregion Button Event
 
         #region Inspection Area & Algorithm Gridview Update
@@ -769,13 +835,23 @@ namespace InspectionSystemManager
                 string _Name = "Algo" + _Index;
                 bool _Enable = InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoEnable;
 
-                if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)         _Name = "Search a reference";      //"Pattern - Reference"
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER) _Name = "Search a body reference"; //"Blob - Reference"
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)       _Name = "Defect detection";        //"Blob - Defect"
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_NEEDLE_FIND)_Name = "Search a needle circle";
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD)       _Name = "Lead status inspection";
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID)         _Name = "Search a BarCode Insepction"; //"ID - Search"
-                else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)  _Name = "Search a line";
+                if (ProjectItem == eProjectItem.ID_INSP)
+                {
+                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)            _Name = "기준 패턴 검사";      //"Pattern - Reference"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER)    _Name = "PCB 유무 검사"; //"Blob - Reference"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID)            _Name = "코드 검사"; //"ID - Search"
+                }
+
+                else if (ProjectItem == eProjectItem.LEAD_INSP || ProjectItem == eProjectItem.NEEDLE_ALIGN)
+                {
+                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)            _Name = "Search a reference";      //"Pattern - Reference"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB_REFER)    _Name = "Search a body reference"; //"Blob - Reference"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)          _Name = "Defect detection";        //"Blob - Defect"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_NEEDLE_FIND)   _Name = "Search a needle circle";
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD)          _Name = "Lead status inspection";
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID)            _Name = "Search a BarCode Insepction"; //"ID - Search"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)     _Name = "Search a line";
+                }
 
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
