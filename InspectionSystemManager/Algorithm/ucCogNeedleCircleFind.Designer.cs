@@ -250,13 +250,8 @@
             // numUpDownCaliperNumber
             // 
             this.numUpDownCaliperNumber.Location = new System.Drawing.Point(140, 24);
-            this.numUpDownCaliperNumber.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
             this.numUpDownCaliperNumber.Minimum = new decimal(new int[] {
-            3,
+            5,
             0,
             0,
             0});

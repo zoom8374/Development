@@ -107,9 +107,10 @@ namespace KPVisionInspectionFramework
 
             //Light Initialize
             LightControlManager = new CLightManager();
+            LightControlManager.Initialize(ParamManager.SystemParam.LastRecipeName, ParamManager.SystemParam.IsSimulationMode);
             if (!ParamManager.SystemParam.IsSimulationMode)
             {
-                LightControlManager.Initialize(ParamManager.SystemParam.LastRecipeName);
+                
             }
 
             HistoryManager = new CHistoryManager(((eProjectType)ParamManager.SystemParam.ProjectType).ToString());

@@ -216,6 +216,19 @@ namespace InspectionSystemManager
                 textBoxCenterX.Text = (_CogNeedleFindResult.CenterXReal).ToString("F3");
                 textBoxCenterY.Text = (_CogNeedleFindResult.CenterYReal).ToString("F3");
                 textBoxRadius.Text = (_CogNeedleFindResult.RadiusReal).ToString("F3");
+
+                _CogNeedleFindAlgoRcp.OriginX = _CogNeedleFindResult.CenterX;
+                _CogNeedleFindAlgoRcp.OriginY = _CogNeedleFindResult.CenterY;
+            }
+
+            else
+            {
+                textBoxCenterX.Text = "-";
+                textBoxCenterY.Text = "-";
+                textBoxRadius.Text = "-";
+
+                _CogNeedleFindAlgoRcp.OriginX = 0;
+                _CogNeedleFindAlgoRcp.OriginY = 0;
             }
         }
 

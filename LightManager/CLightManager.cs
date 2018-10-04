@@ -17,6 +17,7 @@ namespace LightManager
     {
         private LightParameter LightParam;
         private LightWindow LightWnd;
+        private bool IsSimulationMode;
         public bool IsShowWindow = false;
 
         // LDH, 각 COM 번호에 해당하는 TotalLight가 생성된 번호를 담는다
@@ -33,16 +34,21 @@ namespace LightManager
             LightWnd = new LightWindow();          
         }
 
-        public void Initialize(string RecipeName)
+        public void Initialize(string RecipeName, bool _IsSimulationMode)
         {
-            LightWnd.SetLightCommandEvent += new LightWindow.SetLightCommandHandler(SetLightCommand);
+            IsSimulationMode = _IsSimulationMode;
 
             LightParameterFolderPath = ".\\Common\\" + "LightParameter";
             LightParameterFullPath = LightParameterFolderPath + "\\" + RecipeName + ".sys";
-
             ReadLightParameters();
-            CheckComportNum();
-            SetLightParam();
+
+            if (false == IsSimulationMode)
+            {
+                CheckComportNum();
+                SetLightParam();
+                LightWnd.SetLightCommandEvent += new LightWindow.SetLightCommandHandler(SetLightCommand);
+            }
+
             SetLightWindow();
         }
 
@@ -126,9 +132,9 @@ namespace LightManager
             LightParameterFullPath = LightParameterFolderPath + "\\" + _RecipeName + ".sys";
 
             if (_SrcRecipeName != "") CopyLightParameter(_RecipeName, _SrcRecipeName);
-
             ReadLightParameters();
-            SetLightParam();
+
+            if (false == IsSimulationMode) SetLightParam();
             SetLightWindow();
         }
 

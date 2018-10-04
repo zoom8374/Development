@@ -60,6 +60,8 @@ namespace InspectionSystemManager
         //검사 시 Area 별 Offset 값을 적용할 변수
         private double AreaBenchMarkOffsetX;
         private double AreaBenchMarkOffsetY;
+        private double BenchMarkOffsetX = 0;
+        private double BenchMarkOffsetY = 0;
         private int AreaAlgoCount;
 
         private string CameraType;
@@ -802,7 +804,9 @@ namespace InspectionSystemManager
             bool _Result = true;
 
             if (false == _InspAlgoParam.AlgoEnable) return true;
-            double _BenchMarkOffsetX = 0, _BenchMarkOffsetY = 0;
+            BenchMarkOffsetX = 0;
+            BenchMarkOffsetY = 0;
+            //double _BenchMarkOffsetX = 0, _BenchMarkOffsetY = 0;
 
             #region Buffer Area Calculate
             int _BenchMark = AreaAlgoCount + (_InspAlgoParam.AlgoBenchMark - 1);
@@ -810,13 +814,13 @@ namespace InspectionSystemManager
             {
                 if (AlgoResultParamList[_BenchMark].ResultParam != null)
                 {
-                    _BenchMarkOffsetX = AlgoResultParamList[_BenchMark].OffsetX - AreaBenchMarkOffsetX;
-                    _BenchMarkOffsetY = AlgoResultParamList[_BenchMark].OffsetY - AreaBenchMarkOffsetY;
+                    BenchMarkOffsetX = AlgoResultParamList[_BenchMark].OffsetX - AreaBenchMarkOffsetX;
+                    BenchMarkOffsetY = AlgoResultParamList[_BenchMark].OffsetY - AreaBenchMarkOffsetY;
                 }
             }
 
-            double _CenterX = _InspAlgoParam.AlgoRegionCenterX + _BenchMarkOffsetX;
-            double _CenterY = _InspAlgoParam .AlgoRegionCenterY + _BenchMarkOffsetY;
+            double _CenterX = _InspAlgoParam.AlgoRegionCenterX +  BenchMarkOffsetX;
+            double _CenterY = _InspAlgoParam .AlgoRegionCenterY + BenchMarkOffsetY;
             double _Width = _InspAlgoParam.AlgoRegionWidth;
             double _Height = _InspAlgoParam.AlgoRegionHeight;
             CogRectangle _InspRegion = new CogRectangle();
@@ -845,7 +849,17 @@ namespace InspectionSystemManager
             if (_CogPatternResult.OriginPointX?.Length > 0) AnyReferenceX = _CogPatternResult.OriginPointX[0];
             if (_CogPatternResult.OriginPointY?.Length > 0) AnyReferenceY = _CogPatternResult.OriginPointY[0];
 
+            double _OriginX = _CogPatternAlgo.ReferenceInfoList[0].CenterX - _CogPatternAlgo.ReferenceInfoList[0].OriginPointOffsetX;
+            double _OriginY = _CogPatternAlgo.ReferenceInfoList[0].CenterY - _CogPatternAlgo.ReferenceInfoList[0].OriginPointOffsetY;
+
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_PATTERN, _CogPatternResult);
+            _AlgoResultParam.OffsetX = 0;
+            _AlgoResultParam.OffsetY = 0;
+            if (_CogPatternAlgo.ReferenceInfoList.Count > 0 && _CogPatternResult.CenterX.Length > 0 && _CogPatternResult.CenterY.Length > 0)
+            {
+                _AlgoResultParam.OffsetX = _OriginX - _CogPatternResult.CenterX[0];
+                _AlgoResultParam.OffsetY = _OriginY - _CogPatternResult.CenterY[0];
+            }
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return true;
@@ -863,6 +877,8 @@ namespace InspectionSystemManager
             if (_CogBlobReferResult.OriginY?.Length > 0) AnyReferenceY = _CogBlobReferResult.OriginY[0];
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_BLOB_REFER, _CogBlobReferResult);
+            _AlgoResultParam.OffsetX = _CogBlobReferAlgo.OriginX - _CogBlobReferResult.OriginX[0];
+            _AlgoResultParam.OffsetY = _CogBlobReferAlgo.OriginY - _CogBlobReferResult.OriginY[0];
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogBlobReferResult.IsGood;
@@ -890,7 +906,8 @@ namespace InspectionSystemManager
             CogNeedleFindAlgo   _CogNeedleFindAlgo = _Algorithm as CogNeedleFindAlgo;
             CogNeedleFindResult _CogNeedleFindResult = new CogNeedleFindResult();
 
-            bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult);
+            //InspNeedleCircleFindProc.SetOffsetValue(BenchMarkOffsetX, BenchMarkOffsetY);
+            bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult, BenchMarkOffsetX, BenchMarkOffsetY);
 
             _CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
             _CogNeedleFindResult.CenterYReal = (_CogNeedleFindResult.CenterY - (OriginImage.Height / 2)) * ResolutionY;
@@ -899,6 +916,8 @@ namespace InspectionSystemManager
             _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
+            _AlgoResultParam.OffsetX = _CogNeedleFindAlgo.OriginX - _CogNeedleFindResult.CenterX;
+            _AlgoResultParam.OffsetY = _CogNeedleFindAlgo.OriginY - _CogNeedleFindResult.CenterY;
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogNeedleFindResult.IsGood;

@@ -16,6 +16,9 @@ namespace InspectionSystemManager
         private CogFindCircleTool       FindCircleProc;
         private CogFindCircleResults    FindCircleResults;
 
+        private double CircleCenterOffsetX;
+        private double CircleCenterOffsetY;
+
         #region Initialize & Deinitialize
         public InspectionNeedleCircleFind()
         {
@@ -34,12 +37,18 @@ namespace InspectionSystemManager
         }
         #endregion Initialize & Deinitialize
 
-        public bool Run(CogImage8Grey _SrcImage, CogNeedleFindAlgo _CogNeedleFindAlgo, ref CogNeedleFindResult _CogNeedleFindResult, int _NgNumber = 0)
+        //public void SetOffsetValue(double _OffsetX, double _OffsetY)
+        //{
+        //    CircleCenterOffsetX = _OffsetX;
+        //    CircleCenterOffsetY = _OffsetY;
+        //}
+
+        public bool Run(CogImage8Grey _SrcImage, CogNeedleFindAlgo _CogNeedleFindAlgo, ref CogNeedleFindResult _CogNeedleFindResult, double _OffsetX = 0, double _OffsetY = 0, int _NgNumber = 0)
         {
             bool _Result = true;
 
             SetCaliper(_CogNeedleFindAlgo.CaliperNumber, _CogNeedleFindAlgo.CaliperSearchLength, _CogNeedleFindAlgo.CaliperProjectionLength, _CogNeedleFindAlgo.CaliperSearchDirection);
-            SetCircularArc(_CogNeedleFindAlgo.ArcCenterX, _CogNeedleFindAlgo.ArcCenterY, _CogNeedleFindAlgo.ArcRadius, _CogNeedleFindAlgo.ArcAngleStart, _CogNeedleFindAlgo.ArcAngleSpan);
+            SetCircularArc(_CogNeedleFindAlgo.ArcCenterX - _OffsetX, _CogNeedleFindAlgo.ArcCenterY - _OffsetY, _CogNeedleFindAlgo.ArcRadius, _CogNeedleFindAlgo.ArcAngleStart, _CogNeedleFindAlgo.ArcAngleSpan);
 
             if (true == Inspection(_SrcImage)) GetResult();
 
@@ -100,12 +109,14 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _eSearchDir)
+        private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _eSearchDir, int _eEdgePolarity = (int)CogCaliperPolarityConstants.DarkToLight)
         {
             FindCircleProc.RunParams.NumCalipers = _CaliperNumber;
+            FindCircleProc.RunParams.NumToIgnore = 3;
             FindCircleProc.RunParams.CaliperSearchLength = _SearchLength;
             FindCircleProc.RunParams.CaliperProjectionLength = _ProjectionLength;
             FindCircleProc.RunParams.CaliperSearchDirection = (CogFindCircleSearchDirectionConstants)_eSearchDir;
+            FindCircleProc.RunParams.CaliperRunParams.Edge0Polarity = (CogCaliperPolarityConstants)_eEdgePolarity;
         }
 
         private void SetCircularArc(double _CenterX, double _CenterY, double _Radius, double _AngleStart, double _AngleSpan)

@@ -166,6 +166,7 @@ namespace InspectionSystemManager
             {
                 ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
             }
 
             else
@@ -750,7 +751,7 @@ namespace InspectionSystemManager
             }
         }
 
-        private void btnShowAlgorithmMoveButton_KeyPress(object sender, KeyPressEventArgs e)
+        private void btnShowAlgorithmMoveButton_MousePressing(object sender, EventArgs e)
         {
             btnAlgorithmIndexMoveUp.Visible = !btnAlgorithmIndexMoveUp.Visible;
             btnAlgorithmIndexMoveDown.Visible = !btnAlgorithmIndexMoveDown.Visible;
