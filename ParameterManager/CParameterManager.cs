@@ -173,6 +173,8 @@ namespace ParameterManager
                         case "ProjectType":      SystemParam.ProjectType = Convert.ToInt32(_Node.InnerText); break;
                         case "IPAddress":        SystemParam.IPAddress = _Node.InnerText; break;
                         case "PortNumber":       SystemParam.PortNumber = Convert.ToInt32(_Node.InnerText); break;
+                        case "InDataPath":       SystemParam.InDataFolderPath = _Node.InnerText; break;
+                        case "OutDataPath":      SystemParam.OutDataFolderPath = _Node.InnerText; break;
                     }
                 }
             }
@@ -204,6 +206,8 @@ namespace ParameterManager
             XElement _ProjectType            = new XElement("ProjectType", SystemParam.ProjectType.ToString());
             XElement _IPAddress              = new XElement("IPAddress", SystemParam.IPAddress);
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
+            XElement _InDataPath             = new XElement("InDataPath", SystemParam.InDataFolderPath);
+            XElement _OutDataPath            = new XElement("OutDataPath", SystemParam.OutDataFolderPath);
             #endregion XML Element Define
 
             #region XML Tree ADD
@@ -218,6 +222,13 @@ namespace ParameterManager
             _SystemParameter.Add(_ProjectType);
             _SystemParameter.Add(_IPAddress);
             _SystemParameter.Add(_PortNumber);
+
+            if(SystemParam.ProjectType == (int)eProjectType.BLOWER)
+            {
+                _SystemParameter.Add(_InDataPath);
+                _SystemParameter.Add(_OutDataPath);
+            }
+
             _SystemParameter.Save(SystemParameterFullPath);
             #endregion XML Tree ADD
         }

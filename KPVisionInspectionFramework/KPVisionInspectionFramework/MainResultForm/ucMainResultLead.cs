@@ -86,6 +86,12 @@ namespace KPVisionInspectionFramework
             LastRecipeName = _LastRecipeName;
         }
 
+        //LDH, 2018.10.01, Result clear
+        public void ClearResult()
+        {
+
+        }
+
         public void SetNeedleResultData(SendResultParameter _ResultParam)
         {
             if (_ResultParam.ID == 0)   //Needle Align Vision1
@@ -201,6 +207,12 @@ namespace KPVisionInspectionFramework
                     {
                         LastResult = "LEAD BENT";
                         ControlInvoke.GradientLabelText(gradientLabelResult, "LEAD BENT", Color.Red);
+                    }
+
+                    else if (eNgType.LEAD_CNT == _ResultParam.NgType)
+                    {
+                        LastResult = "LEAD COUNT";
+                        ControlInvoke.GradientLabelText(gradientLabelResult, "LEAD COUNT", Color.Red);
                     }
                 }
             }

@@ -18,6 +18,7 @@ namespace InspectionSystemManager
         CogBlobResult BlobResult;
         CogBlobReferenceResult InspResults;
 
+        #region Initialize & Deinitialize
         public InspectionBlob()
         {
             BlobProc = new CogBlob();
@@ -43,6 +44,19 @@ namespace InspectionSystemManager
             BlobResults.Dispose();
             BlobResult.Dispose();
             BlobProc.Dispose();
+        }
+        #endregion Initialize & Deinitialize
+
+        public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogBlobAlgo _CogBlobAlgo, ref CogBlobResult _CogBlobResult, int _NgNumber = 0)
+        {
+            bool _Result = true;
+
+            SetHardFixedThreshold(_CogBlobAlgo.ThresholdMin);
+            SetConnectivityMinimum((int)_CogBlobAlgo.BlobAreaMin);
+            SetPolarity(Convert.ToBoolean(_CogBlobAlgo.ForeGround));
+            //SetMeasurement(CogBlobMeasureConstants.Area, CogBlobMeasureModeConstants.Filter, CogBlobFilterModeConstants.IncludeBlobsInRange, _CogBlobReferAlgo.BlobAreaMin, _CogBlobReferAlgo.BlobAreaMax);
+
+            return _Result;
         }
 
         public bool Inspection(CogImage8Grey _SrcImage, CogRectangle _InspArea)
@@ -123,24 +137,37 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        public void SetPolarity(bool _IsMode)
+        private void SetMeasurement(CogBlobMeasureConstants _Properties, CogBlobMeasureModeConstants _Filter, CogBlobFilterModeConstants _Range, double _RangeLow, double _RangeHigh, bool _IsNew = true)
+        {
+            if (_IsNew) BlobProc.RunTimeMeasures.Clear();
+
+            CogBlobMeasure _BlobMeasure = new CogBlobMeasure();
+            _BlobMeasure.Measure = _Properties;
+            _BlobMeasure.Mode = _Filter;
+            _BlobMeasure.FilterMode = _Range;
+            _BlobMeasure.FilterRangeLow = _RangeLow;
+            _BlobMeasure.FilterRangeHigh = _RangeHigh;
+            BlobProc.RunTimeMeasures.Add(_BlobMeasure);
+        }
+
+        private void SetPolarity(bool _IsMode)
         {
             if (_IsMode) BlobProc.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.LightBlobs;
             else         BlobProc.SegmentationParams.Polarity = CogBlobSegmentationPolarityConstants.DarkBlobs;
         }
 
-        public void SetHardFixedThreshold(int _ThresholdValue)
+        private void SetHardFixedThreshold(int _ThresholdValue)
         {
             BlobProc.SegmentationParams.Mode = CogBlobSegmentationModeConstants.HardFixedThreshold;
             BlobProc.SegmentationParams.HardFixedThreshold = _ThresholdValue;
         }
 
-        public void SetConnectivityMinimum(int _MinValue)
+        private void SetConnectivityMinimum(int _MinValue)
         {
             BlobProc.ConnectivityMinPixels = _MinValue;
         }
 
-        public void SetMorphology(eMorphologyMode _OperationMode)
+        private void SetMorphology(eMorphologyMode _OperationMode)
         {
             switch (_OperationMode)
             {
@@ -151,7 +178,7 @@ namespace InspectionSystemManager
             }
         }
 
-        public void SetMorphologyHorizon(int _Time)
+        private void SetMorphologyHorizon(int _Time)
         {
             for (int iLoopCount = 0; iLoopCount < _Time; ++iLoopCount)
                 BlobProc.MorphologyOperations.Add(CogBlobMorphologyConstants.ErodeHorizontal);
@@ -159,7 +186,7 @@ namespace InspectionSystemManager
                 BlobProc.MorphologyOperations.Add(CogBlobMorphologyConstants.DilateHorizontal);
         }
 
-        public void SetMorphologyVertical(int _Time)
+        private void SetMorphologyVertical(int _Time)
         {
             for (int iLoopCount = 0; iLoopCount < _Time; ++iLoopCount)
                 BlobProc.MorphologyOperations.Add(CogBlobMorphologyConstants.ErodeVertical);
@@ -167,7 +194,7 @@ namespace InspectionSystemManager
                 BlobProc.MorphologyOperations.Add(CogBlobMorphologyConstants.DilateVertical);
         }
 
-        public void SetMorphologySquare(int _Time)
+        private void SetMorphologySquare(int _Time)
         {
             for (int iLoopCount = 0; iLoopCount < _Time; ++iLoopCount)
                 BlobProc.MorphologyOperations.Add(CogBlobMorphologyConstants.ErodeSquare);

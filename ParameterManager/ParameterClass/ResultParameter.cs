@@ -137,6 +137,10 @@ namespace ParameterManager
         public double OriginXReal;
         public double OriginYReal;
         public double RadiusReal;
+
+        public double[] PointPosXInfo;
+        public double[] PointPosYInfo;
+        public bool[] PointStatusInfo;
     }
 
     public class CogLeadResult : Result
@@ -166,6 +170,7 @@ namespace ParameterManager
 
         //Lead 검사에 필요한 Parameter
         public int LeadCount;
+        public bool IsLeadCountGood;
         public double LeadPitchAvg;
         public double LeadAngleAvg;
         public bool[] IsLeadBentGood;
@@ -181,6 +186,7 @@ namespace ParameterManager
         public CogLeadResult()
         {
             IsGood = true;
+            IsLeadCountGood = true;
             NgType = eNgType.GOOD;
         }
     }
@@ -234,6 +240,8 @@ namespace ParameterManager
     public class SendLeadResult
     {
         public int LeadCount;
+        public bool IsLeadCountGood;
+
         public double BodyReferenceX;
         public double BodyReferenceY;
         public bool[] IsLeadBendGood;

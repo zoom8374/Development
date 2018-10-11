@@ -20,6 +20,8 @@ namespace InspectionSystemManager
         private double OriginY = 0;
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
+        private double BenchMarkOffsetX = 0;
+        private double BenchMarkOffsetY = 0;
 
         private bool AlgoInitFlag = false;
 
@@ -113,7 +115,7 @@ namespace InspectionSystemManager
         }
         #endregion Control Event
 
-        public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
+        public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
         {
             if (_Algorithm != null)
             {
@@ -123,18 +125,21 @@ namespace InspectionSystemManager
 
                 ResolutionX = _ResolutionX;
                 ResolutionY = _ResolutionY;
+                BenchMarkOffsetX = _BenchMarkOffsetX;
+                BenchMarkOffsetY = _BenchMarkOffsetY;
                 numUpDownCaliperNumber.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperNumber);
                 numUpDownSearchLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperSearchLength);
                 numUpDownProjectionLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperProjectionLength);
-                numUpDownArcCenterX.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterX);
-                numUpDownArcCenterY.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterY);
+                numUpDownArcCenterX.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterX - BenchMarkOffsetX);
+                numUpDownArcCenterY.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterY - BenchMarkOffsetY);
                 numUpDownArcRadius.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcRadius);
                 numUpDownAngleStart.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleStart);
                 numUpDownAngleSpan.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcAngleSpan);
-                textBoxCenterX.Text = CogNeedleFindAlgoRcp.OriginX.ToString("F3");
-                textBoxCenterY.Text = CogNeedleFindAlgoRcp.OriginY.ToString("F3");
+                textBoxCenterX.Text = (CogNeedleFindAlgoRcp.OriginX * ResolutionX).ToString("F3");
+                textBoxCenterY.Text = (CogNeedleFindAlgoRcp.OriginY * ResolutionY).ToString("F3");
                 textBoxRadius.Text = CogNeedleFindAlgoRcp.OriginRadius.ToString("F3");
 
+                graLabelSearchDirection.Text = CogNeedleFindAlgoRcp.CaliperSearchDirection.ToString();
                 SetSearchDirection(CogNeedleFindAlgoRcp.CaliperSearchDirection);
 
                 AlgoInitFlag = true;
@@ -152,13 +157,15 @@ namespace InspectionSystemManager
             CogNeedleFindAlgoRcp.CaliperSearchLength     = Convert.ToDouble(numUpDownSearchLength.Value);
             CogNeedleFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             CogNeedleFindAlgoRcp.CaliperSearchDirection  = Convert.ToInt32(graLabelSearchDirection.Text);
-            CogNeedleFindAlgoRcp.ArcCenterX     = Convert.ToDouble(numUpDownArcCenterX.Value);
-            CogNeedleFindAlgoRcp.ArcCenterY     = Convert.ToDouble(numUpDownArcCenterY.Value);
+            CogNeedleFindAlgoRcp.ArcCenterX     = Convert.ToDouble(numUpDownArcCenterX.Value) + BenchMarkOffsetX;
+            CogNeedleFindAlgoRcp.ArcCenterY     = Convert.ToDouble(numUpDownArcCenterY.Value) + BenchMarkOffsetY;
             CogNeedleFindAlgoRcp.ArcRadius      = Convert.ToDouble(numUpDownArcRadius.Value);
             CogNeedleFindAlgoRcp.ArcAngleStart  = Convert.ToDouble(numUpDownAngleStart.Value);
             CogNeedleFindAlgoRcp.ArcAngleSpan   = Convert.ToDouble(numUpDownAngleSpan.Value);
-            CogNeedleFindAlgoRcp.OriginX        = Convert.ToDouble(textBoxCenterX.Text);
-            CogNeedleFindAlgoRcp.OriginY        = Convert.ToDouble(textBoxCenterY.Text);
+            //CogNeedleFindAlgoRcp.OriginX        = Convert.ToDouble(textBoxCenterX.Text) / ResolutionX;
+            //CogNeedleFindAlgoRcp.OriginY        = Convert.ToDouble(textBoxCenterY.Text) / ResolutionY;
+            CogNeedleFindAlgoRcp.OriginX        = OriginX;
+            CogNeedleFindAlgoRcp.OriginY        = OriginY;
             CogNeedleFindAlgoRcp.OriginRadius   = Convert.ToDouble(textBoxRadius.Text);
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching NeedleCircleFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
@@ -217,8 +224,8 @@ namespace InspectionSystemManager
                 textBoxCenterY.Text = (_CogNeedleFindResult.CenterYReal).ToString("F3");
                 textBoxRadius.Text = (_CogNeedleFindResult.RadiusReal).ToString("F3");
 
-                _CogNeedleFindAlgoRcp.OriginX = _CogNeedleFindResult.CenterX;
-                _CogNeedleFindAlgoRcp.OriginY = _CogNeedleFindResult.CenterY;
+                OriginX = _CogNeedleFindResult.CenterX;
+                OriginY = _CogNeedleFindResult.CenterY;
             }
 
             else

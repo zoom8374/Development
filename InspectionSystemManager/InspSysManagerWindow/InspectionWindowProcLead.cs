@@ -41,6 +41,10 @@ namespace InspectionSystemManager
                     _SendResParam.SendResult = _SendResult;
                     if (_SendResParam.NgType == eNgType.GOOD)
                         _SendResParam.NgType = (_AlgoResultParam.IsGood == true) ? eNgType.GOOD : eNgType.LEAD_BENT;
+
+                    _SendResParam.IsGood &= _AlgoResultParam.IsLeadCountGood;
+                    if (false == _AlgoResultParam.IsLeadCountGood)
+                        _SendResParam.NgType = eNgType.LEAD_CNT;
                 }
 
                 else if (AlgoResultParamList[iLoopCount].ResultAlgoType == eAlgoType.C_LINE_FIND)

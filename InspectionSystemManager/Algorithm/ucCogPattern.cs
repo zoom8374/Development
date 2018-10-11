@@ -22,6 +22,8 @@ namespace InspectionSystemManager
         private int CurrentPattern = 0;
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
+        private double BenchMarkOffsetX = 0;
+        private double BenchMarkOffsetY = 0;
 
         public delegate void DrawReferRegionHandler(CogRectangle _Region, double _OriginX, double _OriginY, CogColorConstants _Color);
         public event DrawReferRegionHandler DrawReferRegionEvent;
@@ -136,7 +138,7 @@ namespace InspectionSystemManager
         }
         #endregion Control Event
 
-        public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
+        public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
         {
             if (null == _Algorithm) return;
 
@@ -150,6 +152,8 @@ namespace InspectionSystemManager
 
             ResolutionX = _ResolutionX;
             ResolutionY = _ResolutionY;
+            BenchMarkOffsetX = _BenchMarkOffsetX;
+            BenchMarkOffsetY = _BenchMarkOffsetY;
 
             numericUpDownFindScore.Value = Convert.ToDecimal(CogPatternAlgoRcp.MatchingScore);
             numericUpDownFindCount.Value = Convert.ToDecimal(CogPatternAlgoRcp.MatchingCount);

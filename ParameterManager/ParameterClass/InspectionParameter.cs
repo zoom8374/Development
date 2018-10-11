@@ -215,6 +215,7 @@ namespace ParameterManager
         public double CaliperSearchLength;
         public double CaliperProjectionLength;
         public int CaliperSearchDirection;
+        public int CaliperIgnoreNumber;
 
         public double ArcCenterX;
         public double ArcCenterY;
@@ -228,10 +229,11 @@ namespace ParameterManager
 
         public CogNeedleFindAlgo()
         {
-            CaliperNumber = 6;
+            CaliperNumber = 15;
             CaliperSearchLength = 30;
             CaliperProjectionLength = 10;
             CaliperSearchDirection = 1;
+            CaliperIgnoreNumber = 10;
 
             ArcCenterX = 150;
             ArcCenterY = 50;
@@ -315,6 +317,9 @@ namespace ParameterManager
         public bool AlgoEnable;
         public Object Algorithm;
 
+        public double BenchMarkOffsetX = 0;
+        public double BenchMarkOffsetY = 0;
+
         public InspectionAlgorithmParameter()
         {
 
@@ -358,6 +363,8 @@ namespace ParameterManager
         public List<InspectionAreaParameter> InspAreaParam;
         public double ResolutionX = 0.005;
         public double ResolutionY = 0.005;
+        public double LastResultDisplayPosX = 50;
+        public double LastResultDisplayPosY = 50;
 
         public InspectionParameter()
         {

@@ -209,7 +209,7 @@ namespace InspectionSystemManager
                 case eIWCMD.TEACHING:       Teaching(_Value);                break;
                 case eIWCMD.TEACH_OK:       TeachingComplete(_Value);        break;
                 case eIWCMD.TEACH_SAVE:     TeachingSave(_Value);            break;
-                case eIWCMD.LIGHT_CONTROL:  LightControl(_Value);            break;
+                case eIWCMD.LIGHT_CONTROL:  LightControl(_Value, _ID);       break;
                 case eIWCMD.SEND_DATA:      SendResultData(_Value);          break;
                 case eIWCMD.SET_RESULT:     SetResultData(_Value);           break;
                 case eIWCMD.INSP_COMPLETE:  InspectionComplete(_Value, _ID); break;
@@ -235,10 +235,10 @@ namespace InspectionSystemManager
             _InspSysManagerEvent?.Invoke(eISMCMD.TEACHING_SAVE, Convert.ToInt32(_Value));
         }
 
-        private void LightControl(object _Value)
+        private void LightControl(object _Value, int _ID)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
-            _InspSysManagerEvent?.Invoke(eISMCMD.LIGHT_CONTROL, Convert.ToBoolean(_Value));
+            _InspSysManagerEvent?.Invoke(eISMCMD.LIGHT_CONTROL, Convert.ToBoolean(_Value), _ID);
         }
 
         private void SendResultData(object _Value)

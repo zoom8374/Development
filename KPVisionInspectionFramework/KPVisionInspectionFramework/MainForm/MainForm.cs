@@ -30,6 +30,7 @@ namespace KPVisionInspectionFramework
         private RecipeWindow                RecipeWnd;
         private MainProcessBase             MainProcess;
         private CHistoryManager             HistoryManager;
+        private FolderPathWindow            FolderPathWnd;
 
         private int ISMModuleCount = 1;
 
@@ -114,6 +115,8 @@ namespace KPVisionInspectionFramework
             }
 
             HistoryManager = new CHistoryManager(((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
+            FolderPathWnd = new FolderPathWindow();
+            FolderPathWnd.SetDataPathEvent += new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
 
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
@@ -330,7 +333,12 @@ namespace KPVisionInspectionFramework
 
         private void rbFolder_Click(object sender, EventArgs e)
         {
+            string[] DataPath = new string[2];
+            DataPath[0] = ParamManager.SystemParam.InDataFolderPath;
+            DataPath[1] = ParamManager.SystemParam.OutDataFolderPath;
 
+            FolderPathWnd.SetCurrentDataPath(DataPath);
+            FolderPathWnd.ShowDialog();
         }
 
         private void rbLabelCode_DoubleClick(object sender, EventArgs e)
@@ -379,7 +387,7 @@ namespace KPVisionInspectionFramework
                 case eISMCMD.SEND_DATA:         SendResultData(_Value);                         break;
                 case eISMCMD.SET_RESULT:        SetResultData(_Value);                          break;
                 case eISMCMD.INSP_COMPLETE:     InspectionComplete(_Value, _ID);                break;
-                case eISMCMD.LIGHT_CONTROL:     LightControl(_Value);                           break;
+                case eISMCMD.LIGHT_CONTROL:     LightControl(_Value, _ID);                      break;
             }
         }
 
@@ -454,6 +462,15 @@ namespace KPVisionInspectionFramework
         {
             rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
         }
+
+        private bool LOTChange(string _LOTName)
+        {
+            bool _Result = false;
+
+
+
+            return _Result;
+        }
         #endregion Sub Window Events
 
         #region Main Process
@@ -496,11 +513,15 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = true;
 
-            string _ReceiveData = _Value as string;
+            string _LotNumber = _Value as string;
+
+            _Result = LOTChange(_LotNumber);
+
+            if (!_Result) return false;
 
             if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType)
             {
-                if(_ReceiveData == "LotEnd") MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE, "END");
+                if(_LotNumber == "LotEnd") MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE, "END");
                 else
                     MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE);
             }
@@ -540,10 +561,10 @@ namespace KPVisionInspectionFramework
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : SetResultData"));
         }
 
-        private void LightControl(object _LightOnOff)
+        private void LightControl(object _LightOnOff, int _ID)
         {
-            if ((bool)_LightOnOff == true) LightControlManager.LightControl(0, true);
-            else                              LightControlManager.LightControl(0, false);
+            if ((bool)_LightOnOff == true)  LightControlManager.LightControl(_ID, true);
+            else                            LightControlManager.LightControl(_ID, false);
         }
 
         private void InspectionComplete(object _Value, int _ID)
@@ -553,6 +574,12 @@ namespace KPVisionInspectionFramework
                 bool _Flag = Convert.ToBoolean(_Value);
                 MainProcess.InspectionComplete(_ID, _Flag);
             }
+        }
+
+        private void SetDataFolderPath(string[] _DataPath)
+        {
+            ParamManager.SystemParam.InDataFolderPath = _DataPath[0];
+            ParamManager.SystemParam.OutDataFolderPath = _DataPath[1];
         }
         #endregion Main Process
     }

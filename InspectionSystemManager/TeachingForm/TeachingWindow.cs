@@ -554,6 +554,9 @@ namespace InspectionSystemManager
             //AlgorithmAreaWidth = _AlgoRegion.Width;
             //AlgorithmAreaHeight = _AlgoRegion.Height;
 
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].BenchMarkOffsetX = AreaOffsetX + AlgoOffsetX;
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].BenchMarkOffsetY = AreaOffsetY + AlgoOffsetY;
+
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX = _AlgoRegion.CenterX + AreaOffsetX;
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterY = _AlgoRegion.CenterY + AreaOffsetY;
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionWidth = _AlgoRegion.Width;
@@ -897,15 +900,19 @@ namespace InspectionSystemManager
             InspAlgoSelected = _ID;
 
             eAlgoType _AlgoType = (eAlgoType)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].AlgoType;
+            object _Algorithm = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm;
+            double _BenchMarkOffsetX = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].BenchMarkOffsetX;
+            double _BenchMarkOffsetY = InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].BenchMarkOffsetY;
+
             switch (_AlgoType)
             {
-                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
-                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY);  break;
+                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
+                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
                 case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
-                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);   ucCogLeadInspWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);     ucCogIDInspWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm); break;
-                case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);   ucCogLineFindWnd.SetAlgoRecipe(InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[_ID].Algorithm, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);   ucCogLeadInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);     ucCogIDInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY); break;
+                case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);   ucCogLineFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

@@ -73,6 +73,19 @@ namespace InspectionSystemManager
                     _CogNeedleFindResult.Radius = FindCircleResults.GetCircle().Radius;
                     _CogNeedleFindResult.OriginX = FindCircleResults.GetCircle().CenterX;
                     _CogNeedleFindResult.OriginY = FindCircleResults.GetCircle().CenterY;
+
+                    _CogNeedleFindResult.PointPosXInfo = new double[FindCircleResults.Count];
+                    _CogNeedleFindResult.PointPosYInfo = new double[FindCircleResults.Count];
+                    _CogNeedleFindResult.PointStatusInfo = new bool[FindCircleResults.Count];
+                    for (int iLoopCount = 0; iLoopCount < FindCircleResults.Count; ++iLoopCount)
+                    {
+                        if (true == FindCircleResults[iLoopCount].Found)
+                        {
+                            _CogNeedleFindResult.PointPosXInfo[iLoopCount] = FindCircleResults[iLoopCount].X;
+                            _CogNeedleFindResult.PointPosYInfo[iLoopCount] = FindCircleResults[iLoopCount].Y;
+                        }
+                        _CogNeedleFindResult.PointStatusInfo[iLoopCount] = FindCircleResults[iLoopCount].Used;
+                    }
                 }
 
                 else
@@ -112,7 +125,7 @@ namespace InspectionSystemManager
         private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _eSearchDir, int _eEdgePolarity = (int)CogCaliperPolarityConstants.DarkToLight)
         {
             FindCircleProc.RunParams.NumCalipers = _CaliperNumber;
-            FindCircleProc.RunParams.NumToIgnore = 3;
+            FindCircleProc.RunParams.NumToIgnore = 5;
             FindCircleProc.RunParams.CaliperSearchLength = _SearchLength;
             FindCircleProc.RunParams.CaliperProjectionLength = _ProjectionLength;
             FindCircleProc.RunParams.CaliperSearchDirection = (CogFindCircleSearchDirectionConstants)_eSearchDir;

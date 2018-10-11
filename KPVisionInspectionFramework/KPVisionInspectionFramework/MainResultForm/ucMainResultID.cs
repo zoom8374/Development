@@ -37,6 +37,7 @@ namespace KPVisionInspectionFramework
         List<string> OutDataList = new List<string>();
         int InDataLimitCount = 0;
         string NowInspectionID;
+        string InspectionTime;
         
 
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
@@ -53,6 +54,28 @@ namespace KPVisionInspectionFramework
         }
 
         public void InitializeControl()
+        {
+            ClearResult();
+        }
+
+        public void DeInitialize()
+        {
+
+        }
+        #endregion Initialize & DeInitialize
+
+        private void panelMain_Paint(object sender, PaintEventArgs e)
+        {
+            //ControlPaint.DrawBorder(e.Graphics, this.panelMain.ClientRectangle, Color.Green, ButtonBorderStyle.Solid);
+        }
+
+        public void SetLastRecipeName(string _LastRecipeName)
+        {
+            LastRecipeName = _LastRecipeName;
+        }
+
+        //LDH, 2018.10.01, Result clear
+        public void ClearResult(string LotNum = "")
         {
             TotalCount = 0;
             GoodCount = 0;
@@ -82,22 +105,6 @@ namespace KPVisionInspectionFramework
             {
                 HistoryParam[iLoopCount] = "-";
             }
-        }
-
-        public void DeInitialize()
-        {
-
-        }
-        #endregion Initialize & DeInitialize
-
-        private void panelMain_Paint(object sender, PaintEventArgs e)
-        {
-            //ControlPaint.DrawBorder(e.Graphics, this.panelMain.ClientRectangle, Color.Green, ButtonBorderStyle.Solid);
-        }
-
-        public void SetLastRecipeName(string _LastRecipeName)
-        {
-            LastRecipeName = _LastRecipeName;
         }
 
         public void SetResultData(SendResultParameter _ResultParam)
@@ -190,17 +197,53 @@ namespace KPVisionInspectionFramework
         }
 
         //LDH, 2018.09.27, InData 읽어오기
-        private void ReadInData(string InDataFilePath)
+        private void ReadInData(string InDataLotNum)
         {
             FileManager objFileManager = new FileManager();
             List<string> FileReadTemp;
 
-            FileReadTemp = objFileManager.txtFileRead(InDataFilePath);
+            string FolderPath = "";
+
+            if (InDataLotNum == "") FolderPath = @"F:\MITfileTest.txt";
+            else
+            {
+                FolderPath = "F:\\" + InDataLotNum;
+
+                try
+                {
+                    if (Directory.Exists(FolderPath))
+                    {
+                        DirectoryInfo DInfo = new DirectoryInfo(FolderPath);
+                        List<string> FileList = new List<string>();
+
+                        foreach (var item in DInfo.GetFiles())
+                        {
+                            FileList.Add(item.Name);
+                        }
+
+                        FileList.Sort();
+                        FolderPath = FolderPath + "\\" + FileList[FileList.Count - 1];
+                    }
+                    else
+                    {
+                        MessageBox.Show("LOT InData 폴더가 없습니다."); return;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("LOT InData 파일이 없습니다."); return;
+                }
+            }
+
+            FileReadTemp = objFileManager.txtFileRead(FolderPath);
 
             for(int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
             {
-                InDataList.Add(FileReadTemp[iLoopCount]);
-                OutDataList.Add(FileReadTemp[iLoopCount]);
+                if (FileReadTemp[iLoopCount] != "")
+                {
+                    InDataList.Add(FileReadTemp[iLoopCount]);
+                    OutDataList.Add(FileReadTemp[iLoopCount]);
+                }
             }
         }
 
@@ -224,51 +267,64 @@ namespace KPVisionInspectionFramework
 
             try
             {
-                IDIndex = InDataList.FindIndex(FindText);
+                IDIndex = OutDataList.FindIndex(FindText);
 
-                TempInData = InDataList[IDIndex];
-                ArrInData = InDataList[IDIndex].Split(',');
+                TempInData = OutDataList[IDIndex];
+                ArrInData = OutDataList[IDIndex].Split(',');
 
                 if (ResultID.Contains(ArrInData[1]))
                 {
-                    if (!(InDataLimitCount >= Convert.ToInt32(ArrInData[2]))) ErrorCode = 1;
+                    if (InDataLimitCount < Convert.ToInt32(ArrInData[2])) ErrorCode = 1;
                 }
                 else ErrorCode = 2;
             }
             catch
             {
-                TempInData = InDataList[1];
-                ArrInData = TempInData.Split(',');
+                TempInData = OutDataList[0];
 
-                if (ResultID.Contains(ArrInData[1])) ErrorCode = 3;
+                string[] LOTInfo = TempInData.Split(',');
+
+                if (ResultID.Contains(LOTInfo[0])) ErrorCode = 3;
                 else ErrorCode = 2;
+
+                string[] AddListData = new string[12];
+                AddListData[0] = ResultID;
+                AddListData[1] = ResultID.Substring(0, ResultID.IndexOf(' '));
+                AddListData[2] = "1";
+                AddListData[11] = "EOS";
+                IDIndex = OutDataList.Count;
+
+                OutDataList.Add("");
+                ArrInData = AddListData;
             }
 
             if (ErrorCode != 0) Result = "NG";
+            
+            DateTime dateTime = DateTime.Now;
+            InspectionTime = String.Format("{0:D2}{1:D2}{2:D2}{3:D3}", dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
 
-            try
-            {
-                if (ErrorCode != 3)
-                {
-                    ArrInData[9] = ErrorCode.ToString();
-                    OutDataList[IDIndex] = string.Join(",", ArrInData);
-                }
+            string OutDataTime = String.Format("{0:D4}{1:D2}{2:D2}{3}", dateTime.Year, dateTime.Month, dateTime.Day, InspectionTime.Substring(0,6));
 
-				//WriteOutData(@"F:\MITfileTest_Out.txt");
-                WriteOutData(@"D:\MITfileTest_Out.txt");
-            }
+            ArrInData[7] = OutDataTime;
+            ArrInData[8] = TotalCount.ToString();
+            ArrInData[9] = ErrorCode.ToString();
+            ArrInData[10] = Result;
 
-            catch
-            {
-                Result = "NG";
-            }
+            OutDataList[IDIndex] = string.Join(",", ArrInData);
+
+            WriteOutData(@"F:\MITfileTest_Out.txt");
 
             return Result;
         }
 
         private bool FindText(string Text)
         {
-            if (Text.Contains(NowInspectionID)) return true;
+            if (Text.Contains(NowInspectionID))
+            {
+                string[] TextTemp = Text.Split(',');
+
+                if(TextTemp[0] == NowInspectionID) return true;
+            }
             return false;
         }
 
@@ -284,7 +340,8 @@ namespace KPVisionInspectionFramework
             if (false == Directory.Exists(ImageSaveFolder)) Directory.CreateDirectory(ImageSaveFolder);
 
             string ImageSaveFile;
-            ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.bmp", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+            //ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.bmp", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+            ImageSaveFile = String.Format("{0}\\{1}.bmp", ImageSaveFolder, InspectionTime);
 
             //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
             HistoryParam[0] = LastRecipeName;

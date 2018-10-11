@@ -182,6 +182,13 @@ namespace KPVisionInspectionFramework
         }
         #endregion Control Default Event
 
+        //LDH, 2018.10.01, Result Window Clear
+        public void ClearResultData()
+        {
+            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.ClearResult();
+            else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.ClearResult();
+        }
+
         public void SetResultData(SendResultParameter _ResultParam)
         {
             //if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN)   SetNeedleAlignResultData(_ResultParam);

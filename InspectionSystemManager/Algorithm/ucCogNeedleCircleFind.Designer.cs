@@ -251,7 +251,7 @@
             // 
             this.numUpDownCaliperNumber.Location = new System.Drawing.Point(140, 24);
             this.numUpDownCaliperNumber.Minimum = new decimal(new int[] {
-            5,
+            15,
             0,
             0,
             0});
@@ -260,7 +260,7 @@
             this.numUpDownCaliperNumber.TabIndex = 61;
             this.numUpDownCaliperNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numUpDownCaliperNumber.Value = new decimal(new int[] {
-            6,
+            15,
             0,
             0,
             0});

@@ -14,6 +14,9 @@ namespace InspectionSystemManager
 {
     public partial class ucCogID : UserControl
     {
+        private double BenchMarkOffsetX = 0;
+        private double BenchMarkOffsetY = 0;
+
         private CogBarCodeIDAlgo CogBarCodeIDAlgoRcp = new CogBarCodeIDAlgo();
 
         public delegate void ApplyBarCodeIDInspValueHandler(CogBarCodeIDAlgo _CogBarCodeIDAlgo, ref CogBarCodeIDResult _CogBarCodeIDResult);
@@ -34,8 +37,11 @@ namespace InspectionSystemManager
 
         }
 
-        public void SetAlgoRecipe(Object _Algorithm)
+        public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY)
         {
+            BenchMarkOffsetX = _BenchMarkOffsetX;
+            BenchMarkOffsetY = _BenchMarkOffsetY;
+
             CogBarCodeIDAlgoRcp = _Algorithm as CogBarCodeIDAlgo;
             comboBoxSymbology.Text = "";
             comboBoxSymbology.SelectedText = CogBarCodeIDAlgoRcp.Symbology;

@@ -19,6 +19,8 @@ namespace InspectionSystemManager
 
         private double ResolutionX = 0.005;
         private double ResolutionY = 0.005;
+        private double BenchMarkOffsetX = 0;
+        private double BenchMarkOffsetY = 0;
 
         private bool AlgoInitFlag = false;
 
@@ -73,7 +75,7 @@ namespace InspectionSystemManager
         }
         #endregion Control Event
 
-        public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
+        public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
         {
             if (_Algorithm != null)
             {
@@ -83,6 +85,8 @@ namespace InspectionSystemManager
 
                 ResolutionX = _ResolutionX;
                 ResolutionY = _ResolutionY;
+                BenchMarkOffsetX = _BenchMarkOffsetX;
+                BenchMarkOffsetY = _BenchMarkOffsetY;
 
                 numUpDownCaliperNumber.Value = Convert.ToDecimal(CogLineFindAlgoRcp.CaliperNumber);
                 numUpDownSearchLength.Value = Convert.ToDecimal(CogLineFindAlgoRcp.CaliperSearchLength);

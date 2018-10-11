@@ -21,6 +21,10 @@ namespace ParameterManager
         public int ResultWindowWidth;
         public int ResultWindowHeight;
 
+        //LDH, 2018.10.05, ID용 FolderPath 추가
+        public string InDataFolderPath;
+        public string OutDataFolderPath;
+
         public SystemParameter()
         {
             MachineNumber = 1;

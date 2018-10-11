@@ -25,6 +25,9 @@ namespace InspectionSystemManager
         private double LeadPitchAverage = 0;
         private double LeadAngleAverage = 0;
 
+        private double BenchMarkOffsetX = 0;
+        private double BenchMarkOffsetY = 0;
+
         private bool AlgoInitFlag = false;
 
         public delegate void ApplyLeadInspValueHandler(CogLeadAlgo _CogLeadAlgo, ref CogLeadResult _CogLeadResult, bool _IsDisplay = true);
@@ -94,6 +97,7 @@ namespace InspectionSystemManager
         private void btnGetLeadInfo_Click(object sender, EventArgs e)
         {
             ApplySettingValue(false);
+            textBoxLeadCount.Text = LeadCount.ToString();
             textBoxLeadPitch.Text = (LeadPitchAverage * ResolutionX).ToString("F3");
 
             if (LeadAngleAverage > 0)   textBoxLeadBentAngle.Text = (90 - (LeadAngleAverage * 180 / Math.PI)).ToString("F3");
@@ -102,7 +106,7 @@ namespace InspectionSystemManager
         }
         #endregion Control Event
 
-        public void SetAlgoRecipe(Object _Algorithm, double _ResolutionX, double _ResolutionY)
+        public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
         {
             if (_Algorithm != null)
             {
@@ -112,9 +116,12 @@ namespace InspectionSystemManager
 
                 ResolutionX = _ResolutionX;
                 ResolutionY = _ResolutionY;
+                BenchMarkOffsetX = _BenchMarkOffsetX;
+                BenchMarkOffsetY = _BenchMarkOffsetY;
 
                 LeadCount = CogLeadAlgoRcp.LeadCount;
 
+                textBoxLeadCount.Text = LeadCount.ToString();
                 graLabelForeground.Text = CogLeadAlgoRcp.ForeGround.ToString();
                 graLabelThresholdValue.Text = CogLeadAlgoRcp.ThresholdMin.ToString();
                 hScrollBarThreshold.Value = CogLeadAlgoRcp.ThresholdMin;
@@ -163,6 +170,8 @@ namespace InspectionSystemManager
             CogLeadAlgoRcp.LeadBent = Convert.ToDouble(textBoxLeadBentAngle.Text);
             CogLeadAlgoRcp.LeadBentMin = Convert.ToDouble(textBoxLeadBentAngleMin.Text);
             CogLeadAlgoRcp.LeadBentMax= Convert.ToDouble(textBoxLeadBentAngleMax.Text);
+
+            CogLeadAlgoRcp.LeadCount = Convert.ToInt32(textBoxLeadCount.Text);
 
             CogLeadAlgoRcp.IsLeadPitchInspection = ckLeadPitch.Checked;
             CogLeadAlgoRcp.LeadPitch = Convert.ToDouble(textBoxLeadPitch.Text);

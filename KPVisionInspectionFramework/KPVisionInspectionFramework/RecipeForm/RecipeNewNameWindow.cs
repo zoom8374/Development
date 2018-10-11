@@ -33,17 +33,19 @@ namespace KPVisionInspectionFramework
 
         private void btnRecipeConfirm_Click(object sender, EventArgs e)
         {
-            if (textBoxNewRecipe.Text == null || textBoxNewRecipe.Text == "") { MessageBox.Show("Enter a name for the new recipe."); return; }
+            if (textBoxNewRecipe.Text == null || textBoxNewRecipe.Text == "") { MessageBox.Show("Enter a name for the new recipe."); return; } 
+
+            string RecipeName = textBoxNewRecipe.Text + "_" + textBoxNewRecipeSub.Text;
 
             for (int iLoopCount = 0; iLoopCount < RecipeList.Count(); iLoopCount++)
             {
-                if (textBoxNewRecipe.Text == RecipeList[iLoopCount]) { MessageBox.Show("The recipe name is already in use."); return; }
+                if (RecipeName == RecipeList[iLoopCount]) { MessageBox.Show("The recipe name is already in use."); return; }
             }
 
             var _RecipeCopyEvent = RecipeCopyEvent;
-            _RecipeCopyEvent?.Invoke(textBoxNewRecipe.Text);
+            _RecipeCopyEvent?.Invoke(RecipeName);
 
-            NewRecipeName = textBoxNewRecipe.Text;
+            NewRecipeName = RecipeName;
             this.DialogResult = DialogResult.OK;
             this.Hide();
         }
@@ -69,6 +71,14 @@ namespace KPVisionInspectionFramework
         {
             var s = sender as Label;
             s.Tag = new Point(e.X, e.Y);
+        }
+
+        private void textBoxNewRecipe_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar)) && e.KeyChar != Convert.ToChar(Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

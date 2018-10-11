@@ -90,6 +90,12 @@
     <Compile Include="MainForm\CodeSettingWindow.Designer.cs">
       <DependentUpon>CodeSettingWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm\FolderPathWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm\FolderPathWindow.designer.cs">
+      <DependentUpon>FolderPathWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </Compile>
     <EmbeddedResource Include="MainForm\CodeSettingWindow.resx">
       <DependentUpon>CodeSettingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm\FolderPathWindow.resx">
+      <DependentUpon>FolderPathWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
