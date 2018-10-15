@@ -160,6 +160,7 @@ namespace InspectionSystemManager
             _CogLineFindAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
             _CogLineFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             _CogLineFindAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
+            _CogLineFindAlgoRcp.IgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Text);
             _CogLineFindAlgoRcp.CaliperLineStartX = Convert.ToDouble(numUpDownStartX.Value);
             _CogLineFindAlgoRcp.CaliperLineStartY = Convert.ToDouble(numUpDownStartY.Value);
             _CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToDouble(numUpDownEndX.Value);

@@ -138,6 +138,8 @@ namespace ParameterManager
         public double OriginYReal;
         public double RadiusReal;
 
+        public int PointFoundCount;
+
         public double[] PointPosXInfo;
         public double[] PointPosYInfo;
         public bool[] PointStatusInfo;

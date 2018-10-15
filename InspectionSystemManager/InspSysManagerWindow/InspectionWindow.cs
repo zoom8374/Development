@@ -434,6 +434,8 @@ namespace InspectionSystemManager
         private void btnLive_Click(object sender, EventArgs e)
         {
             if (IsSimulationMode) return;
+
+            IsCrossLine = false;
             kpCogDisplayMain.ClearDisplay();
             IsCamLiveFlag = !IsCamLiveFlag;
             CameraManager.CamLive(IsCamLiveFlag);
@@ -492,7 +494,8 @@ namespace InspectionSystemManager
             IsCrossLine = !IsCrossLine;
             //kpCogDisplayMain.ClearDisplay();
 
-            if (IsCrossLine) kpCogDisplayMain.DrawCross(ImageSizeWidth / 2, ImageSizeHeight / 2, ImageSizeWidth, ImageSizeHeight, "Cross", CogColorConstants.Green);
+            //if (IsCrossLine) kpCogDisplayMain.DrawCross(ImageSizeWidth / 2, ImageSizeHeight / 2, ImageSizeWidth, ImageSizeHeight, "Cross", CogColorConstants.Green);
+            if (IsCrossLine) kpCogDisplayMain.DrwaInterActiveCross(ImageSizeWidth / 2, ImageSizeHeight / 2, 1, 8000, "Cross", CogColorConstants.Green);
         }
 
         private void panelMenuHide_Click(object sender, EventArgs e)
@@ -534,8 +537,11 @@ namespace InspectionSystemManager
                 ImageSizeWidth = _DisplayImage.Width;
                 ImageSizeHeight = _DisplayImage.Height;
             }
+
+            IsCrossLine = false;
             kpCogDisplayMain.ClearDisplay();
             kpCogDisplayMain.SetDisplayImage(_DisplayImage);
+            
             GC.Collect();
         }
 
@@ -543,6 +549,9 @@ namespace InspectionSystemManager
         private void SetDisplayGrabImage(byte[] Image)
         {
             kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
+            kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
+            kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
+            kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();
@@ -704,6 +713,7 @@ namespace InspectionSystemManager
             AlgoResultParamList.Clear();
             AnyReferenceX = 0;
             AnyReferenceY = 0;
+            IsCrossLine = false;
             DisplayClear(true, true);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Resut Clear", ID + 1), CLogManager.LOG_LEVEL.LOW);
             return _Result;
@@ -921,6 +931,9 @@ namespace InspectionSystemManager
             if (_CogNeedleFindResult.RadiusReal + 0.1 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.1 < _CogNeedleFindAlgo.OriginRadius)
                 _CogNeedleFindResult.IsGood = true;
             else
+                _CogNeedleFindResult.IsGood = false;
+
+            if (_CogNeedleFindAlgo.CaliperNumber - 2 >= _CogNeedleFindResult.PointFoundCount)
                 _CogNeedleFindResult.IsGood = false;
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
@@ -1154,6 +1167,8 @@ namespace InspectionSystemManager
                     {
                         for (int iLoopCount = 0; iLoopCount < _CogNeedleFindResult.PointStatusInfo.Length; ++iLoopCount)
                         {
+                            if (_CogNeedleFindResult.PointPosXInfo[iLoopCount] == 0 && _CogNeedleFindResult.PointPosYInfo[iLoopCount] == 0) continue;
+
                             CogPointMarker _Point = new CogPointMarker();
                             _Point.SetCenterRotationSize(_CogNeedleFindResult.PointPosXInfo[iLoopCount], _CogNeedleFindResult.PointPosYInfo[iLoopCount], 0, 1);
 

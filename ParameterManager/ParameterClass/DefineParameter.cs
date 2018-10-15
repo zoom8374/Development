@@ -60,6 +60,8 @@ namespace ParameterManager
 
     public enum eSearchDirection    { IN_WARD = 0, OUT_WARD = 1 };
 
+    public enum ePolarity           { DARK_TO_LIGHT = 1, LIGHT_TO_DARK = 2 }
+
     public enum eInspMode           { TRI_INSP = 0, ONE_INSP, SINGLE_INSP, SIMUL_INSP };
 
     public enum eReferAction        { ADD = 0, DEL, MODIFY };

@@ -735,6 +735,8 @@ namespace ParameterManager
                     case "CaliperSearchLength": _CogNeedleFind.CaliperSearchLength = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "CaliperProjectionLength": _CogNeedleFind.CaliperProjectionLength = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "CaliperSearchDirection": _CogNeedleFind.CaliperSearchDirection = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperPolarity": _CogNeedleFind.CaliperPolarity = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "CaliperIgnoreNumber": _CogNeedleFind.CaliperIgnoreNumber = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "ArcCenterX": _CogNeedleFind.ArcCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ArcCenterY": _CogNeedleFind.ArcCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "ArcRadius": _CogNeedleFind.ArcRadius = Convert.ToDouble(_NodeChild.InnerText); break;
@@ -984,6 +986,8 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("CaliperSearchLength", _CogNeedleFindAlgo.CaliperSearchLength.ToString());
             _XmlWriter.WriteElementString("CaliperProjectionLength", _CogNeedleFindAlgo.CaliperProjectionLength.ToString());
             _XmlWriter.WriteElementString("CaliperSearchDirection", _CogNeedleFindAlgo.CaliperSearchDirection.ToString());
+            _XmlWriter.WriteElementString("CaliperPolarity", _CogNeedleFindAlgo.CaliperPolarity.ToString());
+            _XmlWriter.WriteElementString("CaliperIgnoreNumber", _CogNeedleFindAlgo.CaliperIgnoreNumber.ToString());
             _XmlWriter.WriteElementString("ArcCenterX", _CogNeedleFindAlgo.ArcCenterX.ToString());
             _XmlWriter.WriteElementString("ArcCenterY", _CogNeedleFindAlgo.ArcCenterY.ToString());
             _XmlWriter.WriteElementString("ArcRadius", _CogNeedleFindAlgo.ArcRadius.ToString());
@@ -1155,6 +1159,8 @@ namespace ParameterManager
                         _Algorithm.CaliperSearchLength      = _SrcAlgorithm.CaliperSearchLength;
                         _Algorithm.CaliperProjectionLength  = _SrcAlgorithm.CaliperProjectionLength;
                         _Algorithm.CaliperSearchDirection   = _SrcAlgorithm.CaliperSearchDirection;
+                        _Algorithm.CaliperPolarity      = _SrcAlgorithm.CaliperPolarity;
+                        _Algorithm.CaliperIgnoreNumber  = _SrcAlgorithm.CaliperIgnoreNumber;
                         _Algorithm.ArcCenterX       = _SrcAlgorithm.ArcCenterX;
                         _Algorithm.ArcCenterY       = _SrcAlgorithm.ArcCenterY;
                         _Algorithm.ArcRadius        = _SrcAlgorithm.ArcRadius;

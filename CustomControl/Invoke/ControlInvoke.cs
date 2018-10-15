@@ -22,6 +22,26 @@ namespace CustomControl
             }
         }
 
+        public static void GradientLabelText(GradientLabel _Control, Color _FontColor, Color _BackColor)
+        {
+            if (_Control.InvokeRequired)
+            {
+                _Control.Invoke(new MethodInvoker(delegate () 
+                {
+                    _Control.ForeColor = _FontColor;
+                    _Control.ColorTop = _BackColor;
+                    _Control.ColorBottom = _BackColor;
+
+                }));
+            }
+            else
+            {
+                _Control.ForeColor = _FontColor;
+                _Control.ColorTop = _BackColor;
+                _Control.ColorBottom = _BackColor;
+            }
+        }
+
         public static void GradientLabelText(GradientLabel _Control, string _Text, Color _FontColor)
         {
             if (_Control.InvokeRequired)

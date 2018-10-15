@@ -66,12 +66,14 @@ namespace InspectionSystemManager
                 int _CaliperNumber = 0;
                 double _CaliperSearchLength = 0, _CaliperProjectionLength = 0;
                 eSearchDirection _CaliperSearchDir = eSearchDirection.IN_WARD;
+                ePolarity _CaliperPolarity = ePolarity.DARK_TO_LIGHT;
                 _CaliperNumber = _CircleCaliperTool.RunParams.NumCalipers;
                 _CaliperSearchLength = _CircleCaliperTool.RunParams.CaliperSearchLength;
                 _CaliperProjectionLength = _CircleCaliperTool.RunParams.CaliperProjectionLength;
                 _CaliperSearchDir = (eSearchDirection)_CircleCaliperTool.RunParams.CaliperSearchDirection;
+                _CaliperPolarity = (ePolarity)_CircleCaliperTool.RunParams.CaliperRunParams.Edge0Polarity;
 
-                ucCogNeedleFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir);
+                ucCogNeedleFindWnd.SetCaliper(_CaliperNumber, _CaliperSearchLength, _CaliperProjectionLength, _CaliperSearchDir, _CaliperPolarity);
                 ucCogNeedleFindWnd.SetCircularArc(_CenterX, _CenterY, _Radius, _AngleStart, _AngleSpan);
             }
 
@@ -287,7 +289,9 @@ namespace InspectionSystemManager
             _CogFindCircle.NumCalipers = _CogNeedleFindAlgo.CaliperNumber;
             _CogFindCircle.CaliperSearchLength = _CogNeedleFindAlgo.CaliperSearchLength;
             _CogFindCircle.CaliperProjectionLength = _CogNeedleFindAlgo.CaliperProjectionLength;
+            _CogFindCircle.NumToIgnore = _CogNeedleFindAlgo.CaliperIgnoreNumber;
             _CogFindCircle.CaliperSearchDirection = (CogFindCircleSearchDirectionConstants)_CogNeedleFindAlgo.CaliperSearchDirection;
+            _CogFindCircle.CaliperRunParams.Edge0Polarity = (CogCaliperPolarityConstants)_CogNeedleFindAlgo.CaliperPolarity;
 
             _CogFindCircle.ExpectedCircularArc.CenterX = _CogNeedleFindAlgo.ArcCenterX;
             _CogFindCircle.ExpectedCircularArc.CenterY = _CogNeedleFindAlgo.ArcCenterY;
@@ -425,8 +429,11 @@ namespace InspectionSystemManager
             bool _Result = InspLineFindProcess.Run(InspectionImage, ref _DestImage, AlgoRegionRectangle, _CogLineFindAlgo, ref _CogLineFindResult);
 
             CogLineSegment _CogLine = new CogLineSegment();
-            _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
-            kpTeachDisplay.DrawStaticLine(_CogLine, "LineFind", CogColorConstants.Green);
+            if (_CogLineFindResult.StartX != 0 && _CogLineFindResult.StartY != 0 && _CogLineFindResult.Length != 0)
+            {
+                _CogLine.SetStartLengthRotation(_CogLineFindResult.StartX, _CogLineFindResult.StartY, _CogLineFindResult.Length, _CogLineFindResult.Rotation);
+                kpTeachDisplay.DrawStaticLine(_CogLine, "LineFind", CogColorConstants.Green);
+            }
         }
 
         private void DrawLineFindCaliperFunction(CogLineFindAlgo _CogLineFindAlgo)

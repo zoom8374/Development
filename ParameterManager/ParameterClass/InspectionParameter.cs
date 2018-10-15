@@ -215,6 +215,7 @@ namespace ParameterManager
         public double CaliperSearchLength;
         public double CaliperProjectionLength;
         public int CaliperSearchDirection;
+        public int CaliperPolarity;
         public int CaliperIgnoreNumber;
 
         public double ArcCenterX;
@@ -233,6 +234,7 @@ namespace ParameterManager
             CaliperSearchLength = 30;
             CaliperProjectionLength = 10;
             CaliperSearchDirection = 1;
+            CaliperPolarity = 1;
             CaliperIgnoreNumber = 10;
 
             ArcCenterX = 150;

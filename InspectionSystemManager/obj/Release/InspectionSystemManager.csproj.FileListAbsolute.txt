@@ -98,6 +98,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bi
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageFile.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.ImageProcessing.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\Cognex.VisionPro.PMAlign.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CPressingButton.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\KPDisplay.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\LogMessageManager.dll
@@ -152,4 +153,3 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\ob
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Release\InspectionSystemManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Release\CPressingButton.dll

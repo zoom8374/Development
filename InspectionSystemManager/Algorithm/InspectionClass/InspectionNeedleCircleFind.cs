@@ -47,7 +47,8 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
 
-            SetCaliper(_CogNeedleFindAlgo.CaliperNumber, _CogNeedleFindAlgo.CaliperSearchLength, _CogNeedleFindAlgo.CaliperProjectionLength, _CogNeedleFindAlgo.CaliperSearchDirection);
+            SetCaliperDirection(_CogNeedleFindAlgo.CaliperSearchDirection, _CogNeedleFindAlgo.CaliperPolarity);
+            SetCaliper(_CogNeedleFindAlgo.CaliperNumber, _CogNeedleFindAlgo.CaliperSearchLength, _CogNeedleFindAlgo.CaliperProjectionLength, _CogNeedleFindAlgo.CaliperIgnoreNumber);
             SetCircularArc(_CogNeedleFindAlgo.ArcCenterX - _OffsetX, _CogNeedleFindAlgo.ArcCenterY - _OffsetY, _CogNeedleFindAlgo.ArcRadius, _CogNeedleFindAlgo.ArcAngleStart, _CogNeedleFindAlgo.ArcAngleSpan);
 
             if (true == Inspection(_SrcImage)) GetResult();
@@ -68,6 +69,8 @@ namespace InspectionSystemManager
             {
                 if (FindCircleResults.GetCircle() != null)
                 {
+                    _CogNeedleFindResult.PointFoundCount = FindCircleResults.NumPointsFound;
+
                     _CogNeedleFindResult.CenterX = FindCircleResults.GetCircle().CenterX;
                     _CogNeedleFindResult.CenterY = FindCircleResults.GetCircle().CenterY;
                     _CogNeedleFindResult.Radius = FindCircleResults.GetCircle().Radius;
@@ -122,12 +125,16 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _eSearchDir, int _eEdgePolarity = (int)CogCaliperPolarityConstants.DarkToLight)
+        private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _CaliperIgnoreNumber)
         {
             FindCircleProc.RunParams.NumCalipers = _CaliperNumber;
-            FindCircleProc.RunParams.NumToIgnore = 5;
+            FindCircleProc.RunParams.NumToIgnore = _CaliperIgnoreNumber;
             FindCircleProc.RunParams.CaliperSearchLength = _SearchLength;
             FindCircleProc.RunParams.CaliperProjectionLength = _ProjectionLength;
+        }
+
+        private void SetCaliperDirection(int _eSearchDir, int _eEdgePolarity = (int)CogCaliperPolarityConstants.DarkToLight)
+        {
             FindCircleProc.RunParams.CaliperSearchDirection = (CogFindCircleSearchDirectionConstants)_eSearchDir;
             FindCircleProc.RunParams.CaliperRunParams.Edge0Polarity = (CogCaliperPolarityConstants)_eEdgePolarity;
         }

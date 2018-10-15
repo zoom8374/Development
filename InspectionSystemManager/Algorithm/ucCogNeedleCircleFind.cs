@@ -74,6 +74,15 @@ namespace InspectionSystemManager
             DrawCircleFindCaliper();
         }
 
+        private void rbCaliperPolarityD_MouseUp(object sender, MouseEventArgs e)
+        {
+            RadioButton _RadioPolarity = (RadioButton)sender;
+            int _Polarity = Convert.ToInt32(_RadioPolarity.Tag);
+            SetPolarity(_Polarity);
+            graLabelPolarity.Text = _Polarity.ToString();
+            DrawCircleFindCaliper();
+        }
+
         private void numUpDownCaliperNumber_ValueChanged(object sender, EventArgs e)
         {
             DrawCircleFindCaliper();
@@ -130,6 +139,7 @@ namespace InspectionSystemManager
                 numUpDownCaliperNumber.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperNumber);
                 numUpDownSearchLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperSearchLength);
                 numUpDownProjectionLength.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperProjectionLength);
+                numUpDownIgnoreNumber.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.CaliperIgnoreNumber);
                 numUpDownArcCenterX.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterX - BenchMarkOffsetX);
                 numUpDownArcCenterY.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcCenterY - BenchMarkOffsetY);
                 numUpDownArcRadius.Value = Convert.ToDecimal(CogNeedleFindAlgoRcp.ArcRadius);
@@ -140,7 +150,9 @@ namespace InspectionSystemManager
                 textBoxRadius.Text = CogNeedleFindAlgoRcp.OriginRadius.ToString("F3");
 
                 graLabelSearchDirection.Text = CogNeedleFindAlgoRcp.CaliperSearchDirection.ToString();
+                graLabelPolarity.Text = CogNeedleFindAlgoRcp.CaliperPolarity.ToString();
                 SetSearchDirection(CogNeedleFindAlgoRcp.CaliperSearchDirection);
+                SetPolarity(CogNeedleFindAlgoRcp.CaliperPolarity);
 
                 AlgoInitFlag = true;
             }
@@ -157,6 +169,8 @@ namespace InspectionSystemManager
             CogNeedleFindAlgoRcp.CaliperSearchLength     = Convert.ToDouble(numUpDownSearchLength.Value);
             CogNeedleFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             CogNeedleFindAlgoRcp.CaliperSearchDirection  = Convert.ToInt32(graLabelSearchDirection.Text);
+            CogNeedleFindAlgoRcp.CaliperIgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Value);
+            CogNeedleFindAlgoRcp.CaliperPolarity = Convert.ToInt32(graLabelPolarity.Text);
             CogNeedleFindAlgoRcp.ArcCenterX     = Convert.ToDouble(numUpDownArcCenterX.Value) + BenchMarkOffsetX;
             CogNeedleFindAlgoRcp.ArcCenterY     = Convert.ToDouble(numUpDownArcCenterY.Value) + BenchMarkOffsetY;
             CogNeedleFindAlgoRcp.ArcRadius      = Convert.ToDouble(numUpDownArcRadius.Value);
@@ -171,12 +185,13 @@ namespace InspectionSystemManager
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching NeedleCircleFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
-        public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, eSearchDirection _eSearchDir)
+        public void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, eSearchDirection _eSearchDir, ePolarity _ePolarity)
         {
             numUpDownCaliperNumber.Value = Convert.ToDecimal(_CaliperNumber);
             numUpDownSearchLength.Value = Convert.ToDecimal(_SearchLength);
             numUpDownProjectionLength.Value = Convert.ToDecimal(_ProjectionLength);
             SetSearchDirection(Convert.ToInt32(_eSearchDir));
+            SetPolarity(Convert.ToInt32(_ePolarity));
         }
 
         public void SetCircularArc(double _CenterX, double _CenterY, double _Radius, double _AngleStart, double _AngleSpan)
@@ -199,6 +214,18 @@ namespace InspectionSystemManager
                 case eSearchDirection.OUT_WARD: rbSearchDirectionOut.Checked = true;    break;
             }
         }
+
+        private void SetPolarity(int _Polarity)
+        {
+            rbCaliperPolarityDarkToLight.Checked = false;
+            rbCaliperPolarityLightToDark.Checked = false;
+
+            switch ((ePolarity)_Polarity)
+            {
+                case ePolarity.DARK_TO_LIGHT: rbCaliperPolarityDarkToLight.Checked = true; break;
+                case ePolarity.LIGHT_TO_DARK: rbCaliperPolarityLightToDark.Checked = true; break;
+            }
+        }
         
         private void ApplySettingValue()
         {
@@ -208,6 +235,8 @@ namespace InspectionSystemManager
             _CogNeedleFindAlgoRcp.CaliperSearchLength     = Convert.ToDouble(numUpDownSearchLength.Value);
             _CogNeedleFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             _CogNeedleFindAlgoRcp.CaliperSearchDirection  = Convert.ToInt32(graLabelSearchDirection.Text);
+            _CogNeedleFindAlgoRcp.CaliperIgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Value);
+            _CogNeedleFindAlgoRcp.CaliperPolarity = Convert.ToInt32(graLabelPolarity.Text);
             _CogNeedleFindAlgoRcp.ArcCenterX     = Convert.ToDouble(numUpDownArcCenterX.Value);
             _CogNeedleFindAlgoRcp.ArcCenterY     = Convert.ToDouble(numUpDownArcCenterY.Value);
             _CogNeedleFindAlgoRcp.ArcRadius      = Convert.ToDouble(numUpDownArcRadius.Value);
@@ -248,6 +277,8 @@ namespace InspectionSystemManager
             _CogNeedleFindAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
             _CogNeedleFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             _CogNeedleFindAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
+            _CogNeedleFindAlgoRcp.CaliperIgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Value);
+            _CogNeedleFindAlgoRcp.CaliperPolarity = Convert.ToInt32(graLabelPolarity.Text);
             _CogNeedleFindAlgoRcp.ArcCenterX = Convert.ToDouble(numUpDownArcCenterX.Value);
             _CogNeedleFindAlgoRcp.ArcCenterY = Convert.ToDouble(numUpDownArcCenterY.Value);
             _CogNeedleFindAlgoRcp.ArcRadius = Convert.ToDouble(numUpDownArcRadius.Value);

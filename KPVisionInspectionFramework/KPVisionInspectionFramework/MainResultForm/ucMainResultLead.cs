@@ -111,6 +111,8 @@ namespace KPVisionInspectionFramework
                 if (_ResultParam.IsGood)
                 {
                     LastResult = "GOOD";
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignX1, Color.Black, Color.White);
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignY1, Color.Black, Color.White);
                     ControlInvoke.GradientLabelText(gradientLabelResult, "GOOD", Color.Lime);
                 }
 
@@ -126,6 +128,8 @@ namespace KPVisionInspectionFramework
                         LastResult = "Not Found";
                     }
 
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignX1, Color.White, Color.Red);
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignY1, Color.White, Color.Red);
                     ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
                 }
             }
@@ -147,6 +151,8 @@ namespace KPVisionInspectionFramework
                 if (_ResultParam.IsGood)
                 {
                     LastResult = "GOOD";
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignX2, Color.Black, Color.White);
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignY2, Color.Black, Color.White);
                     ControlInvoke.GradientLabelText(gradientLabelResult, "GOOD", Color.Lime);
                 }
 
@@ -162,6 +168,8 @@ namespace KPVisionInspectionFramework
                         LastResult = "Not Found";
                     }
 
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignX2, Color.White, Color.Red);
+                    ControlInvoke.GradientLabelText(gradientLabelNeedleAlignY2, Color.White, Color.Red);
                     ControlInvoke.GradientLabelText(gradientLabelResult, "Not Found", Color.Red);
                 }
             }

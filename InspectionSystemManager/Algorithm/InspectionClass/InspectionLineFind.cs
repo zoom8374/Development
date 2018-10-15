@@ -23,6 +23,8 @@ namespace InspectionSystemManager
         {
             FindLineProc = new CogFindLineTool();
             FindLineResults = new CogFindLineResults();
+
+            FindLineProc.RunParams.DecrementNumToIgnore = true;
         }
 
         public void Initialize()
@@ -40,11 +42,12 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
 
-            SetCaliper(_CogLineFindAlgo.CaliperNumber, _CogLineFindAlgo.CaliperSearchLength, _CogLineFindAlgo.CaliperProjectionLength, _CogLineFindAlgo.CaliperSearchDirection);
+            SetCaliperDirection(_CogLineFindAlgo.CaliperSearchDirection);
+            SetCaliper(_CogLineFindAlgo.CaliperNumber, _CogLineFindAlgo.CaliperSearchLength, _CogLineFindAlgo.CaliperProjectionLength, _CogLineFindAlgo.IgnoreNumber);
             SetCaliperLine(_CogLineFindAlgo.CaliperLineStartX, _CogLineFindAlgo.CaliperLineStartY, _CogLineFindAlgo.CaliperLineEndX, _CogLineFindAlgo.CaliperLineEndY);
 
             if (true == Inspection(_SrcImage)) GetResult();
-            if (FindLineResults != null)
+            if (FindLineResults != null && (_CogLineFindAlgo.CaliperNumber - _CogLineFindAlgo.IgnoreNumber) < (FindLineResults.NumPointsFound + 5))
             {
                 try
                 {
@@ -98,6 +101,9 @@ namespace InspectionSystemManager
 
                     else
                     {
+                        _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
+                        double _Rotation = 0;
+                        _Rotation = _CogLineFindResult.Rotation * 180 / Math.PI;
                         _CogLineFindResult.IsGood = true;
                     }
                 }
@@ -134,12 +140,18 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _SearchDir)
+        private void SetCaliperDirection(int _eSearchDir)
+        {
+            FindLineProc.RunParams.CaliperSearchDirection = _eSearchDir;
+        }
+
+        private void SetCaliper(int _CaliperNumber, double _SearchLength, double _ProjectionLength, int _CaliperIgnoreNumber)
         {
             FindLineProc.RunParams.NumCalipers = _CaliperNumber;
             FindLineProc.RunParams.CaliperSearchLength = _SearchLength;
             FindLineProc.RunParams.CaliperProjectionLength = _ProjectionLength;
-            FindLineProc.RunParams.CaliperSearchDirection = _SearchDir;
+            FindLineProc.RunParams.NumToIgnore = _CaliperIgnoreNumber;
+            //FindLineProc.RunParams.CaliperSearchDirection = _SearchDir;
         }
 
         private void SetCaliperLine(double _StartX, double _StartY, double _EndX, double _EndY)
