@@ -90,6 +90,10 @@ namespace InspectionSystemManager
             ucCogIDInspWnd = new ucCogID();
             ucCogLineFindWnd = new ucCogLineFind();
 
+            if (_ProjectItem == eProjectItem.LEAD_INSP)         ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.NEEDLE_ALIGN) ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.ID_INSP)      ucCogBlobReferWnd.Initialize(true);
+
             InspPatternProcess = new InspectionPattern();
             InspBlobReferProcess = new InspectionBlobReference();
             InspNeedleCircleFindProcess = new InspectionNeedleCircleFind();

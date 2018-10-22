@@ -11,13 +11,14 @@ namespace CustomControl
     public class FileManager
     {
         #region txt File Write/Read
+
+        //LDH, txt 파일 전체 쓰기
         public void txtFileWrite(string FilePath, List<string> WriteList)
         {
-            if (!File.Exists(FilePath))
-            {
-                File.Create(FilePath).Close();
-                System.Threading.Thread.Sleep(100);
-            }
+            if (Path.GetDirectoryName(FilePath) == null) return;
+
+            DirectoryInfo FolderInfo = new DirectoryInfo(Path.GetDirectoryName(FilePath));
+            if (!FolderInfo.Exists) FolderInfo.Create();
 
             StreamWriter FileWriter = new StreamWriter(FilePath);
 
@@ -29,6 +30,7 @@ namespace CustomControl
             FileWriter.Close();
         }
 
+        //LDH, txt 파일 전체 읽기
         public List<string> txtFileRead(string FilePath)
         {
             List<string> ReadList = new List<string>();

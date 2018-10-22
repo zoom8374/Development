@@ -14,6 +14,9 @@ namespace KPVisionInspectionFramework
         public delegate void SetDataPathHandler(string[] _DataPath);
         public event SetDataPathHandler SetDataPathEvent;
 
+        public delegate bool LOTChangeHandler(object _LOTNum);
+        public event LOTChangeHandler LOTChangeEvent;
+
         public FolderPathWindow()
         {
             InitializeComponent();
@@ -21,11 +24,14 @@ namespace KPVisionInspectionFramework
 
         public void SetCurrentDataPath(string[] _CurrentDataPath)
         {
+            textBoxInDataPath.Clear();
+            textBoxOutDataPath.Clear();
+
             textBoxInDataPath.Text = _CurrentDataPath[0];
             textBoxOutDataPath.Text = _CurrentDataPath[1];
         }
 
-        private void btnRecipeConfirm_Click(object sender, EventArgs e)
+        private void btnConfirm_Click(object sender, EventArgs e)
         {
             if (textBoxInDataPath.Text == null || textBoxInDataPath.Text == "") { MessageBox.Show("In Data 폴더 경로가 없습니다."); return; }
             if (textBoxOutDataPath.Text == null || textBoxOutDataPath.Text == "") { MessageBox.Show("Out Data 폴더 경로가 없습니다."); return; }
@@ -69,6 +75,16 @@ namespace KPVisionInspectionFramework
                 case 0: textBoxInDataPath.Text = FolderDialog.SelectedPath; break;
                 case 1: textBoxOutDataPath.Text = FolderDialog.SelectedPath; break;
             }
+        }
+
+        private void btnLotChange_Click(object sender, EventArgs e)
+        {
+            LOTChangeEvent("B84060800");
+        }
+
+        private void btnLOTEnd_Click(object sender, EventArgs e)
+        {
+            LOTChangeEvent("LotEnd");
         }
     }
 }

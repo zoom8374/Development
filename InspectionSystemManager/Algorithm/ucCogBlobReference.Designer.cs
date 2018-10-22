@@ -31,7 +31,7 @@
             this.labelTitle = new CustomControl.GradientLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBoxDummyCondition = new System.Windows.Forms.GroupBox();
             this.btnDummyHistogramMean = new System.Windows.Forms.Button();
             this.numUpDownDummyValue = new System.Windows.Forms.NumericUpDown();
             this.ckDummyUsable = new System.Windows.Forms.CheckBox();
@@ -101,7 +101,7 @@
             this.rbBenchMarkTopLeft = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.groupBoxDummyCondition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownDummyValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -142,7 +142,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.tabPage1.Controls.Add(this.groupBox5);
+            this.tabPage1.Controls.Add(this.groupBoxDummyCondition);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
@@ -153,20 +153,20 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Condition";
             // 
-            // groupBox5
+            // groupBoxDummyCondition
             // 
-            this.groupBox5.Controls.Add(this.btnDummyHistogramMean);
-            this.groupBox5.Controls.Add(this.numUpDownDummyValue);
-            this.groupBox5.Controls.Add(this.ckDummyUsable);
-            this.groupBox5.Controls.Add(this.gradientLabel13);
-            this.groupBox5.Controls.Add(this.btnSetting);
-            this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(6, 237);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(471, 79);
-            this.groupBox5.TabIndex = 22;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = " Dummy Condition ";
+            this.groupBoxDummyCondition.Controls.Add(this.btnDummyHistogramMean);
+            this.groupBoxDummyCondition.Controls.Add(this.numUpDownDummyValue);
+            this.groupBoxDummyCondition.Controls.Add(this.ckDummyUsable);
+            this.groupBoxDummyCondition.Controls.Add(this.gradientLabel13);
+            this.groupBoxDummyCondition.Controls.Add(this.btnSetting);
+            this.groupBoxDummyCondition.ForeColor = System.Drawing.Color.White;
+            this.groupBoxDummyCondition.Location = new System.Drawing.Point(6, 237);
+            this.groupBoxDummyCondition.Name = "groupBoxDummyCondition";
+            this.groupBoxDummyCondition.Size = new System.Drawing.Size(471, 79);
+            this.groupBoxDummyCondition.TabIndex = 22;
+            this.groupBoxDummyCondition.TabStop = false;
+            this.groupBoxDummyCondition.Text = " Dummy Condition ";
             // 
             // btnDummyHistogramMean
             // 
@@ -1092,8 +1092,8 @@
             this.Size = new System.Drawing.Size(500, 388);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.groupBoxDummyCondition.ResumeLayout(false);
+            this.groupBoxDummyCondition.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownDummyValue)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -1177,7 +1177,7 @@
         private CustomControl.GradientLabel gradientLabel12;
         private CustomControl.GradientLabel gradientLabel11;
         private CustomControl.GradientLabel gradientLabel10;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBoxDummyCondition;
         private System.Windows.Forms.Button btnGet;
         private System.Windows.Forms.Button btnDummyHistogramMean;
         private System.Windows.Forms.NumericUpDown numUpDownDummyValue;

@@ -389,7 +389,7 @@
             this.groupBox2.Size = new System.Drawing.Size(287, 153);
             this.groupBox2.TabIndex = 70;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = " Expected circular Arc ";
+            this.groupBox2.Text = " Expected line segment ";
             // 
             // numUpDownEndY
             // 

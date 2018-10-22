@@ -26,17 +26,14 @@ namespace KPVisionInspectionFramework
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
 
+        public delegate void ReadLOTNumHandler(string LOTNum);
+        public event ReadLOTNumHandler ReadLOTNumEvent;
+
         #region Initialize & DeInitialize
         public MainResultBase(string _LastRecipeName)
         {
             LastRecipeName = _LastRecipeName;
             InitializeComponent();
-
-            
-            
-
-            
-            
         }
 
         public void Initialize(Object _OwnerForm, int _ProjectType)
@@ -50,7 +47,7 @@ namespace KPVisionInspectionFramework
                 MainResultIDWnd.ScreenshotEvent += new ucMainResultID.ScreenshotHandler(ScreenShot);
                 panelMain.Controls.Add(MainResultIDWnd);
             }
-
+        
             else if (ProjectType == eProjectType.DISPENSER)
             {
                 MainResultLeadWnd = new ucMainResultLead(LastRecipeName);
@@ -61,8 +58,24 @@ namespace KPVisionInspectionFramework
             SetWindowLocation(1482, 148);
         }
 
+        //LDH, 2018.10.15, 프로젝트별 event 분리로 초기화 따로함
+        public void EventInitialize()
+        {
+            MainResultIDWnd.ReadLOTNumEvent += new ucMainResultID.ReadLOTNumHandler(ReadLOTNumEvent);
+        }
+
         public void DeInitialize()
         {
+            if (ProjectType == eProjectType.BLOWER)
+            {
+                MainResultIDWnd.ScreenshotEvent -= new ucMainResultID.ScreenshotHandler(ScreenShot);
+                MainResultIDWnd.ReadLOTNumEvent -= new ucMainResultID.ReadLOTNumHandler(ReadLOTNumEvent);
+            }
+            else if (ProjectType == eProjectType.DISPENSER)
+            {
+                MainResultLeadWnd.ScreenshotEvent -= new ucMainResultLead.ScreenshotHandler(ScreenShot);
+            }
+
             panelMain.Controls.Clear();
         }
 
@@ -183,9 +196,9 @@ namespace KPVisionInspectionFramework
         #endregion Control Default Event
 
         //LDH, 2018.10.01, Result Window Clear
-        public void ClearResultData()
+        public void ClearResultData(string _LOTNum = "", string _InDataPath = "", string _OutDataPath = "")
         {
-            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.ClearResult();
+            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.ClearResult(_LOTNum, _InDataPath, _OutDataPath);
             else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.ClearResult();
         }
 
@@ -204,10 +217,26 @@ namespace KPVisionInspectionFramework
 
         }
 
+        //LDH, 2018.10.12, AutoMode 관리
+        public bool SetAutoMode(bool _AutoModeFlag)
+        {
+            bool _Result = false;
+
+            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.SetAutoMode(_AutoModeFlag);
+            else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetAutoMode(_AutoModeFlag);
+
+            return _Result;
+        }
+
         public void SetLastRecipeName(eProjectType _ProjectType, string _LastRecipeName)
         {
             if (_ProjectType == eProjectType.BLOWER) MainResultIDWnd.SetLastRecipeName(_LastRecipeName);
             else if (_ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetLastRecipeName(_LastRecipeName);
+        }
+
+        public void LOTEnd()
+        {
+            MainResultIDWnd.LOTEnd();
         }
 
         //LDH, 2018.08.10, 전체화면 Screenshot

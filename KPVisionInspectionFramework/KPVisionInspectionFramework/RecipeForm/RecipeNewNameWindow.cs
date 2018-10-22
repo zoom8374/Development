@@ -29,6 +29,12 @@ namespace KPVisionInspectionFramework
 
             RecipeList = new string[_RecipeList.Count()];
             RecipeList = _RecipeList;
+
+            if(!_CurrentRecipe.Contains("_"))
+            {
+                textBoxNewRecipeSub.Size = new Size(226, 26);
+                textBoxNewRecipeSub.Location = new Point(103, 77);
+            }
         }
 
         private void btnRecipeConfirm_Click(object sender, EventArgs e)

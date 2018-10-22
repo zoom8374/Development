@@ -301,12 +301,14 @@ namespace DIOControlManager
             ThreadVisionAliveSignal = new Thread(ThreadVisionAliveSignalFunc);
             IsThreadVisionAliveSignalExit = false;
             ThreadOutputIOCheck.IsBackground = true;
-            if (ProjectType != eProjectType.BLOWER) ThreadVisionAliveSignal.Start();
+            if (ProjectType != eProjectType.BLOWER && ProjectType != eProjectType.DISPENSER)
+                ThreadVisionAliveSignal.Start();
 
             ThreadInputAliveCheck = new Thread(ThreadInputAliveCheckFunc);
             IsThreadInputAliveCheckExit = false;
             ThreadOutputIOCheck.IsBackground = true;
-            if (ProjectType != eProjectType.BLOWER) ThreadInputAliveCheck.Start();
+            if (ProjectType != eProjectType.BLOWER && ProjectType != eProjectType.DISPENSER)
+                ThreadInputAliveCheck.Start();
 
             ThreadSignalToggle = new Thread(ThreadSignalToggleFunc);
             IsThreadSignalToggleExit = false;

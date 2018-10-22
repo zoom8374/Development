@@ -79,6 +79,7 @@ namespace KPVisionInspectionFramework
                 rbSerial.Visible = false;
                 rbConfig.Visible = false;
                 rbLabelCode.Visible = false;
+                rbFolder.Visible = false;
             }
 
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
@@ -105,6 +106,13 @@ namespace KPVisionInspectionFramework
             ResultBaseWnd.Initialize(this, ParamManager.SystemParam.ProjectType);
             ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
             ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
+            if (ParamManager.SystemParam.ProjectType == Convert.ToInt32(eProjectType.BLOWER))
+            {
+                ResultBaseWnd.ReadLOTNumEvent += new MainResultBase.ReadLOTNumHandler(SetBarcodeTextbox);
+                ResultBaseWnd.EventInitialize();
+                ResultBaseWnd.ClearResultData("", ParamManager.SystemParam.InDataFolderPath, ParamManager.SystemParam.OutDataFolderPath);
+            }
+            else ResultBaseWnd.ClearResultData();
 
             //Light Initialize
             LightControlManager = new CLightManager();
@@ -117,6 +125,7 @@ namespace KPVisionInspectionFramework
             HistoryManager = new CHistoryManager(((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             FolderPathWnd = new FolderPathWindow();
             FolderPathWnd.SetDataPathEvent += new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
+            FolderPathWnd.LOTChangeEvent += new FolderPathWindow.LOTChangeHandler(MainProcessLOTChange);
 
             System.Threading.Thread.Sleep(100);
             #endregion SubWindow 생성 및 Event 등록
@@ -163,11 +172,18 @@ namespace KPVisionInspectionFramework
 
             LightControlManager.DeInitialize();
 
+            FolderPathWnd.SetDataPathEvent -= new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
+            FolderPathWnd.LOTChangeEvent -= new FolderPathWindow.LOTChangeHandler(MainProcessLOTChange);
+
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             MainProcess.DeInitialize();
 
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    ((MainProcessDispensor)MainProcess).DeInitialize();
-            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  ((MainProcessID)MainProcess).DeInitialize();
+            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType) ((MainProcessDispensor)MainProcess).DeInitialize();
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            {
+                ((MainProcessID)MainProcess).DeInitialize();
+                ResultBaseWnd.ReadLOTNumEvent -= new MainResultBase.ReadLOTNumHandler(SetBarcodeTextbox);
+            }
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].InspSysManagerEvent -= new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
@@ -267,6 +283,7 @@ namespace KPVisionInspectionFramework
 
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
             MainProcess.AutoMode(true);
+            ResultBaseWnd.SetAutoMode(true);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode ON", CLogManager.LOG_LEVEL.MID);
         }
 
@@ -279,6 +296,7 @@ namespace KPVisionInspectionFramework
 
             CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             MainProcess.AutoMode(false);
+            ResultBaseWnd.SetAutoMode(false);
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess AutoMode STOP", CLogManager.LOG_LEVEL.MID);
         }
 
@@ -467,7 +485,8 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = false;
 
-
+            if (_LOTName == "LotEnd") { ResultBaseWnd.LOTEnd(); ResultBaseWnd.ClearResultData(); }
+            else                      ResultBaseWnd.ClearResultData(_LOTName, ParamManager.SystemParam.InDataFolderPath, ParamManager.SystemParam.OutDataFolderPath);
 
             return _Result;
         }
@@ -580,6 +599,8 @@ namespace KPVisionInspectionFramework
         {
             ParamManager.SystemParam.InDataFolderPath = _DataPath[0];
             ParamManager.SystemParam.OutDataFolderPath = _DataPath[1];
+
+            ParamManager.WriteSystemParameter();
         }
         #endregion Main Process
     }

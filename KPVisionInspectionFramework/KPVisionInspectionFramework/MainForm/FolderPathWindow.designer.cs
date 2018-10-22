@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRecipeConfirm = new System.Windows.Forms.Button();
+            this.btnConfirm = new System.Windows.Forms.Button();
             this.textBoxInDataPath = new System.Windows.Forms.TextBox();
             this.labelTitle = new System.Windows.Forms.Label();
             this.textBoxOutDataPath = new System.Windows.Forms.TextBox();
@@ -36,19 +36,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnIndataPath = new System.Windows.Forms.Button();
             this.btnOutdataPath = new System.Windows.Forms.Button();
+            this.btnLotChange = new System.Windows.Forms.Button();
+            this.btnLOTEnd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnRecipeConfirm
+            // btnConfirm
             // 
-            this.btnRecipeConfirm.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnRecipeConfirm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecipeConfirm.Location = new System.Drawing.Point(503, 114);
-            this.btnRecipeConfirm.Name = "btnRecipeConfirm";
-            this.btnRecipeConfirm.Size = new System.Drawing.Size(111, 36);
-            this.btnRecipeConfirm.TabIndex = 23;
-            this.btnRecipeConfirm.Text = "Confirm";
-            this.btnRecipeConfirm.UseVisualStyleBackColor = true;
-            this.btnRecipeConfirm.Click += new System.EventHandler(this.btnRecipeConfirm_Click);
+            this.btnConfirm.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnConfirm.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConfirm.Location = new System.Drawing.Point(503, 114);
+            this.btnConfirm.Name = "btnConfirm";
+            this.btnConfirm.Size = new System.Drawing.Size(111, 36);
+            this.btnConfirm.TabIndex = 23;
+            this.btnConfirm.Text = "Confirm";
+            this.btnConfirm.UseVisualStyleBackColor = true;
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
             // textBoxInDataPath
             // 
@@ -134,6 +136,30 @@
             this.btnOutdataPath.UseVisualStyleBackColor = true;
             this.btnOutdataPath.Click += new System.EventHandler(this.btnSearchDataPath_Click);
             // 
+            // btnLotChange
+            // 
+            this.btnLotChange.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLotChange.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLotChange.Location = new System.Drawing.Point(386, 114);
+            this.btnLotChange.Name = "btnLotChange";
+            this.btnLotChange.Size = new System.Drawing.Size(111, 36);
+            this.btnLotChange.TabIndex = 23;
+            this.btnLotChange.Text = "LOT Change";
+            this.btnLotChange.UseVisualStyleBackColor = true;
+            this.btnLotChange.Click += new System.EventHandler(this.btnLotChange_Click);
+            // 
+            // btnLOTEnd
+            // 
+            this.btnLOTEnd.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLOTEnd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLOTEnd.Location = new System.Drawing.Point(269, 114);
+            this.btnLOTEnd.Name = "btnLOTEnd";
+            this.btnLOTEnd.Size = new System.Drawing.Size(111, 36);
+            this.btnLOTEnd.TabIndex = 23;
+            this.btnLOTEnd.Text = "LOT End";
+            this.btnLOTEnd.UseVisualStyleBackColor = true;
+            this.btnLOTEnd.Click += new System.EventHandler(this.btnLOTEnd_Click);
+            // 
             // FolderPathWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,7 +170,9 @@
             this.Controls.Add(this.btnIndataPath);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelTrainImage);
-            this.Controls.Add(this.btnRecipeConfirm);
+            this.Controls.Add(this.btnLOTEnd);
+            this.Controls.Add(this.btnLotChange);
+            this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.textBoxOutDataPath);
             this.Controls.Add(this.textBoxInDataPath);
             this.Controls.Add(this.labelTitle);
@@ -159,7 +187,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnRecipeConfirm;
+        private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.TextBox textBoxInDataPath;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.TextBox textBoxOutDataPath;
@@ -167,5 +195,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnIndataPath;
         private System.Windows.Forms.Button btnOutdataPath;
+        private System.Windows.Forms.Button btnLotChange;
+        private System.Windows.Forms.Button btnLOTEnd;
     }
 }

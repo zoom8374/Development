@@ -40,9 +40,9 @@ namespace InspectionSystemManager
             InitializeComponent();
         }
 
-        public void Initialize()
+        public void Initialize(bool _UseDummy = false)
         {
-
+            groupBoxDummyCondition.Visible = _UseDummy;
         }
 
         private void InitializeControl()

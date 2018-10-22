@@ -270,6 +270,7 @@ namespace InspectionSystemManager
             _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
 
             CogCircle _CogCircle = new CogCircle();
+            if (_CogNeedleFindResult.Radius <= 0) return;
             _CogCircle.SetCenterRadius(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, _CogNeedleFindResult.Radius);
             CogPointMarker _CogCenterPoint = new CogPointMarker();
             _CogCenterPoint.SetCenterRotationSize(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY, 0, 2);

@@ -38,11 +38,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.gradientLabel13 = new CustomControl.GradientLabel();
-            this.gradientLabel12 = new CustomControl.GradientLabel();
-            this.gradientLabel11 = new CustomControl.GradientLabel();
+            this.gradientLabelTotalCount = new CustomControl.GradientLabel();
+            this.gradientLabelYield = new CustomControl.GradientLabel();
+            this.gradientLabelNgCount = new CustomControl.GradientLabel();
             this.SevenSegTotal = new DmitryBrant.CustomControls.SevenSegmentArray();
-            this.gradientLabel9 = new CustomControl.GradientLabel();
+            this.gradientLabelGoodCount = new CustomControl.GradientLabel();
             this.SevenSegYield = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.SevenSegNg = new DmitryBrant.CustomControls.SevenSegmentArray();
             this.SevenSegGood = new DmitryBrant.CustomControls.SevenSegmentArray();
@@ -73,11 +73,11 @@
             // 
             // panelMain
             // 
-            this.panelMain.Controls.Add(this.gradientLabel13);
-            this.panelMain.Controls.Add(this.gradientLabel12);
-            this.panelMain.Controls.Add(this.gradientLabel11);
+            this.panelMain.Controls.Add(this.gradientLabelTotalCount);
+            this.panelMain.Controls.Add(this.gradientLabelYield);
+            this.panelMain.Controls.Add(this.gradientLabelNgCount);
             this.panelMain.Controls.Add(this.SevenSegTotal);
-            this.panelMain.Controls.Add(this.gradientLabel9);
+            this.panelMain.Controls.Add(this.gradientLabelGoodCount);
             this.panelMain.Controls.Add(this.SevenSegYield);
             this.panelMain.Controls.Add(this.SevenSegNg);
             this.panelMain.Controls.Add(this.SevenSegGood);
@@ -103,50 +103,52 @@
             this.panelMain.TabIndex = 14;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
-            // gradientLabel13
+            // gradientLabelTotalCount
             // 
-            this.gradientLabel13.BackColor = System.Drawing.Color.White;
-            this.gradientLabel13.ColorBottom = System.Drawing.Color.LightGray;
-            this.gradientLabel13.ColorTop = System.Drawing.Color.DimGray;
-            this.gradientLabel13.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel13.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel13.Location = new System.Drawing.Point(3, 90);
-            this.gradientLabel13.Name = "gradientLabel13";
-            this.gradientLabel13.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel13.TabIndex = 40;
-            this.gradientLabel13.Text = "Total";
-            this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTotalCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelTotalCount.ColorBottom = System.Drawing.Color.LightGray;
+            this.gradientLabelTotalCount.ColorTop = System.Drawing.Color.DimGray;
+            this.gradientLabelTotalCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelTotalCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelTotalCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelTotalCount.Location = new System.Drawing.Point(3, 90);
+            this.gradientLabelTotalCount.Name = "gradientLabelTotalCount";
+            this.gradientLabelTotalCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelTotalCount.TabIndex = 40;
+            this.gradientLabelTotalCount.Text = "Total";
+            this.gradientLabelTotalCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelTotalCount.DoubleClick += new System.EventHandler(this.gradientLabelTotalCount_DoubleClick);
             // 
-            // gradientLabel12
+            // gradientLabelYield
             // 
-            this.gradientLabel12.BackColor = System.Drawing.Color.White;
-            this.gradientLabel12.ColorBottom = System.Drawing.Color.LemonChiffon;
-            this.gradientLabel12.ColorTop = System.Drawing.Color.Gold;
-            this.gradientLabel12.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel12.ForeColor = System.Drawing.Color.Black;
-            this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel12.Location = new System.Drawing.Point(3, 171);
-            this.gradientLabel12.Name = "gradientLabel12";
-            this.gradientLabel12.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel12.TabIndex = 41;
-            this.gradientLabel12.Text = "Yield";
-            this.gradientLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelYield.BackColor = System.Drawing.Color.White;
+            this.gradientLabelYield.ColorBottom = System.Drawing.Color.LemonChiffon;
+            this.gradientLabelYield.ColorTop = System.Drawing.Color.Gold;
+            this.gradientLabelYield.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelYield.ForeColor = System.Drawing.Color.Black;
+            this.gradientLabelYield.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelYield.Location = new System.Drawing.Point(3, 171);
+            this.gradientLabelYield.Name = "gradientLabelYield";
+            this.gradientLabelYield.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelYield.TabIndex = 41;
+            this.gradientLabelYield.Text = "Yield";
+            this.gradientLabelYield.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // gradientLabel11
+            // gradientLabelNgCount
             // 
-            this.gradientLabel11.BackColor = System.Drawing.Color.White;
-            this.gradientLabel11.ColorBottom = System.Drawing.Color.LightCoral;
-            this.gradientLabel11.ColorTop = System.Drawing.Color.DarkRed;
-            this.gradientLabel11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel11.Location = new System.Drawing.Point(3, 144);
-            this.gradientLabel11.Name = "gradientLabel11";
-            this.gradientLabel11.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel11.TabIndex = 42;
-            this.gradientLabel11.Text = "NG";
-            this.gradientLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelNgCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelNgCount.ColorBottom = System.Drawing.Color.LightCoral;
+            this.gradientLabelNgCount.ColorTop = System.Drawing.Color.DarkRed;
+            this.gradientLabelNgCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelNgCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelNgCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelNgCount.Location = new System.Drawing.Point(3, 144);
+            this.gradientLabelNgCount.Name = "gradientLabelNgCount";
+            this.gradientLabelNgCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelNgCount.TabIndex = 42;
+            this.gradientLabelNgCount.Text = "NG";
+            this.gradientLabelNgCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelNgCount.DoubleClick += new System.EventHandler(this.gradientLabelNgCount_DoubleClick);
             // 
             // SevenSegTotal
             // 
@@ -165,20 +167,21 @@
             this.SevenSegTotal.TabStop = false;
             this.SevenSegTotal.Value = "000000";
             // 
-            // gradientLabel9
+            // gradientLabelGoodCount
             // 
-            this.gradientLabel9.BackColor = System.Drawing.Color.White;
-            this.gradientLabel9.ColorBottom = System.Drawing.Color.LightGreen;
-            this.gradientLabel9.ColorTop = System.Drawing.Color.Green;
-            this.gradientLabel9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel9.Location = new System.Drawing.Point(3, 117);
-            this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(94, 24);
-            this.gradientLabel9.TabIndex = 43;
-            this.gradientLabel9.Text = "Good";
-            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelGoodCount.BackColor = System.Drawing.Color.White;
+            this.gradientLabelGoodCount.ColorBottom = System.Drawing.Color.LightGreen;
+            this.gradientLabelGoodCount.ColorTop = System.Drawing.Color.Green;
+            this.gradientLabelGoodCount.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.gradientLabelGoodCount.ForeColor = System.Drawing.Color.White;
+            this.gradientLabelGoodCount.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabelGoodCount.Location = new System.Drawing.Point(3, 117);
+            this.gradientLabelGoodCount.Name = "gradientLabelGoodCount";
+            this.gradientLabelGoodCount.Size = new System.Drawing.Size(94, 24);
+            this.gradientLabelGoodCount.TabIndex = 43;
+            this.gradientLabelGoodCount.Text = "Good";
+            this.gradientLabelGoodCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gradientLabelGoodCount.DoubleClick += new System.EventHandler(this.gradientLabelGoodCount_DoubleClick);
             // 
             // SevenSegYield
             // 
@@ -582,11 +585,11 @@
         private CustomControl.GradientLabel gradientLabel2;
         private CustomControl.GradientLabel gradientLabelTeaching;
         private CustomControl.GradientLabel gradientLabel5;
-        private CustomControl.GradientLabel gradientLabel13;
-        private CustomControl.GradientLabel gradientLabel12;
-        private CustomControl.GradientLabel gradientLabel11;
+        private CustomControl.GradientLabel gradientLabelTotalCount;
+        private CustomControl.GradientLabel gradientLabelYield;
+        private CustomControl.GradientLabel gradientLabelNgCount;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegTotal;
-        private CustomControl.GradientLabel gradientLabel9;
+        private CustomControl.GradientLabel gradientLabelGoodCount;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegYield;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegNg;
         private DmitryBrant.CustomControls.SevenSegmentArray SevenSegGood;

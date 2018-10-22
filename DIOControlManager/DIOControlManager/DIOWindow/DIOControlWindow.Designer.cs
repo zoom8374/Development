@@ -110,6 +110,7 @@
             this.btnTrigger.TabIndex = 0;
             this.btnTrigger.Text = "Trigger";
             this.btnTrigger.UseVisualStyleBackColor = true;
+            this.btnTrigger.Visible = false;
             this.btnTrigger.Click += new System.EventHandler(this.btnTrigger_Click);
             // 
             // labelTitle
@@ -647,7 +648,7 @@
             this.labelInputTitle.Name = "labelInputTitle";
             this.labelInputTitle.Size = new System.Drawing.Size(724, 30);
             this.labelInputTitle.TabIndex = 300;
-            this.labelInputTitle.Text = " Input I/O Signal (VISION -> PLC)";
+            this.labelInputTitle.Text = " Input I/O Signal (PLC -> VISION)";
             this.labelInputTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelOutputTitle
@@ -662,7 +663,7 @@
             this.labelOutputTitle.Name = "labelOutputTitle";
             this.labelOutputTitle.Size = new System.Drawing.Size(724, 30);
             this.labelOutputTitle.TabIndex = 301;
-            this.labelOutputTitle.Text = " Output I/O Signal (PLC -> VISION)";
+            this.labelOutputTitle.Text = " Output I/O Signal (VISION -> PLC)";
             this.labelOutputTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnInput31
@@ -1245,6 +1246,7 @@
             this.btnRequest.TabIndex = 334;
             this.btnRequest.Text = "Request";
             this.btnRequest.UseVisualStyleBackColor = true;
+            this.btnRequest.Visible = false;
             this.btnRequest.Click += new System.EventHandler(this.btnRequest_Click);
             // 
             // DIOControlWindow

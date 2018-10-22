@@ -440,8 +440,8 @@ namespace InspectionSystemManager
             IsCamLiveFlag = !IsCamLiveFlag;
             CameraManager.CamLive(IsCamLiveFlag);
 
-            if (IsCamLiveFlag)  labelStatus.Text = "(Live)";
-            else                labelStatus.Text = "";
+            if (IsCamLiveFlag)  { CParameterManager.SystemMode = eSysMode.LIVE_MODE;    labelStatus.Text = "(Live)"; }
+            else                { CParameterManager.SystemMode = eSysMode.MANUAL_MODE;  labelStatus.Text = ""; }
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "CamLive : " + IsCamLiveFlag.ToString(), CLogManager.LOG_LEVEL.MID);
         }
 
@@ -492,7 +492,7 @@ namespace InspectionSystemManager
         private void btnCrossBar_Click(object sender, EventArgs e)
         {
             IsCrossLine = !IsCrossLine;
-            //kpCogDisplayMain.ClearDisplay();
+            kpCogDisplayMain.ClearDisplay();
 
             //if (IsCrossLine) kpCogDisplayMain.DrawCross(ImageSizeWidth / 2, ImageSizeHeight / 2, ImageSizeWidth, ImageSizeHeight, "Cross", CogColorConstants.Green);
             if (IsCrossLine) kpCogDisplayMain.DrwaInterActiveCross(ImageSizeWidth / 2, ImageSizeHeight / 2, 1, 8000, "Cross", CogColorConstants.Green);
@@ -549,9 +549,12 @@ namespace InspectionSystemManager
         private void SetDisplayGrabImage(byte[] Image)
         {
             kpCogDisplayMain.SetDisplayImage(Image, ImageSizeWidth, ImageSizeHeight);
-            kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
-            kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
-            kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
+            if (CParameterManager.SystemMode != eSysMode.LIVE_MODE)
+            {
+                kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
+                kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
+                kpCogDisplayMain.SetDisplayPanY(DisplayPanYValue);
+            }
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - H/W Trigger ON Grab", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             OriginImage = (CogImage8Grey)kpCogDisplayMain.GetDisplayImage();

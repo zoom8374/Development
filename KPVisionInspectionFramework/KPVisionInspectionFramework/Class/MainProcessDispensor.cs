@@ -50,10 +50,12 @@ namespace KPVisionInspectionFramework
             int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
             int _ReadyCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
+            int _LiveCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_LIVE);
 
             if (_AutoCmdBit >= 0) DIOWnd.SetOutputSignal((short)_AutoCmdBit, false);
             if (_CompleteCmdBit >= 0) DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
             if (_ReadyCmdBit >= 0) DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
+            if (_LiveCmdBit >= 0) DIOWnd.SetOutputSignal((short)_LiveCmdBit, true);
 
             AckStructs = new AckStruct[3];
             for (int iLoopCount = 0; iLoopCount < 3; ++iLoopCount) AckStructs[iLoopCount] = new AckStruct(); ;
@@ -68,10 +70,12 @@ namespace KPVisionInspectionFramework
             int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);
             int _CompleteCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
             int _ReadyCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_READY);
+            int _LiveCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_LIVE);
 
             if (_AutoCmdBit >= 0) DIOWnd.SetOutputSignal((short)_AutoCmdBit, false);
             if (_CompleteCmdBit >= 0) DIOWnd.SetOutputSignal((short)_CompleteCmdBit, false);
             if (_ReadyCmdBit >= 0) DIOWnd.SetOutputSignal((short)_ReadyCmdBit, false);
+            if (_LiveCmdBit >= 0) DIOWnd.SetOutputSignal((short)_LiveCmdBit, false);
 
             DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.DeInitialize();

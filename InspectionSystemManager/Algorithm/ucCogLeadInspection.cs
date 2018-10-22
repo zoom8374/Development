@@ -224,12 +224,12 @@ namespace InspectionSystemManager
             CogLeadResult _CogLeadResult = new CogLeadResult();
             CogLeadAlgo _CogLeadAlgoRcp = new CogLeadAlgo();
             _CogLeadAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
-            _CogLeadAlgoRcp.BlobAreaMin = Convert.ToInt32(textBoxBlobAreaMin.Text);
-            _CogLeadAlgoRcp.BlobAreaMax = Convert.ToInt32(textBoxBlobAreaMax.Text);
-            _CogLeadAlgoRcp.WidthMin = Convert.ToInt32(textBoxWidthSizeMin.Text);
-            _CogLeadAlgoRcp.WidthMax = Convert.ToInt32(textBoxWidthSizeMax.Text);
-            _CogLeadAlgoRcp.HeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
-            _CogLeadAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
+            _CogLeadAlgoRcp.BlobAreaMin = Convert.ToDouble(textBoxBlobAreaMin.Text);
+            _CogLeadAlgoRcp.BlobAreaMax = Convert.ToDouble(textBoxBlobAreaMax.Text);
+            _CogLeadAlgoRcp.WidthMin = Convert.ToDouble(textBoxWidthSizeMin.Text);
+            _CogLeadAlgoRcp.WidthMax = Convert.ToDouble(textBoxWidthSizeMax.Text);
+            _CogLeadAlgoRcp.HeightMin = Convert.ToDouble(textBoxHeightSizeMin.Text);
+            _CogLeadAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
             _CogLeadAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             
             var _ApplyLeadInspValueEvent = ApplyLeadInspValueEvent;
