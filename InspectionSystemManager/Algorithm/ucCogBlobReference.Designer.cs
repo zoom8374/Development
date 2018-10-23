@@ -448,6 +448,7 @@
             this.textBoxHeightSizeMax.TabIndex = 37;
             this.textBoxHeightSizeMax.Text = "0";
             this.textBoxHeightSizeMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxHeightSizeMax.TextChanged += new System.EventHandler(this.textBoxHeightSizeMax_TextChanged);
             // 
             // textBoxBlobAreaMin
             // 
@@ -457,6 +458,7 @@
             this.textBoxBlobAreaMin.TabIndex = 29;
             this.textBoxBlobAreaMin.Text = "10000";
             this.textBoxBlobAreaMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBlobAreaMin.TextChanged += new System.EventHandler(this.textBoxBlobAreaMin_TextChanged);
             // 
             // textBoxHeightSizeMin
             // 
@@ -466,6 +468,7 @@
             this.textBoxHeightSizeMin.TabIndex = 34;
             this.textBoxHeightSizeMin.Text = "0";
             this.textBoxHeightSizeMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxHeightSizeMin.TextChanged += new System.EventHandler(this.textBoxHeightSizeMin_TextChanged);
             // 
             // textBoxBlobAreaMax
             // 
@@ -475,6 +478,7 @@
             this.textBoxBlobAreaMax.TabIndex = 30;
             this.textBoxBlobAreaMax.Text = "500000";
             this.textBoxBlobAreaMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBlobAreaMax.TextChanged += new System.EventHandler(this.textBoxBlobAreaMax_TextChanged);
             // 
             // textBoxWidthSizeMax
             // 
@@ -484,6 +488,7 @@
             this.textBoxWidthSizeMax.TabIndex = 32;
             this.textBoxWidthSizeMax.Text = "0";
             this.textBoxWidthSizeMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxWidthSizeMax.TextChanged += new System.EventHandler(this.textBoxWidthSizeMax_TextChanged);
             // 
             // textBoxWidthSizeMin
             // 
@@ -493,6 +498,7 @@
             this.textBoxWidthSizeMin.TabIndex = 31;
             this.textBoxWidthSizeMin.Text = "0";
             this.textBoxWidthSizeMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxWidthSizeMin.TextChanged += new System.EventHandler(this.textBoxWidthSizeMin_TextChanged);
             // 
             // groupBox1
             // 
@@ -770,6 +776,7 @@
             this.textBoxBodyHeight.TabIndex = 88;
             this.textBoxBodyHeight.Text = "0";
             this.textBoxBodyHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBodyHeight.TextChanged += new System.EventHandler(this.textBoxBodyHeight_TextChanged);
             // 
             // textBoxBodyWidth
             // 
@@ -780,6 +787,7 @@
             this.textBoxBodyWidth.TabIndex = 87;
             this.textBoxBodyWidth.Text = "0";
             this.textBoxBodyWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBodyWidth.TextChanged += new System.EventHandler(this.textBoxBodyWidth_TextChanged);
             // 
             // textBoxBodyArea
             // 
@@ -790,6 +798,7 @@
             this.textBoxBodyArea.TabIndex = 86;
             this.textBoxBodyArea.Text = "0";
             this.textBoxBodyArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxBodyArea.TextChanged += new System.EventHandler(this.textBoxBodyArea_TextChanged);
             // 
             // gradientLabel5
             // 

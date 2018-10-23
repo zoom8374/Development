@@ -33,7 +33,6 @@ namespace InspectionSystemManager
         public delegate double GetHistogramValueHandler();
         public event GetHistogramValueHandler GetHistogramValueEvent;
 
-
         #region Initialize & DeInitialize
         public ucCogBlobReference()
         {
@@ -122,6 +121,109 @@ namespace InspectionSystemManager
         {
             numUpDownDummyValue.Enabled = ckDummyUsable.Checked;
             btnDummyHistogramMean.Enabled = ckDummyUsable.Checked;
+        }
+
+        private void textBoxBlobAreaMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBlobAreaMin.Text);
+            if (!textBoxBlobAreaMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxBlobAreaMin.Text = _TextBoxValue;
+                textBoxBlobAreaMin.Select(textBoxBlobAreaMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxBlobAreaMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBlobAreaMax.Text);
+            if (!textBoxBlobAreaMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxBlobAreaMax.Text = _TextBoxValue;
+                textBoxBlobAreaMax.Select(textBoxBlobAreaMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxWidthSizeMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxWidthSizeMin.Text, true);
+            if (!textBoxWidthSizeMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxWidthSizeMin.Text = _TextBoxValue;
+                textBoxWidthSizeMin.Select(textBoxWidthSizeMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxWidthSizeMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxWidthSizeMax.Text, true);
+            if (!textBoxWidthSizeMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxWidthSizeMax.Text = _TextBoxValue;
+                textBoxWidthSizeMax.Select(textBoxWidthSizeMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxHeightSizeMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxHeightSizeMin.Text, true);
+            if (!textBoxHeightSizeMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxHeightSizeMin.Text = _TextBoxValue;
+                textBoxHeightSizeMin.Select(textBoxHeightSizeMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxHeightSizeMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxHeightSizeMax.Text, true);
+            if (!textBoxHeightSizeMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxHeightSizeMax.Text = _TextBoxValue;
+                textBoxHeightSizeMax.Select(textBoxHeightSizeMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxBodyArea_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBodyArea.Text);
+            if (!textBoxBodyArea.Text.Equals(_TextBoxValue))
+            {
+                textBoxBodyArea.Text = _TextBoxValue;
+                textBoxBodyArea.Select(textBoxBodyArea.Text.Length, 0);
+            }
+        }
+
+        private void textBoxBodyWidth_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBodyWidth.Text, true);
+            if (!textBoxBodyWidth.Text.Equals(_TextBoxValue))
+            {
+                textBoxBodyWidth.Text = _TextBoxValue;
+                textBoxBodyWidth.Select(textBoxBodyWidth.Text.Length, 0);
+            }
+        }
+
+        private void textBoxBodyHeight_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBodyHeight.Text, true);
+            if (!textBoxBodyHeight.Text.Equals(_TextBoxValue))
+            {
+                textBoxBodyHeight.Text = _TextBoxValue;
+                textBoxBodyHeight.Select(textBoxBodyHeight.Text.Length, 0);
+            }
+        }
+
+        private string TextboxValueCheckNumbers(string _TextBoxValue, bool _UseDecimalPoint = false)
+        {
+            string _ResultValue = String.Empty;
+            foreach (char _c in _TextBoxValue)
+            {
+
+                if (true == _UseDecimalPoint && (char.IsNumber(_c) || _c.Equals('.'))) _ResultValue = String.Format("{0}{1}", _ResultValue, _c);
+                else if (false == _UseDecimalPoint && char.IsNumber(_c)) _ResultValue = String.Format("{0}{1}", _ResultValue, _c);
+            }
+
+            return _ResultValue;
         }
         #endregion Control Event
 

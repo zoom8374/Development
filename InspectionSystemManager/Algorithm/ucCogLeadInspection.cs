@@ -102,7 +102,149 @@ namespace InspectionSystemManager
 
             if (LeadAngleAverage > 0)   textBoxLeadBentAngle.Text = (90 - (LeadAngleAverage * 180 / Math.PI)).ToString("F3");
             else                        textBoxLeadBentAngle.Text = (-(90 + (LeadAngleAverage * 180 / Math.PI))).ToString("F3");
-            
+
+        }
+
+        private void textBoxBlobAreaMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBlobAreaMin.Text);
+            if (!textBoxBlobAreaMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxBlobAreaMin.Text = _TextBoxValue;
+                textBoxBlobAreaMin.Select(textBoxBlobAreaMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxBlobAreaMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxBlobAreaMax.Text);
+            if (!textBoxBlobAreaMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxBlobAreaMax.Text = _TextBoxValue;
+                textBoxBlobAreaMax.Select(textBoxBlobAreaMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxWidthSizeMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxWidthSizeMin.Text, true);
+            if (!textBoxWidthSizeMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxWidthSizeMin.Text = _TextBoxValue;
+                textBoxWidthSizeMin.Select(textBoxWidthSizeMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxWidthSizeMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxWidthSizeMax.Text, true);
+            if (!textBoxWidthSizeMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxWidthSizeMax.Text = _TextBoxValue;
+                textBoxWidthSizeMax.Select(textBoxWidthSizeMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxHeightSizeMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxHeightSizeMin.Text, true);
+            if (!textBoxHeightSizeMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxHeightSizeMin.Text = _TextBoxValue;
+                textBoxHeightSizeMin.Select(textBoxHeightSizeMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxHeightSizeMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxHeightSizeMax.Text, true);
+            if (!textBoxHeightSizeMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxHeightSizeMax.Text = _TextBoxValue;
+                textBoxHeightSizeMax.Select(textBoxHeightSizeMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadCount_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadCount.Text);
+            if (!textBoxLeadCount.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadCount.Text = _TextBoxValue;
+                textBoxLeadCount.Select(textBoxLeadCount.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadPitch_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadPitch.Text, true);
+            if (!textBoxLeadPitch.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadPitch.Text = _TextBoxValue;
+                textBoxLeadPitch.Select(textBoxLeadPitch.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadPitchMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadPitchMin.Text, true);
+            if (!textBoxLeadPitchMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadPitchMin.Text = _TextBoxValue;
+                textBoxLeadPitchMin.Select(textBoxLeadPitchMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadPitchMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadPitchMax.Text, true);
+            if (!textBoxLeadPitchMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadPitchMax.Text = _TextBoxValue;
+                textBoxLeadPitchMax.Select(textBoxLeadPitchMax.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadBentAngle_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadBentAngle.Text, true);
+            if (!textBoxLeadBentAngle.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadBentAngle.Text = _TextBoxValue;
+                textBoxLeadBentAngle.Select(textBoxLeadBentAngle.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadBentAngleMin_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadBentAngleMin.Text, true);
+            if (!textBoxLeadBentAngleMin.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadBentAngleMin.Text = _TextBoxValue;
+                textBoxLeadBentAngleMin.Select(textBoxLeadBentAngleMin.Text.Length, 0);
+            }
+        }
+
+        private void textBoxLeadBentAngleMax_TextChanged(object sender, EventArgs e)
+        {
+            string _TextBoxValue = TextboxValueCheckNumbers(textBoxLeadBentAngleMax.Text, true);
+            if (!textBoxLeadBentAngleMax.Text.Equals(_TextBoxValue))
+            {
+                textBoxLeadBentAngleMax.Text = _TextBoxValue;
+                textBoxLeadBentAngleMax.Select(textBoxLeadBentAngleMax.Text.Length, 0);
+            }
+        }
+        private string TextboxValueCheckNumbers(string _TextBoxValue, bool _UseDecimalPoint = false)
+        {
+            string _ResultValue = String.Empty;
+            foreach (char _c in _TextBoxValue)
+            {
+
+                if (true == _UseDecimalPoint && (char.IsNumber(_c) || _c.Equals('.'))) _ResultValue = String.Format("{0}{1}", _ResultValue, _c);
+                else if (false == _UseDecimalPoint && char.IsNumber(_c)) _ResultValue = String.Format("{0}{1}", _ResultValue, _c);
+            }
+
+            return _ResultValue;
         }
         #endregion Control Event
 
@@ -159,12 +301,12 @@ namespace InspectionSystemManager
         {
             CogLeadAlgoRcp.ForeGround = Convert.ToInt32(graLabelForeground.Text);
             CogLeadAlgoRcp.ThresholdMin = Convert.ToInt32(graLabelThresholdValue.Text);
-            CogLeadAlgoRcp.BlobAreaMin = Convert.ToInt32(textBoxBlobAreaMin.Text);
-            CogLeadAlgoRcp.BlobAreaMax = Convert.ToInt32(textBoxBlobAreaMax.Text);
-            CogLeadAlgoRcp.WidthMin = Convert.ToInt32(textBoxWidthSizeMin.Text);
-            CogLeadAlgoRcp.WidthMax = Convert.ToInt32(textBoxWidthSizeMax.Text);
-            CogLeadAlgoRcp.HeightMin = Convert.ToInt32(textBoxHeightSizeMin.Text);
-            CogLeadAlgoRcp.HeightMax = Convert.ToInt32(textBoxHeightSizeMax.Text);
+            CogLeadAlgoRcp.BlobAreaMin = Convert.ToDouble(textBoxBlobAreaMin.Text);
+            CogLeadAlgoRcp.BlobAreaMax = Convert.ToDouble(textBoxBlobAreaMax.Text);
+            CogLeadAlgoRcp.WidthMin = Convert.ToDouble(textBoxWidthSizeMin.Text);
+            CogLeadAlgoRcp.WidthMax = Convert.ToDouble(textBoxWidthSizeMax.Text);
+            CogLeadAlgoRcp.HeightMin = Convert.ToDouble(textBoxHeightSizeMin.Text);
+            CogLeadAlgoRcp.HeightMax = Convert.ToDouble(textBoxHeightSizeMax.Text);
 
             CogLeadAlgoRcp.IsLeadBentInspection = ckLeadBent.Checked;
             CogLeadAlgoRcp.LeadBent = Convert.ToDouble(textBoxLeadBentAngle.Text);
