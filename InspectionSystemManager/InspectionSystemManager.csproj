@@ -72,6 +72,9 @@
     <Compile Include="Algorithm\InspectionClass\InspectionPattern.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionID.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionLineFind.cs" />
+    <Compile Include="InspSysManagerWindow\InspectionWindowProcSurface.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="InspSysManagerWindow\InspectionWindowProcLead.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +164,10 @@
     <ProjectReference Include="..\LogManager\LogMessageManager.csproj">
       <Project>{635bf6d0-1b81-4b61-9f53-5e93c5335b28}</Project>
       <Name>LogMessageManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MapDataManager\MapDataManager.csproj">
+      <Project>{7a1b5eb3-9664-49c0-9935-f8d728dacc9f}</Project>
+      <Name>MapDataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\ParameterManager\ParameterManager.csproj">
       <Project>{72a2c4a7-8c84-416f-a883-9cb823bc9155}</Project>

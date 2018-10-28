@@ -18,6 +18,7 @@ namespace KPVisionInspectionFramework
     {
         private ucMainResultID      MainResultIDWnd;
         private ucMainResultLead    MainResultLeadWnd;
+        private ucMainResultSorter  MainResultSorterWnd;
 
         private eProjectType ProjectType;
         private string LastRecipeName;
@@ -53,6 +54,13 @@ namespace KPVisionInspectionFramework
                 MainResultLeadWnd = new ucMainResultLead(LastRecipeName);
                 MainResultLeadWnd.ScreenshotEvent += new ucMainResultLead.ScreenshotHandler(ScreenShot);
                 panelMain.Controls.Add(MainResultLeadWnd);
+            }
+
+            else if (ProjectType == eProjectType.SORTER)
+            {
+                MainResultSorterWnd = new ucMainResultSorter(LastRecipeName);
+
+                panelMain.Controls.Add(MainResultSorterWnd);
             }
 
             SetWindowLocation(1482, 148);
@@ -214,6 +222,7 @@ namespace KPVisionInspectionFramework
             if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)           MainResultIDWnd.SetResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN) MainResultLeadWnd.SetNeedleResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)    MainResultLeadWnd.SetLeadResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)      MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
 
         }
 

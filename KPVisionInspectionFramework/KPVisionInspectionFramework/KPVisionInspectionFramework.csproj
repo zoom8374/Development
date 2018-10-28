@@ -103,9 +103,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\Program.cs" />
-    <Compile Include="Class\MainProcessBase.cs" />
-    <Compile Include="Class\MainProcessDispensor.cs" />
-    <Compile Include="Class\MainProcessID.cs" />
+    <Compile Include="MainProcessClass\MainProcessBase.cs" />
+    <Compile Include="MainProcessClass\MainProcessDispensor.cs" />
+    <Compile Include="MainProcessClass\MainProcessID.cs" />
+    <Compile Include="MainProcessClass\MainProcessSorter.cs" />
     <Compile Include="MainResultForm\MainResultBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +138,12 @@
     <Compile Include="MainResultForm\ucMainResultLead.Designer.cs">
       <DependentUpon>ucMainResultLead.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainResultForm\ucMainResultSorter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainResultForm\ucMainResultSorter.Designer.cs">
+      <DependentUpon>ucMainResultSorter.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm\CodeSettingWindow.resx">
       <DependentUpon>CodeSettingWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainResultForm\ucMainResultID.resx">
       <DependentUpon>ucMainResultID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainResultForm\ucMainResultSorter.resx">
+      <DependentUpon>ucMainResultSorter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -196,6 +206,7 @@
     <None Include="Resources\Config.png" />
     <None Include="Resources\Align.png" />
     <None Include="Resources\Serial.png" />
+    <None Include="Resources\MapData.png" />
     <Content Include="VisionInspection.ico" />
   </ItemGroup>
   <ItemGroup>

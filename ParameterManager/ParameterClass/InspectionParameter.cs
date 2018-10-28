@@ -363,6 +363,7 @@ namespace ParameterManager
     public class InspectionParameter
     {
         public List<InspectionAreaParameter> InspAreaParam;
+        public MapDataParameter              MapDataParam;
         public double ResolutionX = 0.005;
         public double ResolutionY = 0.005;
         public double LastResultDisplayPosX = 50;
@@ -371,6 +372,7 @@ namespace ParameterManager
         public InspectionParameter()
         {
             InspAreaParam = new List<InspectionAreaParameter>();
+            MapDataParam = new MapDataParameter();
         }
     }
 }

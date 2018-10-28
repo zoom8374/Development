@@ -11,6 +11,7 @@ namespace HistoryManager
     public class CHistoryManager
     {
         private static HistoryWindow HistoryWnd = new HistoryWindow();
+        private static string ProjectName;
 
         public bool IsShowHistoryWindow = false;
 
@@ -20,9 +21,11 @@ namespace HistoryManager
         static string INSERT_string = "";
         static string CreateComm = "";
 
-        public CHistoryManager(string _ProjectType)
+        public CHistoryManager(string _ProjectName, string _ProjectType)
         {
-            HistoryWnd.Initialize(_ProjectType);
+            ProjectName = _ProjectName;
+
+            HistoryWnd.Initialize(ProjectName, _ProjectType);
 
             if (_ProjectType == "DISPENSER")
             {
@@ -89,7 +92,8 @@ namespace HistoryManager
         private static bool CheckDBFile()
         {
             bool CreateTable = false;
-            string connStrFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData";
+            //string connStrFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData";
+            string connStrFolderPath = String.Format(@"D:\VisionInspectionData\{0}\HistoryData", ProjectName);
 
             if (false == Directory.Exists(connStrFolderPath))
             {

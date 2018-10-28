@@ -51,7 +51,12 @@ namespace ParameterManager
         {
             bool _Result = false;
 
-            ProjectName = _ProjectName;
+            ProjectName             = _ProjectName;
+            InspectionDefaultPath   = @"D:\VisionInspectionData\" + ProjectName + @"\";
+            ISMParameterFullPath    = @"D:\VisionInspectionData\" + ProjectName + @"\RecipeParameter\Default\ISMParameter1.Sys";
+
+            RecipeParameterPath     = InspectionDefaultPath + @"RecipeParameter\";
+            SystemParameterFullPath = InspectionDefaultPath + @"SystemParameter.Sys";
 
             do
             {

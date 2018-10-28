@@ -353,5 +353,10 @@ namespace HistoryManager
 
             return _strRecipeList;
         }
+
+        public static void SetHistoryFolderPath(string _ProjectName)
+        {
+            connStrFolderPath = String.Format(@"D:\VisionInspectionData\{0}\HistoryData", _ProjectName);
+        }
     }
 }

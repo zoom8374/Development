@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Cognex.VisionPro;
-
-
 using ParameterManager;
 
 namespace InspectionSystemManager

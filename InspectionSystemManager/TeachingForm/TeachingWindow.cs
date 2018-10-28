@@ -93,6 +93,7 @@ namespace InspectionSystemManager
             if (_ProjectItem == eProjectItem.LEAD_INSP)         ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.NEEDLE_ALIGN) ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.ID_INSP)      ucCogBlobReferWnd.Initialize(true);
+            else if (_ProjectItem == eProjectItem.SURFACE)      ucCogBlobReferWnd.Initialize(false);
 
             InspPatternProcess = new InspectionPattern();
             InspBlobReferProcess = new InspectionBlobReference();
@@ -171,6 +172,11 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
+            }
+
+            else if (ProjectItem == eProjectItem.SURFACE)
+            {
+                ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
             }
 
             else
@@ -859,6 +865,11 @@ namespace InspectionSystemManager
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD)          _Name = "Lead status inspection";
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID)            _Name = "Search a BarCode Insepction"; //"ID - Search"
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)     _Name = "Search a line";
+                }
+
+                else if (ProjectItem == eProjectItem.SURFACE)
+                {
+                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB) _Name = "Defect detection";        //"Blob - Defect"
                 }
 
                 AddInspectionAlgo(_Index, _Name, _Enable);

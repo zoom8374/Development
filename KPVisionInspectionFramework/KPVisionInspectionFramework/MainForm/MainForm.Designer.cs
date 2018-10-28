@@ -41,6 +41,7 @@
             this.rbLight = new System.Windows.Forms.RibbonButton();
             this.rbDIO = new System.Windows.Forms.RibbonButton();
             this.rbConfig = new System.Windows.Forms.RibbonButton();
+            this.rbMapData = new System.Windows.Forms.RibbonButton();
             this.ribbonPanelData = new System.Windows.Forms.RibbonPanel();
             this.rbRecipe = new System.Windows.Forms.RibbonButton();
             this.rbLog = new System.Windows.Forms.RibbonButton();
@@ -48,10 +49,10 @@
             this.rbFolder = new System.Windows.Forms.RibbonButton();
             this.ribbonPanelStatus = new System.Windows.Forms.RibbonPanel();
             this.rbLabelCurrentRecipe = new System.Windows.Forms.RibbonLabel();
+            this.rbLabelCode = new System.Windows.Forms.RibbonLabel();
             this.ribbonPanelSystem = new System.Windows.Forms.RibbonPanel();
             this.rbExit = new System.Windows.Forms.RibbonButton();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.rbLabelCode = new System.Windows.Forms.RibbonLabel();
             this.SuspendLayout();
             // 
             // ribbonMain
@@ -119,6 +120,7 @@
             this.ribbonPanelSetting.Items.Add(this.rbLight);
             this.ribbonPanelSetting.Items.Add(this.rbDIO);
             this.ribbonPanelSetting.Items.Add(this.rbConfig);
+            this.ribbonPanelSetting.Items.Add(this.rbMapData);
             this.ribbonPanelSetting.Text = "Setting ";
             // 
             // rbAlign
@@ -167,6 +169,14 @@
             this.rbConfig.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbConfig.SmallImage")));
             this.rbConfig.Text = " Config ";
             this.rbConfig.Click += new System.EventHandler(this.rbConfig_Click);
+            // 
+            // rbMapData
+            // 
+            this.rbMapData.Image = global::KPVisionInspectionFramework.Properties.Resources.MapData;
+            this.rbMapData.MinimumSize = new System.Drawing.Size(70, 60);
+            this.rbMapData.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbMapData.SmallImage")));
+            this.rbMapData.Text = " MapData ";
+            this.rbMapData.Click += new System.EventHandler(this.rbMapData_Click);
             // 
             // ribbonPanelData
             // 
@@ -218,6 +228,12 @@
             // 
             this.rbLabelCurrentRecipe.Text = "Recipe : Default Recipe";
             // 
+            // rbLabelCode
+            // 
+            this.rbLabelCode.Text = "CODE : -";
+            this.rbLabelCode.ToolTip = "CODE";
+            this.rbLabelCode.DoubleClick += new System.EventHandler(this.rbLabelCode_DoubleClick);
+            // 
             // ribbonPanelSystem
             // 
             this.ribbonPanelSystem.Items.Add(this.rbExit);
@@ -238,12 +254,6 @@
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(1264, 846);
             this.panelMain.TabIndex = 2;
-            // 
-            // rbLabelCode
-            // 
-            this.rbLabelCode.Text = "CODE : -";
-            this.rbLabelCode.ToolTip = "CODE";
-            this.rbLabelCode.DoubleClick += new System.EventHandler(this.rbLabelCode_DoubleClick);
             // 
             // MainForm
             // 
@@ -292,6 +302,7 @@
         private System.Windows.Forms.RibbonButton rbAlign;
         private System.Windows.Forms.RibbonButton rbSerial;
         private System.Windows.Forms.RibbonLabel rbLabelCode;
+        private System.Windows.Forms.RibbonButton rbMapData;
     }
 }
 

@@ -35,10 +35,9 @@ namespace InspectionSystemManager
         private InspectionParameter InspParam = new InspectionParameter();
         public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
         public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
+        private SendResultParameter SendResParam = new SendResultParameter();
         private double AnyReferenceX = 0;
         private double AnyReferenceY = 0;
-
-        private SendResultParameter SendResParam = new SendResultParameter();
 
         private int ID;
         private eProjectType ProjectType;
@@ -586,6 +585,11 @@ namespace InspectionSystemManager
 
             kpCogDisplayMain.SetDisplayImage(_CogImage);
             GC.Collect();
+        }
+
+        public CogImage8Grey GetOriginImage()
+        {
+            return OriginImage;
         }
         #endregion Set Image Display Control
 
@@ -1307,6 +1311,7 @@ namespace InspectionSystemManager
             if (ProjectItem == eProjectItem.LEAD_INSP)          SendResParam = GetLeadInspectionResultAnalysis();
             else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  SendResParam = GetNeedleFindResultAnalysis();
             else if (ProjectItem == eProjectItem.ID_INSP)       SendResParam = GetIDReadResultAnalysis();
+            else if (ProjectItem == eProjectItem.SURFACE)       SendResParam = GetSurfaceInspectionResultAnalysis();
 
             return _Result;
         }

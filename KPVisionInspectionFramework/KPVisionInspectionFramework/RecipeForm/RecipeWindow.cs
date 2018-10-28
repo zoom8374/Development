@@ -18,6 +18,7 @@ namespace KPVisionInspectionFramework
     public partial class RecipeWindow : Form
     {
         private string RecipeFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\RecipeParameter\";
+        private string ProjectName = "CIPOSLeadInspection";
         private string CurrentRecipeName;
         private bool IsRecipeNew = false;
 
@@ -30,9 +31,12 @@ namespace KPVisionInspectionFramework
             InitializeComponent();
         }
 
-        public RecipeWindow(string _CurrentRecipe = "Default")
+        public RecipeWindow(string _ProjectName, string _CurrentRecipe = "Default")
         {
             InitializeComponent();
+
+            ProjectName = _ProjectName;
+            RecipeFolderPath = String.Format(@"D:\VisionInspectionData\{0}\RecipeParameter\", ProjectName);
 
             CurrentRecipeName = _CurrentRecipe;
             LoadRecipeList();

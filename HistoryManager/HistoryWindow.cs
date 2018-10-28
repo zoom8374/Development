@@ -15,7 +15,8 @@ namespace HistoryManager
 {
     public partial class HistoryWindow : Form
     {
-        DataSet HistorySet = new DataSet();
+        private DataSet HistorySet = new DataSet();
+        private string ProjectName;
 
         string SelectDateFrom;
         string SelectDateTo;
@@ -33,8 +34,9 @@ namespace HistoryManager
             InitializeComponent();
         }
 
-        public void Initialize(string _ProjectType)
+        public void Initialize(string _ProjectName, string _ProjectType)
         {
+            ProjectName = _ProjectName;
             ProjectType = _ProjectType;
         
             if (ProjectType == "DISPENSER") ScreenshotIndex = 4;
@@ -51,6 +53,8 @@ namespace HistoryManager
             HistoryToolTip.SetToolTip(btnAllview, "View all");
             HistoryToolTip.SetToolTip(btnSelectDelete, "Delete selected Period");
             HistoryToolTip.SetToolTip(btnAllDelete, "Delete All");
+
+            SqliteManager.SetHistoryFolderPath(ProjectName);
         }
 
         public void GridViewInitialize()
@@ -322,7 +326,8 @@ namespace HistoryManager
         
         private void LoadRecipeList()
         {
-            string _RecipeFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\RecipeParameter";
+            //string _RecipeFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\RecipeParameter";
+            string _RecipeFolderPath = String.Format(@"D:\VisionInspectionData\{0}\RecipeParameter", ProjectName);
             DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeFolderPath);
             if (true == _DirInfo.Exists)
             {

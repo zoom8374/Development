@@ -5,8 +5,11 @@ using System.Text;
 using System.Drawing;
 using System.Threading;
 
+using Cognex.VisionPro;
+
 using LogMessageManager;
 using ParameterManager;
+using MapDataManager;
 
 namespace InspectionSystemManager
 {
@@ -16,6 +19,8 @@ namespace InspectionSystemManager
 
         private InspectionWindow InspWnd;
         private string           InspWndName;
+
+        private MapDataWindow    MapDataWnd; //2018.10.24
 
         private Thread ThreadInspection;
         private bool IsThreadInspectionExit = false;
@@ -38,6 +43,7 @@ namespace InspectionSystemManager
             ID = _ID;
             IsSimulationMode = _IsSimulationMode;
 
+            MapDataWnd = new MapDataWindow();
             InspWnd = new InspectionWindow();
             InspWndName = String.Format(" {0} Inspection Window", _SystemName);
 
@@ -62,6 +68,8 @@ namespace InspectionSystemManager
             InspWnd.InitializeResolution(_InspSysManagerParam.ResolutionX, _InspSysManagerParam.ResolutionY);
             InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
+
+            MapDataWnd.Initialize(InspParam.MapDataParam);
         }
 
         public void DeInitialize()
@@ -198,6 +206,17 @@ namespace InspectionSystemManager
         private void ImageGrabLiveStop()
         {
 
+        }
+
+        public CogImage8Grey GetOriginImage()
+        {
+            return InspWnd.GetOriginImage();
+        }
+
+        public void ShowMapDataWindow()
+        {
+            MapDataWnd.SetMapDataImage(InspWnd.GetOriginImage());
+            MapDataWnd.ShowDialog();
         }
         #endregion Vision Management
 

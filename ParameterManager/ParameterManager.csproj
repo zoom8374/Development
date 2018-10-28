@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CParameterManager.cs" />
+    <Compile Include="ParameterClass\MapDataParameter.cs" />
     <Compile Include="ParameterClass\InspectionParameter.cs" />
     <Compile Include="ParameterClass\DefineParameter.cs" />
     <Compile Include="ParameterClass\InspectionSystemManagerParameter.cs" />

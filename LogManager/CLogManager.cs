@@ -22,8 +22,9 @@ namespace LogMessageManager
         #endregion Log Window Variable
 
         #region Initialize
-        public CLogManager()
+        public CLogManager(string _ProjectName)
         {
+            LogWnd.Initialize(_ProjectName);
             LogWnd.LogWindoCloserEvent += new LogWindowSE.LogWindoCloserwHandler(LogWindowCloseEventFunction);
         }
         #endregion Initialize

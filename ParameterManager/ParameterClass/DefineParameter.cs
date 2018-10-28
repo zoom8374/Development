@@ -10,12 +10,12 @@ namespace ParameterManager
     /// <summary>
     /// Project Type
     /// </summary>
-    public enum eProjectType { NONE = 0, DISPENSER, BLOWER };
+    public enum eProjectType { NONE = 0, DISPENSER, BLOWER, SORTER };
 
     /// <summary>
     /// Project Item
     /// </summary>
-    public enum eProjectItem { NEEDLE_ALIGN = 0, LEAD_INSP, ID_INSP};
+    public enum eProjectItem { NEEDLE_ALIGN = 0, LEAD_INSP, ID_INSP, SURFACE};
 
     /// <summary>
     /// Algorithm Type

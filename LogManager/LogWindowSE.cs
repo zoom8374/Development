@@ -11,6 +11,7 @@ namespace LogMessageManager
 {
     public partial class LogWindowSE : Form
     {
+        private string ProjectName;
         private bool ResizingFlag = false;
         private bool IsResizing = false;
         private Point LastPosition = new Point(0, 0);
@@ -27,6 +28,11 @@ namespace LogMessageManager
             LastPosition.Y = this.Location.Y;
 
             LogSettingWnd = new LogSettingWindow();
+        }
+
+        public void Initialize(string _ProjectName)
+        {
+            ProjectName = _ProjectName;
         }
 
         #region Control Default Event
@@ -177,7 +183,8 @@ namespace LogMessageManager
 
         private void btnLogFolderOpen_Click(object sender, EventArgs e)
         {
-            string _LogFileFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\Log";
+            //string _LogFileFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\Log";
+            string _LogFileFolderPath = String.Format(@"D:\VisionInspectionData\{0}\Log", ProjectName);
 
             LogWindoCloserEvent();
 
