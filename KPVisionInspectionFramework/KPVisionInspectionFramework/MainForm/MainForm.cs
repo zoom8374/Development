@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
+using System.Xml;
 
 using InspectionSystemManager;
 using ParameterManager;
@@ -32,6 +34,7 @@ namespace KPVisionInspectionFramework
         private CHistoryManager             HistoryManager;
         private FolderPathWindow            FolderPathWnd;
 
+        private string ProjectName;
         private int ISMModuleCount = 1;
 
         private Timer TimerShowWindow = new Timer(); //Dialog Show용 Timer
@@ -60,10 +63,37 @@ namespace KPVisionInspectionFramework
 
         private void ProgramLogin()
         {
+            #region VisionInspectionData Common File
+            DirectoryInfo _DirInfo = new DirectoryInfo(@"D:\VisionInspectionData\Common\");
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            string _ProjectInfoFileName = @"D:\VisionInspectionData\Common\ProjectInformation.xml";
+            if (false == File.Exists(_ProjectInfoFileName))
+            {
+                File.Create(_ProjectInfoFileName).Close();
+                ProjectName = "CIPOSLeadInspection";
+            }
+
+            else
+            {
+                XmlNodeList _XmlNodeList = GetNodeList(_ProjectInfoFileName);
+                if (null == _XmlNodeList) return;
+                foreach (XmlNode _Node in _XmlNodeList)
+                {
+                    if (null == _Node) return;
+                    switch (_Node.Name)
+                    {
+                        case "ProjectName": ProjectName = _Node.InnerText; break;
+                    }
+                }
+            }
+
+            if (ProjectName == "") ProjectName = "CIPOSLeadInspection";
+            #endregion VisionInspectionData Common File
+
             #region Parameter Initialize
             ParamManager = new CParameterManager();
-            ParamManager.Initialize("CIPOSLeadInspection");
-            //ParamManager.Initialize("KPSorterInspection");
+            ParamManager.Initialize(ProjectName);
             #endregion Parameter Initialize
         }
 
@@ -80,14 +110,21 @@ namespace KPVisionInspectionFramework
                 rbConfig.Visible = false;
                 rbLabelCode.Visible = false;
                 rbFolder.Visible = false;
-                //rbMapData.Visible = false;
+                rbMapData.Visible = false;
             }
 
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
             {
                 rbAlign.Visible = false;
                 rbConfig.Visible = false;
-                //rbMapData.Visible = false;
+                rbMapData.Visible = false;
+            }
+
+            else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
+            {
+                rbAlign.Visible = false;
+                rbLabelCode.Visible = false;
+
             }
             #endregion Ribbon Menu Setting
 
@@ -167,7 +204,7 @@ namespace KPVisionInspectionFramework
             else                                                                        MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
-            MainProcess.Initialize();
+            MainProcess.Initialize(@"D:\VisionInspectionData\Common\");
             #endregion MainProcess Setting
 
             #region InspSysManager Initialize
@@ -185,7 +222,12 @@ namespace KPVisionInspectionFramework
             #endregion InspSysManager Initialize
 
             //LDH, 2018.09.19
-            if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType) MainProcess.SendSerialData(eMainProcCmd.REQUEST);
+            if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            {
+                MainProcess.SendSerialData(eMainProcCmd.REQUEST);
+                System.Threading.Thread.Sleep(3000);
+                MainProcess.SendSerialData(eMainProcCmd.REQUEST, "LOT");
+            }
         }
 
         private void DeInitialize()
@@ -295,6 +337,26 @@ namespace KPVisionInspectionFramework
             }
 
             base.WndProc(ref message);
+        }
+
+        private XmlNodeList GetNodeList(string _XmlFilePath)
+        {
+            XmlNodeList _XmlNodeList = null;
+
+            try
+            {
+                XmlDocument _XmlDocument = new XmlDocument();
+                _XmlDocument.Load(_XmlFilePath);
+                XmlElement _XmlRoot = _XmlDocument.DocumentElement;
+                _XmlNodeList = _XmlRoot.ChildNodes;
+            }
+
+            catch
+            {
+                _XmlNodeList = null;
+            }
+
+            return _XmlNodeList;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -440,6 +502,7 @@ namespace KPVisionInspectionFramework
             {
                 case eISMCMD.TEACHING_STATUS:   TeachingStatusCheck(Convert.ToBoolean(_Value)); break;
                 case eISMCMD.TEACHING_SAVE:     TeachingParameterSave(Convert.ToInt32(_Value)); break;
+                case eISMCMD.MAPDATA_SAVE:      MapDataParameterSave(_Value, _ID);              break;
                 case eISMCMD.SEND_DATA:         SendResultData(_Value);                         break;
                 case eISMCMD.SET_RESULT:        SetResultData(_Value);                          break;
                 case eISMCMD.INSP_COMPLETE:     InspectionComplete(_Value, _ID);                break;
@@ -474,8 +537,15 @@ namespace KPVisionInspectionFramework
         private void TeachingParameterSave(int _ID)
         {
             InspSysManager[_ID].GetInspectionParameterRef(ref ParamManager.InspParam[_ID]);
-
             ParamManager.WriteInspectionParameter(_ID);
+        }
+
+        private void MapDataParameterSave(object _Value, int _ID)
+        {
+            var _MapDataParam = _Value as MapDataParameter;
+            CParameterManager.RecipeCopy(_MapDataParam, ref ParamManager.InspMapDataParam[_ID]);
+
+            ParamManager.WriteInspectionMapDataparameter(_ID);
         }
         #endregion Event : Inspection System Manager Event & Function
 
@@ -497,19 +567,25 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = true;
 
-            ParamManager.RecipeReload(_RecipeName);
-
-            //LDH, 2018.07.26, Light File 따로 관리
-            LightControlManager.RecipeChange(_RecipeName, _SrcRecipe);
-            ResultBaseWnd.SetLastRecipeName((eProjectType)ParamManager.SystemParam.ProjectType, _RecipeName);
-
-            for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
+            if (true == ParamManager.RecipeReload(_RecipeName))
             {
-                InspSysManager[iLoopCount].SetInspectionParameter(ParamManager.InspParam[iLoopCount], false);
-                InspSysManager[iLoopCount].GetInspectionParameterRef(ref ParamManager.InspParam[iLoopCount]);
-            }
+                //LDH, 2018.07.26, Light File 따로 관리
+                LightControlManager.RecipeChange(_RecipeName, _SrcRecipe);
+                ResultBaseWnd.SetLastRecipeName((eProjectType)ParamManager.SystemParam.ProjectType, _RecipeName);
 
-            UpdateRibbonRecipeName(_RecipeName);
+                for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
+                {
+                    InspSysManager[iLoopCount].SetInspectionParameter(ParamManager.InspParam[iLoopCount], false);
+                    InspSysManager[iLoopCount].GetInspectionParameterRef(ref ParamManager.InspParam[iLoopCount]);
+                }
+
+                UpdateRibbonRecipeName(_RecipeName);
+            }
+            else
+            {
+                MessageBox.Show("Recipe 변경에 실패했습니다.\nRecipe를 확인하세요.");
+                _Result = false;
+            }
 
             return _Result;
         }
@@ -519,12 +595,29 @@ namespace KPVisionInspectionFramework
             rbLabelCurrentRecipe.Text = "Recipe : " + _RecipeName + " ";
         }
 
-        private bool LOTChange(string _LOTName)
+        private bool LOTChange(string _LOTInfo)
         {
             bool _Result = false;
 
-            if (_LOTName == "LotEnd") { ResultBaseWnd.LOTEnd(); ResultBaseWnd.ClearResultData(); }
-            else                      ResultBaseWnd.ClearResultData(_LOTName, ParamManager.SystemParam.InDataFolderPath, ParamManager.SystemParam.OutDataFolderPath);
+            string[] _LOTInfoTemp = _LOTInfo.Split(',');
+            string _LOTName = _LOTInfoTemp[1];
+
+            try
+            {
+                if (_LOTName == "LotEnd") { ResultBaseWnd.LOTEnd(); ResultBaseWnd.ClearResultData(); }
+                else
+                {
+                    ResultBaseWnd.ClearResultData(_LOTName, ParamManager.SystemParam.InDataFolderPath, ParamManager.SystemParam.OutDataFolderPath);
+                    ResultBaseWnd.LOTStart(_LOTInfoTemp);
+                    string IndataTotalCount = ResultBaseWnd.GetTotalCount();
+                    if (IndataTotalCount != null) MainProcess.SendSerialData(eMainProcCmd.LOT_RETURN, IndataTotalCount);
+                }
+                _Result = true;
+            }
+            catch(Exception ex)
+            {
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : LOTChange Exception!!!"), CLogManager.LOG_LEVEL.LOW);
+            }  
 
             return _Result;
         }
@@ -570,17 +663,22 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = true;
 
-            string _LotNumber = _Value as string;
+            string LOTInfo = _Value as string;
 
-            _Result = LOTChange(_LotNumber);
+            _Result = LOTChange(LOTInfo);
 
             if (!_Result) return false;
 
             if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType)
             {
-                if(_LotNumber == "LotEnd") MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE, "END");
-                else
-                    MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE);
+                string[] ReceiveData = LOTInfo.Split(',');
+
+                switch(ReceiveData[0])
+                {
+                    case "@E": MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE, "END"); break;
+                    case "@N": MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE, "RELOAD"); break;
+                    case "@L": MainProcess.SendSerialData(eMainProcCmd.LOT_CHANGE); break;
+                }
             }
 
             return _Result;

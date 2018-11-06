@@ -40,10 +40,16 @@ namespace KPVisionInspectionFramework
         string OutDataFolderPath;
         List<string> InDataList = new List<string>();
         List<string> OutDataList = new List<string>();
+
         int InDataLimitCount = 0;
+        string LOTType;
         string NowLotNum;
+        string NowLotSeparateNum;
+        string OperatorName;
+        string MCNum;
         string NowInspectionID;
         string InspectionTime;
+        string IndataTotalCount;
         
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
         public event ScreenshotHandler ScreenshotEvent;
@@ -82,6 +88,21 @@ namespace KPVisionInspectionFramework
         public void SetAutoMode(bool _AutoModeFlag)
         {
             AutoModeFlag = _AutoModeFlag;
+        }
+
+        //LDH, 2018.10.29, LOT Start 시 처리
+        public void LOTStart(string[] _LOTInfo)
+        {
+            LOTType = _LOTInfo[0];
+            NowLotSeparateNum = _LOTInfo[2];
+            OperatorName = _LOTInfo[4];
+            MCNum = _LOTInfo[5];
+            InDataLimitCount = Convert.ToInt32(_LOTInfo[6]);
+
+            if (NowLotNum != "") ReadInData();
+
+            //LDH, 2018.10.29, RELOAD면 Backup Load
+            if (LOTType == "@N") ReadBackupData();
         }
 
         //LDH, 2018.10.11, LOT End 시 처리
@@ -124,8 +145,12 @@ namespace KPVisionInspectionFramework
 
             InDataList.Clear();
             OutDataList.Clear();
+
             InDataLimitCount = 0;
-            NowLotNum = "";
+            LOTType = "";
+            NowLotSeparateNum = "";
+            OperatorName = "";
+            MCNum = "";
             NowInspectionID = "";
             InspectionTime = "";
 
@@ -133,9 +158,6 @@ namespace KPVisionInspectionFramework
             NowLotNum = _LotNum;
             InDataFolderPath = _InDataPath;
             OutDataFolderPath = _OutDataPath;
-            InDataLimitCount = 13;
-            ReadBackupData();
-            if (NowLotNum != "") ReadInData();
 
             //LDH, 2018.08.13, Hitory Parameter용 배열 초기화
             HistoryParam = new string[4];
@@ -174,8 +196,10 @@ namespace KPVisionInspectionFramework
 
                 if (LastResult == "OK")         ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
                 else if (LastResult == "DUMMY") ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
+                else if (LastResult == "GOOD")  ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
                 else                            ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Red);
 
+                if (LastResult != "GOOD" && LastResult != "OK" && LastResult != "DUMMY") { _ResultParam.IsGood = false; _ResultParam.NgType = eNgType.ID; }
             }
 
             else
@@ -257,6 +281,8 @@ namespace KPVisionInspectionFramework
             {
                 FileReadTemp = objFileManager.txtFileRead(BackupFilePath);
 
+                OutDataList.Clear();
+
                 for (int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
                 {
                     if (FileReadTemp[0] != "") { NowLotNum = FileReadTemp[0].Substring(0, FileReadTemp[0].IndexOf(',')); ReadLOTNumEvent(NowLotNum); }
@@ -300,18 +326,28 @@ namespace KPVisionInspectionFramework
             }
 
             FileReadTemp = objFileManager.txtFileRead(FolderPath);
+
+
             OutDataList.Clear();
 
             for (int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
             {
-                if (FileReadTemp[iLoopCount] != "")
+                if (FileReadTemp[iLoopCount] != "" && FileReadTemp[iLoopCount] != "EOL")
                 {
                     InDataList.Add(FileReadTemp[iLoopCount]);
                     OutDataList.Add(FileReadTemp[iLoopCount]);
                 }
             }
 
+            string[] TotalCountTemp = InDataList[0].Split(',');
+
+            IndataTotalCount = TotalCountTemp[1];
             ReadLOTNumEvent(NowLotNum);
+        }
+
+        public string GetTotalCount()
+        {
+            return IndataTotalCount;
         }
 
         //LDH, 2018.09.28, OutData 쓰기

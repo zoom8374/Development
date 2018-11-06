@@ -14,7 +14,7 @@ namespace KPVisionInspectionFramework
         public delegate void MainProcessCommandHandler(eMainProcCmd _MainCmd, object _Value);
         public event MainProcessCommandHandler MainProcessCommandEvent;
 
-        public virtual void Initialize()
+        public virtual void Initialize(string CommonFolderPath)
         {
 
         }

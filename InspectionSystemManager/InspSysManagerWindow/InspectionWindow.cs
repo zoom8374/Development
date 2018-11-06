@@ -28,6 +28,7 @@ namespace InspectionSystemManager
         private InspectionLead InspLeadProc;
         private InspectionID InspIDProc;
         private InspectionLineFind InspLineFindProc;
+        private InspectionMultiPattern InspMultiPatternProc;
         private CCameraManager CameraManager;
 
         private TeachingWindow TeachWnd;
@@ -36,6 +37,7 @@ namespace InspectionSystemManager
         public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
         public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
         private SendResultParameter SendResParam = new SendResultParameter();
+		
         private double AnyReferenceX = 0;
         private double AnyReferenceY = 0;
 
@@ -694,9 +696,9 @@ namespace InspectionSystemManager
                 if (false == InspectionResultClear()) break;
                 if (false == InspectionProcess()) break;
                 if (false == InpsectionResultAnalysis()) break;
+                if (false == InspectionDataSet()) break; //send랑 순서바꾼거 확인해보기
                 if (ProjectType != eProjectType.DISPENSER)
                     if (false == InspectionDataSend()) break;
-                if (false == InspectionDataSet()) break;
                 if (false == InspectionResultDsiplay()) break;
                 if (false == InspectionComplete(true)) break;
 				IsThreadImageSaveTrigger = true;
@@ -844,13 +846,14 @@ namespace InspectionSystemManager
             #endregion Buffer Area Calculate
 
             eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
-            if (eAlgoType.C_PATTERN == _AlgoType)           _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB == _AlgoType)         _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            if (eAlgoType.C_PATTERN == _AlgoType) _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB == _AlgoType) _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LEAD == _AlgoType) _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB_REFER == _AlgoType) _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType) _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_ID == _AlgoType) _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LINE_FIND == _AlgoType) _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) _Result = CogMultiPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
             return _Result;
         }
@@ -875,6 +878,32 @@ namespace InspectionSystemManager
             {
                 _AlgoResultParam.OffsetX = _OriginX - _CogPatternResult.CenterX[0];
                 _AlgoResultParam.OffsetY = _OriginY - _CogPatternResult.CenterY[0];
+            }
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return true;
+        }
+
+        private bool CogMultiPatternAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            var _CogMultiPatternAlgo = _Algorithm as CogMultiPatternAlgo;
+            CogMultiPatternResult _CogMultiPatternResult = new CogMultiPatternResult();
+
+            bool _Result = InspMultiPatternProc.Run(OriginImage, _InspRegion, _CogMultiPatternAlgo, ref _CogMultiPatternResult);
+
+            if (_CogMultiPatternResult.OriginPointX?.Length > 0) AnyReferenceX = _CogMultiPatternResult.OriginPointX[0];
+            if (_CogMultiPatternResult.OriginPointY?.Length > 0) AnyReferenceY = _CogMultiPatternResult.OriginPointY[0];
+
+            double _OriginX = _CogMultiPatternAlgo.ReferenceInfoList[0].CenterX - _CogMultiPatternAlgo.ReferenceInfoList[0].OriginPointOffsetX;
+            double _OriginY = _CogMultiPatternAlgo.ReferenceInfoList[0].CenterY - _CogMultiPatternAlgo.ReferenceInfoList[0].OriginPointOffsetY;
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_MULTI_PATTERN, _CogMultiPatternResult);
+            _AlgoResultParam.OffsetX = 0;
+            _AlgoResultParam.OffsetY = 0;
+            if (_CogMultiPatternAlgo.ReferenceInfoList.Count > 0 && _CogMultiPatternResult.CenterX.Length > 0 && _CogMultiPatternResult.CenterY.Length > 0)
+            {
+                _AlgoResultParam.OffsetX = _OriginX - _CogMultiPatternResult.CenterX[0];
+                _AlgoResultParam.OffsetY = _OriginY - _CogMultiPatternResult.CenterY[0];
             }
             AlgoResultParamList.Add(_AlgoResultParam);
 

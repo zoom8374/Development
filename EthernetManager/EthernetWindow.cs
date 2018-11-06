@@ -17,6 +17,8 @@ namespace EthernetManager
     {
         public bool IsShowWindow = false;
 
+        private string CommonFolderPath = "";
+
         private char STX = (char)0x02;
         private char ETX = (char)0x03;
 
@@ -64,10 +66,10 @@ namespace EthernetManager
 
         private void ReadEthernetInfoFile()
         {
-            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            string _EthernetInfoFileName = @".\Common\EthernetInformation.xml";
+            string _EthernetInfoFileName = string.Format(@"{0}EthernetInformation.xml", CommonFolderPath);
             if (false == File.Exists(_EthernetInfoFileName))
             {
                 File.Create(_EthernetInfoFileName).Close();
@@ -93,10 +95,10 @@ namespace EthernetManager
 
         private void WriteEthernetInfoFile()
         {
-            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            string _EthernetInfoFileName = @".\Common\EthernetInformation.xml";
+            string _EthernetInfoFileName = string.Format(@"{0}EthernetInformation.xml", CommonFolderPath);
             XmlTextWriter _XmlWriter = new XmlTextWriter(_EthernetInfoFileName, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();
@@ -111,8 +113,10 @@ namespace EthernetManager
         }
         #endregion Read & Write Ethernet Information
 
-        public void Initialize()
+        public void Initialize(string _CommonFolderPath)
         {
+            CommonFolderPath = _CommonFolderPath;
+
             ReadEthernetInfoFile();
 
             textBoxIPAddress.Text = IPAddress;

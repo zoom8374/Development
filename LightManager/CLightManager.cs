@@ -38,7 +38,7 @@ namespace LightManager
         {
             IsSimulationMode = _IsSimulationMode;
 
-            LightParameterFolderPath = ".\\Common\\" + "LightParameter";
+            LightParameterFolderPath = @"D:\VisionInspectionData\Common\" + "LightParameter";
             LightParameterFullPath = LightParameterFolderPath + "\\" + RecipeName + ".sys";
             ReadLightParameters();
 

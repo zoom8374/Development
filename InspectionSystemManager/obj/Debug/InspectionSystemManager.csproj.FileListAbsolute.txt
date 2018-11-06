@@ -99,3 +99,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\ob
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\MapDataManager.exe
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\MapDataManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.ucCogMultiPattern.resources

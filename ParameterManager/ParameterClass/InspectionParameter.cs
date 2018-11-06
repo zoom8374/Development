@@ -62,6 +62,29 @@ namespace ParameterManager
     }
 
     /// <summary>
+    /// Multi Pattern 매칭 알고리즘
+    /// </summary>
+    public class CogMultiPatternAlgo
+    {
+        public References ReferenceInfoList;
+        public int PatternCount;
+        public double MatchingScore;
+        public double MatchingAngle;
+        public int MatchingCount;
+        public double TwoPointAngle;
+
+        public CogMultiPatternAlgo()
+        {
+            ReferenceInfoList = new References();
+
+            MatchingScore = 75;
+            MatchingAngle = 1.0;
+            MatchingCount = 1;
+            TwoPointAngle = 0.0;
+        }
+    }
+
+    /// <summary>
     /// Blob Reference Algorithm
     /// </summary>
     public class CogBlobReferenceAlgo
@@ -332,13 +355,14 @@ namespace ParameterManager
             AlgoType = (int)_AlgoType;
             AlgoBenchMark = 0;
             AlgoEnable = true;
-            if (_AlgoType == eAlgoType.C_PATTERN)           Algorithm = new CogPatternAlgo();
-            else if (_AlgoType == eAlgoType.C_BLOB)         Algorithm = new CogBlobAlgo();
-            else if (_AlgoType == eAlgoType.C_BLOB_REFER)   Algorithm = new CogBlobReferenceAlgo(_ResolutionX, _ResolutionY);
-            else if (_AlgoType == eAlgoType.C_LEAD)         Algorithm = new CogLeadAlgo();
-            else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)  Algorithm = new CogNeedleFindAlgo();
-            else if (_AlgoType == eAlgoType.C_ID)           Algorithm = new CogBarCodeIDAlgo();
-            else if (_AlgoType == eAlgoType.C_LINE_FIND)    Algorithm = new CogLineFindAlgo();
+            if (_AlgoType == eAlgoType.C_PATTERN)            Algorithm = new CogPatternAlgo();
+            else if (_AlgoType == eAlgoType.C_BLOB)          Algorithm = new CogBlobAlgo();
+            else if (_AlgoType == eAlgoType.C_BLOB_REFER)    Algorithm = new CogBlobReferenceAlgo(_ResolutionX, _ResolutionY);
+            else if (_AlgoType == eAlgoType.C_LEAD)          Algorithm = new CogLeadAlgo();
+            else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)   Algorithm = new CogNeedleFindAlgo();
+            else if (_AlgoType == eAlgoType.C_ID)            Algorithm = new CogBarCodeIDAlgo();
+            else if (_AlgoType == eAlgoType.C_LINE_FIND)     Algorithm = new CogLineFindAlgo();
+            else if (_AlgoType == eAlgoType.C_MULTI_PATTERN) Algorithm = new CogMultiPatternAlgo();
         }
     }
 
@@ -363,7 +387,7 @@ namespace ParameterManager
     public class InspectionParameter
     {
         public List<InspectionAreaParameter> InspAreaParam;
-        public MapDataParameter              MapDataParam;
+        //public MapDataParameter              MapDataParam;
         public double ResolutionX = 0.005;
         public double ResolutionY = 0.005;
         public double LastResultDisplayPosX = 50;
@@ -372,7 +396,6 @@ namespace ParameterManager
         public InspectionParameter()
         {
             InspAreaParam = new List<InspectionAreaParameter>();
-            MapDataParam = new MapDataParameter();
         }
     }
 }

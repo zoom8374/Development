@@ -33,6 +33,7 @@ namespace InspectionSystemManager
         private InspectionLead              InspLeadProcess;
         private InspectionID                InspIDProcess;
         private InspectionLineFind          InspLineFindProcess;
+        private InspectionMultiPattern      InspMultiPatternProcess;
 
         //검사 Algorithm Teaching UI
         private ucCogPattern            ucCogPatternWnd;
@@ -42,6 +43,7 @@ namespace InspectionSystemManager
         private ucCogLeadInspection     ucCogLeadInspWnd;
         private ucCogID                 ucCogIDInspWnd;
         private ucCogLineFind           ucCogLineFindWnd;
+        private ucCogMultiPattern       ucCogMultiPatternWnd;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -89,6 +91,7 @@ namespace InspectionSystemManager
             ucCogLeadInspWnd = new ucCogLeadInspection();
             ucCogIDInspWnd = new ucCogID();
             ucCogLineFindWnd = new ucCogLineFind();
+            ucCogMultiPatternWnd = new ucCogMultiPattern();
 
             if (_ProjectItem == eProjectItem.LEAD_INSP)         ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.NEEDLE_ALIGN) ucCogBlobReferWnd.Initialize(false);
@@ -136,6 +139,7 @@ namespace InspectionSystemManager
             ucCogLeadInspWnd.Dispose();
             ucCogIDInspWnd.Dispose();
             ucCogLineFindWnd.Dispose();
+            ucCogMultiPatternWnd.Dispose();
 
             InspBlobReferProcess.DeInitialize();
             InspNeedleCircleFindProcess.DeInitialize();
@@ -188,6 +192,7 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
             }
         }
 
@@ -218,6 +223,14 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_PATTERN);
+        }
+
+        private void MultiPatternFindAlgorithm(object sender, EventArgs e)
+        {
+            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_MULTI_PATTERN, ResolutionX, ResolutionY);
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
+            UpdateInspectionAlgoList(InspAreaSelected, true);
+            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_MULTI_PATTERN);
         }
 
         private void BlobReferenceAlgorithm(object sender, EventArgs e)
@@ -705,6 +718,7 @@ namespace InspectionSystemManager
                 case eAlgoType.C_LEAD:          ucCogLeadInspWnd.SaveAlgoRecipe();   break;
                 case eAlgoType.C_ID:            ucCogIDInspWnd.SaveAlgoRecipe();     break;
                 case eAlgoType.C_LINE_FIND:     ucCogLineFindWnd.SaveAlgoRecipe();   break;
+				case eAlgoType.C_MULTI_PATTERN: ucCogMultiPatternWnd.SaveAlgoRecipe(); break;
             }
         }
 
@@ -865,6 +879,7 @@ namespace InspectionSystemManager
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD)          _Name = "Lead status inspection";
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_ID)            _Name = "Search a BarCode Insepction"; //"ID - Search"
                     else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND)     _Name = "Search a line";
+					else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_MULTI_PATTERN) _Name = "Search Multi reference"; 
                 }
 
                 else if (ProjectItem == eProjectItem.SURFACE)
@@ -921,13 +936,14 @@ namespace InspectionSystemManager
 
             switch (_AlgoType)
             {
-                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);    ucCogPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
-                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);  ucCogBlobReferWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
-                case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);       ucCogBlobWnd.SetAlgoRecipe();       break;
-                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd); ucCogNeedleFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);   ucCogLeadInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);     ucCogIDInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY); break;
-                case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);   ucCogLineFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);      ucCogPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
+                case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);    ucCogBlobReferWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
+                case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);         ucCogBlobWnd.SetAlgoRecipe();       break;
+                case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd);   ucCogNeedleFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);     ucCogLeadInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);       ucCogIDInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY); break;
+                case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);     ucCogLineFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_MULTI_PATTERN: panelTeaching.Controls.Add(ucCogMultiPatternWnd); ucCogMultiPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

@@ -97,6 +97,32 @@ namespace ParameterManager
         }
     }
 
+    public class CogMultiPatternResult : Result
+    {
+        public int FindCount;
+
+        public double[] Score;
+        public double[] Scale;
+        public double[] Angle;
+        public double[] CenterX;
+        public double[] CenterY;
+        public double[] OriginPointX;
+        public double[] OriginPointY;
+        public double[] Width;
+        public double[] Height;
+        public double TwoPointAngle;
+
+        public CogMultiPatternResult()
+        {
+            IsGood = true;
+            NgType = eNgType.GOOD;
+
+            FindCount = 0;
+
+            TwoPointAngle = 0.0;
+        }
+    }
+
     public class CogBlobReferenceResult : Result
     {
         public int      BlobCount;

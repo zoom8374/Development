@@ -37,14 +37,14 @@ namespace KPVisionInspectionFramework
         {
         }
 
-        public override void Initialize()
+        public override void Initialize(string _CommonFolderPath)
         {
-            DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER);
+            DIOWnd = new DIOControlWindow((int)eProjectType.DISPENSER, _CommonFolderPath);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.Initialize();
 
             EthernetServWnd = new EthernetWindow();
-            EthernetServWnd.Initialize();
+            EthernetServWnd.Initialize(_CommonFolderPath);
             EthernetServWnd.ReceiveStringEvent += new EthernetWindow.ReceiveStringHandler(ReceiveStringEventFunction);
 
             int _AutoCmdBit = DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_AUTO);

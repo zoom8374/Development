@@ -17,7 +17,7 @@ namespace KPVisionInspectionFramework
 
         }
 
-        public override void Initialize()
+        public override void Initialize(string CommonFolderPath)
         {
             
         }

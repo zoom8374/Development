@@ -31,6 +31,8 @@ namespace InspectionSystemManager
             ucCogLineFindWnd.ApplyLineFindEvent += new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
             ucCogLineFindWnd.DrawLineFindCaliperEvent += new ucCogLineFind.DrawLineFindCaliperHandler(DrawLineFindCaliperFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent += new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
+            ucCogMultiPatternWnd.DrawReferRegionEvent += new ucCogMultiPattern.DrawReferRegionHandler(DrawReferRegionFunction);
+            ucCogMultiPatternWnd.ReferenceActionEvent += new ucCogMultiPattern.ReferenceActionHandler(ReferenceActionFunction);
         }
 
         private void DeInitializeEvent()
@@ -47,6 +49,9 @@ namespace InspectionSystemManager
             ucCogLineFindWnd.ApplyLineFindEvent -= new ucCogLineFind.ApplyLineFindHandler(ApplyLineFindValueFunction);
             ucCogLineFindWnd.DrawLineFindCaliperEvent -= new ucCogLineFind.DrawLineFindCaliperHandler(DrawLineFindCaliperFunction);
             kpTeachDisplay.CogDisplayMouseUpEvent -= new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
+            ucCogMultiPatternWnd.DrawReferRegionEvent -= new ucCogMultiPattern.DrawReferRegionHandler(DrawReferRegionFunction);
+            ucCogMultiPatternWnd.ReferenceActionEvent -= new ucCogMultiPattern.ReferenceActionHandler(ReferenceActionFunction);
+
         }
         #endregion InitializeEvent & DeInitializeEvent
 
@@ -144,6 +149,7 @@ namespace InspectionSystemManager
                 _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
                 _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
                 ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+                //((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
             }
 
             else if (_ReferAction == eReferAction.MODIFY)

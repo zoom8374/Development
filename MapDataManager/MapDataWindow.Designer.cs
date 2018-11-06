@@ -30,7 +30,10 @@
         {
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.btnSave = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnUnitPatternAreaCancel = new System.Windows.Forms.Button();
+            this.btnUnitPatternSearchAreaCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numericUpDownAngleLimit = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel8 = new CustomControl.GradientLabel();
@@ -42,10 +45,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.kpPatternDisplay = new KPDisplay.KPCogDisplayControl();
-            this.btnUnitPatternShow = new System.Windows.Forms.Button();
             this.btnUnitPatternAreaShow = new System.Windows.Forms.Button();
-            this.btnUnitPatternSet = new System.Windows.Forms.Button();
+            this.btnUnitPatternSearchAreaShow = new System.Windows.Forms.Button();
             this.btnUnitPatternAreaSet = new System.Windows.Forms.Button();
+            this.btnUnitPatternSearchAreaSet = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -95,6 +98,7 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.btnSave);
             this.panelMain.Controls.Add(this.panel2);
             this.panelMain.Controls.Add(this.panel1);
             this.panelMain.Controls.Add(this.gradientLabel2);
@@ -108,19 +112,61 @@
             this.panelMain.TabIndex = 46;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSave.Location = new System.Drawing.Point(1002, 800);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(124, 35);
+            this.btnSave.TabIndex = 313;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.btnUnitPatternAreaCancel);
+            this.panel2.Controls.Add(this.btnUnitPatternSearchAreaCancel);
             this.panel2.Controls.Add(this.groupBox2);
             this.panel2.Controls.Add(this.kpPatternDisplay);
-            this.panel2.Controls.Add(this.btnUnitPatternShow);
             this.panel2.Controls.Add(this.btnUnitPatternAreaShow);
-            this.panel2.Controls.Add(this.btnUnitPatternSet);
+            this.panel2.Controls.Add(this.btnUnitPatternSearchAreaShow);
             this.panel2.Controls.Add(this.btnUnitPatternAreaSet);
+            this.panel2.Controls.Add(this.btnUnitPatternSearchAreaSet);
             this.panel2.Location = new System.Drawing.Point(639, 369);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(617, 425);
             this.panel2.TabIndex = 312;
+            // 
+            // btnUnitPatternAreaCancel
+            // 
+            this.btnUnitPatternAreaCancel.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUnitPatternAreaCancel.Enabled = false;
+            this.btnUnitPatternAreaCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternAreaCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternAreaCancel.Location = new System.Drawing.Point(263, 378);
+            this.btnUnitPatternAreaCancel.Name = "btnUnitPatternAreaCancel";
+            this.btnUnitPatternAreaCancel.Size = new System.Drawing.Size(124, 40);
+            this.btnUnitPatternAreaCancel.TabIndex = 311;
+            this.btnUnitPatternAreaCancel.Text = "Cancel \r\nPattern Area";
+            this.btnUnitPatternAreaCancel.UseVisualStyleBackColor = false;
+            this.btnUnitPatternAreaCancel.Click += new System.EventHandler(this.btnUnitPatternAreaCancel_Click);
+            // 
+            // btnUnitPatternSearchAreaCancel
+            // 
+            this.btnUnitPatternSearchAreaCancel.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUnitPatternSearchAreaCancel.Enabled = false;
+            this.btnUnitPatternSearchAreaCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternSearchAreaCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternSearchAreaCancel.Location = new System.Drawing.Point(263, 333);
+            this.btnUnitPatternSearchAreaCancel.Name = "btnUnitPatternSearchAreaCancel";
+            this.btnUnitPatternSearchAreaCancel.Size = new System.Drawing.Size(124, 40);
+            this.btnUnitPatternSearchAreaCancel.TabIndex = 310;
+            this.btnUnitPatternSearchAreaCancel.Text = "Cancel Pattern\r\nSearch Area";
+            this.btnUnitPatternSearchAreaCancel.UseVisualStyleBackColor = false;
+            this.btnUnitPatternSearchAreaCancel.Click += new System.EventHandler(this.btnUnitPatternSearchAreaCancel_Click);
             // 
             // groupBox2
             // 
@@ -285,57 +331,59 @@
             this.kpPatternDisplay.TabIndex = 308;
             this.kpPatternDisplay.UseStatusBar = false;
             // 
-            // btnUnitPatternShow
-            // 
-            this.btnUnitPatternShow.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternShow.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternShow.Location = new System.Drawing.Point(3, 334);
-            this.btnUnitPatternShow.Name = "btnUnitPatternShow";
-            this.btnUnitPatternShow.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternShow.TabIndex = 306;
-            this.btnUnitPatternShow.Text = "Show\r\n Unit Pattern";
-            this.btnUnitPatternShow.UseVisualStyleBackColor = false;
-            this.btnUnitPatternShow.Click += new System.EventHandler(this.btnUnitPatternShow_Click);
-            // 
             // btnUnitPatternAreaShow
             // 
             this.btnUnitPatternAreaShow.BackColor = System.Drawing.SystemColors.Control;
             this.btnUnitPatternAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.btnUnitPatternAreaShow.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternAreaShow.Location = new System.Drawing.Point(3, 380);
+            this.btnUnitPatternAreaShow.Location = new System.Drawing.Point(3, 378);
             this.btnUnitPatternAreaShow.Name = "btnUnitPatternAreaShow";
             this.btnUnitPatternAreaShow.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternAreaShow.TabIndex = 304;
-            this.btnUnitPatternAreaShow.Text = "Show\r\n Unit Pattern Area";
+            this.btnUnitPatternAreaShow.TabIndex = 306;
+            this.btnUnitPatternAreaShow.Text = "Show\r\nPattern Area";
             this.btnUnitPatternAreaShow.UseVisualStyleBackColor = false;
             this.btnUnitPatternAreaShow.Click += new System.EventHandler(this.btnUnitPatternAreaShow_Click);
             // 
-            // btnUnitPatternSet
+            // btnUnitPatternSearchAreaShow
             // 
-            this.btnUnitPatternSet.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternSet.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternSet.Location = new System.Drawing.Point(133, 334);
-            this.btnUnitPatternSet.Name = "btnUnitPatternSet";
-            this.btnUnitPatternSet.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternSet.TabIndex = 307;
-            this.btnUnitPatternSet.Text = "Set \r\nUnit Pattern";
-            this.btnUnitPatternSet.UseVisualStyleBackColor = false;
-            this.btnUnitPatternSet.Click += new System.EventHandler(this.btnUnitPatternSet_Click);
+            this.btnUnitPatternSearchAreaShow.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUnitPatternSearchAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternSearchAreaShow.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternSearchAreaShow.Location = new System.Drawing.Point(3, 333);
+            this.btnUnitPatternSearchAreaShow.Name = "btnUnitPatternSearchAreaShow";
+            this.btnUnitPatternSearchAreaShow.Size = new System.Drawing.Size(124, 40);
+            this.btnUnitPatternSearchAreaShow.TabIndex = 304;
+            this.btnUnitPatternSearchAreaShow.Text = "Show Pattern \r\nSearch Area";
+            this.btnUnitPatternSearchAreaShow.UseVisualStyleBackColor = false;
+            this.btnUnitPatternSearchAreaShow.Click += new System.EventHandler(this.btnUnitPatternSearchAreaShow_Click);
             // 
             // btnUnitPatternAreaSet
             // 
             this.btnUnitPatternAreaSet.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUnitPatternAreaSet.Enabled = false;
             this.btnUnitPatternAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.btnUnitPatternAreaSet.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternAreaSet.Location = new System.Drawing.Point(133, 380);
+            this.btnUnitPatternAreaSet.Location = new System.Drawing.Point(133, 378);
             this.btnUnitPatternAreaSet.Name = "btnUnitPatternAreaSet";
             this.btnUnitPatternAreaSet.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternAreaSet.TabIndex = 305;
-            this.btnUnitPatternAreaSet.Text = "Set\r\n Unit Pattern Area";
+            this.btnUnitPatternAreaSet.TabIndex = 307;
+            this.btnUnitPatternAreaSet.Text = "Set \r\nPattern Area";
             this.btnUnitPatternAreaSet.UseVisualStyleBackColor = false;
             this.btnUnitPatternAreaSet.Click += new System.EventHandler(this.btnUnitPatternAreaSet_Click);
+            // 
+            // btnUnitPatternSearchAreaSet
+            // 
+            this.btnUnitPatternSearchAreaSet.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUnitPatternSearchAreaSet.Enabled = false;
+            this.btnUnitPatternSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternSearchAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternSearchAreaSet.Location = new System.Drawing.Point(133, 333);
+            this.btnUnitPatternSearchAreaSet.Name = "btnUnitPatternSearchAreaSet";
+            this.btnUnitPatternSearchAreaSet.Size = new System.Drawing.Size(124, 40);
+            this.btnUnitPatternSearchAreaSet.TabIndex = 305;
+            this.btnUnitPatternSearchAreaSet.Text = "Set Pattern\r\nSearch Area";
+            this.btnUnitPatternSearchAreaSet.UseVisualStyleBackColor = false;
+            this.btnUnitPatternSearchAreaSet.Click += new System.EventHandler(this.btnUnitPatternSearchAreaSet_Click);
             // 
             // panel1
             // 
@@ -641,10 +689,10 @@
         private CustomControl.GradientLabel labelInputTitle;
         private KPDisplay.KPCogDisplayControl kpTeachDisplay;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Button btnUnitPatternSearchAreaSet;
+        private System.Windows.Forms.Button btnUnitPatternSearchAreaShow;
         private System.Windows.Forms.Button btnUnitPatternAreaSet;
         private System.Windows.Forms.Button btnUnitPatternAreaShow;
-        private System.Windows.Forms.Button btnUnitPatternSet;
-        private System.Windows.Forms.Button btnUnitPatternShow;
         private CustomControl.GradientLabel gradientLabel2;
         private CustomControl.GradientLabel gradientLabel1;
         private System.Windows.Forms.Panel panel1;
@@ -670,6 +718,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnUnitPatternAreaCancel;
+        private System.Windows.Forms.Button btnUnitPatternSearchAreaCancel;
     }
 }
 

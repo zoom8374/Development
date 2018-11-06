@@ -16,6 +16,7 @@ namespace InspectionSystemManager
     public class CInspectionSystemManager
     {
         private InspectionParameter InspParam = new InspectionParameter();
+        private MapDataParameter    MapDataParam = new MapDataParameter();
 
         private InspectionWindow InspWnd;
         private string           InspWndName;
@@ -69,7 +70,8 @@ namespace InspectionSystemManager
             InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
 
-            MapDataWnd.Initialize(InspParam.MapDataParam);
+            MapDataWnd.Initialize(MapDataParam);
+            MapDataWnd.MapDataParameterSaveEvent += new MapDataWindow.MapDataParameterSaveHandler(MapDataParameterSaveEventFunction);
         }
 
         public void DeInitialize()
@@ -262,19 +264,30 @@ namespace InspectionSystemManager
 
         private void SendResultData(object _Value)
         {
-            InspSysManagerEvent(eISMCMD.SEND_DATA, _Value);
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            InspSysManagerEvent?.Invoke(eISMCMD.SEND_DATA, _Value);
         }
 
         private void SetResultData(object _Value)
         {
-            InspSysManagerEvent(eISMCMD.SET_RESULT, _Value);
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            InspSysManagerEvent?.Invoke(eISMCMD.SET_RESULT, _Value);
         }
 
         private void InspectionComplete(object _Value, int _ID)
         {
-            InspSysManagerEvent(eISMCMD.INSP_COMPLETE, _Value, _ID);
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            InspSysManagerEvent?.Invoke(eISMCMD.INSP_COMPLETE, _Value, _ID);
         }
         #endregion Event : Inspection Window Event
+
+        #region Event : MapDataWindow Event Function
+        private void MapDataParameterSaveEventFunction(MapDataParameter _MapDataParam, int _ID = 0)
+        {
+            var _InspSysManagerEvent = InspSysManagerEvent;
+            InspSysManagerEvent?.Invoke(eISMCMD.MAPDATA_SAVE, _MapDataParam, _ID);
+        }
+        #endregion Event : MapDataWindow Event Function
 
         public void TriggerOn()
         {

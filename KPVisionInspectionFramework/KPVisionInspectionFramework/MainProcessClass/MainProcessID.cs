@@ -25,9 +25,9 @@ namespace KPVisionInspectionFramework
             
         }
 
-        public override void Initialize()
+        public override void Initialize(string _CommonFolderPath)
         {
-            DIOWnd = new DIOControlWindow((int)eProjectType.BLOWER);
+            DIOWnd = new DIOControlWindow((int)eProjectType.BLOWER, _CommonFolderPath);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
             DIOWnd.Initialize();
 
@@ -114,10 +114,14 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = false;
 
-            int _Result1Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1);
-            int _Result2Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT2);
-            int _Result3Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT3);
-            int _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_COMPLETE);
+            //int _Result1Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT1);
+            //int _Result2Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT2);
+            //int _Result3Bit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_RESULT3);
+            //int _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitCheck(AirBlowCmd.OUT_COMPLETE);
+            int _Result1Bit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_RESULT_1);
+            int _Result2Bit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_RESULT_2);
+            int _Result3Bit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_RESULT_3);
+            int _CompleteCmdBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck((int)DIO_DEF.OUT_COMPLETE);
 
             if (_Result1Bit >= 0) DIOWnd.SetOutputSignal((short)_Result1Bit, false);
             if (_Result2Bit >= 0) DIOWnd.SetOutputSignal((short)_Result2Bit, false);
@@ -141,6 +145,7 @@ namespace KPVisionInspectionFramework
                     case eNgType.REF_NG: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_1); break;
                     case eNgType.ID:     SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_1); break;
                     case eNgType.DEFECT: SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_1); break;
+                    //case eNgType.DUMMY:  SendResultBit = (short)DIOWnd.DioBaseCmd.OutputBitIndexCheck(DIO_DEF.OUT_RESULT_3); break;
                 }
                 DIOWnd.SetOutputSignal((short)SendResultBit, true);
             }
@@ -171,9 +176,11 @@ namespace KPVisionInspectionFramework
                 case "@S": ReceiveCmd = eMainProcCmd.RCP_CHANGE; break;
                 case "@L": ReceiveCmd = eMainProcCmd.LOT_CHANGE; break;
                 case "@E": ReceiveCmd = eMainProcCmd.LOT_CHANGE; break;
+                case "@N": ReceiveCmd = eMainProcCmd.LOT_CHANGE; break;
             }
 
-            OnMainProcessCommand(ReceiveCmd, ReceiveData[1]);
+            if(ReceiveCmd == eMainProcCmd.LOT_CHANGE) OnMainProcessCommand(ReceiveCmd, _SerialData);
+            else                                      OnMainProcessCommand(ReceiveCmd, ReceiveData[1]);
 
             return true;
         }
@@ -188,10 +195,17 @@ namespace KPVisionInspectionFramework
                 case eMainProcCmd.RCP_CHANGE: SendBit = "@D_OK"; break;
                 case eMainProcCmd.LOT_CHANGE:
                     {
+                        //if (_SendData == "RELOAD")   SendBit = "@N_OK"; 
                         if (_SendData == "END") SendBit = "@E_OK";
-                        else                    SendBit = "@L_OK"; 
+                        //else                         SendBit = "@L_OK"; 
                     }break;
-                case eMainProcCmd.REQUEST: SendBit = "@R_D"; break;
+                case eMainProcCmd.REQUEST:
+                    {
+                        if(_SendData == "LOT") SendBit = "@R_L";
+                        else                   SendBit = "@R_D";
+                    }
+                    break;
+                case eMainProcCmd.LOT_RETURN: SendBit = string.Format("@L_OK,{0}",_SendData); break;
             }
 
             SerialWnd.SendSequenceData(SendBit + "," + '\r');

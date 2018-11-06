@@ -237,6 +237,19 @@ namespace KPDisplay
             kCogDisplay.StaticGraphics.Add(StaticRectGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);
         }
 
+        public void DrawStaticShape(CogRectangle _cogRect, string _groupName, CogColorConstants _color, int _LineSize, CogGraphicLineStyleConstants _Style)
+        {
+            StaticRectGraphic = new CogRectangle();
+            StaticRectGraphic = _cogRect;
+            StaticRectGraphic.Color = _color;
+            StaticRectGraphic.LineWidthInScreenPixels = _LineSize;
+            StaticRectGraphic.LineStyle = _Style;
+
+            StaticRectGraphic.Selected = false;
+            kCogDisplay.ClearDisplay(_groupName);
+            kCogDisplay.StaticGraphics.Add(StaticRectGraphic.CopyBase(CogCopyShapeConstants.All), _groupName);
+        }
+
         public void DrawStaticShapeNotClear(CogRectangle _cogRect, string _groupName, CogColorConstants _color, int _LineSize = 2)
         {
             StaticRectGraphic = new CogRectangle();

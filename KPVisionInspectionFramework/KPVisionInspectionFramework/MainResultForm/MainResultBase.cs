@@ -243,9 +243,20 @@ namespace KPVisionInspectionFramework
             else if (_ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetLastRecipeName(_LastRecipeName);
         }
 
+
+        public void LOTStart(string[] _LOTInfo)
+        {
+            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.LOTStart(_LOTInfo);
+        }
+
         public void LOTEnd()
         {
             MainResultIDWnd.LOTEnd();
+        }
+
+        public string GetTotalCount()
+        {
+            return MainResultIDWnd.GetTotalCount();
         }
 
         //LDH, 2018.08.10, 전체화면 Screenshot

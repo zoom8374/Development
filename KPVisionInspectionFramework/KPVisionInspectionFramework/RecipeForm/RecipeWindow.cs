@@ -80,11 +80,10 @@ namespace KPVisionInspectionFramework
         #region Control Event
         private void btnRecipeChange_Click(object sender, EventArgs e)
         {
-            this.Hide();
-
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange_Click", CLogManager.LOG_LEVEL.LOW);
-
             if (listBoxRecipe.SelectedItem == null) { MessageBox.Show(new Form { TopMost = true }, "Select the recipe you want to change."); return; }
+
+            this.Hide();
             RecipeChange(listBoxRecipe.SelectedItem.ToString());
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange Complete : " + listBoxRecipe.SelectedItem.ToString(), CLogManager.LOG_LEVEL.LOW);
@@ -159,13 +158,20 @@ namespace KPVisionInspectionFramework
             LoadRecipeList();
         }
 
+        private void textBoxSearchRecipe_TextChanged(object sender, EventArgs e)
+        {
+            LoadRecipeList(textBoxSearchRecipe.Text);
+        }
+
         private void btnOk_Click(object sender, EventArgs e)
         {
+            textBoxSearchRecipe.Text = "";
+            textBoxSearchRecipe.Focus();
             this.Close();
         }
         #endregion Control Event
 
-        private void LoadRecipeList()
+        private void LoadRecipeList(string _SearchString = "")
         {
             DirectoryInfo _DirInfo = new DirectoryInfo(RecipeFolderPath);
             if (true == _DirInfo.Exists)
@@ -174,8 +180,17 @@ namespace KPVisionInspectionFramework
                 DirectoryInfo[] _DirInfos = _DirInfo.GetDirectories();
                 foreach (DirectoryInfo _DInfo in _DirInfos)
                 {
-                    if (_DInfo.Name != "[Default]")
+                    if (_DInfo.Name == "[Default]") continue;
+
+                    if (_SearchString != "")
+                    {
+                        if (_DInfo.Name.Contains(_SearchString))
+                            listBoxRecipe.Items.Add(_DInfo.Name);
+                    }
+
+                    else
                         listBoxRecipe.Items.Add(_DInfo.Name);
+
                 }
             }
             textBoxCurrentRecipe.Text = CurrentRecipeName;
@@ -209,7 +224,7 @@ namespace KPVisionInspectionFramework
                 FileInfo[] _FileInfo = _DirInfo.GetFiles();
                 foreach (FileInfo _FInfo in _FileInfo)
                 {
-                    if (_DirInfo.Extension != ".Rcp") continue;
+                    if (_FInfo.Extension != ".Rcp") continue;
 
                     try
                     {
@@ -217,27 +232,34 @@ namespace KPVisionInspectionFramework
                         _XmlDoc.Load(_FInfo.FullName);
 
                         XmlNode _FirstNode = _XmlDoc.DocumentElement;
-                        XmlElement _ModuleNode = (XmlElement)_FirstNode.ChildNodes[0];
+                        //XmlElement _ModuleNode = (XmlElement)_FirstNode.ChildNodes[0];
 
-                        foreach (XmlElement _Node in _ModuleNode)
+                        XmlElement _AreaNode = _XmlDoc.DocumentElement;
+                        foreach (XmlElement _Node0 in _AreaNode)
                         {
-                            if (false == _Node.Name.Contains("Algo")) continue;
-                            XmlElement _Algo = _Node;
+                            if (false == _Node0.Name.Contains("InspAlgoArea")) continue;
+                            XmlElement _ModuleNode = _Node0;
 
-                            foreach (XmlElement _Node2 in _Algo)
+                            foreach (XmlElement _Node in _ModuleNode)
                             {
-                                if (false == _Node2.Name.Contains("Reference")) continue;
-                                XmlElement _ReferenceData = _Node2;
-                                XmlNode _DeleteNode = _ReferenceData.SelectSingleNode("ReferencePath");
+                                if (false == _Node.Name.Contains("Algo")) continue;
+                                XmlElement _Algo = _Node;
 
-                                if (_DeleteNode.InnerText != null && _DeleteNode.InnerText != "")
+                                foreach (XmlElement _Node2 in _Algo)
                                 {
-                                    string _ReferencePath = _DeleteNode.InnerText;
-                                    string[] _ReferencePaths = _ReferencePath.Split('\\');
-                                    _ReferencePaths[4] = _NewRecipeName;
-                                    _ReferencePath = String.Join("\\", _ReferencePaths);
-                                    _ReferenceData.RemoveChild(_DeleteNode);
-                                    _ReferenceData.AppendChild(CreateNode(_XmlDoc, "ReferencePath", _ReferencePath));
+                                    if (false == _Node2.Name.Contains("Reference")) continue;
+                                    XmlElement _ReferenceData = _Node2;
+                                    XmlNode _DeleteNode = _ReferenceData.SelectSingleNode("ReferencePath");
+
+                                    if (_DeleteNode.InnerText != null && _DeleteNode.InnerText != "")
+                                    {
+                                        string _ReferencePath = _DeleteNode.InnerText;
+                                        string[] _ReferencePaths = _ReferencePath.Split('\\');
+                                        _ReferencePaths[4] = _NewRecipeName;
+                                        _ReferencePath = String.Join("\\", _ReferencePaths);
+                                        _ReferenceData.RemoveChild(_DeleteNode);
+                                        _ReferenceData.AppendChild(CreateNode(_XmlDoc, "ReferencePath", _ReferencePath));
+                                    }
                                 }
                             }
                         }

@@ -25,6 +25,8 @@ namespace DIOControlManager
 
         private eProjectType ProjectType = eProjectType.NONE;
 
+        private string CommonFolderPath = "";
+
         private List<SignalToggleData> SignalToggleList;
         private short SleepTime = 10;
 
@@ -68,8 +70,10 @@ namespace DIOControlManager
         public event InputChangedHandler InputChangedEvent;
 
         #region Initialize & DeInitialize
-        public DIOControlWindow(int _ProjectType = 0)
+        public DIOControlWindow(int _ProjectType = 0, string _CommonFolderPath = "")
         {
+            CommonFolderPath = _CommonFolderPath;
+
             InitializeComponent();
             InitializeControl();
 
@@ -159,10 +163,10 @@ namespace DIOControlManager
 
         private void ReadIOInfoFile()
         {
-            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            string _IOInfoFileName = @".\Common\IOInformation.xml";
+            string _IOInfoFileName = string.Format(@"{0}IOInformation.xml", CommonFolderPath);
             if (false == File.Exists(_IOInfoFileName))
             {
                 File.Create(_IOInfoFileName).Close();
@@ -245,10 +249,10 @@ namespace DIOControlManager
                     OutputNameList.Add(btnOutputSignal[iLoopCount].Text);
             }
 
-            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            string _IOInfoFileName = @".\Common\IOInformation.xml";
+            string _IOInfoFileName = string.Format(@"{0}IOInformation.xml", CommonFolderPath);
             XmlTextWriter _XmlWriter = new XmlTextWriter(_IOInfoFileName, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();

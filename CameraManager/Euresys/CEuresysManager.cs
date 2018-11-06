@@ -208,7 +208,6 @@ namespace CameraManager
                 //MC.SetParam(channel, "NextTrigMode", "COMBINED");
                 MC.SetParam(channel, "NextTrigMode", "SAME");
                 //MC.SetParam(channel, "ForceTrig", "TRIG");
-
                 String channelState2;
                 MC.GetParam(channel, "ChannelState", out channelState2);
                 MC.SetParam(channel, "ChannelState", "IDLE");

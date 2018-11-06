@@ -18,6 +18,8 @@ namespace EthernetServerManager
     {
         public bool IsShowWindow = false;
 
+        private string CommonFolderPath = "";
+
         private CEtherentServerManager ServerSock;
         private Queue<string> CmdQueue = new Queue<string>();
 
@@ -37,8 +39,10 @@ namespace EthernetServerManager
             InitializeComponent();
         }
 
-        public void Initialize()
+        public void Initialize(string _CommonFolderPath)
         {
+            CommonFolderPath = _CommonFolderPath;
+
             ReadEthernetInfoFile();
 
             textBoxIPAddress.Text = IPAddress;
@@ -87,10 +91,10 @@ namespace EthernetServerManager
 
         private void ReadEthernetInfoFile()
         {
-            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            string _EthernetInfoFileName = @".\Common\EthernetInformation.xml";
+            string _EthernetInfoFileName = string.Format(@"{0}EthernetInformation.xml", CommonFolderPath);
             if (false == File.Exists(_EthernetInfoFileName))
             {
                 File.Create(_EthernetInfoFileName).Close();
@@ -117,10 +121,10 @@ namespace EthernetServerManager
 
         private void WriteEthernetInfoFile()
         {
-            DirectoryInfo _DirInfo = new DirectoryInfo(@".\Common\");
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            string _EthernetInfoFileName = @".\Common\EthernetInformation.xml";
+            string _EthernetInfoFileName = string.Format(@"{0}EthernetInformation.xml", CommonFolderPath);
             XmlTextWriter _XmlWriter = new XmlTextWriter(_EthernetInfoFileName, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();

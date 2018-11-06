@@ -90,6 +90,7 @@
     <Compile Include="InspSysManagerWindow\InspectionWindow.Designer.cs">
       <DependentUpon>InspectionWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\InspectionClass\InspectionMultiPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -147,6 +148,12 @@
     <Compile Include="Algorithm\ucCogLineFind.Designer.cs">
       <DependentUpon>ucCogLineFind.cs</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\ucCogMultiPattern.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogMultiPattern.Designer.cs">
+      <DependentUpon>ucCogMultiPattern.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CameraManager\CameraManager.csproj">
@@ -187,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogLeadInspection.resx">
       <DependentUpon>ucCogLeadInspection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogMultiPattern.resx">
+      <DependentUpon>ucCogMultiPattern.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogNeedleCircleFind.resx">
       <DependentUpon>ucCogNeedleCircleFind.cs</DependentUpon>

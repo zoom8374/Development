@@ -20,7 +20,7 @@ namespace ParameterManager
     /// <summary>
     /// Algorithm Type
     /// </summary>
-    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND }
+    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND, C_MULTI_PATTERN }
 
     /// <summary>
     /// Camera Model Type
@@ -30,7 +30,7 @@ namespace ParameterManager
     /// <summary>
     /// 
     /// </summary>
-    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, LOT_CHANGE, ACK_COMPLETE, ACK_FAIL }
+    public enum eMainProcCmd { TRG = 1, REQUEST, RCP_CHANGE, LOT_CHANGE, LOT_RETURN, ACK_COMPLETE, ACK_FAIL }
 
     /// <summary>
     /// Inspection Window Command
@@ -40,7 +40,7 @@ namespace ParameterManager
     /// <summary>
     /// Inspection System Manager To Main Command
     /// </summary>
-    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL }
+    public enum eISMCMD     { TEACHING_STATUS = 1, TEACHING_SAVE, MAPDATA_SAVE, SET_RESULT, SEND_DATA, INSP_COMPLETE, LIGHT_CONTROL }
 
     /// <summary>
     /// Teaching Step

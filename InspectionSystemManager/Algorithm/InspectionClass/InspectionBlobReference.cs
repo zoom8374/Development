@@ -82,7 +82,7 @@ namespace InspectionSystemManager
                     _CogHistoTool.Run();
                     double _HistoAvg = _CogHistoTool.Result.StandardDeviation;
                     _CogBlobReferResult.HistogramAvg = _HistoAvg;
-                    if (_CogBlobReferAlgo.DummyHistoMeanValue + 5 > _HistoAvg && _CogBlobReferAlgo.DummyHistoMeanValue - 5 < _HistoAvg)
+                    if (_CogBlobReferAlgo.DummyHistoMeanValue + 5 > _HistoAvg)// && _CogBlobReferAlgo.DummyHistoMeanValue - 5 < _HistoAvg)
                         _CogBlobReferResult.DummyStatus = true;
                 }
 

@@ -20,6 +20,7 @@ namespace ParameterManager
         public SystemParameter                      SystemParam;
         public InspectionParameter[]                InspParam;
         public InspectionSystemManagerParameter[]   InspSysManagerParam;
+        public MapDataParameter[]                   InspMapDataParam;
 
         public static eSysMode SystemMode;
 
@@ -72,19 +73,27 @@ namespace ParameterManager
             return _Result;
         }
 
-        public void RecipeReload(string _RecipeName)
+        public bool RecipeReload(string _RecipeName)
         {
             //LDH, 2018.08.24, Air Blower용 Recipe명 받아오기
-            if (eProjectType.BLOWER == (eProjectType)SystemParam.ProjectType) _RecipeName = GetRecipeNameFromFolder(_RecipeName);
+            if (eProjectType.BLOWER == (eProjectType)SystemParam.ProjectType)
+            {
+                _RecipeName = GetRecipeNameFromFolder(_RecipeName);
+                if (_RecipeName == "NULL") return false;
+            }
+			
+            if (_RecipeName == "") return false;
             SystemParam.LastRecipeName = _RecipeName;
 
             ReadInspectionParameters();
+
+            return true;
         }
 
         //LDH, 2018.08.24, Air Blower는 Recipe 번호만 받기 때문에, Recipe 폴더에서 번호확인후 Recipe명 load
         private string GetRecipeNameFromFolder(string _RecipeName)
         {
-            string GetRecipeName = "";
+            List<string> GetRecipeName = new List<string>();
             List<string> RecipeList = new List<string>();
 
             DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath);
@@ -102,13 +111,20 @@ namespace ParameterManager
             {
                 if(RecipeName.Contains("_"))
                 {
-                    if (RecipeName.Substring(0, RecipeName.IndexOf("_")) == _RecipeName) { GetRecipeName = RecipeList[NameCount]; break; }
+                    string _RecipeNameTemp = _RecipeName;
+                    if (_RecipeNameTemp.Contains("_")) _RecipeNameTemp = _RecipeName.Substring(0, _RecipeName.IndexOf("_"));
+
+                    if (RecipeName.Substring(0, RecipeName.IndexOf("_")) == _RecipeNameTemp)
+                    {
+                        GetRecipeName.Add(RecipeList[NameCount]);
+                    }
                 }
 
                 NameCount++;
             }
 
-            return GetRecipeName;
+            if (GetRecipeName.Count == 1 && GetRecipeName[0] == _RecipeName) return GetRecipeName[0];
+            else return "NULL";
         }
 
         public void DeInitialize()
@@ -448,22 +464,25 @@ namespace ParameterManager
         }
         #endregion Read & Write Project Item Parameter
 
-        #region Read & Write InspectionParameter
+        #region Read & Write InspectionParameter / Map Data Parameter
         public bool ReadInspectionParameters()
         {
             bool _Result = true;
 
             InspParam = new InspectionParameter[SystemParam.InspSystemManagerCount];
+            InspMapDataParam = new MapDataParameter[SystemParam.InspSystemManagerCount];
             for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
             {
                 InspParam[iLoopCount] = new InspectionParameter();
-                if (false == ReadInspectionParameter(iLoopCount, SystemParam.LastRecipeName)) { _Result = false; break; }
+                if (false == ReadInspectionParameter(iLoopCount, SystemParam.LastRecipeName))           { _Result = false; break; }
+                if (false == ReadInspectionMapDataParameter(iLoopCount, SystemParam.LastRecipeName))    { _Result = false;  break; }
             }
 
             return _Result;
         }
 
-        public bool ReadInspectionParameter(int _ID, string _RecipeName = null)
+        #region Read & Write InspectionParameter
+        private bool ReadInspectionParameter(int _ID, string _RecipeName = null)
         {
             bool _Result = true;
 
@@ -487,9 +506,11 @@ namespace ParameterManager
             foreach (XmlNode _Node in _XmlNodeList)
             {
                 InspectionAreaParameter _InspAreaParamTemp = new InspectionAreaParameter();
+                MapDataParameter _MapDataParamTemp = new MapDataParameter();
 
                 if (null == _Node) return false;
                 if (true == GetInspectionParameterResolution(_Node, ref InspParam[_ID]))    {   continue;   }
+                GetInspectionMapDataParameter(_Node, ref _MapDataParamTemp);
                 GetInspectionParameterRegion(_Node, ref _InspAreaParamTemp);
                 GetInspectionParameterAlgorithm(_Node, ref _InspAreaParamTemp);
                 InspParam[_ID].InspAreaParam.Add(_InspAreaParamTemp);
@@ -1031,6 +1052,174 @@ namespace ParameterManager
         }
         #endregion Read & Write InspectionParameter
 
+        #region Read & Write Map Data Parameter
+        private bool ReadInspectionMapDataParameter(int _ID, string _RecipeName = null)
+        {
+            bool _Result = true;
+
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
+            DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            //파일이 없으면 Map Data가 없는 걸로
+            string _InspMapDataParamFullPath = _RecipeParameterPath + @"\InspectionMapData.Rcp";
+            if (false == File.Exists(_InspMapDataParamFullPath)) return true;
+
+            XmlNodeList _XmlNodeList = GetNodeList(_InspMapDataParamFullPath);
+            if (null == _XmlNodeList) return true;
+
+            int _Cnt = 1;
+            InspMapDataParam[_ID] = new MapDataParameter();
+            InspMapDataParam[_ID].UnitListCenterX.Clear();
+            InspMapDataParam[_ID].UnitListCenterY.Clear();
+            foreach (XmlNode _Nodes in _XmlNodeList)
+            {
+                if (null == _Nodes) return true;
+
+                if (_Nodes.Name == "UnitTotalCount")                 InspMapDataParam[_ID].UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitRowCount")              InspMapDataParam[_ID].UnitRowCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitColumnCount")           InspMapDataParam[_ID].UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SectionRowCount")           InspMapDataParam[_ID].SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SectionColumnCount")        InspMapDataParam[_ID].SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaCenterX")     InspMapDataParam[_ID].UnitSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaCenterY")     InspMapDataParam[_ID].UnitSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaWidth")       InspMapDataParam[_ID].UnitSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaHeight")      InspMapDataParam[_ID].UnitSearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaOriginX")    InspMapDataParam[_ID].UnitPatternAreaOriginX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaOriginY")    InspMapDataParam[_ID].UnitPatternAreaOriginY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaCenterX")    InspMapDataParam[_ID].UnitPatternAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaCenterY")    InspMapDataParam[_ID].UnitPatternAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaWidth")      InspMapDataParam[_ID].UnitPatternAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaHeight")     InspMapDataParam[_ID].UnitPatternAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "FindCount")                 InspMapDataParam[_ID].FindCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "FindScore")                 InspMapDataParam[_ID].FindScore = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "AngleLimit")                InspMapDataParam[_ID].AngleLimit = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitCenterList")
+                {
+                    foreach (XmlNode _Node in _Nodes)
+                    {
+                        if (null == _Node) break;
+
+                        string _UnitCenterString = String.Format("UnitCenter{0}", _Cnt);
+                        if (_UnitCenterString == _Node.Name)
+                        {
+                            foreach (XmlNode _NodeChild in _Node)
+                            {
+                                if (_NodeChild.Name == "X")      InspMapDataParam[_ID].UnitListCenterX.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "Y") InspMapDataParam[_ID].UnitListCenterY.Add(Convert.ToDouble(_NodeChild.InnerText));
+                            }
+                        }
+                        _Cnt++;
+                    }
+                }
+            }
+
+            return _Result;
+        }
+
+        private bool GetInspectionMapDataParameter(XmlNode _Nodes, ref MapDataParameter _MapDataParam)
+        {
+            bool _Result = true;
+
+            if (null == _Nodes) return false;
+            _MapDataParam.UnitListCenterX.Clear();
+            _MapDataParam.UnitListCenterY.Clear();
+
+            if (_Nodes.Name == "UnitTotalCount") _MapDataParam.UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitRowCount") _MapDataParam.UnitRowCount = Convert.ToUInt32(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitColumnCount") _MapDataParam.UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+            else if (_Nodes.Name == "SectionRowCount") _MapDataParam.SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
+            else if (_Nodes.Name == "SectionColumnCount") _MapDataParam.SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitSearchAreaCenterX") _MapDataParam.UnitSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitSearchAreaCenterY") _MapDataParam.UnitSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitSearchAreaWidth") _MapDataParam.UnitSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitSearchAreaHeight") _MapDataParam.UnitSearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitPatternAreaOriginX") _MapDataParam.UnitPatternAreaOriginX = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitPatternAreaOriginY") _MapDataParam.UnitPatternAreaOriginY = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitPatternAreaWidth") _MapDataParam.UnitPatternAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitPatternAreaHeight") _MapDataParam.UnitPatternAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "FindCount") _MapDataParam.FindCount = Convert.ToUInt32(_Nodes.InnerText);
+            else if (_Nodes.Name == "FindScore") _MapDataParam.FindScore = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "AngleLimit") _MapDataParam.AngleLimit = Convert.ToDouble(_Nodes.InnerText);
+            else if (_Nodes.Name == "UnitCenterList")
+            {
+                int _Cnt = 1;
+                string _UnitCenterString = String.Format("UnitCenter{0}", _Cnt);
+
+                foreach (XmlNode _Node in _Nodes)
+                {
+                    if (null == _Node) break;
+                    if (_UnitCenterString == _Node.Name)
+                    {
+                        foreach (XmlNode _NodeChild in _Node)
+                        {
+                            if (_NodeChild.Name == "X") _MapDataParam.UnitListCenterX.Add(Convert.ToDouble(_NodeChild.InnerText));
+                            else if (_NodeChild.Name == "Y") _MapDataParam.UnitListCenterY.Add(Convert.ToDouble(_NodeChild.InnerText));
+                        }
+                    }
+                }
+                _Cnt++;
+            }
+
+            return _Result;
+        }
+
+        public void WriteInspectionMapDataparameter(int _ID, string _RecipeName = null)
+        {
+            if (InspMapDataParam[_ID].UnitListCenterX.Count == 0 || InspMapDataParam[_ID].UnitListCenterY.Count == 0) return;
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            string _MapDataParameterFilePath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1) + @"\InspectionMapData.Rcp";
+            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
+            DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            XmlTextWriter _XmlWriter = new XmlTextWriter(_MapDataParameterFilePath, Encoding.Unicode);
+            _XmlWriter.Formatting = Formatting.Indented;
+            _XmlWriter.WriteStartDocument();
+            _XmlWriter.WriteStartElement("MapDataList");
+            {
+                _XmlWriter.WriteElementString("UnitTotalCount", InspMapDataParam[_ID].UnitTotalCount.ToString());
+                _XmlWriter.WriteElementString("UnitRowCount", InspMapDataParam[_ID].UnitRowCount.ToString());
+                _XmlWriter.WriteElementString("UnitColumnCount", InspMapDataParam[_ID].UnitColumnCount.ToString());
+                _XmlWriter.WriteElementString("SectionRowCount", InspMapDataParam[_ID].SectionRowCount.ToString());
+                _XmlWriter.WriteElementString("SectionColumnCount", InspMapDataParam[_ID].SectionColumnCount.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaCenterX", InspMapDataParam[_ID].UnitSearchAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaCenterY", InspMapDataParam[_ID].UnitSearchAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaWidth", InspMapDataParam[_ID].UnitSearchAreaWidth.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaHeight", InspMapDataParam[_ID].UnitSearchAreaHeight.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaOriginX", InspMapDataParam[_ID].UnitPatternAreaOriginX.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaOriginY", InspMapDataParam[_ID].UnitPatternAreaOriginY.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaCenterX", InspMapDataParam[_ID].UnitPatternAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaCenterY", InspMapDataParam[_ID].UnitPatternAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaWidth", InspMapDataParam[_ID].UnitPatternAreaWidth.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaHeight", InspMapDataParam[_ID].UnitPatternAreaHeight.ToString());
+                _XmlWriter.WriteElementString("FindCount", InspMapDataParam[_ID].FindCount.ToString());
+                _XmlWriter.WriteElementString("FindScore", InspMapDataParam[_ID].FindScore.ToString());
+                _XmlWriter.WriteElementString("AngleLimit", InspMapDataParam[_ID].AngleLimit.ToString());
+
+                _XmlWriter.WriteStartElement("UnitCenterList");
+                {
+                    for (int iLoopCount = 0; iLoopCount < InspMapDataParam[_ID].UnitListCenterX.Count; ++iLoopCount)
+                    {
+                        _XmlWriter.WriteStartElement("UnitCenter" + (iLoopCount));
+                        {
+                            _XmlWriter.WriteElementString("X", InspMapDataParam[_ID].UnitListCenterX[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("Y", InspMapDataParam[_ID].UnitListCenterY[iLoopCount].ToString());
+                        }
+                        _XmlWriter.WriteEndElement();
+                    }
+                }
+                _XmlWriter.WriteEndElement();
+            }
+            _XmlWriter.WriteEndElement();
+            _XmlWriter.WriteEndDocument();
+            _XmlWriter.Close();
+        }
+        #endregion Read & Write Map Data Parameter
+
+        #endregion Read & Write InspectionParameter
+
         #region RecipeCopy
         /// <summary>
         /// Inspection Parameter (Recipe) 복사
@@ -1252,6 +1441,36 @@ namespace ParameterManager
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
                 }
                 _DestParam.InspAreaParam.Add(_InspAreaParam);
+            }
+        }
+
+        public static void RecipeCopy(MapDataParameter _SrcParam, ref MapDataParameter _DestParam)
+        {
+            _DestParam.UnitTotalCount         = _SrcParam.UnitTotalCount;
+            _DestParam.UnitRowCount           = _SrcParam.UnitRowCount;
+            _DestParam.UnitColumnCount        = _SrcParam.UnitColumnCount;
+            _DestParam.SectionRowCount        = _SrcParam.SectionRowCount;
+            _DestParam.SectionColumnCount     = _SrcParam.SectionColumnCount;
+            _DestParam.UnitSearchAreaCenterX  = _SrcParam.UnitSearchAreaCenterX;
+            _DestParam.UnitSearchAreaCenterY  = _SrcParam.UnitSearchAreaCenterY;
+            _DestParam.UnitSearchAreaWidth    = _SrcParam.UnitSearchAreaWidth;
+            _DestParam.UnitSearchAreaHeight   = _SrcParam.UnitSearchAreaHeight;
+            _DestParam.UnitPatternAreaOriginX = _SrcParam.UnitPatternAreaOriginX;
+            _DestParam.UnitPatternAreaOriginY = _SrcParam.UnitPatternAreaOriginY;
+            _DestParam.UnitPatternAreaCenterX     = _SrcParam.UnitPatternAreaCenterX;
+            _DestParam.UnitPatternAreaCenterY     = _SrcParam.UnitPatternAreaCenterY;
+            _DestParam.UnitPatternAreaWidth   = _SrcParam.UnitPatternAreaWidth;
+            _DestParam.UnitPatternAreaHeight  = _SrcParam.UnitPatternAreaHeight;
+            _DestParam.FindCount              = _SrcParam.FindCount;
+            _DestParam.FindScore              = _SrcParam.FindScore;
+            _DestParam.AngleLimit             = _SrcParam.AngleLimit;
+
+            _DestParam.UnitListCenterX = new List<double>();
+            _DestParam.UnitListCenterY = new List<double>();
+            for (int iLoopCount = 0; iLoopCount < _SrcParam.UnitListCenterX.Count; ++iLoopCount)
+            {
+                _DestParam.UnitListCenterX.Add(_SrcParam.UnitListCenterX[iLoopCount]);
+                _DestParam.UnitListCenterY.Add(_SrcParam.UnitListCenterY[iLoopCount]);
             }
         }
         #endregion RecipeCopy

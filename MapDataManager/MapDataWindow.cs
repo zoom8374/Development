@@ -18,6 +18,10 @@ namespace MapDataManager
     public partial class MapDataWindow : Form
     {
         private MapDataParameter MapDataParam;
+        private MapDataParameter MapDataParamBackup;
+
+        public delegate void MapDataParameterSaveHandler(MapDataParameter _MapDataParam, int _ID);
+        public event MapDataParameterSaveHandler MapDataParameterSaveEvent;
 
         #region Initialize & DeInitialize
         public MapDataWindow()
@@ -27,12 +31,20 @@ namespace MapDataManager
 
         public void Initialize(MapDataParameter _MapDataParam)
         {
-            MapDataParam = new MapDataParameter();
+            SetMapDataParameter(_MapDataParam);
         }
 
         public void DeInitialize()
         {
 
+        }
+
+        private void SetMapDataParameter(MapDataParameter _MapDataParam)
+        {
+            MapDataParam = new MapDataParameter();
+            MapDataParamBackup = new MapDataParameter();
+            CParameterManager.RecipeCopy(_MapDataParam, ref MapDataParam);
+            CParameterManager.RecipeCopy(_MapDataParam, ref MapDataParamBackup);
         }
         #endregion Initialize & DeInitialize
 
@@ -72,24 +84,119 @@ namespace MapDataManager
             kpTeachDisplay.SetDisplayImage(_OriginImage);
         }
 
-        private void btnUnitPatternShow_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnUnitPatternSet_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnUnitPatternAreaShow_Click(object sender, EventArgs e)
         {
+            btnUnitPatternSearchAreaShow.Enabled = false;
+            btnUnitPatternSearchAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaCancel.Enabled = false;
+            btnUnitPatternAreaShow.Enabled = false;
+            btnUnitPatternAreaSet.Enabled = true;
+            btnUnitPatternAreaCancel.Enabled = true;
 
+            CogRectangle _PatternRegion = new CogRectangle();
+            CogRectangle _PatternSearchRegion = new CogRectangle();
+            _PatternRegion.SetCenterWidthHeight(MapDataParam.UnitPatternAreaCenterX, MapDataParam.UnitPatternAreaCenterY, MapDataParam.UnitPatternAreaWidth, MapDataParam.UnitPatternAreaHeight);
+            _PatternSearchRegion.SetCenterWidthHeight(MapDataParam.UnitSearchAreaCenterX, MapDataParam.UnitSearchAreaCenterY, MapDataParam.UnitSearchAreaWidth, MapDataParam.UnitSearchAreaHeight);
+
+            kpTeachDisplay.ClearDisplay();
+            kpTeachDisplay.DrawInterActiveShape(_PatternRegion, "PatternRegion", CogColorConstants.Green);
+            kpTeachDisplay.DrawStaticShape(_PatternSearchRegion, "PatternSearchRegion", CogColorConstants.Orange, 2, CogGraphicLineStyleConstants.Dash);
         }
 
         private void btnUnitPatternAreaSet_Click(object sender, EventArgs e)
         {
+            btnUnitPatternSearchAreaShow.Enabled = true;
+            btnUnitPatternSearchAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaCancel.Enabled = false;
+            btnUnitPatternAreaShow.Enabled = true;
+            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternAreaCancel.Enabled = false;
 
+            double _CenterX, _CenterY, _Width, _Height;
+            CogRectangle _PatternRegion = kpTeachDisplay.GetInterActiveRectangle();
+            _PatternRegion.GetCenterWidthHeight(out _CenterX, out _CenterY, out _Width, out _Height);
+
+            kpTeachDisplay.ClearDisplay("PatternRegion");
+            kpTeachDisplay.DrawStaticShape(_PatternRegion, "PatternRegion", CogColorConstants.Green, 2, CogGraphicLineStyleConstants.Dash);
+
+            MapDataParam.UnitPatternAreaCenterX = _CenterX;
+            MapDataParam.UnitPatternAreaCenterY = _CenterY;
+            MapDataParam.UnitPatternAreaWidth = _Width;
+            MapDataParam.UnitPatternAreaHeight = _Height;
+        }
+
+        private void btnUnitPatternSearchAreaCancel_Click(object sender, EventArgs e)
+        {
+            btnUnitPatternSearchAreaShow.Enabled = true;
+            btnUnitPatternSearchAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaCancel.Enabled = false;
+            btnUnitPatternAreaShow.Enabled = true;
+            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternAreaCancel.Enabled = false;
+
+            kpTeachDisplay.ClearDisplay();
+        }
+
+        private void btnUnitPatternSearchAreaShow_Click(object sender, EventArgs e)
+        {
+            btnUnitPatternSearchAreaShow.Enabled = false;
+            btnUnitPatternSearchAreaSet.Enabled = true;
+            btnUnitPatternSearchAreaCancel.Enabled = true;
+            btnUnitPatternAreaShow.Enabled = false;
+            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternAreaCancel.Enabled = false;
+
+            CogRectangle _PatternRegion = new CogRectangle();
+            CogRectangle _PatternSearchRegion = new CogRectangle();
+            _PatternRegion.SetCenterWidthHeight(MapDataParam.UnitPatternAreaCenterX, MapDataParam.UnitPatternAreaCenterY, MapDataParam.UnitPatternAreaWidth, MapDataParam.UnitPatternAreaHeight);
+            _PatternSearchRegion.SetCenterWidthHeight(MapDataParam.UnitSearchAreaCenterX, MapDataParam.UnitSearchAreaCenterY, MapDataParam.UnitSearchAreaWidth, MapDataParam.UnitSearchAreaHeight);
+
+            kpTeachDisplay.ClearDisplay();
+            kpTeachDisplay.DrawInterActiveShape(_PatternSearchRegion, "PatternSearchRegion", CogColorConstants.Orange);
+            kpTeachDisplay.DrawStaticShape(_PatternRegion, "PatternRegion", CogColorConstants.Green, 2, CogGraphicLineStyleConstants.Dash);
+        }
+
+        private void btnUnitPatternSearchAreaSet_Click(object sender, EventArgs e)
+        {
+            btnUnitPatternSearchAreaShow.Enabled = true;
+            btnUnitPatternSearchAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaCancel.Enabled = false;
+            btnUnitPatternAreaShow.Enabled = true;
+            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternAreaCancel.Enabled = false;
+
+            double _CenterX, _CenterY, _Width, _Height;
+            CogRectangle _PatternSearchRegion = kpTeachDisplay.GetInterActiveRectangle();
+
+            _PatternSearchRegion.GetCenterWidthHeight(out _CenterX, out _CenterY, out _Width, out _Height);
+
+            kpTeachDisplay.ClearDisplay("PatternSearchRegion");
+            kpTeachDisplay.DrawStaticShape(_PatternSearchRegion, "PatternSearchRegion", CogColorConstants.Orange, 2, CogGraphicLineStyleConstants.Dash);
+
+            MapDataParam.UnitSearchAreaCenterX = _CenterX;
+            MapDataParam.UnitSearchAreaCenterY = _CenterY;
+            MapDataParam.UnitSearchAreaWidth = _Width;
+            MapDataParam.UnitSearchAreaHeight = _Height;
+        }
+
+        private void btnUnitPatternAreaCancel_Click(object sender, EventArgs e)
+        {
+            btnUnitPatternSearchAreaShow.Enabled = true;
+            btnUnitPatternSearchAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaCancel.Enabled = false;
+            btnUnitPatternAreaShow.Enabled = true;
+            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternAreaCancel.Enabled = false;
+
+            kpTeachDisplay.ClearDisplay();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            int _ID = 0; //ID 확인 UI 추가 필요
+
+            var _MapDataParameterSaveEvent = MapDataParameterSaveEvent;
+            MapDataParameterSaveEvent?.Invoke(MapDataParam, _ID);
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -98,6 +205,5 @@ namespace MapDataManager
             this.Close();
         }
         #endregion Control Event
-
     }
 }

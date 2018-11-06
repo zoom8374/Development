@@ -21,6 +21,7 @@ namespace InspectionSystemManager
         public InspectionPattern()
         {
             PatternProc = new CogPMAlignTool();
+            PatternProc.Pattern.TrainAlgorithm = CogPMAlignTrainAlgorithmConstants.PatQuick;
             PatternResults = new CogPMAlignResults();
         }
 

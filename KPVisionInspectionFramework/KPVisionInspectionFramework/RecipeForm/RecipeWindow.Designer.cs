@@ -35,10 +35,12 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnRecipeCopy = new System.Windows.Forms.Button();
             this.btnRecipeChange = new System.Windows.Forms.Button();
-            this.gradientLabel2 = new CustomControl.GradientLabel();
             this.textBoxCurrentRecipe = new System.Windows.Forms.TextBox();
-            this.gradientLabel1 = new CustomControl.GradientLabel();
             this.listBoxRecipe = new System.Windows.Forms.ListBox();
+            this.gradientLabel2 = new CustomControl.GradientLabel();
+            this.gradientLabel1 = new CustomControl.GradientLabel();
+            this.textBoxSearchRecipe = new System.Windows.Forms.TextBox();
+            this.gradientLabel3 = new CustomControl.GradientLabel();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +62,8 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.gradientLabel3);
+            this.panelMain.Controls.Add(this.textBoxSearchRecipe);
             this.panelMain.Controls.Add(this.btnRecipeAdd);
             this.panelMain.Controls.Add(this.btnRecipeDelete);
             this.panelMain.Controls.Add(this.btnOk);
@@ -135,6 +139,30 @@
             this.btnRecipeChange.UseVisualStyleBackColor = true;
             this.btnRecipeChange.Click += new System.EventHandler(this.btnRecipeChange_Click);
             // 
+            // textBoxCurrentRecipe
+            // 
+            this.textBoxCurrentRecipe.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxCurrentRecipe.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.textBoxCurrentRecipe.Location = new System.Drawing.Point(3, 639);
+            this.textBoxCurrentRecipe.Multiline = true;
+            this.textBoxCurrentRecipe.Name = "textBoxCurrentRecipe";
+            this.textBoxCurrentRecipe.ReadOnly = true;
+            this.textBoxCurrentRecipe.Size = new System.Drawing.Size(634, 29);
+            this.textBoxCurrentRecipe.TabIndex = 302;
+            this.textBoxCurrentRecipe.Text = "Recipe Name";
+            // 
+            // listBoxRecipe
+            // 
+            this.listBoxRecipe.Font = new System.Drawing.Font("나눔바른고딕", 10F, System.Drawing.FontStyle.Bold);
+            this.listBoxRecipe.FormattingEnabled = true;
+            this.listBoxRecipe.ItemHeight = 15;
+            this.listBoxRecipe.Items.AddRange(new object[] {
+            "Recipe"});
+            this.listBoxRecipe.Location = new System.Drawing.Point(1, 1);
+            this.listBoxRecipe.Name = "listBoxRecipe";
+            this.listBoxRecipe.Size = new System.Drawing.Size(638, 544);
+            this.listBoxRecipe.TabIndex = 4;
+            // 
             // gradientLabel2
             // 
             this.gradientLabel2.BackColor = System.Drawing.Color.LightSlateGray;
@@ -149,18 +177,6 @@
             this.gradientLabel2.TabIndex = 303;
             this.gradientLabel2.Text = "Recipe Management";
             this.gradientLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // textBoxCurrentRecipe
-            // 
-            this.textBoxCurrentRecipe.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxCurrentRecipe.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBoxCurrentRecipe.Location = new System.Drawing.Point(3, 639);
-            this.textBoxCurrentRecipe.Multiline = true;
-            this.textBoxCurrentRecipe.Name = "textBoxCurrentRecipe";
-            this.textBoxCurrentRecipe.ReadOnly = true;
-            this.textBoxCurrentRecipe.Size = new System.Drawing.Size(634, 29);
-            this.textBoxCurrentRecipe.TabIndex = 302;
-            this.textBoxCurrentRecipe.Text = "Recipe Name";
             // 
             // gradientLabel1
             // 
@@ -177,17 +193,29 @@
             this.gradientLabel1.Text = "Current Recipe Name";
             this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // listBoxRecipe
+            // textBoxSearchRecipe
             // 
-            this.listBoxRecipe.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.listBoxRecipe.FormattingEnabled = true;
-            this.listBoxRecipe.ItemHeight = 14;
-            this.listBoxRecipe.Items.AddRange(new object[] {
-            "Recipe"});
-            this.listBoxRecipe.Location = new System.Drawing.Point(1, 1);
-            this.listBoxRecipe.Name = "listBoxRecipe";
-            this.listBoxRecipe.Size = new System.Drawing.Size(638, 592);
-            this.listBoxRecipe.TabIndex = 4;
+            this.textBoxSearchRecipe.Font = new System.Drawing.Font("나눔바른고딕", 12F, System.Drawing.FontStyle.Bold);
+            this.textBoxSearchRecipe.Location = new System.Drawing.Point(100, 549);
+            this.textBoxSearchRecipe.Name = "textBoxSearchRecipe";
+            this.textBoxSearchRecipe.Size = new System.Drawing.Size(541, 26);
+            this.textBoxSearchRecipe.TabIndex = 1;
+            this.textBoxSearchRecipe.TextChanged += new System.EventHandler(this.textBoxSearchRecipe_TextChanged);
+            // 
+            // gradientLabel3
+            // 
+            this.gradientLabel3.BackColor = System.Drawing.Color.LightSlateGray;
+            this.gradientLabel3.ColorBottom = System.Drawing.Color.Gray;
+            this.gradientLabel3.ColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel3.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
+            this.gradientLabel3.Location = new System.Drawing.Point(3, 547);
+            this.gradientLabel3.Name = "gradientLabel3";
+            this.gradientLabel3.Size = new System.Drawing.Size(94, 28);
+            this.gradientLabel3.TabIndex = 310;
+            this.gradientLabel3.Text = "Search";
+            this.gradientLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RecipeWindow
             // 
@@ -224,5 +252,7 @@
         private CustomControl.GradientLabel gradientLabel2;
         private System.Windows.Forms.TextBox textBoxCurrentRecipe;
         private CustomControl.GradientLabel gradientLabel1;
+        private CustomControl.GradientLabel gradientLabel3;
+        private System.Windows.Forms.TextBox textBoxSearchRecipe;
     }
 }
