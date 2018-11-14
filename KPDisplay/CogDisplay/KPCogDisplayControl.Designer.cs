@@ -38,11 +38,13 @@
             // cogDisplayStatusBarV2
             // 
             this.cogDisplayStatusBarV2.CoordinateSpaceName = "*\\#";
+            this.cogDisplayStatusBarV2.CoordinateSpaceName3D = "*\\#";
             this.cogDisplayStatusBarV2.Location = new System.Drawing.Point(-1, 503);
             this.cogDisplayStatusBarV2.Name = "cogDisplayStatusBarV2";
             this.cogDisplayStatusBarV2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.cogDisplayStatusBarV2.Size = new System.Drawing.Size(499, 22);
             this.cogDisplayStatusBarV2.TabIndex = 1;
+            this.cogDisplayStatusBarV2.Use3DCoordinateSpaceTree = false;
             // 
             // kCogDisplay
             // 
@@ -51,6 +53,8 @@
             this.kCogDisplay.ColorMapPredefined = Cognex.VisionPro.Display.CogDisplayColorMapPredefinedConstants.None;
             this.kCogDisplay.ColorMapUpperClipColor = System.Drawing.Color.Black;
             this.kCogDisplay.ColorMapUpperRoiLimit = 1D;
+            this.kCogDisplay.DoubleTapZoomCycleLength = 2;
+            this.kCogDisplay.DoubleTapZoomSensitivity = 2.5D;
             this.kCogDisplay.Location = new System.Drawing.Point(0, 0);
             this.kCogDisplay.MouseWheelMode = Cognex.VisionPro.Display.CogDisplayMouseWheelModeConstants.Zoom1;
             this.kCogDisplay.MouseWheelSensitivity = 1D;

@@ -30,10 +30,19 @@
         {
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnUnitPatternAreaCancel = new System.Windows.Forms.Button();
-            this.btnUnitPatternSearchAreaCancel = new System.Windows.Forms.Button();
+            this.btnManualSearchAreaSet = new System.Windows.Forms.Button();
+            this.btnManualSearchArea = new System.Windows.Forms.Button();
+            this.btnShowSearchArea = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnUnitPatternSearchAreaShow = new System.Windows.Forms.Button();
+            this.btnUnitPatternOriginCenterSet = new System.Windows.Forms.Button();
+            this.btnUnitPatternSearchAreaSet = new System.Windows.Forms.Button();
+            this.btnUnitPatternAreaShow = new System.Windows.Forms.Button();
+            this.btnUnitPatternAreaSet = new System.Windows.Forms.Button();
+            this.btnFindSearchArea = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numericUpDownAngleLimit = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel8 = new CustomControl.GradientLabel();
@@ -45,11 +54,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.kpPatternDisplay = new KPDisplay.KPCogDisplayControl();
-            this.btnUnitPatternAreaShow = new System.Windows.Forms.Button();
-            this.btnUnitPatternSearchAreaShow = new System.Windows.Forms.Button();
-            this.btnUnitPatternAreaSet = new System.Windows.Forms.Button();
-            this.btnUnitPatternSearchAreaSet = new System.Windows.Forms.Button();
+            this.btnUnitPatternAreaCancel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtUnitTotalCount = new System.Windows.Forms.TextBox();
+            this.gradientLabel6 = new CustomControl.GradientLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.numUpDownSectionColumnCount = new System.Windows.Forms.NumericUpDown();
@@ -65,8 +73,12 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.kpTeachDisplay = new KPDisplay.KPCogDisplayControl();
             this.labelInputTitle = new CustomControl.GradientLabel();
+            this.chAreaAutoSearch = new System.Windows.Forms.CheckBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.chAreaManualSearch = new System.Windows.Forms.CheckBox();
             this.panelMain.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAngleLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindCount)).BeginInit();
@@ -78,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionRowCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitColumnCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitRowCount)).BeginInit();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -98,6 +111,10 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.chAreaManualSearch);
+            this.panelMain.Controls.Add(this.panel3);
+            this.panelMain.Controls.Add(this.chAreaAutoSearch);
+            this.panelMain.Controls.Add(this.btnCancel);
             this.panelMain.Controls.Add(this.btnSave);
             this.panelMain.Controls.Add(this.panel2);
             this.panelMain.Controls.Add(this.panel1);
@@ -112,11 +129,23 @@
             this.panelMain.TabIndex = 46;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.Location = new System.Drawing.Point(997, 800);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(124, 35);
+            this.btnCancel.TabIndex = 314;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(1002, 800);
+            this.btnSave.Location = new System.Drawing.Point(867, 800);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(124, 35);
             this.btnSave.TabIndex = 313;
@@ -127,46 +156,158 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.btnUnitPatternAreaCancel);
-            this.panel2.Controls.Add(this.btnUnitPatternSearchAreaCancel);
+            this.panel2.Controls.Add(this.btnShowSearchArea);
+            this.panel2.Controls.Add(this.groupBox1);
+            this.panel2.Controls.Add(this.btnFindSearchArea);
             this.panel2.Controls.Add(this.groupBox2);
             this.panel2.Controls.Add(this.kpPatternDisplay);
-            this.panel2.Controls.Add(this.btnUnitPatternAreaShow);
-            this.panel2.Controls.Add(this.btnUnitPatternSearchAreaShow);
-            this.panel2.Controls.Add(this.btnUnitPatternAreaSet);
-            this.panel2.Controls.Add(this.btnUnitPatternSearchAreaSet);
-            this.panel2.Location = new System.Drawing.Point(639, 369);
+            this.panel2.Controls.Add(this.btnUnitPatternAreaCancel);
+            this.panel2.Location = new System.Drawing.Point(639, 305);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(617, 425);
+            this.panel2.Size = new System.Drawing.Size(617, 394);
             this.panel2.TabIndex = 312;
             // 
-            // btnUnitPatternAreaCancel
+            // btnManualSearchAreaSet
             // 
-            this.btnUnitPatternAreaCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternAreaCancel.Enabled = false;
-            this.btnUnitPatternAreaCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternAreaCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternAreaCancel.Location = new System.Drawing.Point(263, 378);
-            this.btnUnitPatternAreaCancel.Name = "btnUnitPatternAreaCancel";
-            this.btnUnitPatternAreaCancel.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternAreaCancel.TabIndex = 311;
-            this.btnUnitPatternAreaCancel.Text = "Cancel \r\nPattern Area";
-            this.btnUnitPatternAreaCancel.UseVisualStyleBackColor = false;
-            this.btnUnitPatternAreaCancel.Click += new System.EventHandler(this.btnUnitPatternAreaCancel_Click);
+            this.btnManualSearchAreaSet.BackColor = System.Drawing.SystemColors.Control;
+            this.btnManualSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnManualSearchAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnManualSearchAreaSet.Location = new System.Drawing.Point(489, 5);
+            this.btnManualSearchAreaSet.Name = "btnManualSearchAreaSet";
+            this.btnManualSearchAreaSet.Size = new System.Drawing.Size(124, 40);
+            this.btnManualSearchAreaSet.TabIndex = 318;
+            this.btnManualSearchAreaSet.Text = "Set Manual\r\nSearch Area";
+            this.btnManualSearchAreaSet.UseVisualStyleBackColor = false;
+            this.btnManualSearchAreaSet.Click += new System.EventHandler(this.btnManualSearchAreaSet_Click);
             // 
-            // btnUnitPatternSearchAreaCancel
+            // btnManualSearchArea
             // 
-            this.btnUnitPatternSearchAreaCancel.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternSearchAreaCancel.Enabled = false;
-            this.btnUnitPatternSearchAreaCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternSearchAreaCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternSearchAreaCancel.Location = new System.Drawing.Point(263, 333);
-            this.btnUnitPatternSearchAreaCancel.Name = "btnUnitPatternSearchAreaCancel";
-            this.btnUnitPatternSearchAreaCancel.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternSearchAreaCancel.TabIndex = 310;
-            this.btnUnitPatternSearchAreaCancel.Text = "Cancel Pattern\r\nSearch Area";
-            this.btnUnitPatternSearchAreaCancel.UseVisualStyleBackColor = false;
-            this.btnUnitPatternSearchAreaCancel.Click += new System.EventHandler(this.btnUnitPatternSearchAreaCancel_Click);
+            this.btnManualSearchArea.BackColor = System.Drawing.SystemColors.Control;
+            this.btnManualSearchArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnManualSearchArea.ForeColor = System.Drawing.Color.Black;
+            this.btnManualSearchArea.Location = new System.Drawing.Point(356, 5);
+            this.btnManualSearchArea.Name = "btnManualSearchArea";
+            this.btnManualSearchArea.Size = new System.Drawing.Size(124, 40);
+            this.btnManualSearchArea.TabIndex = 317;
+            this.btnManualSearchArea.Text = "Show Manual\r\nSearch Area";
+            this.btnManualSearchArea.UseVisualStyleBackColor = false;
+            this.btnManualSearchArea.Click += new System.EventHandler(this.btnManualSearchArea_Click);
+            // 
+            // btnShowSearchArea
+            // 
+            this.btnShowSearchArea.BackColor = System.Drawing.SystemColors.Control;
+            this.btnShowSearchArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnShowSearchArea.ForeColor = System.Drawing.Color.Black;
+            this.btnShowSearchArea.Location = new System.Drawing.Point(356, 335);
+            this.btnShowSearchArea.Name = "btnShowSearchArea";
+            this.btnShowSearchArea.Size = new System.Drawing.Size(124, 40);
+            this.btnShowSearchArea.TabIndex = 316;
+            this.btnShowSearchArea.Text = "Show Search Area";
+            this.btnShowSearchArea.UseVisualStyleBackColor = false;
+            this.btnShowSearchArea.Click += new System.EventHandler(this.btnShowSearchArea_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnUnitPatternSearchAreaShow);
+            this.groupBox1.Controls.Add(this.btnUnitPatternOriginCenterSet);
+            this.groupBox1.Controls.Add(this.btnUnitPatternSearchAreaSet);
+            this.groupBox1.Controls.Add(this.btnUnitPatternAreaShow);
+            this.groupBox1.Controls.Add(this.btnUnitPatternAreaSet);
+            this.groupBox1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(334, 135);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(276, 192);
+            this.groupBox1.TabIndex = 315;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = " Pattern Setting ";
+            // 
+            // btnUnitPatternSearchAreaShow
+            // 
+            this.btnUnitPatternSearchAreaShow.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnUnitPatternSearchAreaShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitPatternSearchAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternSearchAreaShow.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternSearchAreaShow.Location = new System.Drawing.Point(8, 20);
+            this.btnUnitPatternSearchAreaShow.Name = "btnUnitPatternSearchAreaShow";
+            this.btnUnitPatternSearchAreaShow.Size = new System.Drawing.Size(128, 45);
+            this.btnUnitPatternSearchAreaShow.TabIndex = 304;
+            this.btnUnitPatternSearchAreaShow.Text = "Show Pattern \r\nSearch Area";
+            this.btnUnitPatternSearchAreaShow.UseVisualStyleBackColor = false;
+            this.btnUnitPatternSearchAreaShow.Click += new System.EventHandler(this.btnUnitPatternSearchAreaShow_Click);
+            // 
+            // btnUnitPatternOriginCenterSet
+            // 
+            this.btnUnitPatternOriginCenterSet.BackColor = System.Drawing.Color.PaleGreen;
+            this.btnUnitPatternOriginCenterSet.Enabled = false;
+            this.btnUnitPatternOriginCenterSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitPatternOriginCenterSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternOriginCenterSet.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternOriginCenterSet.Location = new System.Drawing.Point(142, 122);
+            this.btnUnitPatternOriginCenterSet.Name = "btnUnitPatternOriginCenterSet";
+            this.btnUnitPatternOriginCenterSet.Size = new System.Drawing.Size(128, 45);
+            this.btnUnitPatternOriginCenterSet.TabIndex = 314;
+            this.btnUnitPatternOriginCenterSet.Text = "Set \rOrigin Center";
+            this.btnUnitPatternOriginCenterSet.UseVisualStyleBackColor = false;
+            this.btnUnitPatternOriginCenterSet.Visible = false;
+            this.btnUnitPatternOriginCenterSet.Click += new System.EventHandler(this.btnUnitPatternOriginCenterSet_Click);
+            // 
+            // btnUnitPatternSearchAreaSet
+            // 
+            this.btnUnitPatternSearchAreaSet.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnUnitPatternSearchAreaSet.Enabled = false;
+            this.btnUnitPatternSearchAreaSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitPatternSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternSearchAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternSearchAreaSet.Location = new System.Drawing.Point(142, 20);
+            this.btnUnitPatternSearchAreaSet.Name = "btnUnitPatternSearchAreaSet";
+            this.btnUnitPatternSearchAreaSet.Size = new System.Drawing.Size(128, 45);
+            this.btnUnitPatternSearchAreaSet.TabIndex = 305;
+            this.btnUnitPatternSearchAreaSet.Text = "Set Pattern\r\nSearch Area";
+            this.btnUnitPatternSearchAreaSet.UseVisualStyleBackColor = false;
+            this.btnUnitPatternSearchAreaSet.Click += new System.EventHandler(this.btnUnitPatternSearchAreaSet_Click);
+            // 
+            // btnUnitPatternAreaShow
+            // 
+            this.btnUnitPatternAreaShow.BackColor = System.Drawing.Color.PaleGreen;
+            this.btnUnitPatternAreaShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitPatternAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternAreaShow.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternAreaShow.Location = new System.Drawing.Point(8, 71);
+            this.btnUnitPatternAreaShow.Name = "btnUnitPatternAreaShow";
+            this.btnUnitPatternAreaShow.Size = new System.Drawing.Size(128, 45);
+            this.btnUnitPatternAreaShow.TabIndex = 306;
+            this.btnUnitPatternAreaShow.Text = "Show\r\nPattern Area";
+            this.btnUnitPatternAreaShow.UseVisualStyleBackColor = false;
+            this.btnUnitPatternAreaShow.Click += new System.EventHandler(this.btnUnitPatternAreaShow_Click);
+            // 
+            // btnUnitPatternAreaSet
+            // 
+            this.btnUnitPatternAreaSet.BackColor = System.Drawing.Color.PaleGreen;
+            this.btnUnitPatternAreaSet.Enabled = false;
+            this.btnUnitPatternAreaSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnitPatternAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternAreaSet.Location = new System.Drawing.Point(142, 71);
+            this.btnUnitPatternAreaSet.Name = "btnUnitPatternAreaSet";
+            this.btnUnitPatternAreaSet.Size = new System.Drawing.Size(128, 45);
+            this.btnUnitPatternAreaSet.TabIndex = 307;
+            this.btnUnitPatternAreaSet.Text = "Set \r\nPattern Area";
+            this.btnUnitPatternAreaSet.UseVisualStyleBackColor = false;
+            this.btnUnitPatternAreaSet.Click += new System.EventHandler(this.btnUnitPatternAreaSet_Click);
+            // 
+            // btnFindSearchArea
+            // 
+            this.btnFindSearchArea.BackColor = System.Drawing.SystemColors.Control;
+            this.btnFindSearchArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnFindSearchArea.ForeColor = System.Drawing.Color.Black;
+            this.btnFindSearchArea.Location = new System.Drawing.Point(486, 335);
+            this.btnFindSearchArea.Name = "btnFindSearchArea";
+            this.btnFindSearchArea.Size = new System.Drawing.Size(124, 40);
+            this.btnFindSearchArea.TabIndex = 312;
+            this.btnFindSearchArea.Text = "Find Search Area";
+            this.btnFindSearchArea.UseVisualStyleBackColor = false;
+            this.btnFindSearchArea.Click += new System.EventHandler(this.btnFindSearchArea_Click);
             // 
             // groupBox2
             // 
@@ -183,7 +324,7 @@
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(334, 2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(276, 325);
+            this.groupBox2.Size = new System.Drawing.Size(276, 127);
             this.groupBox2.TabIndex = 309;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Condition Setting ";
@@ -226,6 +367,11 @@
             // numericUpDownFindCount
             // 
             this.numericUpDownFindCount.Location = new System.Drawing.Point(150, 53);
+            this.numericUpDownFindCount.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numericUpDownFindCount.Minimum = new decimal(new int[] {
             1,
             0,
@@ -331,63 +477,24 @@
             this.kpPatternDisplay.TabIndex = 308;
             this.kpPatternDisplay.UseStatusBar = false;
             // 
-            // btnUnitPatternAreaShow
+            // btnUnitPatternAreaCancel
             // 
-            this.btnUnitPatternAreaShow.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternAreaShow.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternAreaShow.Location = new System.Drawing.Point(3, 378);
-            this.btnUnitPatternAreaShow.Name = "btnUnitPatternAreaShow";
-            this.btnUnitPatternAreaShow.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternAreaShow.TabIndex = 306;
-            this.btnUnitPatternAreaShow.Text = "Show\r\nPattern Area";
-            this.btnUnitPatternAreaShow.UseVisualStyleBackColor = false;
-            this.btnUnitPatternAreaShow.Click += new System.EventHandler(this.btnUnitPatternAreaShow_Click);
-            // 
-            // btnUnitPatternSearchAreaShow
-            // 
-            this.btnUnitPatternSearchAreaShow.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternSearchAreaShow.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternSearchAreaShow.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternSearchAreaShow.Location = new System.Drawing.Point(3, 333);
-            this.btnUnitPatternSearchAreaShow.Name = "btnUnitPatternSearchAreaShow";
-            this.btnUnitPatternSearchAreaShow.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternSearchAreaShow.TabIndex = 304;
-            this.btnUnitPatternSearchAreaShow.Text = "Show Pattern \r\nSearch Area";
-            this.btnUnitPatternSearchAreaShow.UseVisualStyleBackColor = false;
-            this.btnUnitPatternSearchAreaShow.Click += new System.EventHandler(this.btnUnitPatternSearchAreaShow_Click);
-            // 
-            // btnUnitPatternAreaSet
-            // 
-            this.btnUnitPatternAreaSet.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternAreaSet.Enabled = false;
-            this.btnUnitPatternAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternAreaSet.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternAreaSet.Location = new System.Drawing.Point(133, 378);
-            this.btnUnitPatternAreaSet.Name = "btnUnitPatternAreaSet";
-            this.btnUnitPatternAreaSet.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternAreaSet.TabIndex = 307;
-            this.btnUnitPatternAreaSet.Text = "Set \r\nPattern Area";
-            this.btnUnitPatternAreaSet.UseVisualStyleBackColor = false;
-            this.btnUnitPatternAreaSet.Click += new System.EventHandler(this.btnUnitPatternAreaSet_Click);
-            // 
-            // btnUnitPatternSearchAreaSet
-            // 
-            this.btnUnitPatternSearchAreaSet.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUnitPatternSearchAreaSet.Enabled = false;
-            this.btnUnitPatternSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnUnitPatternSearchAreaSet.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternSearchAreaSet.Location = new System.Drawing.Point(133, 333);
-            this.btnUnitPatternSearchAreaSet.Name = "btnUnitPatternSearchAreaSet";
-            this.btnUnitPatternSearchAreaSet.Size = new System.Drawing.Size(124, 40);
-            this.btnUnitPatternSearchAreaSet.TabIndex = 305;
-            this.btnUnitPatternSearchAreaSet.Text = "Set Pattern\r\nSearch Area";
-            this.btnUnitPatternSearchAreaSet.UseVisualStyleBackColor = false;
-            this.btnUnitPatternSearchAreaSet.Click += new System.EventHandler(this.btnUnitPatternSearchAreaSet_Click);
+            this.btnUnitPatternAreaCancel.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUnitPatternAreaCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnUnitPatternAreaCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnUnitPatternAreaCancel.Location = new System.Drawing.Point(226, 335);
+            this.btnUnitPatternAreaCancel.Name = "btnUnitPatternAreaCancel";
+            this.btnUnitPatternAreaCancel.Size = new System.Drawing.Size(124, 40);
+            this.btnUnitPatternAreaCancel.TabIndex = 311;
+            this.btnUnitPatternAreaCancel.Text = "Setting Cancel";
+            this.btnUnitPatternAreaCancel.UseVisualStyleBackColor = false;
+            this.btnUnitPatternAreaCancel.Click += new System.EventHandler(this.btnUnitPatternAreaCancel_Click);
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.txtUnitTotalCount);
+            this.panel1.Controls.Add(this.gradientLabel6);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.numUpDownSectionColumnCount);
@@ -400,14 +507,40 @@
             this.panel1.Controls.Add(this.gradientLabel9);
             this.panel1.Location = new System.Drawing.Point(639, 36);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(617, 297);
+            this.panel1.Size = new System.Drawing.Size(617, 205);
             this.panel1.TabIndex = 311;
+            // 
+            // txtUnitTotalCount
+            // 
+            this.txtUnitTotalCount.Location = new System.Drawing.Point(231, 68);
+            this.txtUnitTotalCount.Name = "txtUnitTotalCount";
+            this.txtUnitTotalCount.ReadOnly = true;
+            this.txtUnitTotalCount.Size = new System.Drawing.Size(86, 21);
+            this.txtUnitTotalCount.TabIndex = 321;
+            this.txtUnitTotalCount.Text = "1";
+            this.txtUnitTotalCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // gradientLabel6
+            // 
+            this.gradientLabel6.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel6.ColorBottom = System.Drawing.Color.SkyBlue;
+            this.gradientLabel6.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel6.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel6.Location = new System.Drawing.Point(61, 65);
+            this.gradientLabel6.Name = "gradientLabel6";
+            this.gradientLabel6.Size = new System.Drawing.Size(163, 26);
+            this.gradientLabel6.TabIndex = 320;
+            this.gradientLabel6.Text = "  Unit Total Count";
+            this.gradientLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox2
             // 
             this.pictureBox2.BackgroundImage = global::MapDataManager.Properties.Resources.FrameSection;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 74);
+            this.pictureBox2.Location = new System.Drawing.Point(3, 107);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(57, 57);
             this.pictureBox2.TabIndex = 319;
@@ -425,7 +558,7 @@
             // 
             // numUpDownSectionColumnCount
             // 
-            this.numUpDownSectionColumnCount.Location = new System.Drawing.Point(230, 107);
+            this.numUpDownSectionColumnCount.Location = new System.Drawing.Point(230, 140);
             this.numUpDownSectionColumnCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -448,7 +581,7 @@
             // 
             // numUpDownSectionRowCount
             // 
-            this.numUpDownSectionRowCount.Location = new System.Drawing.Point(230, 76);
+            this.numUpDownSectionRowCount.Location = new System.Drawing.Point(230, 109);
             this.numUpDownSectionRowCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -471,14 +604,14 @@
             // 
             // gradientLabel4
             // 
-            this.gradientLabel4.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel4.BackColor = System.Drawing.Color.ForestGreen;
             this.gradientLabel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel4.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel4.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel4.ColorBottom = System.Drawing.Color.DarkSeaGreen;
+            this.gradientLabel4.ColorTop = System.Drawing.Color.Green;
             this.gradientLabel4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel4.ForeColor = System.Drawing.Color.White;
             this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel4.Location = new System.Drawing.Point(61, 105);
+            this.gradientLabel4.Location = new System.Drawing.Point(61, 138);
             this.gradientLabel4.Name = "gradientLabel4";
             this.gradientLabel4.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel4.TabIndex = 315;
@@ -487,14 +620,14 @@
             // 
             // gradientLabel5
             // 
-            this.gradientLabel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel5.BackColor = System.Drawing.Color.ForestGreen;
             this.gradientLabel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel5.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel5.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel5.ColorBottom = System.Drawing.Color.DarkSeaGreen;
+            this.gradientLabel5.ColorTop = System.Drawing.Color.Green;
             this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel5.ForeColor = System.Drawing.Color.White;
             this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel5.Location = new System.Drawing.Point(61, 74);
+            this.gradientLabel5.Location = new System.Drawing.Point(61, 107);
             this.gradientLabel5.Name = "gradientLabel5";
             this.gradientLabel5.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel5.TabIndex = 314;
@@ -523,6 +656,7 @@
             0,
             0,
             0});
+            this.numUpDownUnitColumnCount.ValueChanged += new System.EventHandler(this.numUpDownUnitColumnCount_ValueChanged);
             // 
             // numUpDownUnitRowCount
             // 
@@ -546,12 +680,13 @@
             0,
             0,
             0});
+            this.numUpDownUnitRowCount.ValueChanged += new System.EventHandler(this.numUpDownUnitRowCount_ValueChanged);
             // 
             // gradientLabel3
             // 
             this.gradientLabel3.BackColor = System.Drawing.Color.SteelBlue;
             this.gradientLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel3.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel3.ColorBottom = System.Drawing.Color.SkyBlue;
             this.gradientLabel3.ColorTop = System.Drawing.Color.Empty;
             this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel3.ForeColor = System.Drawing.Color.White;
@@ -567,7 +702,7 @@
             // 
             this.gradientLabel9.BackColor = System.Drawing.Color.SteelBlue;
             this.gradientLabel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel9.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel9.ColorBottom = System.Drawing.Color.SkyBlue;
             this.gradientLabel9.ColorTop = System.Drawing.Color.Empty;
             this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel9.ForeColor = System.Drawing.Color.White;
@@ -587,7 +722,7 @@
             this.gradientLabel2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel2.ForeColor = System.Drawing.Color.White;
             this.gradientLabel2.GradientDirection = CustomControl.GradientLabel.Direction.Horizon;
-            this.gradientLabel2.Location = new System.Drawing.Point(639, 336);
+            this.gradientLabel2.Location = new System.Drawing.Point(639, 250);
             this.gradientLabel2.Name = "gradientLabel2";
             this.gradientLabel2.Size = new System.Drawing.Size(620, 30);
             this.gradientLabel2.TabIndex = 309;
@@ -613,7 +748,7 @@
             // 
             this.btnOk.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOk.Location = new System.Drawing.Point(1132, 800);
+            this.btnOk.Location = new System.Drawing.Point(1127, 800);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(124, 35);
             this.btnOk.TabIndex = 303;
@@ -647,6 +782,40 @@
             this.labelInputTitle.Text = " Map Data Setting Image";
             this.labelInputTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // chAreaAutoSearch
+            // 
+            this.chAreaAutoSearch.AutoSize = true;
+            this.chAreaAutoSearch.ForeColor = System.Drawing.Color.White;
+            this.chAreaAutoSearch.Location = new System.Drawing.Point(639, 284);
+            this.chAreaAutoSearch.Name = "chAreaAutoSearch";
+            this.chAreaAutoSearch.Size = new System.Drawing.Size(124, 18);
+            this.chAreaAutoSearch.TabIndex = 315;
+            this.chAreaAutoSearch.Text = "Area Auto Search";
+            this.chAreaAutoSearch.UseVisualStyleBackColor = true;
+            this.chAreaAutoSearch.CheckedChanged += new System.EventHandler(this.chAreaAutoSearch_CheckedChanged);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.btnManualSearchAreaSet);
+            this.panel3.Controls.Add(this.btnManualSearchArea);
+            this.panel3.Location = new System.Drawing.Point(639, 737);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(620, 57);
+            this.panel3.TabIndex = 316;
+            // 
+            // chAreaManualSearch
+            // 
+            this.chAreaManualSearch.AutoSize = true;
+            this.chAreaManualSearch.ForeColor = System.Drawing.Color.White;
+            this.chAreaManualSearch.Location = new System.Drawing.Point(639, 715);
+            this.chAreaManualSearch.Name = "chAreaManualSearch";
+            this.chAreaManualSearch.Size = new System.Drawing.Size(139, 18);
+            this.chAreaManualSearch.TabIndex = 317;
+            this.chAreaManualSearch.Text = "Area Manual Search";
+            this.chAreaManualSearch.UseVisualStyleBackColor = true;
+            this.chAreaManualSearch.CheckedChanged += new System.EventHandler(this.chAreaManualSearch_CheckedChanged);
+            // 
             // MapDataWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -665,19 +834,23 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Map Data Window";
             this.panelMain.ResumeLayout(false);
+            this.panelMain.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAngleLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindScore)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionColumnCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionRowCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitColumnCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitRowCount)).EndInit();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -720,7 +893,18 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnUnitPatternAreaCancel;
-        private System.Windows.Forms.Button btnUnitPatternSearchAreaCancel;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnFindSearchArea;
+        private System.Windows.Forms.TextBox txtUnitTotalCount;
+        private CustomControl.GradientLabel gradientLabel6;
+        private System.Windows.Forms.Button btnUnitPatternOriginCenterSet;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnShowSearchArea;
+        private System.Windows.Forms.Button btnManualSearchArea;
+        private System.Windows.Forms.Button btnManualSearchAreaSet;
+        private System.Windows.Forms.CheckBox chAreaManualSearch;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.CheckBox chAreaAutoSearch;
     }
 }
 

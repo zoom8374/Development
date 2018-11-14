@@ -215,6 +215,9 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, "Vision" + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
                 InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
                 InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName);
+
+                //MapData 사용 여부 Check
+                InspSysManager[iLoopCount].SetMapDataParameter(ParamManager.InspMapDataParam[iLoopCount]);
             }
 
             TimerShowWindow.Tick += new EventHandler(TimerShowWindowTick);
@@ -431,7 +434,21 @@ namespace KPVisionInspectionFramework
 
         private void rbMapData_Click(object sender, EventArgs e)
         {
+            ribbonPanelOperating.Enabled = false;
+            ribbonPanelSetting.Enabled = false;
+            ribbonPanelData.Enabled = false;
+            ribbonPanelStatus.Enabled = false;
+            ribbonPanelSystem.Enabled = false;
+            rbMapData.Enabled = false;
+
             InspSysManager[0].ShowMapDataWindow();
+
+            ribbonPanelOperating.Enabled = true;
+            ribbonPanelSetting.Enabled = true;
+            ribbonPanelData.Enabled = true;
+            ribbonPanelStatus.Enabled = true;
+            ribbonPanelSystem.Enabled = true;
+            rbMapData.Enabled = true;
         }
 
         private void rbRecipe_Click(object sender, EventArgs e)
@@ -520,6 +537,7 @@ namespace KPVisionInspectionFramework
                 ribbonPanelData.Enabled = false;
                 ribbonPanelStatus.Enabled = false;
                 ribbonPanelSystem.Enabled = false;
+                rbMapData.Enabled = false;
                 CParameterManager.SystemMode = eSysMode.TEACH_MODE;
             }
 
@@ -530,6 +548,7 @@ namespace KPVisionInspectionFramework
                 ribbonPanelData.Enabled = true;
                 ribbonPanelStatus.Enabled = true;
                 ribbonPanelSystem.Enabled = true;
+                rbMapData.Enabled = true;
                 CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             }
         }

@@ -776,6 +776,12 @@ namespace KPDisplay
             cogDisplayStatusBarV2.Visible = false;
         }
 
+        public ICogTransform2D GetTransform(string _ToSpace, string _FromSpace)
+        {
+            ICogTransform2D _TransForm = kCogDisplay.GetTransform(_ToSpace, _FromSpace);
+            return _TransForm;
+        }
+
         private void kCogDisplay_MouseDown(object sender, MouseEventArgs e)
         {
             double MousePointX = 0, MousePointY = 0;

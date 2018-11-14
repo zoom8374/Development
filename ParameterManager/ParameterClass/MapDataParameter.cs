@@ -10,13 +10,23 @@ namespace ParameterManager
     public class MapDataParameter
     {
         public CogPMAlignPattern UnitPattern;
-
-        public uint UnitTotalCount;
+        public string UnitPatternPath;
         public uint UnitRowCount;
         public uint UnitColumnCount;
         public uint SectionRowCount;
         public uint SectionColumnCount;
+        public uint UnitTotalCount
+        {
+            get { return UnitRowCount * UnitColumnCount; }
+            set { value = UnitRowCount * UnitColumnCount; }
+        }
 
+        /// <summary>
+        /// 0 : ManualMode / 1 : Auto MOde
+        /// </summary>
+        public int MapDataTeachingMode;
+
+        // Auto Search Mode == Pattern으로 찾기
         public double UnitSearchAreaCenterX;
         public double UnitSearchAreaCenterY;
         public double UnitSearchAreaWidth;
@@ -28,10 +38,16 @@ namespace ParameterManager
         public double UnitPatternAreaWidth;
         public double UnitPatternAreaHeight;
 
-        //public double[] UnitListCenterX;
-        //public double[] UnitListCenterY;
+        //Manual Search Mode == 영역지정으로 설정하기
+        public double WholeSearchAreaCenterX;
+        public double WholeSearchAreaCenterY;
+        public double WholeSearchAreaWidth;
+        public double WholeSearchAreaHeight;
+
         public List<double> UnitListCenterX;
         public List<double> UnitListCenterY;
+        public List<double> UnitListWidth;
+        public List<double> UnitListHeight;
 
         public uint FindCount;
         public double FindScore;
@@ -45,11 +61,12 @@ namespace ParameterManager
             SectionRowCount = 1;
             SectionColumnCount = 1;
 
+            MapDataTeachingMode = 0;
+
             UnitSearchAreaCenterX = 500;
             UnitSearchAreaCenterY = 500;
             UnitSearchAreaWidth = 300;
             UnitSearchAreaHeight = 300;
-
             UnitPatternAreaOriginX = 500;
             UnitPatternAreaOriginY = 500;
             UnitPatternAreaCenterX = 500;
@@ -57,10 +74,15 @@ namespace ParameterManager
             UnitPatternAreaWidth = 200;
             UnitPatternAreaHeight = 200;
 
-            //UnitListCenterX = new double[UnitTotalCount];
-            //UnitListCenterY = new double[UnitTotalCount];
+            WholeSearchAreaCenterX = 800;
+            WholeSearchAreaCenterY = 800;
+            WholeSearchAreaWidth = 500;
+            WholeSearchAreaHeight = 700;
+
             UnitListCenterX = new List<double>();
             UnitListCenterY = new List<double>();
+            UnitListWidth = new List<double>();
+            UnitListHeight = new List<double>();
 
             FindCount = UnitTotalCount;
             FindScore = 75;

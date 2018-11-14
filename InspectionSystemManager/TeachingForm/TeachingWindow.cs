@@ -117,13 +117,13 @@ namespace InspectionSystemManager
             UpdateInspectionAreaList();
 
             InitializeContextMenu();
+            InitializeAreaControl(_ProjectItem);
 
             gridViewArea.ShowCellToolTips = false;
             gridViewAlgo.ShowCellToolTips = false;
 
             //gridViewArea.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
             //gridViewArea.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            
             //gridViewArea.EnableHeadersVisualStyles = false;
             //gridViewArea.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             //gridViewArea.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
@@ -193,6 +193,28 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
+            }
+        }
+
+        /// <summary>
+        /// Project로 구분하여 Area 추가/삭제/복사 버튼의 활성화 비활성화를 설정
+        /// </summary>
+        /// <param name="_ProjectItem">Project Item</param>
+        private void InitializeAreaControl(eProjectItem _ProjectItem)
+        {
+            switch (_ProjectItem)
+            {
+                case eProjectItem.ID_INSP:
+                case eProjectItem.LEAD_INSP:
+                case eProjectItem.NEEDLE_ALIGN:
+                case eProjectItem.SURFACE:
+                    btnInspectionAreaAdd.Visible = false;
+                    btnInspectionAreaDel.Visible = false;
+                    btnInspectionAreaCopy.Visible = false;
+                    break;
+
+                default:
+                    break;
             }
         }
 

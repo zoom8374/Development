@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Threading;
 
 using Cognex.VisionPro;
+using Cognex.VisionPro.PMAlign;
 
 using LogMessageManager;
 using ParameterManager;
@@ -70,16 +71,27 @@ namespace InspectionSystemManager
             InspWnd.InitializeCam(_InspSysManagerParam.CameraType, _InspSysManagerParam.CameraConfigInfo, Convert.ToInt32(_InspSysManagerParam.ImageSizeWidth), Convert.ToInt32(_InspSysManagerParam.ImageSizeHeight));
             InspWnd.InspectionWindowEvent += new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
 
-            MapDataWnd.Initialize(MapDataParam);
-            MapDataWnd.MapDataParameterSaveEvent += new MapDataWindow.MapDataParameterSaveHandler(MapDataParameterSaveEventFunction);
+            
         }
 
         public void DeInitialize()
         {
+            MapDataWnd.MapDataParameterSaveEvent -= new MapDataWindow.MapDataParameterSaveHandler(MapDataParameterSaveEventFunction);
+            MapDataWnd.DeInitialize();
+
             InspWnd.InspectionWindowEvent -= new InspectionWindow.InspectionWindowHandler(InspectionWindowEventFunction);
             InspWnd.Deinitialize();
 
             if (ThreadInspection != null) { IsThreadInspectionExit = true; Thread.Sleep(200); ThreadInspection.Abort(); ThreadInspection = null; }
+        }
+
+        public void SetMapDataParameter(MapDataParameter _MapDataParam)
+        {
+            if (null == _MapDataParam) return;
+
+            CParameterManager.RecipeCopy(_MapDataParam, ref MapDataParam);
+            MapDataWnd.Initialize(MapDataParam);
+            MapDataWnd.MapDataParameterSaveEvent += new MapDataWindow.MapDataParameterSaveHandler(MapDataParameterSaveEventFunction);
         }
 
         public void SetSystemMode(eSysMode _SystemMode)
@@ -285,7 +297,7 @@ namespace InspectionSystemManager
         private void MapDataParameterSaveEventFunction(MapDataParameter _MapDataParam, int _ID = 0)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
-            InspSysManagerEvent?.Invoke(eISMCMD.MAPDATA_SAVE, _MapDataParam, _ID);
+            _InspSysManagerEvent?.Invoke(eISMCMD.MAPDATA_SAVE, _MapDataParam, _ID);
         }
         #endregion Event : MapDataWindow Event Function
 

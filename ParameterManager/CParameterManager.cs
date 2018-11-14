@@ -510,7 +510,7 @@ namespace ParameterManager
 
                 if (null == _Node) return false;
                 if (true == GetInspectionParameterResolution(_Node, ref InspParam[_ID]))    {   continue;   }
-                GetInspectionMapDataParameter(_Node, ref _MapDataParamTemp);
+                //GetInspectionMapDataParameter(_Node, ref _MapDataParamTemp);
                 GetInspectionParameterRegion(_Node, ref _InspAreaParamTemp);
                 GetInspectionParameterAlgorithm(_Node, ref _InspAreaParamTemp);
                 InspParam[_ID].InspAreaParam.Add(_InspAreaParamTemp);
@@ -640,8 +640,19 @@ namespace ParameterManager
                             case "Height":              _ReferInfo.Height = Convert.ToDouble(_Node.InnerText); break;
                         }
                     }
-                    _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
-                    _CogPattern.ReferenceInfoList.Add(_ReferInfo);
+
+                    try
+                    {
+                        _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                        _CogPattern.ReferenceInfoList.Add(_ReferInfo);
+                    }
+
+                    catch
+                    {
+                        _ReferInfo.Reference = new CogPMAlignPattern();
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "GetPatternInspectionparameter Err", CLogManager.LOG_LEVEL.LOW);
+                    }
+                    
                     _Cnt++;
                 }
             }
@@ -1069,19 +1080,23 @@ namespace ParameterManager
             XmlNodeList _XmlNodeList = GetNodeList(_InspMapDataParamFullPath);
             if (null == _XmlNodeList) return true;
 
-            int _Cnt = 1;
+            int _Cnt = 0;
             InspMapDataParam[_ID] = new MapDataParameter();
             InspMapDataParam[_ID].UnitListCenterX.Clear();
             InspMapDataParam[_ID].UnitListCenterY.Clear();
+            InspMapDataParam[_ID].UnitListWidth.Clear();
+            InspMapDataParam[_ID].UnitListHeight.Clear();
             foreach (XmlNode _Nodes in _XmlNodeList)
             {
                 if (null == _Nodes) return true;
-
-                if (_Nodes.Name == "UnitTotalCount")                 InspMapDataParam[_ID].UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
+                    
+                if (_Nodes.Name == "UnitPatternPath")                InspMapDataParam[_ID].UnitPatternPath = _Nodes.InnerText;
+                else if (_Nodes.Name == "UnitTotalCount")            InspMapDataParam[_ID].UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitRowCount")              InspMapDataParam[_ID].UnitRowCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitColumnCount")           InspMapDataParam[_ID].UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "SectionRowCount")           InspMapDataParam[_ID].SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "SectionColumnCount")        InspMapDataParam[_ID].SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "MapDataTeachingMode")       InspMapDataParam[_ID].MapDataTeachingMode = Convert.ToInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitSearchAreaCenterX")     InspMapDataParam[_ID].UnitSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitSearchAreaCenterY")     InspMapDataParam[_ID].UnitSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitSearchAreaWidth")       InspMapDataParam[_ID].UnitSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
@@ -1092,6 +1107,10 @@ namespace ParameterManager
                 else if (_Nodes.Name == "UnitPatternAreaCenterY")    InspMapDataParam[_ID].UnitPatternAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitPatternAreaWidth")      InspMapDataParam[_ID].UnitPatternAreaWidth = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitPatternAreaHeight")     InspMapDataParam[_ID].UnitPatternAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaCenterX")    InspMapDataParam[_ID].WholeSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaCenterY")    InspMapDataParam[_ID].WholeSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaWidth")      InspMapDataParam[_ID].WholeSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaHeight")     InspMapDataParam[_ID].WholeSearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "FindCount")                 InspMapDataParam[_ID].FindCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "FindScore")                 InspMapDataParam[_ID].FindScore = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "AngleLimit")                InspMapDataParam[_ID].AngleLimit = Convert.ToDouble(_Nodes.InnerText);
@@ -1108,6 +1127,8 @@ namespace ParameterManager
                             {
                                 if (_NodeChild.Name == "X")      InspMapDataParam[_ID].UnitListCenterX.Add(Convert.ToDouble(_NodeChild.InnerText));
                                 else if (_NodeChild.Name == "Y") InspMapDataParam[_ID].UnitListCenterY.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "W") InspMapDataParam[_ID].UnitListWidth.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "H") InspMapDataParam[_ID].UnitListHeight.Add(Convert.ToDouble(_NodeChild.InnerText));
                             }
                         }
                         _Cnt++;
@@ -1115,75 +1136,47 @@ namespace ParameterManager
                 }
             }
 
-            return _Result;
-        }
-
-        private bool GetInspectionMapDataParameter(XmlNode _Nodes, ref MapDataParameter _MapDataParam)
-        {
-            bool _Result = true;
-
-            if (null == _Nodes) return false;
-            _MapDataParam.UnitListCenterX.Clear();
-            _MapDataParam.UnitListCenterY.Clear();
-
-            if (_Nodes.Name == "UnitTotalCount") _MapDataParam.UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitRowCount") _MapDataParam.UnitRowCount = Convert.ToUInt32(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitColumnCount") _MapDataParam.UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
-            else if (_Nodes.Name == "SectionRowCount") _MapDataParam.SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
-            else if (_Nodes.Name == "SectionColumnCount") _MapDataParam.SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitSearchAreaCenterX") _MapDataParam.UnitSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitSearchAreaCenterY") _MapDataParam.UnitSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitSearchAreaWidth") _MapDataParam.UnitSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitSearchAreaHeight") _MapDataParam.UnitSearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitPatternAreaOriginX") _MapDataParam.UnitPatternAreaOriginX = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitPatternAreaOriginY") _MapDataParam.UnitPatternAreaOriginY = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitPatternAreaWidth") _MapDataParam.UnitPatternAreaWidth = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitPatternAreaHeight") _MapDataParam.UnitPatternAreaHeight = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "FindCount") _MapDataParam.FindCount = Convert.ToUInt32(_Nodes.InnerText);
-            else if (_Nodes.Name == "FindScore") _MapDataParam.FindScore = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "AngleLimit") _MapDataParam.AngleLimit = Convert.ToDouble(_Nodes.InnerText);
-            else if (_Nodes.Name == "UnitCenterList")
+            try
             {
-                int _Cnt = 1;
-                string _UnitCenterString = String.Format("UnitCenter{0}", _Cnt);
-
-                foreach (XmlNode _Node in _Nodes)
-                {
-                    if (null == _Node) break;
-                    if (_UnitCenterString == _Node.Name)
-                    {
-                        foreach (XmlNode _NodeChild in _Node)
-                        {
-                            if (_NodeChild.Name == "X") _MapDataParam.UnitListCenterX.Add(Convert.ToDouble(_NodeChild.InnerText));
-                            else if (_NodeChild.Name == "Y") _MapDataParam.UnitListCenterY.Add(Convert.ToDouble(_NodeChild.InnerText));
-                        }
-                    }
-                }
-                _Cnt++;
+                InspMapDataParam[_ID].UnitPattern = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(InspMapDataParam[_ID].UnitPatternPath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+            }
+            
+            catch
+            {
+                InspMapDataParam[_ID].UnitPattern = new CogPMAlignPattern();
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ReadInspectionMapDataParameter Err", CLogManager.LOG_LEVEL.LOW);
             }
 
             return _Result;
         }
-
+        
         public void WriteInspectionMapDataparameter(int _ID, string _RecipeName = null)
         {
-            if (InspMapDataParam[_ID].UnitListCenterX.Count == 0 || InspMapDataParam[_ID].UnitListCenterY.Count == 0) return;
+            //if (InspMapDataParam[_ID].UnitListCenterX.Count == 0 || InspMapDataParam[_ID].UnitListCenterY.Count == 0) return;
             if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
             string _MapDataParameterFilePath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1) + @"\InspectionMapData.Rcp";
             string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
             DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
+            string _PatternFileName = String.Format("MapDataReference.pat");
+            string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
+            if (false == Directory.Exists(_PatternFilePath)) Directory.CreateDirectory(_PatternFilePath);
+            InspMapDataParam[_ID].UnitPatternPath = _PatternFilePath + _PatternFileName;
+            CogSerializer.SaveObjectToFile(InspMapDataParam[_ID].UnitPattern, InspMapDataParam[_ID].UnitPatternPath);
+
             XmlTextWriter _XmlWriter = new XmlTextWriter(_MapDataParameterFilePath, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();
             _XmlWriter.WriteStartElement("MapDataList");
             {
+                _XmlWriter.WriteElementString("UnitPatternPath", InspMapDataParam[_ID].UnitPatternPath);
                 _XmlWriter.WriteElementString("UnitTotalCount", InspMapDataParam[_ID].UnitTotalCount.ToString());
                 _XmlWriter.WriteElementString("UnitRowCount", InspMapDataParam[_ID].UnitRowCount.ToString());
                 _XmlWriter.WriteElementString("UnitColumnCount", InspMapDataParam[_ID].UnitColumnCount.ToString());
                 _XmlWriter.WriteElementString("SectionRowCount", InspMapDataParam[_ID].SectionRowCount.ToString());
                 _XmlWriter.WriteElementString("SectionColumnCount", InspMapDataParam[_ID].SectionColumnCount.ToString());
+                _XmlWriter.WriteElementString("MapDataTeachingMode", InspMapDataParam[_ID].SectionColumnCount.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaCenterX", InspMapDataParam[_ID].UnitSearchAreaCenterX.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaCenterY", InspMapDataParam[_ID].UnitSearchAreaCenterY.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaWidth", InspMapDataParam[_ID].UnitSearchAreaWidth.ToString());
@@ -1194,6 +1187,10 @@ namespace ParameterManager
                 _XmlWriter.WriteElementString("UnitPatternAreaCenterY", InspMapDataParam[_ID].UnitPatternAreaCenterY.ToString());
                 _XmlWriter.WriteElementString("UnitPatternAreaWidth", InspMapDataParam[_ID].UnitPatternAreaWidth.ToString());
                 _XmlWriter.WriteElementString("UnitPatternAreaHeight", InspMapDataParam[_ID].UnitPatternAreaHeight.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaCenterX", InspMapDataParam[_ID].WholeSearchAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaCenterY", InspMapDataParam[_ID].WholeSearchAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaWidth", InspMapDataParam[_ID].WholeSearchAreaWidth.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaHeight", InspMapDataParam[_ID].WholeSearchAreaHeight.ToString());
                 _XmlWriter.WriteElementString("FindCount", InspMapDataParam[_ID].FindCount.ToString());
                 _XmlWriter.WriteElementString("FindScore", InspMapDataParam[_ID].FindScore.ToString());
                 _XmlWriter.WriteElementString("AngleLimit", InspMapDataParam[_ID].AngleLimit.ToString());
@@ -1206,6 +1203,8 @@ namespace ParameterManager
                         {
                             _XmlWriter.WriteElementString("X", InspMapDataParam[_ID].UnitListCenterX[iLoopCount].ToString());
                             _XmlWriter.WriteElementString("Y", InspMapDataParam[_ID].UnitListCenterY[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("W", InspMapDataParam[_ID].UnitListWidth[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("H", InspMapDataParam[_ID].UnitListHeight[iLoopCount].ToString());
                         }
                         _XmlWriter.WriteEndElement();
                     }
@@ -1446,11 +1445,20 @@ namespace ParameterManager
 
         public static void RecipeCopy(MapDataParameter _SrcParam, ref MapDataParameter _DestParam)
         {
+            if (null == _DestParam) _DestParam = new MapDataParameter();
+            _DestParam.UnitListCenterX = new List<double>();
+            _DestParam.UnitListCenterY = new List<double>();
+            _DestParam.UnitListWidth = new List<double>();
+            _DestParam.UnitListHeight = new List<double>();
+
+            _DestParam.UnitPattern            = _SrcParam.UnitPattern;
+            _DestParam.UnitPatternPath        = _SrcParam.UnitPatternPath;
             _DestParam.UnitTotalCount         = _SrcParam.UnitTotalCount;
             _DestParam.UnitRowCount           = _SrcParam.UnitRowCount;
             _DestParam.UnitColumnCount        = _SrcParam.UnitColumnCount;
             _DestParam.SectionRowCount        = _SrcParam.SectionRowCount;
             _DestParam.SectionColumnCount     = _SrcParam.SectionColumnCount;
+            _DestParam.MapDataTeachingMode    = _SrcParam.MapDataTeachingMode;
             _DestParam.UnitSearchAreaCenterX  = _SrcParam.UnitSearchAreaCenterX;
             _DestParam.UnitSearchAreaCenterY  = _SrcParam.UnitSearchAreaCenterY;
             _DestParam.UnitSearchAreaWidth    = _SrcParam.UnitSearchAreaWidth;
@@ -1461,16 +1469,20 @@ namespace ParameterManager
             _DestParam.UnitPatternAreaCenterY     = _SrcParam.UnitPatternAreaCenterY;
             _DestParam.UnitPatternAreaWidth   = _SrcParam.UnitPatternAreaWidth;
             _DestParam.UnitPatternAreaHeight  = _SrcParam.UnitPatternAreaHeight;
+            _DestParam.WholeSearchAreaCenterX = _SrcParam.WholeSearchAreaCenterX;
+            _DestParam.WholeSearchAreaCenterY = _SrcParam.WholeSearchAreaCenterY;
+            _DestParam.WholeSearchAreaWidth   = _SrcParam.WholeSearchAreaWidth;
+            _DestParam.WholeSearchAreaHeight  = _SrcParam.WholeSearchAreaHeight;
             _DestParam.FindCount              = _SrcParam.FindCount;
             _DestParam.FindScore              = _SrcParam.FindScore;
             _DestParam.AngleLimit             = _SrcParam.AngleLimit;
-
-            _DestParam.UnitListCenterX = new List<double>();
-            _DestParam.UnitListCenterY = new List<double>();
+            
             for (int iLoopCount = 0; iLoopCount < _SrcParam.UnitListCenterX.Count; ++iLoopCount)
             {
                 _DestParam.UnitListCenterX.Add(_SrcParam.UnitListCenterX[iLoopCount]);
                 _DestParam.UnitListCenterY.Add(_SrcParam.UnitListCenterY[iLoopCount]);
+                _DestParam.UnitListWidth.Add(_SrcParam.UnitListWidth[iLoopCount]);
+                _DestParam.UnitListHeight.Add(_SrcParam.UnitListHeight[iLoopCount]);
             }
         }
         #endregion RecipeCopy
