@@ -49,6 +49,7 @@ namespace InspectionSystemManager
 
             if(!_CogBarcodeIDResult.IsGood)
             {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Reading Fail!!", CLogManager.LOG_LEVEL.MID);
                 _CogBarcodeIDResult.IDResult = new string[1];
                 _CogBarcodeIDResult.IDCenterX = new double[1];
                 _CogBarcodeIDResult.IDCenterY = new double[1];
@@ -61,14 +62,15 @@ namespace InspectionSystemManager
             }
             else
             {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Reading Complete", CLogManager.LOG_LEVEL.MID);
                 _CogBarcodeIDResult.IDCount = IDResults.Count;
-
                 _CogBarcodeIDResult.IDResult = new string[IDResults.Count];
                 _CogBarcodeIDResult.IDCenterX = new double[IDResults.Count];
                 _CogBarcodeIDResult.IDCenterY = new double[IDResults.Count];
                 _CogBarcodeIDResult.IDAngle = new double[IDResults.Count];
                 _CogBarcodeIDResult.IDPolygon = new CogPolygon[IDResults.Count];
 
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Reading Count : " + IDResults.Count.ToString(), CLogManager.LOG_LEVEL.MID);
                 for (int iLoopCount = 0; iLoopCount < IDResults.Count; iLoopCount++)
                 {
                     _CogBarcodeIDResult.IDResult[iLoopCount] = IDResults[iLoopCount].DecodedData.DecodedString.ToString();
@@ -76,11 +78,14 @@ namespace InspectionSystemManager
                     _CogBarcodeIDResult.IDCenterY[iLoopCount] = IDResults[iLoopCount].CenterY;
                     _CogBarcodeIDResult.IDAngle[iLoopCount] = IDResults[iLoopCount].Angle;
                     _CogBarcodeIDResult.IDPolygon[iLoopCount] = IDResults[iLoopCount].BoundsPolygon;
+
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Reading Code : " + IDResults[iLoopCount].DecodedData.DecodedString.ToString(), CLogManager.LOG_LEVEL.MID);
                 }
 
                 if(IDResults.Count != _CogBarCodeIDAlgo.FindCount) _CogBarcodeIDResult.IsGood = false;
             }
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Result : " + _CogBarcodeIDResult.IsGood.ToString(), CLogManager.LOG_LEVEL.MID);
             return _Result;
         }
 

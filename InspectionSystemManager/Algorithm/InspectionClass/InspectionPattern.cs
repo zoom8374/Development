@@ -40,13 +40,15 @@ namespace InspectionSystemManager
             bool _Result = false;
 
             PatternProc.RunParams.AcceptThreshold = _CogPatternAlgo.MatchingScore / 100;
-
+            
             for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
             {
                 if (false == Inspection(_SrcImage, _InspRegion, _CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference)) continue;
 
                 if (PatternResults != null && PatternResults.Count > 0)
                 {
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Find Count : " + PatternResults.Count.ToString(), CLogManager.LOG_LEVEL.MID);
+
                     _CogPatternResult.FindCount = PatternResults.Count;
                     _CogPatternResult.IsGood = true;
 
@@ -71,6 +73,8 @@ namespace InspectionSystemManager
                         _CogPatternResult.CenterY[jLoopCount] = _CogPatternResult.OriginPointY[jLoopCount] + _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetY;
                         _CogPatternResult.Width[jLoopCount] = _CogPatternAlgo.ReferenceInfoList[iLoopCount].Width;
                         _CogPatternResult.Height[jLoopCount] = _CogPatternAlgo.ReferenceInfoList[iLoopCount].Height;
+
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Find Score : " + (_CogPatternResult.Score[jLoopCount] * 100).ToString("F2"), CLogManager.LOG_LEVEL.MID);
                     }
                     break;
                 }
@@ -100,6 +104,8 @@ namespace InspectionSystemManager
                     _CogPatternResult.Height[0] = _InspRegion.Height;
                 }
             }
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Result : " + (_CogPatternResult.IsGood).ToString(), CLogManager.LOG_LEVEL.MID);
 
             return _Result;
         }

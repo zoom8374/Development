@@ -103,7 +103,15 @@ namespace KPVisionInspectionFramework
 
             #region Ribbon Menu Setting
             UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName);
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
+            if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
+            {
+                rbAlign.Visible = false;
+                rbSerial.Visible = false;
+                rbConfig.Visible = false;
+                rbFolder.Visible = false;
+            }
+
+            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
             {
                 rbAlign.Visible = false;
                 rbSerial.Visible = false;
@@ -129,19 +137,35 @@ namespace KPVisionInspectionFramework
             #endregion Ribbon Menu Setting
 
             #region Log Window Initialize
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
             {
-                LogWnd = new CLogManager("CIPOSLeadInspection");
-                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\CIPOSLeadInspection\Log\SystemLog");
-                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\CIPOSLeadInspection\Log\InspectionLog");
+                LogWnd = new CLogManager(ProjectName);
+                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
+                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\InspectionLog");
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : KPVisionInspection program run!!");
+            }
+
+            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)
+            {
+                LogWnd = new CLogManager(ProjectName);
+                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
+                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\InspectionLog");
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : CIPOS lead inspection program run!!");
+            }
+
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            {
+                LogWnd = new CLogManager(ProjectName);
+                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
+                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\InspectionLog");
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : AirBlower inspection program run!!");
             }
 
             else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
             {
-                LogWnd = new CLogManager("KPSorterInspection");
-                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\KPSorterInspection\Log\SystemLog");
-                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\KPSorterInspection\Log\InspectionLog");
+                LogWnd = new CLogManager(ProjectName);
+                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
+                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\InspectionLog");
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : PCB Sorter inspection program run!!");
             }
             #endregion Log Window Initialize
@@ -149,17 +173,20 @@ namespace KPVisionInspectionFramework
             #region SubWindow 생성 및 Event 등록
             #region Recipe Window Initialize
             //Recipe Initialize
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
-            {
-                RecipeWnd = new RecipeWindow("CIPOSLeadInspection", ParamManager.SystemParam.LastRecipeName);
-                RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-            }
+            RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
+            RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
 
-            else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
-            {
-                RecipeWnd = new RecipeWindow("KPSorterInspection", ParamManager.SystemParam.LastRecipeName);
-                RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-            }
+            //if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+            //{
+            //    RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
+            //    RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
+            //}
+            //
+            //else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
+            //{
+            //    RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
+            //    RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
+            //}
             #endregion Recipe Window Initialize
 
             #region Result Window Initialize
@@ -185,10 +212,12 @@ namespace KPVisionInspectionFramework
             #endregion Light Window Initialize
 
             #region History Window Initialize
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
-                HistoryManager = new CHistoryManager("CIPOSLeadInspection", ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
+            if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
+                HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
+            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
+                HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
-                HistoryManager = new CHistoryManager("KPSorterInspection", ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
+                HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             #endregion History Window Initialize
 
             FolderPathWnd = new FolderPathWindow();
@@ -199,7 +228,8 @@ namespace KPVisionInspectionFramework
             #endregion SubWindow 생성 및 Event 등록
 
             #region Project 별 MainProcess Setting
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    MainProcess = new MainProcessDispensor();
+            if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType) 			 MainProcess = new MainProcessDefault();
+            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    MainProcess = new MainProcessDispensor();
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  MainProcess = new MainProcessID();
             else                                                                        MainProcess = new MainProcessBase();
 
@@ -255,7 +285,8 @@ namespace KPVisionInspectionFramework
             MainProcess.MainProcessCommandEvent -= new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             MainProcess.DeInitialize();
 
-            if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType) ((MainProcessDispensor)MainProcess).DeInitialize();
+            if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType) MainProcess.DeInitialize();
+            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType) ((MainProcessDispensor)MainProcess).DeInitialize();
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
             {
                 ((MainProcessID)MainProcess).DeInitialize();
@@ -275,7 +306,8 @@ namespace KPVisionInspectionFramework
             Theme.ColorTable.ReadThemeIniFile(content);
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
 
-            if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.DISPENSER)       this.Text = "(주)KP Vision - CIPOS Inspection Program";
+            if((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.NONE)             this.Text = "(주)KP Vision - Vision Inspection Program";
+            else if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.DISPENSER)  this.Text = "(주)KP Vision - CIPOS Inspection Program";
             else if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.BLOWER)     this.Text = "(주)KP Vision - Air Blower Inspection Program";
             else if ((eProjectType)ParamManager.SystemParam.ProjectType == eProjectType.SORTER)     this.Text = "(주)KP Vision - PCB Sorter Inspection Program";
 

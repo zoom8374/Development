@@ -107,6 +107,7 @@
     <Compile Include="MainProcessClass\MainProcessDispensor.cs" />
     <Compile Include="MainProcessClass\MainProcessID.cs" />
     <Compile Include="MainProcessClass\MainProcessSorter.cs" />
+    <Compile Include="MainProcessClass\MainProcessDefault.cs" />
     <Compile Include="MainResultForm\MainResultBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +145,12 @@
     <Compile Include="MainResultForm\ucMainResultSorter.Designer.cs">
       <DependentUpon>ucMainResultSorter.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainResultForm\ucMainResultNone.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainResultForm\ucMainResultNone.Designer.cs">
+      <DependentUpon>ucMainResultNone.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm\CodeSettingWindow.resx">
       <DependentUpon>CodeSettingWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainResultForm\ucMainResultID.resx">
       <DependentUpon>ucMainResultID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainResultForm\ucMainResultNone.resx">
+      <DependentUpon>ucMainResultNone.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainResultForm\ucMainResultSorter.resx">
       <DependentUpon>ucMainResultSorter.cs</DependentUpon>

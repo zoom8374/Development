@@ -53,11 +53,12 @@ namespace InspectionSystemManager
 
             if (true == Inspection(_SrcImage)) GetResult();
 
-            if (FindCircleResults != null && FindCircleResults.Count > 0) _CogNeedleFindResult.IsGood = true;
-            else _CogNeedleFindResult.IsGood = false;
+            if (FindCircleResults != null && FindCircleResults.Count > 0)   _CogNeedleFindResult.IsGood = true;
+            else                                                            _CogNeedleFindResult.IsGood = false;
 
             if (!_CogNeedleFindResult.IsGood)
             {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Needle Find Fail!!", CLogManager.LOG_LEVEL.MID);
                 _CogNeedleFindResult.CenterX = _CogNeedleFindAlgo.ArcCenterX;
                 _CogNeedleFindResult.CenterY = _CogNeedleFindAlgo.ArcCenterY;
                 _CogNeedleFindResult.Radius = _CogNeedleFindAlgo.ArcRadius;
@@ -69,8 +70,9 @@ namespace InspectionSystemManager
             {
                 if (FindCircleResults.GetCircle() != null)
                 {
-                    _CogNeedleFindResult.PointFoundCount = FindCircleResults.NumPointsFound;
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Needle Find Complete", CLogManager.LOG_LEVEL.MID);
 
+                    _CogNeedleFindResult.PointFoundCount = FindCircleResults.NumPointsFound;
                     _CogNeedleFindResult.CenterX = FindCircleResults.GetCircle().CenterX;
                     _CogNeedleFindResult.CenterY = FindCircleResults.GetCircle().CenterY;
                     _CogNeedleFindResult.Radius = FindCircleResults.GetCircle().Radius;
@@ -89,19 +91,25 @@ namespace InspectionSystemManager
                         }
                         _CogNeedleFindResult.PointStatusInfo[iLoopCount] = FindCircleResults[iLoopCount].Used;
                     }
+
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Center X : {0}, Y : {1}", _CogNeedleFindResult.CenterX.ToString("F2"), _CogNeedleFindResult.CenterY.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Radius : {0}", _CogNeedleFindResult.Radius.ToString("F2")), CLogManager.LOG_LEVEL.MID);
                 }
 
                 else
                 {
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Needle Find Fail!!", CLogManager.LOG_LEVEL.MID);
+
                     _CogNeedleFindResult.CenterX = 0;
                     _CogNeedleFindResult.CenterY = 0;
                     _CogNeedleFindResult.Radius = 0;
                     _CogNeedleFindResult.OriginX = 0;
                     _CogNeedleFindResult.OriginY = 0;
-
                     _CogNeedleFindResult.IsGood = false;
                 }
             }
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Result : " + _CogNeedleFindResult.IsGood.ToString(), CLogManager.LOG_LEVEL.MID);
 
             return _Result;
         }

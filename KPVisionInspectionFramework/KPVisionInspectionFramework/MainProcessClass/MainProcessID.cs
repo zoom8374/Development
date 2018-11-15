@@ -19,30 +19,34 @@ namespace KPVisionInspectionFramework
         public DIOControlWindow DIOWnd;
         public SerialWindow     SerialWnd;
 
+        public bool IsDIOInitialize;
+        public bool IsSerialInitialize;
+
         #region Initialize & DeInitialize
         public MainProcessID()
         {
-            
+            IsDIOInitialize = false;
+            IsSerialInitialize = false;
         }
 
         public override void Initialize(string _CommonFolderPath)
         {
             DIOWnd = new DIOControlWindow((int)eProjectType.BLOWER, _CommonFolderPath);
             DIOWnd.InputChangedEvent += new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
-            DIOWnd.Initialize();
+            IsDIOInitialize = DIOWnd.Initialize();
 
             SerialWnd = new SerialWindow();
             SerialWnd.SerialReceiveEvent += new SerialWindow.SerialReceiveHandler(SeraialReceiveEventFunction);
-            SerialWnd.Initialize("COM1");
+            IsSerialInitialize = SerialWnd.Initialize("COM1");
         }
 
         public override void DeInitialize()
         {
             DIOWnd.InputChangedEvent -= new DIOControlWindow.InputChangedHandler(InputChangeEventFunction);
-            DIOWnd.DeInitialize();
+            if (IsDIOInitialize) DIOWnd.DeInitialize();
 
             SerialWnd.SerialReceiveEvent -= new SerialWindow.SerialReceiveHandler(SeraialReceiveEventFunction);
-            SerialWnd.DeInitialize();
+            if (IsSerialInitialize) SerialWnd.DeInitialize();
         }
         #endregion Initialize & DeInitialize
 

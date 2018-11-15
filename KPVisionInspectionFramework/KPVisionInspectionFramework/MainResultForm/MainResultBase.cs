@@ -16,6 +16,7 @@ namespace KPVisionInspectionFramework
 {
     public partial class MainResultBase : Form
     {
+        private ucMainResultNone    MainResultNoneWnd;
         private ucMainResultID      MainResultIDWnd;
         private ucMainResultLead    MainResultLeadWnd;
         private ucMainResultSorter  MainResultSorterWnd;
@@ -42,7 +43,14 @@ namespace KPVisionInspectionFramework
             this.Owner = (Form)_OwnerForm;
             ProjectType = (eProjectType)_ProjectType;
 
-            if (ProjectType == eProjectType.BLOWER)
+            if (ProjectType == eProjectType.NONE)
+            {
+                MainResultNoneWnd = new ucMainResultNone(LastRecipeName);
+                MainResultNoneWnd.ScreenshotEvent += new ucMainResultNone.ScreenshotHandler(ScreenShot);
+                panelMain.Controls.Add(MainResultNoneWnd);
+            }
+
+            else if (ProjectType == eProjectType.BLOWER)
             {
                 MainResultIDWnd = new ucMainResultID(LastRecipeName);
                 MainResultIDWnd.ScreenshotEvent += new ucMainResultID.ScreenshotHandler(ScreenShot);
@@ -74,7 +82,12 @@ namespace KPVisionInspectionFramework
 
         public void DeInitialize()
         {
-            if (ProjectType == eProjectType.BLOWER)
+            if (ProjectType == eProjectType.NONE)
+            {
+                MainResultNoneWnd.ScreenshotEvent -= new ucMainResultNone.ScreenshotHandler(ScreenShot);
+            }
+
+            else if (ProjectType == eProjectType.BLOWER)
             {
                 MainResultIDWnd.ScreenshotEvent -= new ucMainResultID.ScreenshotHandler(ScreenShot);
                 MainResultIDWnd.ReadLOTNumEvent -= new ucMainResultID.ReadLOTNumHandler(ReadLOTNumEvent);
@@ -206,7 +219,8 @@ namespace KPVisionInspectionFramework
         //LDH, 2018.10.01, Result Window Clear
         public void ClearResultData(string _LOTNum = "", string _InDataPath = "", string _OutDataPath = "")
         {
-            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.ClearResult(_LOTNum, _InDataPath, _OutDataPath);
+            if (ProjectType == eProjectType.NONE)           MainResultNoneWnd.ClearResult();
+            else if (ProjectType == eProjectType.BLOWER)    MainResultIDWnd.ClearResult(_LOTNum, _InDataPath, _OutDataPath);
             else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.ClearResult();
         }
 
@@ -219,7 +233,8 @@ namespace KPVisionInspectionFramework
             //if (ProjectType == eProjectType.BLOWER)         MainResultIDWnd.SetResultData(_ResultParam);
             //else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetResultData(_ResultParam);
 
-            if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)           MainResultIDWnd.SetResultData(_ResultParam);
+            if (_ResultParam.ProjectItem == eProjectItem.NONE)              MainResultNoneWnd.SetNoneResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)      MainResultIDWnd.SetResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN) MainResultLeadWnd.SetNeedleResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)    MainResultLeadWnd.SetLeadResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)      MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
@@ -231,7 +246,8 @@ namespace KPVisionInspectionFramework
         {
             bool _Result = false;
 
-            if (ProjectType == eProjectType.BLOWER) MainResultIDWnd.SetAutoMode(_AutoModeFlag);
+            if (ProjectType == eProjectType.NONE)           MainResultNoneWnd.SetAutoMode(_AutoModeFlag);
+            else if (ProjectType == eProjectType.BLOWER)    MainResultIDWnd.SetAutoMode(_AutoModeFlag);
             else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetAutoMode(_AutoModeFlag);
 
             return _Result;
@@ -239,8 +255,9 @@ namespace KPVisionInspectionFramework
 
         public void SetLastRecipeName(eProjectType _ProjectType, string _LastRecipeName)
         {
-            if (_ProjectType == eProjectType.BLOWER) MainResultIDWnd.SetLastRecipeName(_LastRecipeName);
-            else if (_ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetLastRecipeName(_LastRecipeName);
+            if (_ProjectType == eProjectType.NONE)              MainResultNoneWnd.SetLastRecipeName(_LastRecipeName);
+            else if (_ProjectType == eProjectType.BLOWER)       MainResultIDWnd.SetLastRecipeName(_LastRecipeName);
+            else if (_ProjectType == eProjectType.DISPENSER)    MainResultLeadWnd.SetLastRecipeName(_LastRecipeName);
         }
 
 

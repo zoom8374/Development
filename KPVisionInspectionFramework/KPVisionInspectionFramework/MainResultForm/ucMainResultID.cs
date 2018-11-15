@@ -60,7 +60,7 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public ucMainResultID(string _LastRecipeName)
         {
-            BackupFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\Log\";
+            BackupFolderPath = @"D:\VisionInspectionData\KPAirBlowerInspection\Log\";
 
             SetLastRecipeName(_LastRecipeName);
 
@@ -445,7 +445,7 @@ namespace KPVisionInspectionFramework
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
 
             DateTime dateTime = DateTime.Now;
-            string InspScreenshotPath = @"D:\VisionInspectionData\CIPOSLeadInspection\HistoryData\Screenshot\";
+            string InspScreenshotPath = @"D:\VisionInspectionData\KPAirBlowerInspection\HistoryData\Screenshot\";
             string ImageSaveFolder = String.Format("{0}{1:D4}\\{2:D2}\\{3:D2}", InspScreenshotPath, dateTime.Year, dateTime.Month, dateTime.Day);
 
             if (false == Directory.Exists(ImageSaveFolder)) Directory.CreateDirectory(ImageSaveFolder);

@@ -64,6 +64,26 @@ namespace ParameterManager
     /// <summary>
     /// Multi Pattern 매칭 알고리즘
     /// </summary>
+    public class CogAutoPatternAlgo
+    {
+        public References ReferenceInfoList;
+        public double MatchingScore;
+        public int MatchingCount;
+        public int PatternThreshold;
+
+        public CogAutoPatternAlgo()
+        {
+            ReferenceInfoList = new References();
+
+            MatchingScore = 75;
+            MatchingCount = 1;
+            PatternThreshold = 128;
+        }
+    }
+
+    /// <summary>
+    /// Multi Pattern 매칭 알고리즘
+    /// </summary>
     public class CogMultiPatternAlgo
     {
         public References ReferenceInfoList;

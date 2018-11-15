@@ -73,6 +73,7 @@ namespace InspectionSystemManager
             List<int> _ResultIndexList = new List<int>();
             if (GetResults().BlobCount > 0)
             {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Blob Total Count : " + GetResults().BlobCount.ToString(), CLogManager.LOG_LEVEL.MID);
                 if (_CogBlobReferAlgo.UseDummyValue)
                 {
                     //Histogram check
@@ -84,6 +85,9 @@ namespace InspectionSystemManager
                     _CogBlobReferResult.HistogramAvg = _HistoAvg;
                     if (_CogBlobReferAlgo.DummyHistoMeanValue + 5 > _HistoAvg)// && _CogBlobReferAlgo.DummyHistoMeanValue - 5 < _HistoAvg)
                         _CogBlobReferResult.DummyStatus = true;
+
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Dummy Deviation : " + _HistoAvg.ToString("F2"), CLogManager.LOG_LEVEL.MID);
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Dummy Status : " + _CogBlobReferResult.DummyStatus.ToString(), CLogManager.LOG_LEVEL.MID);
                 }
 
                 CogBlobReferenceResult _CogBlobReferResultTemp = new CogBlobReferenceResult();
@@ -93,27 +97,58 @@ namespace InspectionSystemManager
                 double _ResolutionY = _CogBlobReferAlgo.ResolutionY;
                 for (int iLoopCount = 0; iLoopCount < _CogBlobReferResultTemp.BlobCount; ++iLoopCount)
                 {
-                    if (_CogBlobReferAlgo.WidthMin < _CogBlobReferResultTemp.Width[iLoopCount] * _ResolutionX && _CogBlobReferAlgo.WidthMax > _CogBlobReferResultTemp.Width[iLoopCount] * _ResolutionX &&
-                        _CogBlobReferAlgo.HeightMin < _CogBlobReferResultTemp.Height[iLoopCount] * _ResolutionY && _CogBlobReferAlgo.HeightMax > _CogBlobReferResultTemp.Height[iLoopCount] * _ResolutionY)
+                    double _ResultRealWidth = _CogBlobReferResultTemp.Width[iLoopCount] * _ResolutionX;
+                    double _ResultRealHeight = _CogBlobReferResultTemp.Height[iLoopCount] * _ResolutionY;
+
+                    if (_CogBlobReferAlgo.WidthMin < _ResultRealWidth && _CogBlobReferAlgo.WidthMax > _ResultRealWidth && _CogBlobReferAlgo.HeightMin < _ResultRealHeight && _CogBlobReferAlgo.HeightMax > _ResultRealHeight)
                     {
                         _CogBlobReferResultTemp.IsGoods[iLoopCount] = true;
                         if (_CogBlobReferAlgo.UseBodyArea)
                         {
+                            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyArea Flag True", CLogManager.LOG_LEVEL.MID);
                             double _BodyAreaGap = Math.Abs(_CogBlobReferResultTemp.BlobArea[iLoopCount] - _CogBlobReferAlgo.BodyArea);
-                            if ((_CogBlobReferAlgo.BodyArea * _CogBlobReferAlgo.BodyAreaPermitPercent / 100) > _BodyAreaGap) { _CogBlobReferResultTemp.IsGoods[iLoopCount] = false; continue; }
+                            if ((_CogBlobReferAlgo.BodyArea * _CogBlobReferAlgo.BodyAreaPermitPercent / 100) > _BodyAreaGap)
+                            {
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyArea Result Fail!!", CLogManager.LOG_LEVEL.MID);
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - UseBodyArea Result : {0}", _BodyAreaGap.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - UseBodyArea Condition : {0}", (_CogBlobReferAlgo.BodyArea * _CogBlobReferAlgo.BodyAreaPermitPercent / 100).ToString("F2")), CLogManager.LOG_LEVEL.MID);
+
+                                _CogBlobReferResultTemp.IsGoods[iLoopCount] = false;
+                                continue;
+                            }
                         }
 
                         if (_CogBlobReferAlgo.UseBodyWidth)
                         {
+                            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyWidth Flag True", CLogManager.LOG_LEVEL.MID);
                             double _BodyWidthGap = Math.Abs(_CogBlobReferResultTemp.Width[iLoopCount] - _CogBlobReferAlgo.BodyWidth);
-                            if ((_CogBlobReferAlgo.BodyWidth * _CogBlobReferAlgo.BodyWidthPermitPercent / 100) > _BodyWidthGap) { _CogBlobReferResultTemp.IsGoods[iLoopCount] = false; continue; }
+                            if ((_CogBlobReferAlgo.BodyWidth * _CogBlobReferAlgo.BodyWidthPermitPercent / 100) > _BodyWidthGap)
+                            {
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyWidth Result Fail!!", CLogManager.LOG_LEVEL.MID);
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - UseBodyWidth Result : {0}", _BodyWidthGap.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - UseBodyWidth Condition : {0}", (_CogBlobReferAlgo.BodyWidth * _CogBlobReferAlgo.BodyWidthPermitPercent / 100).ToString("F2")), CLogManager.LOG_LEVEL.MID);
+
+                                _CogBlobReferResultTemp.IsGoods[iLoopCount] = false;
+                                continue;
+                            }
                         }
 
                         if (_CogBlobReferAlgo.UseBodyHeight)
                         {
+                            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyHeight Flag True", CLogManager.LOG_LEVEL.MID);
                             double _BodyHeightGap = Math.Abs(_CogBlobReferResultTemp.Height[iLoopCount] - _CogBlobReferAlgo.BodyHeight);
-                            if ((_CogBlobReferAlgo.BodyHeight * _CogBlobReferAlgo.BodyHeightPermitPercent / 100) > _BodyHeightGap) { _CogBlobReferResultTemp.IsGoods[iLoopCount] = false; continue; }
+                            if ((_CogBlobReferAlgo.BodyHeight * _CogBlobReferAlgo.BodyHeightPermitPercent / 100) > _BodyHeightGap)
+                            {
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - UseBodyHeight Result Fail!!", CLogManager.LOG_LEVEL.MID);
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - UseBodyHeight Result : {0}", _BodyHeightGap.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - UseBodyHeight Condition : {0}", (_CogBlobReferAlgo.BodyHeight * _CogBlobReferAlgo.BodyHeightPermitPercent / 100).ToString("F2")), CLogManager.LOG_LEVEL.MID);
+
+                                _CogBlobReferResultTemp.IsGoods[iLoopCount] = false;
+                                continue;
+                            }
                         }
+
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - W : {0}mm, H : {1}mm", _ResultRealWidth, _ResultRealHeight), CLogManager.LOG_LEVEL.MID);
 
                         eBenchMarkPosition _eBenchMark = (eBenchMarkPosition)_CogBlobReferAlgo.BenchMarkPosition;
                         if (eBenchMarkPosition.TL == _eBenchMark) { _X = _CogBlobReferResultTemp.BlobMinX[iLoopCount]; _Y = _CogBlobReferResultTemp.BlobMinY[iLoopCount]; }
@@ -134,6 +169,8 @@ namespace InspectionSystemManager
 
                 if (_ResultIndexList.Count > 0)
                 {
+                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Blob Condition Count : " + _ResultIndexList.Count.ToString(), CLogManager.LOG_LEVEL.MID);
+                    #region _CogBlobReferResult 할당
                     int _Count = _ResultIndexList.Count;
                     _CogBlobReferResult.BlobCount = _Count;
                     _CogBlobReferResult.BlobMessCenterX = new double[_Count];
@@ -155,6 +192,7 @@ namespace InspectionSystemManager
                     _CogBlobReferResult.OriginY = new double[_Count];
                     _CogBlobReferResult.IsGoods = new bool[_Count];
                     _CogBlobReferResult.ResultGraphic = new CogCompositeShape[_Count];
+                    #endregion _CogBlobReferResult 할당
 
                     for (int iLoopCount = 0; iLoopCount < _Count; ++iLoopCount)
                     {
@@ -204,6 +242,8 @@ namespace InspectionSystemManager
 
             else
             {
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Blob not found!!", CLogManager.LOG_LEVEL.MID);
+
                 _CogBlobReferResult.BlobMinX = new double[1];
                 _CogBlobReferResult.BlobMaxY = new double[1];
                 _CogBlobReferResult.BlobCenterX = new double[1];
@@ -224,6 +264,8 @@ namespace InspectionSystemManager
 
                 _CogBlobReferResult.IsGood = false;
             }
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Result : " + _CogBlobReferResult.IsGood.ToString(), CLogManager.LOG_LEVEL.MID);
             return _Result;
         }
 

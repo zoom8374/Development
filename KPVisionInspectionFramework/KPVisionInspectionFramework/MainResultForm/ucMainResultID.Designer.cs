@@ -122,7 +122,7 @@
             this.gradientLabel4.Name = "gradientLabel4";
             this.gradientLabel4.Size = new System.Drawing.Size(376, 30);
             this.gradientLabel4.TabIndex = 29;
-            this.gradientLabel4.Text = " Data Matrix Data";
+            this.gradientLabel4.Text = " Data Matrix Result";
             this.gradientLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SevenSegGood

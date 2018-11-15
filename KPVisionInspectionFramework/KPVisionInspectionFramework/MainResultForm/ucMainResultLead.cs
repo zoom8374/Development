@@ -19,6 +19,7 @@ namespace KPVisionInspectionFramework
 {
     public partial class ucMainResultLead : UserControl
     {
+        #region Count & Yield Variable
         private uint TotalCount
         {
             set { SegmentValueInvoke(SevenSegTotal, value.ToString()); }
@@ -42,7 +43,9 @@ namespace KPVisionInspectionFramework
             set { SegmentValueInvoke(SevenSegYield, value.ToString()); }
             get { return Convert.ToDouble(SevenSegYield.Value); }
         }
+        #endregion Count & Yield Variable
 
+        #region Count & Yield Registry Variable
         private RegistryKey RegTotalCount;
         private RegistryKey RegGoodCount;
         private RegistryKey RegNgCount;
@@ -52,6 +55,7 @@ namespace KPVisionInspectionFramework
         private string RegGoodCountPath     = String.Format(@"KPVision\ResultCount\GoodCount");
         private string RegNgCountPath       = String.Format(@"KPVision\ResultCount\NgCount");
         private string RegYieldPath         = String.Format(@"KPVision\ResultCount\Yield");
+        #endregion Count & Yield Registry Variable
 
         //LDH, 2018.08.14, History 입력용 string 
         private string[] HistoryParam;
@@ -426,7 +430,7 @@ namespace KPVisionInspectionFramework
         }
 
         //LDH, 2018.08.13, History 추가용 함수
-        private void InspectionHistory(int ID, string _Result)
+        private void InspectionHistory(int _ID, string _Result)
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
 
@@ -441,7 +445,7 @@ namespace KPVisionInspectionFramework
 
             //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
             HistoryParam[0] = LastRecipeName;
-            HistoryParam[1] = ID.ToString();
+            HistoryParam[1] = _ID.ToString();
             HistoryParam[2] = _Result;
             HistoryParam[3] = ImageSaveFile;
 

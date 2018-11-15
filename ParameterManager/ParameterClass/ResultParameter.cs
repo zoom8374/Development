@@ -123,6 +123,25 @@ namespace ParameterManager
         }
     }
 
+    public class CogAutoPatternResult : Result
+    {
+        public double Score;
+        public double Scale;
+        public double Angle;
+        public double CenterX;
+        public double CenterY;
+        public double OriginPointX;
+        public double OriginPointY;
+        public double Width;
+        public double Height;
+
+        public CogAutoPatternResult()
+        {
+            IsGood = true;
+            NgType = eNgType.GOOD;
+        }
+    }
+
     public class CogBlobReferenceResult : Result
     {
         public int      BlobCount;
@@ -282,6 +301,12 @@ namespace ParameterManager
 
         public double[] LeadLengthReal;
         public double[] LeadWidthReal;
+    }
+
+    public class SendNoneResult
+    {
+        public string ReadCode;
+        public double MatchingScore;
     }
     #endregion Last Send Result Parameter
 }

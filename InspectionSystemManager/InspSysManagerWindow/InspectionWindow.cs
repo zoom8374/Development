@@ -29,6 +29,7 @@ namespace InspectionSystemManager
         private InspectionID InspIDProc;
         private InspectionLineFind InspLineFindProc;
         private InspectionMultiPattern InspMultiPatternProc;
+        private InspectionAutoPattern InspAutoPatternProc;
         private CCameraManager CameraManager;
 
         private TeachingWindow TeachWnd;
@@ -115,6 +116,12 @@ namespace InspectionSystemManager
 
             InspPatternProc = new InspectionPattern();
             InspPatternProc.Initialize();
+
+            InspMultiPatternProc = new InspectionMultiPattern();
+            InspMultiPatternProc.Initialize();
+
+            InspAutoPatternProc = new InspectionAutoPattern();
+            InspAutoPatternProc.Initialize();
 
             InspBlobReferProc = new InspectionBlobReference();
             InspBlobReferProc.Initialize();
@@ -619,7 +626,7 @@ namespace InspectionSystemManager
                 } 
             }
 
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "InspectionWindow - LoadCogImage Exception : " + ex.ToString(), CLogManager.LOG_LEVEL.LOW);
                 MessageBox.Show(new Form { TopMost = true }, "Could not open image file.");
@@ -693,12 +700,13 @@ namespace InspectionSystemManager
             do
             {
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Start", ID + 1), CLogManager.LOG_LEVEL.LOW);
+                if (false == AutoTeaching()) break;
                 if (false == InspectionResultClear()) break;
                 if (false == InspectionProcess()) break;
                 if (false == InpsectionResultAnalysis()) break;
                 if (false == InspectionDataSet()) break; //send랑 순서바꾼거 확인해보기
-                if (ProjectType != eProjectType.DISPENSER)
-                    if (false == InspectionDataSend()) break;
+                //if (ProjectType != eProjectType.DISPENSER)
+                if (false == InspectionDataSend()) break;
                 if (false == InspectionResultDsiplay()) break;
                 if (false == InspectionComplete(true)) break;
 				IsThreadImageSaveTrigger = true;
@@ -712,6 +720,11 @@ namespace InspectionSystemManager
 
             //CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} - Inspection Result : {1}", ID, ));
             return _Result;
+        }
+
+        private bool AutoTeaching()
+        {
+            return true;
         }
 
         private bool InspectionResultClear()
@@ -846,14 +859,14 @@ namespace InspectionSystemManager
             #endregion Buffer Area Calculate
 
             eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
-            if (eAlgoType.C_PATTERN == _AlgoType) _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB == _AlgoType) _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_LEAD == _AlgoType) _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB_REFER == _AlgoType) _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType) _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_ID == _AlgoType) _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_LINE_FIND == _AlgoType) _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) _Result = CogMultiPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            if (eAlgoType.C_PATTERN == _AlgoType)           _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB == _AlgoType)         _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_MULTI_PATTERN == _AlgoType)_Result = CogMultiPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
 
             return _Result;
         }
@@ -863,7 +876,9 @@ namespace InspectionSystemManager
             var _CogPatternAlgo = _Algorithm as CogPatternAlgo;
             CogPatternResult _CogPatternResult = new CogPatternResult();
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "PatternMatching Algorithm Start", CLogManager.LOG_LEVEL.MID);
             bool _Result = InspPatternProc.Run(OriginImage, _InspRegion, _CogPatternAlgo, ref _CogPatternResult);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "PatternMatching Algorithm End", CLogManager.LOG_LEVEL.MID);
 
             if (_CogPatternResult.OriginPointX?.Length > 0) AnyReferenceX = _CogPatternResult.OriginPointX[0];
             if (_CogPatternResult.OriginPointY?.Length > 0) AnyReferenceY = _CogPatternResult.OriginPointY[0];
@@ -910,13 +925,41 @@ namespace InspectionSystemManager
             return true;
         }
 
+        private bool CogAutoPatternAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        {
+            var _CogAutoPatternAlgo = _Algorithm as CogAutoPatternAlgo;
+            CogAutoPatternResult _CogAutoPatternResult = new CogAutoPatternResult();
+
+            bool _Result = InspAutoPatternProc.Run(OriginImage, _InspRegion, _CogAutoPatternAlgo, ref _CogAutoPatternResult);
+
+            if (_CogAutoPatternResult.OriginPointX > 0) AnyReferenceX = _CogAutoPatternResult.OriginPointX;
+            if (_CogAutoPatternResult.OriginPointY > 0) AnyReferenceY = _CogAutoPatternResult.OriginPointY;
+
+            double _OriginX = _CogAutoPatternAlgo.ReferenceInfoList[0].CenterX - _CogAutoPatternAlgo.ReferenceInfoList[0].OriginPointOffsetX;
+            double _OriginY = _CogAutoPatternAlgo.ReferenceInfoList[0].CenterY - _CogAutoPatternAlgo.ReferenceInfoList[0].OriginPointOffsetY;
+
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_AUTO_PATTERN, _CogAutoPatternResult);
+            _AlgoResultParam.OffsetX = 0;
+            _AlgoResultParam.OffsetY = 0;
+            if (_CogAutoPatternAlgo.ReferenceInfoList.Count > 0 && _CogAutoPatternResult.Score > 0)
+            {
+                _AlgoResultParam.OffsetX = _OriginX - _CogAutoPatternResult.CenterX;
+                _AlgoResultParam.OffsetY = _OriginY - _CogAutoPatternResult.CenterY;
+            }
+            AlgoResultParamList.Add(_AlgoResultParam);
+
+            return true;
+        }
+
         private bool CogBlobReferenceAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
         {
             //CogBlobReferenceAlgo    _CogBlobReferAlgo = (CogBlobReferenceAlgo)_Algorithm;
             var _CogBlobReferAlgo = _Algorithm as CogBlobReferenceAlgo;
             CogBlobReferenceResult  _CogBlobReferResult = new CogBlobReferenceResult();
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "BlobReference Algorithm Start", CLogManager.LOG_LEVEL.MID);
             bool _Result = InspBlobReferProc.Run(OriginImage, _InspRegion, _CogBlobReferAlgo, ref _CogBlobReferResult, _NgAreaNumber);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "BlobReference Algorithm Start End", CLogManager.LOG_LEVEL.MID);
 
             if (_CogBlobReferResult.OriginX?.Length > 0) AnyReferenceX = _CogBlobReferResult.OriginX[0];
             if (_CogBlobReferResult.OriginY?.Length > 0) AnyReferenceY = _CogBlobReferResult.OriginY[0];
@@ -956,6 +999,7 @@ namespace InspectionSystemManager
             CogNeedleFindResult _CogNeedleFindResult = new CogNeedleFindResult();
 
             //InspNeedleCircleFindProc.SetOffsetValue(BenchMarkOffsetX, BenchMarkOffsetY);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm Start", CLogManager.LOG_LEVEL.MID);
             bool _Result = InspNeedleCircleFindProc.Run(OriginImage, _CogNeedleFindAlgo, ref _CogNeedleFindResult, BenchMarkOffsetX, BenchMarkOffsetY);
 
             _CogNeedleFindResult.CenterXReal = (_CogNeedleFindResult.CenterX - (OriginImage.Width / 2)) * ResolutionX;
@@ -972,6 +1016,10 @@ namespace InspectionSystemManager
             if (_CogNeedleFindAlgo.CaliperNumber - 2 >= _CogNeedleFindResult.PointFoundCount)
                 _CogNeedleFindResult.IsGood = false;
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Position X : {0}, Y : {1}", _CogNeedleFindResult.CenterXReal.ToString("F2"), _CogNeedleFindResult.CenterYReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format(" - Real Radius : {0}", _CogNeedleFindResult.RadiusReal.ToString("F2")), CLogManager.LOG_LEVEL.MID);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Needle Circle Find Algorithm End", CLogManager.LOG_LEVEL.MID);
+
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_NEEDLE_FIND, _CogNeedleFindResult);
             _AlgoResultParam.OffsetX = _CogNeedleFindAlgo.OriginX - _CogNeedleFindResult.CenterX;
             _AlgoResultParam.OffsetY = _CogNeedleFindAlgo.OriginY - _CogNeedleFindResult.CenterY;
@@ -985,7 +1033,9 @@ namespace InspectionSystemManager
             CogBarCodeIDAlgo    _CogBarCodeIDAlgo = _Algorithm as CogBarCodeIDAlgo;
             CogBarCodeIDResult  _CogBarCodeIDResult = new CogBarCodeIDResult();
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "CodeRead Algorithm Start", CLogManager.LOG_LEVEL.MID);
             bool _Result = InspIDProc.Run(OriginImage, _InspRegion, _CogBarCodeIDAlgo, ref _CogBarCodeIDResult);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "CodeRead Algorithm End", CLogManager.LOG_LEVEL.MID);
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_ID, _CogBarCodeIDResult);
             AlgoResultParamList.Add(_AlgoResultParam);
@@ -1063,7 +1113,7 @@ namespace InspectionSystemManager
                 ResultDisplay(_PatternRect, _Point, "Pattern_" + iLoopCount, _PatternResult.IsGood);
 
                 string _MatchingName = string.Format($"Rate = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
-                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
 
             if (_PatternResult.FindCount <= 0) _IsGood = false;
@@ -1337,7 +1387,8 @@ namespace InspectionSystemManager
             bool _Result = true;
 
             SendResParam = new SendResultParameter();
-            if (ProjectItem == eProjectItem.LEAD_INSP)          SendResParam = GetLeadInspectionResultAnalysis();
+			if (ProjectItem == eProjectItem.NONE)	 			SendResParam = GetDefaultInspectionResultAnalysis();
+            else if (ProjectItem == eProjectItem.LEAD_INSP)     SendResParam = GetLeadInspectionResultAnalysis();
             else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  SendResParam = GetNeedleFindResultAnalysis();
             else if (ProjectItem == eProjectItem.ID_INSP)       SendResParam = GetIDReadResultAnalysis();
             else if (ProjectItem == eProjectItem.SURFACE)       SendResParam = GetSurfaceInspectionResultAnalysis();
@@ -1351,7 +1402,7 @@ namespace InspectionSystemManager
 
             var _InspectionWindowEvent = InspectionWindowEvent;
             _InspectionWindowEvent?.Invoke(eIWCMD.SET_RESULT, SendResParam);
-
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM {0} Last Result : {1}", SendResParam.ID + 1, SendResParam.IsGood.ToString()), CLogManager.LOG_LEVEL.LOW);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - InspectionDataSet Complete", CLogManager.LOG_LEVEL.MID);
 
             return _Result;
@@ -1360,6 +1411,7 @@ namespace InspectionSystemManager
         public bool InspectionDataSend()
         {
             bool _Result = true;
+            if (ProjectType == eProjectType.DISPENSER) return true;
 
             var _InspectionWindowEvent = InspectionWindowEvent;
             _InspectionWindowEvent?.Invoke(eIWCMD.SEND_DATA, SendResParam);
