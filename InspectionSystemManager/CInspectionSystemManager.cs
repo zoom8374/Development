@@ -92,6 +92,9 @@ namespace InspectionSystemManager
             CParameterManager.RecipeCopy(_MapDataParam, ref MapDataParam);
             MapDataWnd.Initialize(MapDataParam);
             MapDataWnd.MapDataParameterSaveEvent += new MapDataWindow.MapDataParameterSaveHandler(MapDataParameterSaveEventFunction);
+
+            //InspectionWindow에 전달
+            InspWnd.SetMapDataParameter(MapDataParam);
         }
 
         public void SetSystemMode(eSysMode _SystemMode)
@@ -230,7 +233,11 @@ namespace InspectionSystemManager
         public void ShowMapDataWindow()
         {
             MapDataWnd.SetMapDataImage(InspWnd.GetOriginImage());
-            MapDataWnd.ShowDialog();
+            if (System.Windows.Forms.DialogResult.OK == MapDataWnd.ShowDialog())
+            {
+                CParameterManager.RecipeCopy(MapDataWnd.GetCurrentMapDataParameter(), ref MapDataParam);
+                InspWnd.SetMapDataParameter(MapDataParam);
+            }
         }
         #endregion Vision Management
 

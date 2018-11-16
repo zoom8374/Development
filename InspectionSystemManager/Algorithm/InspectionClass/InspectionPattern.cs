@@ -40,7 +40,11 @@ namespace InspectionSystemManager
             bool _Result = false;
 
             PatternProc.RunParams.AcceptThreshold = _CogPatternAlgo.MatchingScore / 100;
-            
+            PatternProc.RunParams.ZoneAngle.Configuration = CogPMAlignZoneConstants.LowHigh;
+            PatternProc.RunParams.ZoneAngle.Low = _CogPatternAlgo.MatchingAngle * -1;
+            PatternProc.RunParams.ZoneAngle.High = _CogPatternAlgo.MatchingAngle * 1;
+
+
             for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
             {
                 if (false == Inspection(_SrcImage, _InspRegion, _CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference)) continue;
@@ -66,7 +70,7 @@ namespace InspectionSystemManager
                     {
                         _CogPatternResult.Score[jLoopCount] = PatternResults[jLoopCount].Score;
                         _CogPatternResult.Scale[jLoopCount] = PatternResults[jLoopCount].GetPose().Scaling;
-                        _CogPatternResult.Angle[jLoopCount] = PatternResults[jLoopCount].GetPose().Skew;
+                        _CogPatternResult.Angle[jLoopCount] = PatternResults[jLoopCount].GetPose().Rotation;
                         _CogPatternResult.OriginPointX[jLoopCount] = PatternResults[jLoopCount].GetPose().TranslationX;
                         _CogPatternResult.OriginPointY[jLoopCount] = PatternResults[jLoopCount].GetPose().TranslationY;
                         _CogPatternResult.CenterX[jLoopCount] = _CogPatternResult.OriginPointX[jLoopCount] + _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetX;

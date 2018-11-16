@@ -71,8 +71,13 @@ namespace MapDataManager
             chAreaAutoSearch.Checked    = Convert.ToBoolean(MapDataParam.MapDataTeachingMode);
             chAreaManualSearch.Checked  = !Convert.ToBoolean(MapDataParam.MapDataTeachingMode);
 
-            if (true == MapDataParam.UnitPattern.Trained)
+            if (MapDataParam.UnitPattern != null && MapDataParam.UnitPattern.Trained == true)
                 kpPatternDisplay.SetDisplayImage((CogImage8Grey)MapDataParam.UnitPattern.GetTrainedPatternImage());
+        }
+
+        public MapDataParameter GetCurrentMapDataParameter()
+        {
+            return MapDataParam;
         }
         #endregion Initialize & DeInitialize
 
@@ -337,8 +342,17 @@ namespace MapDataManager
         private void btnManualSearchArea_Click(object sender, EventArgs e)
         {
             CogRectangle _WholePatternRegion = new CogRectangle();
-            _WholePatternRegion.SetCenterWidthHeight(MapDataParam.WholeSearchAreaCenterX, MapDataParam.WholeSearchAreaCenterY,
-                                                     MapDataParam.WholeSearchAreaWidth, MapDataParam.WholeSearchAreaHeight);
+            if (MapDataParam != null)
+            {
+                _WholePatternRegion.SetCenterWidthHeight(MapDataParam.WholeSearchAreaCenterX, MapDataParam.WholeSearchAreaCenterY,
+                                                         MapDataParam.WholeSearchAreaWidth, MapDataParam.WholeSearchAreaHeight);
+            }
+
+            else
+            {
+                MapDataParam = new MapDataParameter();
+                _WholePatternRegion.SetCenterWidthHeight(800, 800, 500, 500);
+            }
 
             kpTeachDisplay.ClearDisplay();
             kpTeachDisplay.DrawInterActiveShape(_WholePatternRegion, "WholePatternRegion", CogColorConstants.Orange);

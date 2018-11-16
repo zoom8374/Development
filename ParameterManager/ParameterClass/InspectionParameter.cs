@@ -398,6 +398,12 @@ namespace ParameterManager
         public bool Enable = true;
         public int NgAreaNumber = 1;
 
+        //MapData 관련 변수
+        public bool IsUseMapData = false;
+        public int MapDataUnitTotalCount = 1;
+        public int MapDataStartNumber = 1;
+        public int MapDataEndNumber = 1;
+
         public InspectionAreaParameter()
         {
             InspAlgoParam = new List<InspectionAlgorithmParameter>();

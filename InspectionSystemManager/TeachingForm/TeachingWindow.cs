@@ -49,9 +49,11 @@ namespace InspectionSystemManager
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
+        private eProjectType    ProjectType;
         private eProjectItem    ProjectItem;
 
         private InspectionParameter InspParam;
+        private MapDataParameter MapDataParam;
         private int InspAreaSelected = -1;
         private int InspAlgoSelected = -1;
         private eAlgoType CurrentAlgoType;
@@ -75,16 +77,26 @@ namespace InspectionSystemManager
             InitializeContextMenu();
         }
 
-        public void Initialize(int _ID = 0, InspectionParameter _InspParam = null, eProjectItem _ProjectItem = eProjectItem.NEEDLE_ALIGN)
+        public void SetParameters(InspectionParameter _InspParam, MapDataParameter _MapDataParam)
+        {
+            SetMapDataParameter(_MapDataParam);
+            SetInspectionParameter(_InspParam);
+            SetResolution();
+
+            GridViewAreaAndAlgoClear();
+            UpdateInspectionAreaList();
+            gridViewArea.ShowCellToolTips = false;
+            gridViewAlgo.ShowCellToolTips = false;
+        }
+
+        public void Initialize(int _ID = 0, eProjectType _ProjectType = eProjectType.DISPENSER, eProjectItem _ProjectItem = eProjectItem.NEEDLE_ALIGN)
         {
             string _WindowTextName = String.Format(" Vision{0} - Teaching Window", (_ID + 1));
             this.labelTitle.Text = _WindowTextName;
             this.labelStatus.Text = "";
 
+            ProjectType = _ProjectType;
             ProjectItem = _ProjectItem;
-
-            SetInspectionParameter(_InspParam);
-            SetResolution();
 
             ucCogPatternWnd = new ucCogPattern();
             ucCogBlobWnd = new ucCogBlob();
@@ -119,14 +131,8 @@ namespace InspectionSystemManager
             foreach (DataGridViewColumn _dataGridView in gridViewAlgo.Columns)  _dataGridView.SortMode = DataGridViewColumnSortMode.NotSortable;            
 
             InitializeEvent();
-            GridViewAreaAndAlgoClear();
-            UpdateInspectionAreaList();
-
             InitializeContextMenu();
-            InitializeAreaControl(_ProjectItem);
-
-            gridViewArea.ShowCellToolTips = false;
-            gridViewAlgo.ShowCellToolTips = false;
+            InitializeAreaControl(_ProjectType);
 
             //gridViewArea.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
             //gridViewArea.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
@@ -211,14 +217,12 @@ namespace InspectionSystemManager
         /// Project로 구분하여 Area 추가/삭제/복사 버튼의 활성화 비활성화를 설정
         /// </summary>
         /// <param name="_ProjectItem">Project Item</param>
-        private void InitializeAreaControl(eProjectItem _ProjectItem)
+        private void InitializeAreaControl(eProjectType _ProjectType)
         {
-            switch (_ProjectItem)
+            switch (_ProjectType)
             {
-                case eProjectItem.ID_INSP:
-                case eProjectItem.LEAD_INSP:
-                case eProjectItem.NEEDLE_ALIGN:
-                case eProjectItem.SURFACE:
+                case eProjectType.DISPENSER:
+                case eProjectType.BLOWER:
                     btnInspectionAreaAdd.Visible = false;
                     btnInspectionAreaDel.Visible = false;
                     btnInspectionAreaCopy.Visible = false;
@@ -235,6 +239,12 @@ namespace InspectionSystemManager
             CParameterManager.RecipeCopy(_InspParam, ref InspParam);
 
             //Reference File Copy
+        }
+
+        private void SetMapDataParameter(MapDataParameter _MapDataParam)
+        {
+            MapDataParam = new MapDataParameter();
+            CParameterManager.RecipeCopy(_MapDataParam, ref MapDataParam);
         }
 
         private void SetResolution()
@@ -825,6 +835,50 @@ namespace InspectionSystemManager
             btnAlgorithmIndexMoveUp.Visible = !btnAlgorithmIndexMoveUp.Visible;
             btnAlgorithmIndexMoveDown.Visible = !btnAlgorithmIndexMoveDown.Visible;
         }
+
+        private void btnDataMapApplyInspectionArea_Click(object sender, EventArgs e)
+        {
+            if (MapDataParam.UnitTotalCount > 10) { MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.UnitTotalCount)); return; }
+
+            int _StartNumber = InspParam.InspAreaParam.Count + 1;
+            for (int iLoopCount = 0; iLoopCount < MapDataParam.UnitTotalCount; ++iLoopCount)
+            {
+                InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
+                _InspAreaParam.AreaRegionCenterX = MapDataParam.UnitListCenterX[iLoopCount];
+                _InspAreaParam.AreaRegionCenterY = MapDataParam.UnitListCenterY[iLoopCount];
+                _InspAreaParam.AreaRegionWidth = MapDataParam.UnitListWidth[iLoopCount];
+                _InspAreaParam.AreaRegionHeight = MapDataParam.UnitListHeight[iLoopCount];
+                _InspAreaParam.IsUseMapData = true;
+                _InspAreaParam.MapDataUnitTotalCount = (int)MapDataParam.UnitTotalCount;
+                _InspAreaParam.MapDataStartNumber   = _StartNumber;
+                _InspAreaParam.MapDataEndNumber     = _StartNumber + _InspAreaParam.MapDataUnitTotalCount - 1;
+                InspParam.InspAreaParam.Add(_InspAreaParam);
+            }
+
+            GridViewAreaAndAlgoClear();
+            UpdateInspectionAreaList(InspParam.InspAreaParam.Count - 1);
+
+            UpdateTeachingStatus(eTeachStep.AREA_CLEAR);
+            gridViewAlgo.ClearSelection();
+            gridViewAlgo.Rows.Clear();
+        }
+
+        private void btnShowAllArea_Click(object sender, EventArgs e)
+        {
+            ShowAllArea();
+        }
+
+        private void ShowAllArea()
+        {
+            kpTeachDisplay.ClearDisplay();
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                CogRectangle _InspAreaRect = new CogRectangle();
+                _InspAreaRect.SetCenterWidthHeight(InspParam.InspAreaParam[iLoopCount].AreaRegionCenterX, InspParam.InspAreaParam[iLoopCount].AreaRegionCenterY,
+                                                   InspParam.InspAreaParam[iLoopCount].AreaRegionWidth, InspParam.InspAreaParam[iLoopCount].AreaRegionHeight);
+                kpTeachDisplay.DrawStaticShape(_InspAreaRect, "Area " + (iLoopCount + 1), kpTeachDisplay.ColorDefine[iLoopCount], 2, CogGraphicLineStyleConstants.Dash);
+            }
+        }
         #endregion Button Event
 
         #region Inspection Area & Algorithm Gridview Update
@@ -840,12 +894,28 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
             {
-                string _Index = (iLoopCount + 1).ToString();
-                string _Name = "Area" + _Index;
-                bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
+                //if (InspParam.InspAreaParam[iLoopCount].IsUseMapData)
+                //{
+                //    int _Index = (iLoopCount + 1);
+                //    string _IndexString = _Index.ToString();
+                //    string _Name = String.Format("Area {0} ~ {1}", InspParam.InspAreaParam[iLoopCount].MapDataStartNumber, InspParam.InspAreaParam[iLoopCount].MapDataEndNumber);
+                //    if (_Index > InspParam.InspAreaParam[iLoopCount].MapDataStartNumber && _Index <= InspParam.InspAreaParam[iLoopCount].MapDataEndNumber) continue;
 
-                AddInspectionArea(_Index, _Name, _Enable);
-                gridViewArea.Rows[iLoopCount].Selected = false;
+                //    bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
+
+                //    AddInspectionArea(_IndexString, _Name, _Enable);
+                //    gridViewArea.Rows[iLoopCount].Selected = false;
+                //}
+
+                //else
+                {
+                    string _IndexString = (iLoopCount + 1).ToString();
+                    string _Name = "Area" + _IndexString;
+                    bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
+
+                    AddInspectionArea(_IndexString, _Name, _Enable);
+                    gridViewArea.Rows[iLoopCount].Selected = false;
+                }
             }
 
             if (_Selected != -1)

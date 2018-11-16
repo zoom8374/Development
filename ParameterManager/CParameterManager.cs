@@ -474,6 +474,7 @@ namespace ParameterManager
             for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
             {
                 InspParam[iLoopCount] = new InspectionParameter();
+                InspMapDataParam[iLoopCount] = new MapDataParameter();
                 if (false == ReadInspectionParameter(iLoopCount, SystemParam.LastRecipeName))           { _Result = false; break; }
                 if (false == ReadInspectionMapDataParameter(iLoopCount, SystemParam.LastRecipeName))    { _Result = false;  break; }
             }
@@ -1163,7 +1164,8 @@ namespace ParameterManager
             string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
             if (false == Directory.Exists(_PatternFilePath)) Directory.CreateDirectory(_PatternFilePath);
             InspMapDataParam[_ID].UnitPatternPath = _PatternFilePath + _PatternFileName;
-            CogSerializer.SaveObjectToFile(InspMapDataParam[_ID].UnitPattern, InspMapDataParam[_ID].UnitPatternPath);
+            if (InspMapDataParam[_ID].UnitPattern != null) 
+                CogSerializer.SaveObjectToFile(InspMapDataParam[_ID].UnitPattern, InspMapDataParam[_ID].UnitPatternPath);
 
             XmlTextWriter _XmlWriter = new XmlTextWriter(_MapDataParameterFilePath, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
@@ -1176,7 +1178,7 @@ namespace ParameterManager
                 _XmlWriter.WriteElementString("UnitColumnCount", InspMapDataParam[_ID].UnitColumnCount.ToString());
                 _XmlWriter.WriteElementString("SectionRowCount", InspMapDataParam[_ID].SectionRowCount.ToString());
                 _XmlWriter.WriteElementString("SectionColumnCount", InspMapDataParam[_ID].SectionColumnCount.ToString());
-                _XmlWriter.WriteElementString("MapDataTeachingMode", InspMapDataParam[_ID].SectionColumnCount.ToString());
+                _XmlWriter.WriteElementString("MapDataTeachingMode", InspMapDataParam[_ID].MapDataTeachingMode.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaCenterX", InspMapDataParam[_ID].UnitSearchAreaCenterX.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaCenterY", InspMapDataParam[_ID].UnitSearchAreaCenterY.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaWidth", InspMapDataParam[_ID].UnitSearchAreaWidth.ToString());
@@ -1445,6 +1447,7 @@ namespace ParameterManager
 
         public static void RecipeCopy(MapDataParameter _SrcParam, ref MapDataParameter _DestParam)
         {
+            if (null == _SrcParam) return;
             if (null == _DestParam) _DestParam = new MapDataParameter();
             _DestParam.UnitListCenterX = new List<double>();
             _DestParam.UnitListCenterY = new List<double>();

@@ -21,28 +21,47 @@ namespace KPDisplay
 {
     public partial class KPCogDisplayControl: UserControl
     {
-        Point MousePoint = new Point();
-        CogRectangle InteractiveRectGraphic = new CogRectangle();
-        CogRectangle StaticRectGraphic = new CogRectangle();
-        CogRectangleAffine InteractiveRectAffineGraphic = new CogRectangleAffine();
-        CogRectangleAffine StaticRectAffineGraphic = new CogRectangleAffine();
-        CogPointMarker InteractivePointMarker = new CogPointMarker();
-        CogPointMarker StaticPointMarker = new CogPointMarker();
-        CogGraphicLabel cogLabel = new CogGraphicLabel();
-        CogLineSegment staticGraphicHor = new CogLineSegment();
-        CogLineSegment staticGraphicVer = new CogLineSegment();
-        CogLineSegment staticGraphicDistance = new CogLineSegment();
-        CogCircle StaticCircleGraphic = new CogCircle();
-        CogPolygon StaticPolygonGraphic = new CogPolygon();
+        private  Point MousePoint = new Point();
+        private  CogRectangle InteractiveRectGraphic = new CogRectangle();
+        private  CogRectangle StaticRectGraphic = new CogRectangle();
+        private  CogRectangleAffine InteractiveRectAffineGraphic = new CogRectangleAffine();
+        private  CogRectangleAffine StaticRectAffineGraphic = new CogRectangleAffine();
+        private  CogPointMarker InteractivePointMarker = new CogPointMarker();
+        private  CogPointMarker StaticPointMarker = new CogPointMarker();
+        private  CogGraphicLabel cogLabel = new CogGraphicLabel();
+        private  CogLineSegment staticGraphicHor = new CogLineSegment();
+        private  CogLineSegment staticGraphicVer = new CogLineSegment();
+        private  CogLineSegment staticGraphicDistance = new CogLineSegment();
+        private  CogCircle StaticCircleGraphic = new CogCircle();
+        private  CogPolygon StaticPolygonGraphic = new CogPolygon();
+        
+        private  CogLineSegment StaticArrow = new CogLineSegment();
+        private  CogLineSegment StaticLineSegment = new CogLineSegment();
+        
+        private  CogFindCircleTool CircleCaliperTool = new CogFindCircleTool();
+        private  CogCircularArc InteractiveCircularArc = new CogCircularArc();
+        
+        private  CogFindLineTool LineCaliperTool = new CogFindLineTool();
+        private  CogLineSegment InteractiveLine = new CogLineSegment();
 
-        CogLineSegment StaticArrow = new CogLineSegment();
-        CogLineSegment StaticLineSegment = new CogLineSegment();
-
-        CogFindCircleTool CircleCaliperTool = new CogFindCircleTool();
-        CogCircularArc InteractiveCircularArc = new CogCircularArc();
-
-        CogFindLineTool LineCaliperTool = new CogFindLineTool();
-        CogLineSegment InteractiveLine = new CogLineSegment();
+        #region Color Define
+        public CogColorConstants[] ColorDefine = new CogColorConstants[56] {    CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
+                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
+                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
+                                                                                CogColorConstants.DarkGrey,     CogColorConstants.LightGrey,
+                                                                                CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
+                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
+                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
+                                                                                CogColorConstants.DarkGrey,     CogColorConstants.LightGrey,
+                                                                                CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
+                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
+                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
+                                                                                CogColorConstants.DarkGrey,     CogColorConstants.LightGrey,
+                                                                                CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
+                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
+                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
+                                                                        CogColorConstants.DarkGrey,     CogColorConstants.LightGrey  };
+        #endregion Color Define
 
         //public delegate void CogDisplayMouseUpHandler(CogFindCircleTool _CircleCaliperTool);
         public delegate void CogDisplayMouseUpHandler(object _CaliperTool);

@@ -22,22 +22,23 @@ namespace InspectionSystemManager
     public partial class InspectionWindow : Form
     {
         #region Inspection Variable
-        private InspectionPattern InspPatternProc;
-        private InspectionBlobReference InspBlobReferProc;
-        private InspectionNeedleCircleFind InspNeedleCircleFindProc;
-        private InspectionLead InspLeadProc;
-        private InspectionID InspIDProc;
-        private InspectionLineFind InspLineFindProc;
-        private InspectionMultiPattern InspMultiPatternProc;
-        private InspectionAutoPattern InspAutoPatternProc;
-        private CCameraManager CameraManager;
+        private InspectionPattern           InspPatternProc;
+        private InspectionBlobReference     InspBlobReferProc;
+        private InspectionNeedleCircleFind  InspNeedleCircleFindProc;
+        private InspectionLead              InspLeadProc;
+        private InspectionID                InspIDProc;
+        private InspectionLineFind          InspLineFindProc;
+        private InspectionMultiPattern      InspMultiPatternProc;
+        private InspectionAutoPattern       InspAutoPatternProc;
+        private CCameraManager              CameraManager;
 
-        private TeachingWindow TeachWnd;
-        private ImageDeleteWindow ImageDeleteWnd;
+        private TeachingWindow      TeachWnd;
+        private ImageDeleteWindow   ImageDeleteWnd;
         private InspectionParameter InspParam = new InspectionParameter();
-        public AreaResultParameterList AreaResultParamList = new AreaResultParameterList();
-        public AlgoResultParameterList AlgoResultParamList = new AlgoResultParameterList();
-        private SendResultParameter SendResParam = new SendResultParameter();
+        private MapDataParameter    MapDataParam = new MapDataParameter();
+        public AreaResultParameterList  AreaResultParamList = new AreaResultParameterList();
+        public AlgoResultParameterList  AlgoResultParamList = new AlgoResultParameterList();
+        private SendResultParameter     SendResParam = new SendResultParameter();
 		
         private double AnyReferenceX = 0;
         private double AnyReferenceY = 0;
@@ -271,6 +272,11 @@ namespace InspectionSystemManager
                 //btnImageSave.Enabled = true;
                 //btnConfigSave.Enabled = true;
             }
+        }
+
+        public void SetMapDataParameter(MapDataParameter _MapDataParam)
+        {
+            CParameterManager.RecipeCopy(_MapDataParam, ref MapDataParam);
         }
 
         public void FreeInspectionParameters(ref InspectionParameter _InspParam)
@@ -655,7 +661,8 @@ namespace InspectionSystemManager
         private void Teaching()
         {
             TeachWnd = new TeachingWindow();
-            TeachWnd.Initialize(ID, InspParam, ProjectItem);
+            TeachWnd.Initialize(ID, ProjectType, ProjectItem);
+            TeachWnd.SetParameters(InspParam, MapDataParam);
             TeachWnd.SetResultData(AreaResultParamList, AlgoResultParamList);
             TeachWnd.SetTeachingImage(OriginImage, OriginImage.Width, OriginImage.Height);
             TeachWnd.ShowDialog();
@@ -1105,12 +1112,17 @@ namespace InspectionSystemManager
             var _PatternResult = _ResultParam as CogPatternResult;
 
             CogRectangle _PatternRect = new CogRectangle();
+            CogRectangleAffine _PatternAffine = new CogRectangleAffine();
             CogPointMarker _Point = new CogPointMarker();
             for (int iLoopCount = 0; iLoopCount < _PatternResult.FindCount; ++iLoopCount)
             {
-                _PatternRect.SetCenterWidthHeight(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount]);
+                //_PatternRect.SetCenterWidthHeight(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount]);
+                //_Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
+                //ResultDisplay(_PatternRect, _Point, "Pattern_" + iLoopCount, _PatternResult.IsGood);
+
+                _PatternAffine.SetCenterLengthsRotationSkew(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount], _PatternResult.Angle[iLoopCount], 0);
                 _Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
-                ResultDisplay(_PatternRect, _Point, "Pattern_" + iLoopCount, _PatternResult.IsGood);
+                ResultDisplay(_PatternAffine, _Point, "Pattern_" + iLoopCount, _PatternResult.IsGood);
 
                 string _MatchingName = string.Format($"Rate = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
                 ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);

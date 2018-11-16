@@ -74,6 +74,8 @@
             this.panelTeaching = new CustomControl.PanelDoubleBuffer();
             this.gradientLabelTeaching = new CustomControl.GradientLabel();
             this.gradientLabel1 = new CustomControl.GradientLabel();
+            this.btnDataMapApplyInspectionArea = new System.Windows.Forms.Button();
+            this.btnShowAllArea = new System.Windows.Forms.Button();
             this.tabControlTeach.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -143,6 +145,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnShowAllArea);
+            this.panel2.Controls.Add(this.btnDataMapApplyInspectionArea);
             this.panel2.Controls.Add(this.btnInspectionAreaCopy);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.btnInspectionAreaSet);
@@ -588,6 +592,28 @@
             this.gradientLabel1.Text = " Inspection & Algorithm Area Setting Window";
             this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // btnDataMapApplyInspectionArea
+            // 
+            this.btnDataMapApplyInspectionArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDataMapApplyInspectionArea.Location = new System.Drawing.Point(497, 255);
+            this.btnDataMapApplyInspectionArea.Name = "btnDataMapApplyInspectionArea";
+            this.btnDataMapApplyInspectionArea.Size = new System.Drawing.Size(74, 38);
+            this.btnDataMapApplyInspectionArea.TabIndex = 9;
+            this.btnDataMapApplyInspectionArea.Text = "Apply DataMap";
+            this.btnDataMapApplyInspectionArea.UseVisualStyleBackColor = true;
+            this.btnDataMapApplyInspectionArea.Click += new System.EventHandler(this.btnDataMapApplyInspectionArea_Click);
+            // 
+            // btnShowAllArea
+            // 
+            this.btnShowAllArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnShowAllArea.Location = new System.Drawing.Point(497, 211);
+            this.btnShowAllArea.Name = "btnShowAllArea";
+            this.btnShowAllArea.Size = new System.Drawing.Size(74, 38);
+            this.btnShowAllArea.TabIndex = 10;
+            this.btnShowAllArea.Text = "Show\r\nAll Area";
+            this.btnShowAllArea.UseVisualStyleBackColor = true;
+            this.btnShowAllArea.Click += new System.EventHandler(this.btnShowAllArea_Click);
+            // 
             // TeachingWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -663,5 +689,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn gridAlgoBenchMark;
         private System.Windows.Forms.DataGridViewCheckBoxColumn gridAlgoEnable;
         private CPressingButton.PressButton btnShowAlgorithmMoveButton;
+        private System.Windows.Forms.Button btnDataMapApplyInspectionArea;
+        private System.Windows.Forms.Button btnShowAllArea;
     }
 }
