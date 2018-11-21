@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using ParameterManager;
 using LogMessageManager;
+using KPDisplay;
 
 using Cognex.VisionPro;
 
@@ -29,18 +30,20 @@ namespace InspectionSystemManager
         Button[] btnAdd;
         Button[] btnModify;
         Button[] btnFind;
+        KPCogDisplayControl[] PatternDisplay; 
 
         private int SelectedPattern = 0;
 
         public delegate void DrawReferRegionHandler(CogRectangle _Region, double _OriginX, double _OriginY, CogColorConstants _Color);
         public event DrawReferRegionHandler DrawReferRegionEvent;
 
-        public delegate void ReferenceActionHandler(eReferAction _ReferAction, int _Index = 0);
+        public delegate void ReferenceActionHandler(eReferAction _ReferAction, int _Index = 0, bool _MultiFlag = true);
         public event ReferenceActionHandler ReferenceActionEvent;
 
         public ucCogMultiPattern()
         {
             InitializeComponent();
+            Initialize();
         }
 
         public void Initialize()
@@ -49,6 +52,17 @@ namespace InspectionSystemManager
             btnAdd = new Button[2] { btnPatternAddTop, btnPatternAddBottom };
             btnModify = new Button[2] { btnPatternModifyTop, btnPatternModifyBottom };
             btnFind = new Button[2] { btnFindTop, btnFindBottom };
+            PatternDisplay = new KPCogDisplayControl[2] { kpPatternDisplay, kpPatternDisplay1 };
+
+            SetPatternButton(1, false);
+        }
+
+        private void SetPatternButton(int BtnNum, bool _EnableFlag)
+        {
+            btnNewArea[BtnNum].Enabled = _EnableFlag;
+            btnAdd[BtnNum].Enabled = _EnableFlag;
+            btnModify[BtnNum].Enabled = _EnableFlag;
+            btnNewArea[BtnNum].Enabled = _EnableFlag;
         }
 
         public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
@@ -74,8 +88,13 @@ namespace InspectionSystemManager
 
             if (CogMultiPatternAlgoRcp.ReferenceInfoList.Count > 0)
             {
-                ShowPatternImageArea(SelectedPattern + 1);
-                ShowPatternImage(SelectedPattern + 1);
+                for (int iLoopCount = 0; iLoopCount < CogMultiPatternAlgoRcp.ReferenceInfoList.Count; iLoopCount++)
+                {
+                    ShowPatternImageArea(SelectedPattern + 1);
+                    ShowPatternImage(SelectedPattern + 1);
+
+                    SetPatternButton(1, true);
+                }
             }
         }
 
@@ -107,6 +126,12 @@ namespace InspectionSystemManager
         {
             int Num = Convert.ToInt32(((Button)sender).Tag);
             SelectedPattern = Num;
+
+            var _ReferenceActionEvent = ReferenceActionEvent;
+            _ReferenceActionEvent?.Invoke(eReferAction.MODIFY, SelectedPattern);
+
+            ShowPatternImage(SelectedPattern + 1);
+            ShowPatternImageArea(SelectedPattern + 1);
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -138,11 +163,11 @@ namespace InspectionSystemManager
 
         private void ShowPatternImage(int _PatternNumber)
         {
-            if (_PatternNumber <= 0) { kpPatternDisplay.SetDisplayImage(null); return; }
+            if (_PatternNumber <= 0) { PatternDisplay[_PatternNumber - 1].SetDisplayImage(null); return; }
             if (_PatternNumber > CogMultiPatternAlgoRcp.ReferenceInfoList.Count || CogMultiPatternAlgoRcp.ReferenceInfoList.Count == 0) return;
 
             _PatternNumber = _PatternNumber - 1;
-            kpPatternDisplay.SetDisplayImage((CogImage8Grey)CogMultiPatternAlgoRcp.ReferenceInfoList[_PatternNumber].Reference.GetTrainedPatternImage());
+            PatternDisplay[_PatternNumber].SetDisplayImage((CogImage8Grey)CogMultiPatternAlgoRcp.ReferenceInfoList[_PatternNumber].Reference.GetTrainedPatternImage());
         }
 
     }

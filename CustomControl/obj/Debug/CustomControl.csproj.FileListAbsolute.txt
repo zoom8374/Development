@@ -342,3 +342,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\Cu
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\CustomControl\obj\Debug\CustomControl.csprojResolveAssemblyReference.cache

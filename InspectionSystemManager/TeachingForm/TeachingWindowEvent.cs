@@ -121,7 +121,7 @@ namespace InspectionSystemManager
             kpTeachDisplay.DrawInterActiveShape(_PointMarker, "ReferOriginPoint", _Color, 14);
         }
 
-        private void ReferenceActionFunction(eReferAction _ReferAction, int _Index = 0)
+        private void ReferenceActionFunction(eReferAction _ReferAction, int _Index = 0, bool _MultiFlag = false)
         {
             if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
 
@@ -154,8 +154,9 @@ namespace InspectionSystemManager
                 _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
                 _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
                 _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
-                ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
-                //((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+
+                if(!_MultiFlag) ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+                else            ((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
             }
 
             else if (_ReferAction == eReferAction.MODIFY)
@@ -187,7 +188,9 @@ namespace InspectionSystemManager
                 _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
                 _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
                 _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
-                ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+
+                if (!_MultiFlag) ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+                else             ((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
             }
 
             else if (_ReferAction == eReferAction.DEL)
@@ -339,7 +342,6 @@ namespace InspectionSystemManager
             }
         }
         #endregion Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow
-
 
         #region Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
         private void ApplyBlobReferenceValueFunction(CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult)

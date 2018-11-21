@@ -175,7 +175,9 @@ namespace KPVisionInspectionFramework
             string[] ReceiveData = _SerialData.Split(',');
             eMainProcCmd ReceiveCmd = eMainProcCmd.LOT_CHANGE;
 
-            switch(ReceiveData[0])
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, _SerialData, CLogManager.LOG_LEVEL.LOW);
+
+            switch (ReceiveData[0])
             {
                 case "@S": ReceiveCmd = eMainProcCmd.RCP_CHANGE; break;
                 case "@L": ReceiveCmd = eMainProcCmd.LOT_CHANGE; break;
@@ -199,7 +201,7 @@ namespace KPVisionInspectionFramework
                 case eMainProcCmd.RCP_CHANGE: SendBit = "@D_OK"; break;
                 case eMainProcCmd.LOT_CHANGE:
                     {
-                        //if (_SendData == "RELOAD")   SendBit = "@N_OK"; 
+                        if (_SendData == "RELOAD")   SendBit = "@N_OK"; 
                         if (_SendData == "END") SendBit = "@E_OK";
                         //else                         SendBit = "@L_OK"; 
                     }break;
@@ -212,6 +214,7 @@ namespace KPVisionInspectionFramework
                 case eMainProcCmd.LOT_RETURN: SendBit = string.Format("@L_OK,{0}",_SendData); break;
             }
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, SendBit + "," + '\r', CLogManager.LOG_LEVEL.LOW);
             SerialWnd.SendSequenceData(SendBit + "," + '\r');
         }
 

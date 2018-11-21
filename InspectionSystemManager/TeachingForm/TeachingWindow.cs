@@ -178,7 +178,7 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("PCB 유무 검사", new EventHandler(BlobReferenceAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("코드 검사", new EventHandler(BarCodeIDAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("자동 패턴 검사", new EventHandler(AutoPatternFindAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("자동 패턴 검사", new EventHandler(AutoPatternFindAlgorithm));
             }
 
             else if (ProjectItem == eProjectItem.LEAD_INSP)
@@ -743,6 +743,27 @@ namespace InspectionSystemManager
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
+            for (int iLoopCount = 0; iLoopCount < gridViewArea.RowCount; ++iLoopCount)
+            {
+                DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.BENCHMARK), iLoopCount];
+                InspParam.InspAreaParam[iLoopCount].AreaBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
+
+                _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.NGNUMBER), iLoopCount];
+                InspParam.InspAreaParam[iLoopCount].NgAreaNumber = _ComboCell.Items.IndexOf(_ComboCell.Value) + 1;
+
+                DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewArea[Convert.ToInt32(eAreaList.ENABLE), iLoopCount];
+                InspParam.InspAreaParam[iLoopCount].Enable = Convert.ToBoolean(_CheckCell.Value);
+            }
+
+            for (int iLoopCount = 0; iLoopCount < gridViewAlgo.RowCount; ++iLoopCount)
+            {
+                DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.BENCHMARK), iLoopCount];
+                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
+
+                DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.ENABLE), iLoopCount];
+                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoEnable = Convert.ToBoolean(_CheckCell.Value);
+            }
+
             this.DialogResult = DialogResult.OK;
             this.Hide();
         }

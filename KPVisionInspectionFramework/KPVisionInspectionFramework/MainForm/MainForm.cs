@@ -258,7 +258,6 @@ namespace KPVisionInspectionFramework
             if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
             {
                 MainProcess.SendSerialData(eMainProcCmd.REQUEST);
-                System.Threading.Thread.Sleep(3000);
                 MainProcess.SendSerialData(eMainProcCmd.REQUEST, "LOT");
             }
         }
@@ -634,7 +633,7 @@ namespace KPVisionInspectionFramework
             }
             else
             {
-                MessageBox.Show("Recipe 변경에 실패했습니다.\nRecipe를 확인하세요.");
+                MessageBox.Show(new Form { TopMost = true }, "Recipe 변경에 실패했습니다.\nRecipe를 확인하세요.");
                 _Result = false;
             }
 
@@ -705,7 +704,10 @@ namespace KPVisionInspectionFramework
             if (!_Result) return false;
 
             if (eProjectType.BLOWER == (eProjectType)ParamManager.SystemParam.ProjectType)
+            {
                 MainProcess.SendSerialData(eMainProcCmd.RCP_CHANGE);
+                System.Threading.Thread.Sleep(1500);
+            }
 
             return _Result;
         }

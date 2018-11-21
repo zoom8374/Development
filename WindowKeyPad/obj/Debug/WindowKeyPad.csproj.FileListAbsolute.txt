@@ -405,3 +405,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\Win
 C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\WindowKeyPad\obj\Debug\WindowKeyPad.csprojResolveAssemblyReference.cache

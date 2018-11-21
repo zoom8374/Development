@@ -60,7 +60,7 @@ namespace KPDisplay
                                                                                 CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
                                                                                 CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
                                                                                 CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
-                                                                        CogColorConstants.DarkGrey,     CogColorConstants.LightGrey  };
+                                                                        		CogColorConstants.DarkGrey,     CogColorConstants.LightGrey  };
         #endregion Color Define
 
         //public delegate void CogDisplayMouseUpHandler(CogFindCircleTool _CircleCaliperTool);

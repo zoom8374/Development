@@ -40,7 +40,7 @@
             this.btnPatternModifyBottom = new System.Windows.Forms.Button();
             this.btnPatternAddBottom = new System.Windows.Forms.Button();
             this.btnShowAreaBottom = new System.Windows.Forms.Button();
-            this.kpCogDisplayControl1 = new KPDisplay.KPCogDisplayControl();
+            this.kpPatternDisplay1 = new KPDisplay.KPCogDisplayControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.numericUpDownAngleLimit = new System.Windows.Forms.NumericUpDown();
             this.gradientLabel5 = new CustomControl.GradientLabel();
@@ -136,6 +136,7 @@
             this.kpPatternDisplay.Name = "kpPatternDisplay";
             this.kpPatternDisplay.Size = new System.Drawing.Size(233, 190);
             this.kpPatternDisplay.TabIndex = 13;
+            this.kpPatternDisplay.Tag = "0";
             this.kpPatternDisplay.UseStatusBar = false;
             // 
             // gradientLabel1
@@ -159,7 +160,7 @@
             this.groupBox2.Controls.Add(this.btnPatternModifyBottom);
             this.groupBox2.Controls.Add(this.btnPatternAddBottom);
             this.groupBox2.Controls.Add(this.btnShowAreaBottom);
-            this.groupBox2.Controls.Add(this.kpCogDisplayControl1);
+            this.groupBox2.Controls.Add(this.kpPatternDisplay1);
             this.groupBox2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(253, 38);
@@ -221,16 +222,17 @@
             this.btnShowAreaBottom.UseVisualStyleBackColor = true;
             this.btnShowAreaBottom.Click += new System.EventHandler(this.btnShowArea_Click);
             // 
-            // kpCogDisplayControl1
+            // kpPatternDisplay1
             // 
-            this.kpCogDisplayControl1.BackColor = System.Drawing.Color.White;
-            this.kpCogDisplayControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpCogDisplayControl1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpCogDisplayControl1.Location = new System.Drawing.Point(4, 14);
-            this.kpCogDisplayControl1.Name = "kpCogDisplayControl1";
-            this.kpCogDisplayControl1.Size = new System.Drawing.Size(234, 190);
-            this.kpCogDisplayControl1.TabIndex = 13;
-            this.kpCogDisplayControl1.UseStatusBar = false;
+            this.kpPatternDisplay1.BackColor = System.Drawing.Color.White;
+            this.kpPatternDisplay1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.kpPatternDisplay1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.kpPatternDisplay1.Location = new System.Drawing.Point(4, 14);
+            this.kpPatternDisplay1.Name = "kpPatternDisplay1";
+            this.kpPatternDisplay1.Size = new System.Drawing.Size(234, 190);
+            this.kpPatternDisplay1.TabIndex = 13;
+            this.kpPatternDisplay1.Tag = "1";
+            this.kpPatternDisplay1.UseStatusBar = false;
             // 
             // groupBox3
             // 
@@ -413,7 +415,7 @@
         private KPDisplay.KPCogDisplayControl kpPatternDisplay;
         private CustomControl.GradientLabel gradientLabel1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private KPDisplay.KPCogDisplayControl kpCogDisplayControl1;
+        private KPDisplay.KPCogDisplayControl kpPatternDisplay1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.NumericUpDown numericUpDownAngleLimit;
         private CustomControl.GradientLabel gradientLabel5;

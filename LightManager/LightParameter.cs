@@ -24,7 +24,7 @@ namespace LightManager
             LightChannel = new int[1];
             LightValues = new int[1];
 
-            ComportNum[0] = 1;
+            ComportNum[0] = 2;
             ControllerType[0] = 0;
             LightChannel[0] = 0;
             LightValues[0] = 128;

@@ -99,27 +99,34 @@ namespace KPVisionInspectionFramework
             MCNum = _LOTInfo[5];
             InDataLimitCount = Convert.ToInt32(_LOTInfo[6]);
 
-            if (NowLotNum != "") ReadInData();
+            //LDH, 201811.19, 분할 LOT Num으로 읽어오기
+            //if (NowLotNum != "") ReadInData();
+            if (NowLotSeparateNum != "") ReadInData();
 
             //LDH, 2018.10.29, RELOAD면 Backup Load
             if (LOTType == "@N") ReadBackupData();
+
+            ReadLOTNumEvent(NowLotSeparateNum);
         }
 
         //LDH, 2018.10.11, LOT End 시 처리
         public void LOTEnd()
         {
-            DateTime dateTime = DateTime.Now;
+            if (NowLotSeparateNum != "NO")
+            {
+                DateTime dateTime = DateTime.Now;
 
-            OutDataList.Add("EOL");
+                OutDataList.Add("EOL");
 
-            string FileName = String.Format("{0}_{1:D4}{2:D2}{3:D2}{4:D2}{5:D2}{6:D2}.txt", NowLotNum, dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
-            string OutDataFilePath = String.Format("{0}\\{1}\\{2}", OutDataFolderPath, NowLotNum, FileName);
+                string FileName = String.Format("{0}_{1:D4}{2:D2}{3:D2}{4:D2}{5:D2}{6:D2}.txt", NowLotSeparateNum, dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
+                string OutDataFilePath = String.Format("{0}\\{1}\\{2}", OutDataFolderPath, NowLotSeparateNum, FileName);
 
-            //LDH, 2018.10.11, OutData\용, 작업자Log용 따로 저장
-            WriteOutData(OutDataFilePath);
-            WriteOutData(String.Format(@"{0}OutDataLog\{1:D4}\{2:D2}\{3:D2}\{4}", BackupFolderPath, dateTime.Year, dateTime.Month, dateTime.Day, FileName));
-            
-            File.Delete(String.Format(@"{0}BakcupLog\Output_Backup.txt", BackupFolderPath));
+                //LDH, 2018.10.11, OutData\용, 작업자Log용 따로 저장
+                WriteOutData(OutDataFilePath);
+                WriteOutData(String.Format(@"{0}OutDataLog\{1:D4}\{2:D2}\{3:D2}\{4}", BackupFolderPath, dateTime.Year, dateTime.Month, dateTime.Day, FileName));
+
+                File.Delete(String.Format(@"{0}BakcupLog\Output_Backup.txt", BackupFolderPath));
+            }
         }
 
         //LDH, 2018.10.01, Result clear
@@ -179,20 +186,27 @@ namespace KPVisionInspectionFramework
 
             if (_ResultParam.IsGood)
             {
-                if (AutoModeFlag)
-                {
-                    TotalCount++;
-                    GoodCount++;
-                    Yield = (double)GoodCount / (double)TotalCount * 100;
+                LastResult = "GOOD";
 
-                    SegmentValueInvoke(SevenSegTotal, TotalCount.ToString());
-                    SegmentValueInvoke(SevenSegGood, GoodCount.ToString());
-                    SegmentValueInvoke(SevenSegYield, Yield.ToString("F2"));
+                if (eNgType.DUMMY == _ResultParam.NgType)
+                {
+                    LastResult = "DUMMY";
                 }
 
-                LastResult = "GOOD";
-                if (eNgType.DUMMY == _ResultParam.NgType)   {   LastResult = "DUMMY"; }
-                else                                        {   NowInspectionID = _DataMatrixString;    LastResult = SetOutData();  }
+                else if (_Result == null)
+                {
+                    if (NowLotSeparateNum != "NO")
+                        LastResult = "CODE NG";
+                }
+   
+                else
+                {
+                    if (NowLotSeparateNum != "NO")
+                    {
+                        NowInspectionID = _DataMatrixString;
+                        LastResult = SetOutData();
+                    }
+                } 
 
                 if (LastResult == "OK")         ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
                 else if (LastResult == "DUMMY") ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Lime);
@@ -200,6 +214,20 @@ namespace KPVisionInspectionFramework
                 else                            ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Red);
 
                 if (LastResult != "GOOD" && LastResult != "OK" && LastResult != "DUMMY") { _ResultParam.IsGood = false; _ResultParam.NgType = eNgType.ID; }
+
+                if (AutoModeFlag)
+                {
+                    TotalCount++;
+                    if (_ResultParam.IsGood) GoodCount++;
+                    else                     NgCount++;
+
+                   Yield = (double)GoodCount / (double)TotalCount * 100;
+
+                    SegmentValueInvoke(SevenSegTotal, TotalCount.ToString());
+                    SegmentValueInvoke(SevenSegGood, GoodCount.ToString());
+                    SegmentValueInvoke(SevenSegNg, NgCount.ToString());
+                    SegmentValueInvoke(SevenSegYield, Yield.ToString("F2"));
+                }
             }
 
             else
@@ -285,7 +313,7 @@ namespace KPVisionInspectionFramework
 
                 for (int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
                 {
-                    if (FileReadTemp[0] != "") { NowLotNum = FileReadTemp[0].Substring(0, FileReadTemp[0].IndexOf(',')); ReadLOTNumEvent(NowLotNum); }
+                    if (FileReadTemp[0] != "") { NowLotSeparateNum = FileReadTemp[0].Substring(0, FileReadTemp[0].IndexOf(',')); ReadLOTNumEvent(NowLotSeparateNum); }
                     if (FileReadTemp[iLoopCount] != "") OutDataList.Add(FileReadTemp[iLoopCount]);
                 }
             }
@@ -298,51 +326,56 @@ namespace KPVisionInspectionFramework
             FileManager objFileManager = new FileManager();
             List<string> FileReadTemp;
 
-            string FolderPath = InDataFolderPath + NowLotNum;
+            //LDH, 2018.11.19, 분할 LOT로 file read 하도록 변경
+            //string FolderPath = InDataFolderPath + NowLotNum;
+            string FolderPath = InDataFolderPath + NowLotSeparateNum;
 
-            try
+            if (NowLotSeparateNum != "NO")
             {
-                if (Directory.Exists(FolderPath))
+                try
                 {
-                    DirectoryInfo DInfo = new DirectoryInfo(FolderPath);
-                    List<string> FileList = new List<string>();
-
-                    foreach (var item in DInfo.GetFiles())
+                    if (Directory.Exists(FolderPath))
                     {
-                        FileList.Add(item.Name);
+                        DirectoryInfo DInfo = new DirectoryInfo(FolderPath);
+                        List<string> FileList = new List<string>();
+
+                        foreach (var item in DInfo.GetFiles())
+                        {
+                            FileList.Add(item.Name);
+                        }
+
+                        FileList.Sort();
+                        FolderPath = FolderPath + "\\" + FileList[FileList.Count - 1];
                     }
-
-                    FileList.Sort();
-                    FolderPath = FolderPath + "\\" + FileList[FileList.Count - 1];
+                    else
+                    {
+                        MessageBox.Show("LOT InData 폴더가 없습니다."); return;
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("LOT InData 폴더가 없습니다."); return;
+                    MessageBox.Show("LOT 폴더에 InData 파일이 없습니다."); return;
                 }
-            }
-            catch
-            {
-                MessageBox.Show("LOT 폴더에 InData 파일이 없습니다."); return;
-            }
 
-            FileReadTemp = objFileManager.txtFileRead(FolderPath);
+                FileReadTemp = objFileManager.txtFileRead(FolderPath);
 
 
-            OutDataList.Clear();
+                OutDataList.Clear();
 
-            for (int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
-            {
-                if (FileReadTemp[iLoopCount] != "" && FileReadTemp[iLoopCount] != "EOL")
+                for (int iLoopCount = 0; iLoopCount < FileReadTemp.Count; iLoopCount++)
                 {
-                    InDataList.Add(FileReadTemp[iLoopCount]);
-                    OutDataList.Add(FileReadTemp[iLoopCount]);
+                    if (FileReadTemp[iLoopCount] != "" && FileReadTemp[iLoopCount] != "EOL")
+                    {
+                        InDataList.Add(FileReadTemp[iLoopCount]);
+                        OutDataList.Add(FileReadTemp[iLoopCount]);
+                    }
                 }
+
+                string[] TotalCountTemp = InDataList[0].Split(',');
+
+                IndataTotalCount = TotalCountTemp[1];
             }
-
-            string[] TotalCountTemp = InDataList[0].Split(',');
-
-            IndataTotalCount = TotalCountTemp[1];
-            ReadLOTNumEvent(NowLotNum);
+            else IndataTotalCount = "0";
         }
 
         public string GetTotalCount()
@@ -351,18 +384,39 @@ namespace KPVisionInspectionFramework
         }
 
         //LDH, 2018.09.28, OutData 쓰기
-        private void WriteOutData(string OutDataFilePath)
+        private void WriteOutData(string OutDataFilePath, bool BackupFlag = false)
         {
             FileManager objFileManager = new FileManager();
 
-            objFileManager.txtFileWrite(OutDataFilePath, OutDataList);
+            List<string> OutDataListTemp = new List<string>();
+
+            string[] DataCheck;
+            bool WriteFlag = false;
+
+            for (int iLoopCount = 0; iLoopCount < OutDataList.Count; iLoopCount++)
+            {
+                DataCheck = OutDataList[iLoopCount].Split(',');
+
+                if (!BackupFlag)
+                {
+                    if (iLoopCount == 0 || iLoopCount == OutDataList.Count - 1) WriteFlag = true;
+                    else if (DataCheck[12] != "") WriteFlag = true;
+                }
+                else WriteFlag = true;
+
+                if (WriteFlag) OutDataListTemp.Add(OutDataList[iLoopCount]);
+
+                WriteFlag = false;
+            }
+
+            objFileManager.txtFileWrite(OutDataFilePath, OutDataListTemp);
         }
 
-        //LDH, 2018.09.27, Outdata 추가
+        //LDH, 2018.09.27, Outdata 추가F
         private string SetOutData()
         {
             int IDIndex = -1;
-            int ErrorCode = 0;
+            string ErrorCode = "OK";
             string Result = "OK";
 
             string TempInData;
@@ -377,11 +431,12 @@ namespace KPVisionInspectionFramework
                 TempInData = OutDataList[IDIndex];
                 ArrInData = OutDataList[IDIndex].Split(',');
 
-                if (NowInspectionID.Contains(ArrInData[1]))
+                //if (NowInspectionID.Contains(ArrInData[1]))
+                if (NowInspectionID.Contains(NowLotNum))
                 {
-                    if (InDataLimitCount < Convert.ToInt32(ArrInData[2])) ErrorCode = 1;
+                    if (InDataLimitCount < Convert.ToInt32(ArrInData[2])) ErrorCode = "1";
                 }
-                else ErrorCode = 2;
+                else ErrorCode = "2";
             }
             catch
             {
@@ -389,14 +444,14 @@ namespace KPVisionInspectionFramework
 
                 string[] LOTInfo = TempInData.Split(',');
 
-                if (NowInspectionID.Contains(LOTInfo[0])) ErrorCode = 3;
-                else ErrorCode = 2;
+                if (NowInspectionID.Contains(LOTInfo[0])) ErrorCode = "3";
+                else ErrorCode = "2";
 
-                string[] AddListData = new string[12];
+                string[] AddListData = new string[14];
                 AddListData[0] = NowInspectionID;
                 AddListData[1] = NowInspectionID.Substring(0, NowInspectionID.IndexOf(' '));
                 AddListData[2] = "1";
-                AddListData[11] = "EOS";
+                AddListData[13] = "EOS";
                 IDIndex = OutDataList.Count;
 
                 ArrInData = AddListData;
@@ -404,26 +459,27 @@ namespace KPVisionInspectionFramework
                 if (AutoModeFlag) OutDataList.Add("");
             }
 
-            if (ErrorCode != 0) Result = "NG";
+            if (ErrorCode != "OK") Result = "NG";
             
             DateTime dateTime = DateTime.Now;
             InspectionTime = String.Format("{0:D2}{1:D2}{2:D2}{3:D3}", dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
 
             string OutDataTime = String.Format("{0:D4}{1:D2}{2:D2}{3}", dateTime.Year, dateTime.Month, dateTime.Day, InspectionTime.Substring(0,6));
 
-            ArrInData[7] = OutDataTime;
-            ArrInData[8] = TotalCount.ToString();
-            ArrInData[9] = ErrorCode.ToString();
-            ArrInData[10] = Result;
+            ArrInData[8] = NowLotSeparateNum;
+            ArrInData[9] = OutDataTime;
+            ArrInData[10] = TotalCount.ToString();
+            ArrInData[11] = ErrorCode.ToString();
+            ArrInData[12] = Result;
 
             if (AutoModeFlag)
             {
                 OutDataList[IDIndex] = string.Join(",", ArrInData);
 
-                WriteOutData(String.Format(@"{0}BakcupLog\Output_Backup.txt", BackupFolderPath));
+                WriteOutData(String.Format(@"{0}BakcupLog\Output_Backup.txt", BackupFolderPath), true);
             }
 
-            if (ErrorCode != 0) Result = "Indata NG";
+            if (ErrorCode != "OK") Result = "Indata NG";
 
             return Result;
         }

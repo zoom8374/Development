@@ -28,7 +28,7 @@ namespace InspectionSystemManager
         public delegate void DrawReferRegionHandler(CogRectangle _Region, double _OriginX, double _OriginY, CogColorConstants _Color);
         public event DrawReferRegionHandler DrawReferRegionEvent;
 
-        public delegate void ReferenceActionHandler(eReferAction _ReferAction, int _Index = 0);
+        public delegate void ReferenceActionHandler(eReferAction _ReferAction, int _Index = 0, bool MultiFlag = false);
         public event ReferenceActionHandler ReferenceActionEvent;
 
         public delegate void ApplyPatternMatchingValueHandler(CogPatternAlgo _CogPatternAlgo, ref CogPatternResult _CogPatternResult);
