@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using System.IO;
 
 using CustomControl;
@@ -18,14 +19,52 @@ namespace KPVisionInspectionFramework
 {
     public partial class ucMainResultID : UserControl
     {
-        private uint TotalCount = 0;
-        private uint GoodCount = 0;
-        private uint NgCount = 0;
-        private double Yield = 0;
+        //private uint TotalCount = 0;
+        //private uint GoodCount = 0;
+        //private uint NgCount = 0;
+        //private double Yield = 0;
 
         private uint CodeErrCount = 0;
         private uint BlankErrCount = 0;
         private uint MixErrCount = 0;
+
+        #region Count & Yield Variable
+        private uint TotalCount
+        {
+            set { SegmentValueInvoke(SevenSegTotal, value.ToString()); }
+            get { return Convert.ToUInt32(SevenSegTotal.Value); }
+        }
+
+        private uint GoodCount
+        {
+            set { SegmentValueInvoke(SevenSegGood, value.ToString()); }
+            get { return Convert.ToUInt32(SevenSegGood.Value); }
+        }
+
+        private uint NgCount
+        {
+            set { SegmentValueInvoke(SevenSegNg, value.ToString()); }
+            get { return Convert.ToUInt32(SevenSegNg.Value); }
+        }
+
+        private double Yield
+        {
+            set { SegmentValueInvoke(SevenSegYield, value.ToString()); }
+            get { return Convert.ToDouble(SevenSegYield.Value); }
+        }
+        #endregion Count & Yield Variable
+
+        #region Count & Yield Registry Variable
+        private RegistryKey RegTotalCount;
+        private RegistryKey RegGoodCount;
+        private RegistryKey RegNgCount;
+        private RegistryKey RegYield;
+
+        private string RegTotalCountPath = String.Format(@"KPVision\ResultCount\TotalCount");
+        private string RegGoodCountPath = String.Format(@"KPVision\ResultCount\GoodCount");
+        private string RegNgCountPath = String.Format(@"KPVision\ResultCount\NgCount");
+        private string RegYieldPath = String.Format(@"KPVision\ResultCount\Yield");
+        #endregion Count & Yield Registry Variable
 
         bool AutoModeFlag = false;
 
@@ -66,11 +105,39 @@ namespace KPVisionInspectionFramework
 
             InitializeComponent();
             this.Location = new Point(1, 1);
+
+            RegTotalCount = Registry.CurrentUser.CreateSubKey(RegTotalCountPath);
+            RegGoodCount = Registry.CurrentUser.CreateSubKey(RegGoodCountPath);
+            RegNgCount = Registry.CurrentUser.CreateSubKey(RegNgCountPath);
+            RegYield = Registry.CurrentUser.CreateSubKey(RegYieldPath);
         }
 
         public void DeInitialize()
         {
 
+        }
+        
+        private void LoadResultCount()
+        {
+            //TotalCount  = (Convert.ToUInt32(RegTotalCount.GetValue("Value")) != null) ? Convert.ToUInt32(RegTotalCount.GetValue("Value") : 0;
+            TotalCount = Convert.ToUInt32(RegTotalCount.GetValue("Value"));
+            GoodCount = Convert.ToUInt32(RegGoodCount.GetValue("Value"));
+            NgCount = Convert.ToUInt32(RegNgCount.GetValue("Value"));
+            Yield = Convert.ToDouble(RegYield.GetValue("Value"));
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Load Result Count");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}", TotalCount, GoodCount, NgCount, Yield));
+        }
+
+        private void SaveResultCount()
+        {
+            RegTotalCount.SetValue("Value", TotalCount, RegistryValueKind.String);
+            RegGoodCount.SetValue("Value", GoodCount, RegistryValueKind.String);
+            RegNgCount.SetValue("Value", NgCount, RegistryValueKind.String);
+            RegYield.SetValue("Value", Yield, RegistryValueKind.String);
+
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Save Result Count");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}", TotalCount, GoodCount, NgCount, Yield));
         }
         #endregion Initialize & DeInitialize
 
@@ -127,6 +194,9 @@ namespace KPVisionInspectionFramework
 
                 File.Delete(String.Format(@"{0}BakcupLog\Output_Backup.txt", BackupFolderPath));
             }
+
+            SaveResultCount();
+            ReadLOTNumEvent("-");
         }
 
         //LDH, 2018.10.01, Result clear
@@ -282,6 +352,7 @@ namespace KPVisionInspectionFramework
                 ControlInvoke.GradientLabelText(gradientLabelResult, LastResult, Color.Red);
             }
 
+            SaveResultCount();
             InspectionHistory(_DataMatrixString);
         }
 
@@ -316,8 +387,12 @@ namespace KPVisionInspectionFramework
                     if (FileReadTemp[0] != "") { NowLotSeparateNum = FileReadTemp[0].Substring(0, FileReadTemp[0].IndexOf(',')); ReadLOTNumEvent(NowLotSeparateNum); }
                     if (FileReadTemp[iLoopCount] != "") OutDataList.Add(FileReadTemp[iLoopCount]);
                 }
+
+                LoadResultCount();
             }
             else ReadLOTNumEvent("-");
+            
+            LoadResultCount();
         }
 
         //LDH, 2018.09.27, InData 읽어오기

@@ -171,6 +171,7 @@ namespace InspectionSystemManager
                 ShowPatternImage(CurrentPattern);
                 UpdatePatternCount();
             }
+            else ShowPatternImage(0);
         }
 
         public void CancelAlgoRecipe()

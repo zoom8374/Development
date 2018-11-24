@@ -33,6 +33,7 @@ namespace ParameterManager
         public eAlgoType ResultAlgoType;
         public double OffsetX;
         public double OffsetY;
+        public double OffsetT;
         public int NgAreaNumber;
 
         public double TeachOriginX;
@@ -273,6 +274,12 @@ namespace ParameterManager
         public object SendResult;
     }
 
+    public class SendNoneResult
+    {
+        public string ReadCode;
+        public double MatchingScore;
+    }
+
     public class SendIDResult
     {
         public string ReadCode;
@@ -303,10 +310,9 @@ namespace ParameterManager
         public double[] LeadWidthReal;
     }
 
-    public class SendNoneResult
+    public class SendSurfaceResult
     {
-        public string ReadCode;
-        public double MatchingScore;
+        public double TwoPointAngle;
     }
     #endregion Last Send Result Parameter
 }

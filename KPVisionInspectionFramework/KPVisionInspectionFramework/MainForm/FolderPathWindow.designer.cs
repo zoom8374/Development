@@ -38,6 +38,8 @@
             this.btnOutdataPath = new System.Windows.Forms.Button();
             this.btnLotChange = new System.Windows.Forms.Button();
             this.btnLOTEnd = new System.Windows.Forms.Button();
+            this.txtBoxLOTNum = new System.Windows.Forms.TextBox();
+            this.labelLOTNum = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnConfirm
@@ -146,6 +148,7 @@
             this.btnLotChange.TabIndex = 23;
             this.btnLotChange.Text = "LOT Change";
             this.btnLotChange.UseVisualStyleBackColor = true;
+            this.btnLotChange.Visible = false;
             this.btnLotChange.Click += new System.EventHandler(this.btnLotChange_Click);
             // 
             // btnLOTEnd
@@ -158,7 +161,31 @@
             this.btnLOTEnd.TabIndex = 23;
             this.btnLOTEnd.Text = "LOT End";
             this.btnLOTEnd.UseVisualStyleBackColor = true;
+            this.btnLOTEnd.Visible = false;
             this.btnLOTEnd.Click += new System.EventHandler(this.btnLOTEnd_Click);
+            // 
+            // txtBoxLOTNum
+            // 
+            this.txtBoxLOTNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxLOTNum.Location = new System.Drawing.Point(102, 118);
+            this.txtBoxLOTNum.Name = "txtBoxLOTNum";
+            this.txtBoxLOTNum.Size = new System.Drawing.Size(160, 26);
+            this.txtBoxLOTNum.TabIndex = 27;
+            this.txtBoxLOTNum.Text = "NO";
+            this.txtBoxLOTNum.Visible = false;
+            // 
+            // labelLOTNum
+            // 
+            this.labelLOTNum.BackColor = System.Drawing.Color.Black;
+            this.labelLOTNum.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelLOTNum.ForeColor = System.Drawing.Color.White;
+            this.labelLOTNum.Location = new System.Drawing.Point(5, 118);
+            this.labelLOTNum.Name = "labelLOTNum";
+            this.labelLOTNum.Size = new System.Drawing.Size(92, 28);
+            this.labelLOTNum.TabIndex = 28;
+            this.labelLOTNum.Text = "LOT Num";
+            this.labelLOTNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelLOTNum.Visible = false;
             // 
             // FolderPathWindow
             // 
@@ -166,6 +193,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(80)))), ((int)(((byte)(120)))));
             this.ClientSize = new System.Drawing.Size(620, 156);
+            this.Controls.Add(this.labelLOTNum);
+            this.Controls.Add(this.txtBoxLOTNum);
             this.Controls.Add(this.btnOutdataPath);
             this.Controls.Add(this.btnIndataPath);
             this.Controls.Add(this.label1);
@@ -197,5 +226,7 @@
         private System.Windows.Forms.Button btnOutdataPath;
         private System.Windows.Forms.Button btnLotChange;
         private System.Windows.Forms.Button btnLOTEnd;
+        private System.Windows.Forms.TextBox txtBoxLOTNum;
+        private System.Windows.Forms.Label labelLOTNum;
     }
 }

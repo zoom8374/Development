@@ -17,9 +17,18 @@ namespace KPVisionInspectionFramework
         public delegate bool LOTChangeHandler(object _LOTNum);
         public event LOTChangeHandler LOTChangeEvent;
 
-        public FolderPathWindow()
+        public FolderPathWindow(bool _SimulationModeFlag)
         {
             InitializeComponent();
+
+            //LDHM 2018.11.21, Test용 LOT Change/END 기능
+            if(_SimulationModeFlag)
+            {
+                labelLOTNum.Visible = true;
+                txtBoxLOTNum.Visible = true;
+                btnLOTEnd.Visible = true;
+                btnLotChange.Visible = true;
+            }
         }
 
         public void SetCurrentDataPath(string[] _CurrentDataPath)
@@ -79,12 +88,14 @@ namespace KPVisionInspectionFramework
 
         private void btnLotChange_Click(object sender, EventArgs e)
         {
-            LOTChangeEvent("B84060800");
+            if (txtBoxLOTNum.Text == "") { MessageBox.Show("LOTNum을 입력하세요."); return; }
+
+            LOTChangeEvent("@N,B84060800," + txtBoxLOTNum.Text + ",AAA,AAA,BBB,25");
         }
 
         private void btnLOTEnd_Click(object sender, EventArgs e)
         {
-            LOTChangeEvent("LotEnd");
+            LOTChangeEvent("@E,LotEnd,");
         }
     }
 }

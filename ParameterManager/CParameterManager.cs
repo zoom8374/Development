@@ -584,14 +584,14 @@ namespace ParameterManager
                     }
                 }
 
-                if ((int)eAlgoType.C_PATTERN == _InspAlgoParamTemp.AlgoType)         GetPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_BLOB == _InspAlgoParamTemp.AlgoType)       GetBlobInspectionParameter(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_BLOB_REFER == _InspAlgoParamTemp.AlgoType) GetBlobReferInspectionParameter(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)       GetLeadInspectionParameter(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_NEEDLE_FIND == _InspAlgoParamTemp.AlgoType)GetNeedleFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_ID == _InspAlgoParamTemp.AlgoType)         GetBarCodeIDInspectionParameter(_Node, ref _InspAlgoParamTemp);
-                else if ((int)eAlgoType.C_LINE_FIND == _InspAlgoParamTemp.AlgoType)  GetLineFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
-                //else if ((int)eAlgoType.C_MULTI_PATTERN == _InspAlgoParamTemp.AlgoType) GetMulti
+                if ((int)eAlgoType.C_PATTERN == _InspAlgoParamTemp.AlgoType)            GetPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_BLOB == _InspAlgoParamTemp.AlgoType)          GetBlobInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_BLOB_REFER == _InspAlgoParamTemp.AlgoType)    GetBlobReferInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LEAD == _InspAlgoParamTemp.AlgoType)          GetLeadInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_NEEDLE_FIND == _InspAlgoParamTemp.AlgoType)   GetNeedleFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_ID == _InspAlgoParamTemp.AlgoType)            GetBarCodeIDInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_LINE_FIND == _InspAlgoParamTemp.AlgoType)     GetLineFindInspectionParameter(_Node, ref _InspAlgoParamTemp);
+                else if ((int)eAlgoType.C_MULTI_PATTERN == _InspAlgoParamTemp.AlgoType) GetMultiPatternInspectionparameter(_Node, ref _InspAlgoParamTemp);
 
                 _InspAreaParam.InspAlgoParam.Add(_InspAlgoParamTemp);
             }
@@ -660,6 +660,68 @@ namespace ParameterManager
                 }
             }
             _InspParam.Algorithm = _CogPattern;
+        }
+
+        private void GetMultiPatternInspectionparameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
+        {
+            if (null == _Nodes) return;
+
+            int _Cnt = 1;
+            CogMultiPatternAlgo _CogMultiPattern = new CogMultiPatternAlgo();
+            _CogMultiPattern.ReferenceInfoList = new References();
+            _CogMultiPattern.ReferenceInfoList.Clear();
+
+            foreach (XmlNode _NodeChild in _Nodes)
+            {
+                if (null == _NodeChild) return;
+
+                string ReferenceName = "Reference" + _Cnt;
+
+                if (_NodeChild.Name == "PatternCount") _CogMultiPattern.PatternCount = Convert.ToInt32(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "MatchingScore") _CogMultiPattern.MatchingScore = Convert.ToDouble(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "MatchingAngle") _CogMultiPattern.MatchingAngle = Convert.ToDouble(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "MatchingCount") _CogMultiPattern.MatchingCount = Convert.ToInt32(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "TwoPointAngle") _CogMultiPattern.TwoPointAngle = Convert.ToInt32(_NodeChild.InnerText);
+
+                //Reference
+                ReferenceInformation _ReferInfo = new ReferenceInformation();
+                if (_NodeChild.Name == ReferenceName)
+                {
+                    foreach (XmlNode _Node in _NodeChild)
+                    {
+                        if (null == _Node) return;
+                        switch (_Node.Name)
+                        {
+                            case "ReferencePath": _ReferInfo.ReferencePath = _Node.InnerText; break;
+                            case "InterActiveStartX": _ReferInfo.InterActiveStartX = Convert.ToDouble(_Node.InnerText); break;
+                            case "InterActiveStartY": _ReferInfo.InterActiveStartY = Convert.ToDouble(_Node.InnerText); break;
+                            case "StaticStartX": _ReferInfo.StaticStartX = Convert.ToDouble(_Node.InnerText); break;
+                            case "StaticStartY": _ReferInfo.StaticStartY = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginX": _ReferInfo.CenterX = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginY": _ReferInfo.CenterY = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginPointOffsetX": _ReferInfo.OriginPointOffsetX = Convert.ToDouble(_Node.InnerText); break;
+                            case "OriginPointOffsetY": _ReferInfo.OriginPointOffsetY = Convert.ToDouble(_Node.InnerText); break;
+                            case "Width": _ReferInfo.Width = Convert.ToDouble(_Node.InnerText); break;
+                            case "Height": _ReferInfo.Height = Convert.ToDouble(_Node.InnerText); break;
+                        }
+                    }
+
+                    try
+                    {
+                        _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                        _CogMultiPattern.ReferenceInfoList.Add(_ReferInfo);
+                    }
+
+                    catch
+                    {
+                        _ReferInfo.Reference = new CogPMAlignPattern();
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "GetPatternInspectionparameter Err", CLogManager.LOG_LEVEL.LOW);
+                    }
+
+                    _Cnt++;
+                }
+            }
+            _InspParam.Algorithm = _CogMultiPattern;
         }
 
         private void GetBlobReferInspectionParameter(XmlNode _Nodes, ref InspectionAlgorithmParameter _InspParam)
@@ -885,13 +947,14 @@ namespace ParameterManager
                                 AreaNumber = iLoopCount + 1;
                                 AlgoNumber = jLoopCount + 1;
                                 eAlgoType _AlgoType = (eAlgoType)_InspAlgoParamTemp.AlgoType;
-                                if (eAlgoType.C_PATTERN == _AlgoType)           WritePatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_BLOB == _AlgoType)         WriteBlobInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_BLOB_REFER == _AlgoType)   WriteBlobReferInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_LEAD == _AlgoType)         WriteLeadInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  WriteNeedleFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_ID == _AlgoType)           WriteBarCodeIDInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_LINE_FIND == _AlgoType)    WriteLineFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                if (eAlgoType.C_PATTERN == _AlgoType)            WritePatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_BLOB == _AlgoType)          WriteBlobInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_BLOB_REFER == _AlgoType)    WriteBlobReferInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LEAD == _AlgoType)          WriteLeadInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)   WriteNeedleFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_ID == _AlgoType)            WriteBarCodeIDInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LINE_FIND == _AlgoType)     WriteLineFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) WriteMultiPatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
                         }
@@ -908,7 +971,7 @@ namespace ParameterManager
         {
             CogPatternAlgo _CogPatternAlgo = (CogPatternAlgo)_InspAlgoParam;
             _XmlWriter.WriteElementString("PatternCount", _CogPatternAlgo.PatternCount.ToString());
-            _XmlWriter.WriteElementString("CatchingScore", _CogPatternAlgo.MatchingScore.ToString());
+            _XmlWriter.WriteElementString("MatchingScore", _CogPatternAlgo.MatchingScore.ToString());
             _XmlWriter.WriteElementString("MatchingAngle", _CogPatternAlgo.MatchingAngle.ToString());
             _XmlWriter.WriteElementString("MatchingCount", _CogPatternAlgo.MatchingCount.ToString());
             _XmlWriter.WriteElementString("EnableShift", _CogPatternAlgo.IsShift.ToString());
@@ -940,6 +1003,45 @@ namespace ParameterManager
                     _XmlWriter.WriteElementString("OriginPointOffsetY", _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetY.ToString());
                     _XmlWriter.WriteElementString("Width", _CogPatternAlgo.ReferenceInfoList[iLoopCount].Width.ToString());
                     _XmlWriter.WriteElementString("Height", _CogPatternAlgo.ReferenceInfoList[iLoopCount].Height.ToString());
+                }
+                _XmlWriter.WriteEndElement();
+            }
+        }
+
+        private void WriteMultiPatternInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        {
+            CogMultiPatternAlgo _CogMultiPatternAlgo = (CogMultiPatternAlgo)_InspAlgoParam;
+            _XmlWriter.WriteElementString("PatternCount", _CogMultiPatternAlgo.PatternCount.ToString());
+            _XmlWriter.WriteElementString("MatchingScore", _CogMultiPatternAlgo.MatchingScore.ToString());
+            _XmlWriter.WriteElementString("MatchingAngle", _CogMultiPatternAlgo.MatchingAngle.ToString());
+            _XmlWriter.WriteElementString("MatchingCount", _CogMultiPatternAlgo.MatchingCount.ToString());
+            _XmlWriter.WriteElementString("TwoPointAngle", _CogMultiPatternAlgo.TwoPointAngle.ToString());
+            
+            //Reference Model Save
+            for (int iLoopCount = 0; iLoopCount < _CogMultiPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
+            {
+                string _Extention = ".pat";
+                string _FileName = String.Format("AR{0:D2}_AL{1:D2}_RF{2:D2}{3}", AreaNumber, AlgoNumber, iLoopCount + 1, _Extention);
+                string _RecipeName = SystemParam.LastRecipeName;
+                string _RecipeParameterPath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
+
+                if (false == Directory.Exists(_RecipeParameterPath)) Directory.CreateDirectory(_RecipeParameterPath);
+                _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath = _RecipeParameterPath + _FileName;
+                CogSerializer.SaveObjectToFile(_CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].Reference, _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.InputImages);
+
+                _XmlWriter.WriteStartElement("Reference" + (iLoopCount + 1));
+                {
+                    _XmlWriter.WriteElementString("ReferencePath", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath);
+                    _XmlWriter.WriteElementString("InterActiveStartX", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].InterActiveStartX.ToString());
+                    _XmlWriter.WriteElementString("InterActiveStartY", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].InterActiveStartY.ToString());
+                    _XmlWriter.WriteElementString("StaticStartX", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].StaticStartX.ToString());
+                    _XmlWriter.WriteElementString("StaticStartY", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].StaticStartY.ToString());
+                    _XmlWriter.WriteElementString("OriginX", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].CenterX.ToString());
+                    _XmlWriter.WriteElementString("OriginY", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].CenterY.ToString());
+                    _XmlWriter.WriteElementString("OriginPointOffsetX", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetX.ToString());
+                    _XmlWriter.WriteElementString("OriginPointOffsetY", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetY.ToString());
+                    _XmlWriter.WriteElementString("Width", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].Width.ToString());
+                    _XmlWriter.WriteElementString("Height", _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].Height.ToString());
                 }
                 _XmlWriter.WriteEndElement();
             }

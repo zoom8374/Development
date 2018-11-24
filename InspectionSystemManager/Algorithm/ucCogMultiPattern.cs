@@ -40,6 +40,9 @@ namespace InspectionSystemManager
         public delegate void ReferenceActionHandler(eReferAction _ReferAction, int _Index = 0, bool _MultiFlag = true);
         public event ReferenceActionHandler ReferenceActionEvent;
 
+        public delegate void ApplyMultiPatternValueHandler(CogMultiPatternAlgo _CogPatternAlgo, ref CogMultiPatternResult _CogPatternResult);
+        public event ApplyMultiPatternValueHandler ApplyMultiPatternValueEvent;
+
         public ucCogMultiPattern()
         {
             InitializeComponent();
@@ -85,17 +88,19 @@ namespace InspectionSystemManager
             numericUpDownFindScore.Value = Convert.ToDecimal(CogMultiPatternAlgoRcp.MatchingScore);
             numericUpDownFindCount.Value = Convert.ToDecimal(CogMultiPatternAlgoRcp.MatchingCount);
             numericUpDownAngleLimit.Value = Convert.ToDecimal(CogMultiPatternAlgoRcp.MatchingAngle);
+            txtBoxAngle.Text = "0.0";
 
             if (CogMultiPatternAlgoRcp.ReferenceInfoList.Count > 0)
             {
                 for (int iLoopCount = 0; iLoopCount < CogMultiPatternAlgoRcp.ReferenceInfoList.Count; iLoopCount++)
                 {
-                    ShowPatternImageArea(SelectedPattern + 1);
-                    ShowPatternImage(SelectedPattern + 1);
-
-                    SetPatternButton(1, true);
+                    ShowPatternImageArea(iLoopCount + 1);
+                    ShowPatternImage(iLoopCount + 1);
                 }
+                
+                SetPatternButton(1, true);
             }
+            else ShowPatternImage(0);
         }
 
         #region Control Event
@@ -114,12 +119,16 @@ namespace InspectionSystemManager
         {
             int Num = Convert.ToInt32(((Button)sender).Tag);
 
+            if (CogMultiPatternAlgoRcp.ReferenceInfoList.Count >= Num + 1) { MessageBox.Show("이미 추가된 Pattern이 있습니다."); return; }
+
             var _ReferenceActionEvent = ReferenceActionEvent;
             _ReferenceActionEvent?.Invoke(eReferAction.ADD);
 
             SelectedPattern = Num;
             ShowPatternImage(Num + 1);
             ShowPatternImageArea(Num + 1);
+
+            if (Num == 0) SetPatternButton(1, true);
         }
 
         private void btnPatternModify_Click(object sender, EventArgs e)
@@ -139,12 +148,45 @@ namespace InspectionSystemManager
             int Num = Convert.ToInt32(((Button)sender).Tag);
             SelectedPattern = Num;
 
+            if (CogMultiPatternAlgoRcp.ReferenceInfoList.Count <= Num) { MessageBox.Show("등록된 Pattern이 없습니다."); return; }
+
+            CogMultiPatternResult _CogMultiPatternResult = new CogMultiPatternResult();
+            CogMultiPatternAlgo _CogMultiPatternAlgoRcp = new CogMultiPatternAlgo();
+            _CogMultiPatternAlgoRcp.MatchingScore = Convert.ToDouble(numericUpDownFindScore.Value);
+            _CogMultiPatternAlgoRcp.MatchingCount = Convert.ToInt32(numericUpDownFindCount.Value);
+            _CogMultiPatternAlgoRcp.MatchingAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
+
+            _CogMultiPatternAlgoRcp.ReferenceInfoList = new References();
+
+            int ReferenceCount = 1;
+            if (SelectedPattern == -1) ReferenceCount = CogMultiPatternAlgoRcp.ReferenceInfoList.Count;
+
+            for (int iLoopCount = 0; iLoopCount < ReferenceCount; iLoopCount++)
+            {
+                ReferenceInformation _ReferInfo = new ReferenceInformation();
+
+                if (SelectedPattern != -1) _ReferInfo = CogMultiPatternAlgoRcp.ReferenceInfoList[SelectedPattern];
+                else                       _ReferInfo = CogMultiPatternAlgoRcp.ReferenceInfoList[iLoopCount];
+
+                _CogMultiPatternAlgoRcp.ReferenceInfoList.Add(_ReferInfo);
+            }
+
+            var _ApplyPatternMatchingValueEvent = ApplyMultiPatternValueEvent;
+            _ApplyPatternMatchingValueEvent?.Invoke(_CogMultiPatternAlgoRcp, ref _CogMultiPatternResult);
+
+            txtBoxAngle.Text = (_CogMultiPatternResult.IsGood) ? _CogMultiPatternResult.TwoPointAngle.ToString("N2") : "0.0";
         }
         #endregion Control Event
 
         public void SaveAlgoRecipe()
         {
+            CogMultiPatternAlgoRcp.MatchingScore = Convert.ToDouble(numericUpDownFindScore.Value);
+            CogMultiPatternAlgoRcp.MatchingCount = Convert.ToInt32(numericUpDownFindCount.Value);
+            CogMultiPatternAlgoRcp.MatchingAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
+            CogMultiPatternAlgoRcp.PatternCount = CogMultiPatternAlgoRcp.ReferenceInfoList.Count;
+            CogMultiPatternAlgoRcp.TwoPointAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
 
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogPattern SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
 
         private void ShowPatternImageArea(int _PatternNumber)
@@ -163,12 +205,18 @@ namespace InspectionSystemManager
 
         private void ShowPatternImage(int _PatternNumber)
         {
-            if (_PatternNumber <= 0) { PatternDisplay[_PatternNumber - 1].SetDisplayImage(null); return; }
+            if (_PatternNumber <= 0)
+            {
+                for (int iLoopCount = 0; iLoopCount < 2; iLoopCount++)
+                {
+                    PatternDisplay[iLoopCount].SetDisplayImage(null);
+                }
+                return;
+            }
             if (_PatternNumber > CogMultiPatternAlgoRcp.ReferenceInfoList.Count || CogMultiPatternAlgoRcp.ReferenceInfoList.Count == 0) return;
 
             _PatternNumber = _PatternNumber - 1;
             PatternDisplay[_PatternNumber].SetDisplayImage((CogImage8Grey)CogMultiPatternAlgoRcp.ReferenceInfoList[_PatternNumber].Reference.GetTrainedPatternImage());
         }
-
     }
 }

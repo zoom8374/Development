@@ -33,6 +33,7 @@ namespace InspectionSystemManager
             kpTeachDisplay.CogDisplayMouseUpEvent += new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
             ucCogMultiPatternWnd.DrawReferRegionEvent += new ucCogMultiPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogMultiPatternWnd.ReferenceActionEvent += new ucCogMultiPattern.ReferenceActionHandler(ReferenceActionFunction);
+            ucCogMultiPatternWnd.ApplyMultiPatternValueEvent += new ucCogMultiPattern.ApplyMultiPatternValueHandler(ApplyMultiPatternValueFunction);
             ucCogAutoPatternWnd.DrawReferRegionEvent += new ucCogAutoPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogAutoPatternWnd.ReferenceActionEvent += new ucCogAutoPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogAutoPatternWnd.ApplyAutoPatternFindValueEvent += new ucCogAutoPattern.ApplyAutoPatternFindValueHandler(ApplyAutoPatternFindValueFunction);
@@ -54,10 +55,10 @@ namespace InspectionSystemManager
             kpTeachDisplay.CogDisplayMouseUpEvent -= new KPDisplay.KPCogDisplayControl.CogDisplayMouseUpHandler(TeachDisplayMouseUpEvent);
             ucCogMultiPatternWnd.DrawReferRegionEvent -= new ucCogMultiPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogMultiPatternWnd.ReferenceActionEvent -= new ucCogMultiPattern.ReferenceActionHandler(ReferenceActionFunction);
+            ucCogMultiPatternWnd.ApplyMultiPatternValueEvent -= new ucCogMultiPattern.ApplyMultiPatternValueHandler(ApplyMultiPatternValueFunction);
             ucCogAutoPatternWnd.DrawReferRegionEvent -= new ucCogAutoPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogAutoPatternWnd.ReferenceActionEvent -= new ucCogAutoPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogAutoPatternWnd.ApplyAutoPatternFindValueEvent -= new ucCogAutoPattern.ApplyAutoPatternFindValueHandler(ApplyAutoPatternFindValueFunction);
-
         }
         #endregion InitializeEvent & DeInitializeEvent
 
@@ -223,6 +224,28 @@ namespace InspectionSystemManager
 
                 string _MatchingName = string.Format($"Rate = {_CogPatternResult.Score[iLoopCount]:F2}, X = {_CogPatternResult.OriginPointX[iLoopCount]:F2}, Y = {_CogPatternResult.OriginPointY[iLoopCount]:F2}");
                 kpTeachDisplay.DrawText(_MatchingName, _CogPatternResult.OriginPointX[iLoopCount], _CogPatternResult.OriginPointY[iLoopCount] + 30, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+        }
+
+        private void ApplyMultiPatternValueFunction(CogMultiPatternAlgo _CogMultiPatternAlgo, ref CogMultiPatternResult _CogMultiPatternResult)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            bool _Result = InspMultiPatternProcess.Run(InspectionImage, AlgoRegionRectangle, _CogMultiPatternAlgo, ref _CogMultiPatternResult);
+
+            for (int iLoopCount = 0; iLoopCount < _CogMultiPatternResult.FindCount; ++iLoopCount)
+            {
+                CogRectangle _PatternRect = new CogRectangle();
+                _PatternRect.SetCenterWidthHeight(_CogMultiPatternResult.CenterX[iLoopCount], _CogMultiPatternResult.CenterY[iLoopCount], _CogMultiPatternResult.Width[iLoopCount], _CogMultiPatternResult.Height[iLoopCount]);
+                kpTeachDisplay.DrawStaticShape(_PatternRect, "PatternRect" + (iLoopCount + 1), CogColorConstants.Green);
+
+                CogPointMarker _Point = new CogPointMarker();
+                _Point.SetCenterRotationSize(_CogMultiPatternResult.OriginPointX[iLoopCount], _CogMultiPatternResult.OriginPointY[iLoopCount], 0, 2);
+                kpTeachDisplay.DrawStaticShape(_Point, "PatternOrigin" + (iLoopCount + 1), CogColorConstants.Green, 12);
+
+                string _MatchingName = string.Format($"Rate = {_CogMultiPatternResult.Score[iLoopCount]:F2}, X = {_CogMultiPatternResult.OriginPointX[iLoopCount]:F2}, Y = {_CogMultiPatternResult.OriginPointY[iLoopCount]:F2}");
+                kpTeachDisplay.DrawText(_MatchingName, _CogMultiPatternResult.OriginPointX[iLoopCount], _CogMultiPatternResult.OriginPointY[iLoopCount] + 30, CogColorConstants.Green, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
         }
         #endregion Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow

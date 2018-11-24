@@ -922,10 +922,12 @@ namespace InspectionSystemManager
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_MULTI_PATTERN, _CogMultiPatternResult);
             _AlgoResultParam.OffsetX = 0;
             _AlgoResultParam.OffsetY = 0;
+            _AlgoResultParam.OffsetT = 0.0;
             if (_CogMultiPatternAlgo.ReferenceInfoList.Count > 0 && _CogMultiPatternResult.CenterX.Length > 0 && _CogMultiPatternResult.CenterY.Length > 0)
             {
                 _AlgoResultParam.OffsetX = _OriginX - _CogMultiPatternResult.CenterX[0];
                 _AlgoResultParam.OffsetY = _OriginY - _CogMultiPatternResult.CenterY[0];
+                _AlgoResultParam.OffsetT = _CogMultiPatternResult.TwoPointAngle;
             }
             AlgoResultParamList.Add(_AlgoResultParam);
 

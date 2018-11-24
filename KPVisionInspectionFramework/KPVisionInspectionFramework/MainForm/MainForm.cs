@@ -220,7 +220,7 @@ namespace KPVisionInspectionFramework
                 HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             #endregion History Window Initialize
 
-            FolderPathWnd = new FolderPathWindow();
+            FolderPathWnd = new FolderPathWindow(ParamManager.SystemParam.IsSimulationMode);
             FolderPathWnd.SetDataPathEvent += new FolderPathWindow.SetDataPathHandler(SetDataFolderPath);
             FolderPathWnd.LOTChangeEvent += new FolderPathWindow.LOTChangeHandler(MainProcessLOTChange);
 

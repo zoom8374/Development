@@ -197,6 +197,8 @@ namespace InspectionSystemManager
             else if (ProjectItem == eProjectItem.SURFACE)
             {
                 ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
             }
 
             else
@@ -226,6 +228,7 @@ namespace InspectionSystemManager
                     btnInspectionAreaAdd.Visible = false;
                     btnInspectionAreaDel.Visible = false;
                     btnInspectionAreaCopy.Visible = false;
+                    btnDataMapApplyInspectionArea.Visible = false;
                     break;
 
                 default:
