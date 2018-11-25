@@ -9,15 +9,3 @@ F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Deb
 F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.dll
 F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.pdb
 F:\[Project]\2018\MIT_Blower\Program\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\EthernetManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\EthernetManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\CustonMsgBoxManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\LogMessageManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\log4net.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\bin\Debug\LogMessageManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.EthernetWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\EthernetManager\obj\Debug\EthernetManager.pdb

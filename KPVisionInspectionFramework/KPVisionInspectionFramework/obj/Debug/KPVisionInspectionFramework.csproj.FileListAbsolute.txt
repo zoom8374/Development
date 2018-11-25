@@ -7,21 +7,3 @@ C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVision
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\CIPOS Lead Inspection.pdb
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
 C:\Zoom\Company\Software\[SS]\CIPOS Lead Inspection\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.csprojResolveAssemblyReference.cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.CodeSettingWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.FolderPathWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainForm.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.MainResultBase.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultID.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultNone.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultSorter.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.Properties.Resources.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.RecipeWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.RecipeNewNameWindow.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultLead.resources
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe.config
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\CIPOS Lead Inspection.exe
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\CIPOS Lead Inspection.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
-C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb

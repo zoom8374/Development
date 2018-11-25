@@ -23,6 +23,7 @@ namespace ParameterManager
         public MapDataParameter[]                   InspMapDataParam;
 
         public static eSysMode SystemMode;
+        public static eSysMode SystemModeBackup;
 
         private string ProjectName;
         private string InspectionDefaultPath;
@@ -78,8 +79,11 @@ namespace ParameterManager
             //LDH, 2018.08.24, Air Blower용 Recipe명 받아오기
             if (eProjectType.BLOWER == (eProjectType)SystemParam.ProjectType)
             {
-                _RecipeName = GetRecipeNameFromFolder(_RecipeName);
-                if (_RecipeName == "NULL") return false;
+                if (CParameterManager.SystemMode != eSysMode.RCP_MANUAL_CANGE)
+                {
+                    _RecipeName = GetRecipeNameFromFolder(_RecipeName);
+                    if (_RecipeName == "NULL") return false;
+                }
             }
 			
             if (_RecipeName == "") return false;
@@ -124,7 +128,8 @@ namespace ParameterManager
             }
 
             //if (GetRecipeName.Count == 1 && GetRecipeName[0] == _RecipeName) return GetRecipeName[0];
-            if (GetRecipeName.Count == 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            //if (GetRecipeName.Count == 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            if (GetRecipeName.Count > 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
             else return "NULL";
         }
 

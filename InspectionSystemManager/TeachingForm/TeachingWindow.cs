@@ -228,6 +228,7 @@ namespace InspectionSystemManager
                     btnInspectionAreaAdd.Visible = false;
                     btnInspectionAreaDel.Visible = false;
                     btnInspectionAreaCopy.Visible = false;
+                    btnShowAllArea.Visible = false;
                     btnDataMapApplyInspectionArea.Visible = false;
                     break;
 

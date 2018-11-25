@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParameterManager
 {
-    public enum eSysMode { AUTO_MODE = 1, MANUAL_MODE = 2, ONESHOT_MODE = 3, TEACH_MODE = 4, LIVE_MODE }
+    public enum eSysMode { AUTO_MODE = 1, MANUAL_MODE = 2, ONESHOT_MODE = 3, TEACH_MODE = 4, LIVE_MODE = 5, RCP_MANUAL_CANGE = 6 }
 
     /// <summary>
     /// Project Type

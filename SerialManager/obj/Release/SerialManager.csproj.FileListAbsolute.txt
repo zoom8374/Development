@@ -10,7 +10,6 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Release\
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Release\LogMessageManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Release\log4net.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\bin\Release\LogMessageManager.pdb
-C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.csprojResolveAssemblyReference.cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.Properties.Resources.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.SerialWindow.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.csproj.GenerateResource.Cache

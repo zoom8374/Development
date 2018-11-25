@@ -484,7 +484,9 @@ namespace KPVisionInspectionFramework
 
         private void rbRecipe_Click(object sender, EventArgs e)
         {
+            CParameterManager.SystemModeBackup = CParameterManager.SystemMode;
             RecipeWnd.ShowDialog();
+            CParameterManager.SystemMode = CParameterManager.SystemModeBackup;
         }
 
         private void rbLog_Click(object sender, EventArgs e)

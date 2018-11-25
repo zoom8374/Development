@@ -12,6 +12,7 @@ using System.Xml;
 using Microsoft.VisualBasic.FileIO;
 
 using LogMessageManager;
+using ParameterManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -84,6 +85,7 @@ namespace KPVisionInspectionFramework
             if (listBoxRecipe.SelectedItem == null) { MessageBox.Show(new Form { TopMost = true }, "Select the recipe you want to change."); return; }
 
             this.Hide();
+            CParameterManager.SystemMode = eSysMode.RCP_MANUAL_CANGE;
             RecipeChange(listBoxRecipe.SelectedItem.ToString());
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange Complete : " + listBoxRecipe.SelectedItem.ToString(), CLogManager.LOG_LEVEL.LOW);
