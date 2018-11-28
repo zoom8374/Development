@@ -58,6 +58,37 @@ namespace DIOControlManager
         }
     }
 
+    public class DefaultCmd: DIOBaseCommand
+    {
+        public static readonly int IN_LIVE      = 0;
+        public static readonly int IN_RESET     = 1;
+        public static readonly int IN_TRIGGER   = 2;
+
+        public static readonly int OUT_LIVE     = 0;
+        public static readonly int OUT_READY    = 1;
+        public static readonly int OUT_COMPLETE = 2;
+        public static readonly int OUT_RESULT   = 3;
+
+        public DefaultCmd(int _IOCount)
+        {
+            IOCount = _IOCount;
+
+            InCmdArray = new int[IOCount];
+            for (int iLoopCount = 0; iLoopCount < _IOCount; ++iLoopCount) InCmdArray[iLoopCount] = DIO_DEF.NONE;
+            InCmdArray[IN_LIVE]     = DIO_DEF.IN_LIVE;
+            InCmdArray[IN_RESET]    = DIO_DEF.IN_RESET;
+            InCmdArray[IN_TRIGGER]  = DIO_DEF.IN_TRG;
+
+
+            OutCmdArray = new int[IOCount];
+            for (int iLoopCount = 0; iLoopCount < _IOCount; ++iLoopCount) OutCmdArray[iLoopCount] = DIO_DEF.NONE;
+            OutCmdArray[OUT_LIVE]       = DIO_DEF.OUT_LIVE;
+            OutCmdArray[OUT_READY]      = DIO_DEF.OUT_READY;
+            OutCmdArray[OUT_COMPLETE]   = DIO_DEF.OUT_COMPLETE;
+            OutCmdArray[OUT_RESULT]     = DIO_DEF.OUT_RESULT_1;
+        }
+    }
+
     public class AirBlowCmd : DIOBaseCommand
     {
         //private static readonly int NONE = -1;
@@ -152,5 +183,10 @@ namespace DIOControlManager
             OutCmdArray[OUT_READY_3]    = DIO_DEF.OUT_READY_3;
             OutCmdArray[OUT_COMPLETE_3] = DIO_DEF.OUT_COMPLETE_3;
         }
+    }
+
+    public class SorterCmd : DIOBaseCommand
+    {
+
     }
 }

@@ -109,6 +109,7 @@ namespace KPVisionInspectionFramework
             {
                 LoadRecipeList();
                 this.Hide();
+                CParameterManager.SystemMode = eSysMode.RCP_MANUAL_CANGE;
                 RecipeChange(_RcpNewNameWnd.NewRecipeName, "[Default]");
                 this.Show();
             }
@@ -277,6 +278,7 @@ namespace KPVisionInspectionFramework
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeCopy Complete", CLogManager.LOG_LEVEL.LOW);
 
+            CParameterManager.SystemMode = eSysMode.RCP_MANUAL_CANGE;
             RecipeChange(_NewRecipeName, _SrcRecipeName);
             LoadRecipeList();
         }

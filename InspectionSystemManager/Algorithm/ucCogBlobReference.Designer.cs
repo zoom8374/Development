@@ -31,11 +31,26 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBoxDummyCondition = new System.Windows.Forms.GroupBox();
+            this.gradientLabel15 = new CustomControl.GradientLabel();
+            this.gradientLabel14 = new CustomControl.GradientLabel();
             this.btnDummyHistogramMean = new System.Windows.Forms.Button();
             this.numUpDownDummyValue = new System.Windows.Forms.NumericUpDown();
             this.ckDummyUsable = new System.Windows.Forms.CheckBox();
+            this.gradientLabel13 = new CustomControl.GradientLabel();
             this.btnSetting = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label19 = new CustomControl.GradientLabel();
+            this.label20 = new CustomControl.GradientLabel();
+            this.label21 = new CustomControl.GradientLabel();
+            this.label14 = new CustomControl.GradientLabel();
+            this.label13 = new CustomControl.GradientLabel();
+            this.label11 = new CustomControl.GradientLabel();
+            this.label4 = new CustomControl.GradientLabel();
+            this.label5 = new CustomControl.GradientLabel();
+            this.label6 = new CustomControl.GradientLabel();
+            this.label7 = new CustomControl.GradientLabel();
+            this.label8 = new CustomControl.GradientLabel();
+            this.label9 = new CustomControl.GradientLabel();
             this.textBoxHeightSizeMax = new System.Windows.Forms.TextBox();
             this.textBoxBlobAreaMin = new System.Windows.Forms.TextBox();
             this.textBoxHeightSizeMin = new System.Windows.Forms.TextBox();
@@ -43,21 +58,35 @@
             this.textBoxWidthSizeMax = new System.Windows.Forms.TextBox();
             this.textBoxWidthSizeMin = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gradientLabel6 = new CustomControl.GradientLabel();
             this.rbForegroundWhite = new System.Windows.Forms.RadioButton();
             this.rbForegroundBlack = new System.Windows.Forms.RadioButton();
+            this.gradientLabel1 = new CustomControl.GradientLabel();
             this.rbRangeUpper = new System.Windows.Forms.RadioButton();
             this.hScrollBarThreshold = new System.Windows.Forms.HScrollBar();
+            this.gradientLabel2 = new CustomControl.GradientLabel();
+            this.graLabelThresholdValue = new CustomControl.GradientLabel();
+            this.graLabelForeground = new CustomControl.GradientLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.numUpDownBodyHeight = new System.Windows.Forms.NumericUpDown();
             this.numUpDownBodyWidth = new System.Windows.Forms.NumericUpDown();
             this.numUpDownBodyArea = new System.Windows.Forms.NumericUpDown();
             this.ckBodyHeight = new System.Windows.Forms.CheckBox();
+            this.gradientLabel9 = new CustomControl.GradientLabel();
             this.ckBodyWidth = new System.Windows.Forms.CheckBox();
+            this.gradientLabel8 = new CustomControl.GradientLabel();
             this.ckBodyArea = new System.Windows.Forms.CheckBox();
             this.textBoxBodyHeight = new System.Windows.Forms.TextBox();
             this.textBoxBodyWidth = new System.Windows.Forms.TextBox();
             this.textBoxBodyArea = new System.Windows.Forms.TextBox();
+            this.gradientLabel5 = new CustomControl.GradientLabel();
+            this.gradientLabel4 = new CustomControl.GradientLabel();
+            this.gradientLabel7 = new CustomControl.GradientLabel();
+            this.gradientLabel3 = new CustomControl.GradientLabel();
+            this.gradientLabel12 = new CustomControl.GradientLabel();
+            this.gradientLabel11 = new CustomControl.GradientLabel();
+            this.gradientLabel10 = new CustomControl.GradientLabel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnGet = new System.Windows.Forms.Button();
             this.rbBenchMarkGravityCenter = new System.Windows.Forms.RadioButton();
@@ -71,35 +100,6 @@
             this.rbBenchMarkTopCenter = new System.Windows.Forms.RadioButton();
             this.rbBenchMarkTopRight = new System.Windows.Forms.RadioButton();
             this.rbBenchMarkTopLeft = new System.Windows.Forms.RadioButton();
-            this.gradientLabel15 = new CustomControl.GradientLabel();
-            this.gradientLabel14 = new CustomControl.GradientLabel();
-            this.gradientLabel13 = new CustomControl.GradientLabel();
-            this.label19 = new CustomControl.GradientLabel();
-            this.label20 = new CustomControl.GradientLabel();
-            this.label21 = new CustomControl.GradientLabel();
-            this.label14 = new CustomControl.GradientLabel();
-            this.label13 = new CustomControl.GradientLabel();
-            this.label11 = new CustomControl.GradientLabel();
-            this.label4 = new CustomControl.GradientLabel();
-            this.label5 = new CustomControl.GradientLabel();
-            this.label6 = new CustomControl.GradientLabel();
-            this.label7 = new CustomControl.GradientLabel();
-            this.label8 = new CustomControl.GradientLabel();
-            this.label9 = new CustomControl.GradientLabel();
-            this.gradientLabel6 = new CustomControl.GradientLabel();
-            this.gradientLabel1 = new CustomControl.GradientLabel();
-            this.gradientLabel2 = new CustomControl.GradientLabel();
-            this.graLabelThresholdValue = new CustomControl.GradientLabel();
-            this.graLabelForeground = new CustomControl.GradientLabel();
-            this.gradientLabel9 = new CustomControl.GradientLabel();
-            this.gradientLabel8 = new CustomControl.GradientLabel();
-            this.gradientLabel5 = new CustomControl.GradientLabel();
-            this.gradientLabel4 = new CustomControl.GradientLabel();
-            this.gradientLabel7 = new CustomControl.GradientLabel();
-            this.gradientLabel3 = new CustomControl.GradientLabel();
-            this.gradientLabel12 = new CustomControl.GradientLabel();
-            this.gradientLabel11 = new CustomControl.GradientLabel();
-            this.gradientLabel10 = new CustomControl.GradientLabel();
             this.labelTitle = new CustomControl.GradientLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -157,6 +157,34 @@
             this.groupBoxDummyCondition.TabStop = false;
             this.groupBoxDummyCondition.Text = " Dummy Condition ";
             // 
+            // gradientLabel15
+            // 
+            this.gradientLabel15.AutoSize = true;
+            this.gradientLabel15.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel15.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel15.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel15.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel15.Location = new System.Drawing.Point(123, 49);
+            this.gradientLabel15.Name = "gradientLabel15";
+            this.gradientLabel15.Size = new System.Drawing.Size(0, 14);
+            this.gradientLabel15.TabIndex = 49;
+            this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel14
+            // 
+            this.gradientLabel14.AutoSize = true;
+            this.gradientLabel14.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel14.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel14.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel14.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel14.Location = new System.Drawing.Point(301, 24);
+            this.gradientLabel14.Name = "gradientLabel14";
+            this.gradientLabel14.Size = new System.Drawing.Size(147, 14);
+            this.gradientLabel14.TabIndex = 49;
+            this.gradientLabel14.Text = "(Dummy 샘플을 놓고 측정)";
+            // 
             // btnDummyHistogramMean
             // 
             this.btnDummyHistogramMean.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -199,6 +227,22 @@
             this.ckDummyUsable.UseVisualStyleBackColor = false;
             this.ckDummyUsable.CheckedChanged += new System.EventHandler(this.ckDummyUsable_CheckedChanged);
             // 
+            // gradientLabel13
+            // 
+            this.gradientLabel13.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel13.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel13.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel13.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel13.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel13.Location = new System.Drawing.Point(11, 18);
+            this.gradientLabel13.Name = "gradientLabel13";
+            this.gradientLabel13.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel13.TabIndex = 95;
+            this.gradientLabel13.Text = "Dummy Level ";
+            this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // btnSetting
             // 
             this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -238,6 +282,180 @@
             this.groupBox2.TabIndex = 21;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = " Inspection Condition ";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ColorBottom = System.Drawing.Color.Empty;
+            this.label19.ColorTop = System.Drawing.Color.Empty;
+            this.label19.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label19.ForeColor = System.Drawing.Color.White;
+            this.label19.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label19.Location = new System.Drawing.Point(432, 83);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(29, 14);
+            this.label19.TabIndex = 49;
+            this.label19.Text = "mm";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.ColorBottom = System.Drawing.Color.Empty;
+            this.label20.ColorTop = System.Drawing.Color.Empty;
+            this.label20.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label20.ForeColor = System.Drawing.Color.White;
+            this.label20.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label20.Location = new System.Drawing.Point(432, 53);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(29, 14);
+            this.label20.TabIndex = 48;
+            this.label20.Text = "mm";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.ColorBottom = System.Drawing.Color.Empty;
+            this.label21.ColorTop = System.Drawing.Color.Empty;
+            this.label21.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label21.ForeColor = System.Drawing.Color.White;
+            this.label21.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label21.Location = new System.Drawing.Point(432, 23);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(29, 14);
+            this.label21.TabIndex = 47;
+            this.label21.Text = "mm";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ColorBottom = System.Drawing.Color.Empty;
+            this.label14.ColorTop = System.Drawing.Color.Empty;
+            this.label14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label14.Location = new System.Drawing.Point(217, 85);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(15, 14);
+            this.label14.TabIndex = 43;
+            this.label14.Text = "~";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ColorBottom = System.Drawing.Color.Empty;
+            this.label13.ColorTop = System.Drawing.Color.Empty;
+            this.label13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label13.Location = new System.Drawing.Point(217, 53);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(15, 14);
+            this.label13.TabIndex = 41;
+            this.label13.Text = "~";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ColorBottom = System.Drawing.Color.Empty;
+            this.label11.ColorTop = System.Drawing.Color.Empty;
+            this.label11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label11.Location = new System.Drawing.Point(217, 23);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(15, 14);
+            this.label11.TabIndex = 42;
+            this.label11.Text = "~";
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.Color.SteelBlue;
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label4.ColorBottom = System.Drawing.Color.Empty;
+            this.label4.ColorTop = System.Drawing.Color.Empty;
+            this.label4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label4.Location = new System.Drawing.Point(11, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 26);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "Blob Area Min";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            this.label5.BackColor = System.Drawing.Color.SteelBlue;
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label5.ColorBottom = System.Drawing.Color.Empty;
+            this.label5.ColorTop = System.Drawing.Color.Empty;
+            this.label5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label5.Location = new System.Drawing.Point(233, 17);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(108, 26);
+            this.label5.TabIndex = 35;
+            this.label5.Text = "Blob Area Max";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.SteelBlue;
+            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label6.ColorBottom = System.Drawing.Color.Empty;
+            this.label6.ColorTop = System.Drawing.Color.Empty;
+            this.label6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label6.Location = new System.Drawing.Point(11, 48);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(108, 26);
+            this.label6.TabIndex = 36;
+            this.label6.Text = "Width Min";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.BackColor = System.Drawing.Color.SteelBlue;
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label7.ColorBottom = System.Drawing.Color.Empty;
+            this.label7.ColorTop = System.Drawing.Color.Empty;
+            this.label7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label7.Location = new System.Drawing.Point(233, 48);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 26);
+            this.label7.TabIndex = 38;
+            this.label7.Text = "Width Max";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.Color.SteelBlue;
+            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label8.ColorBottom = System.Drawing.Color.Empty;
+            this.label8.ColorTop = System.Drawing.Color.Empty;
+            this.label8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label8.Location = new System.Drawing.Point(11, 78);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(108, 26);
+            this.label8.TabIndex = 39;
+            this.label8.Text = "Height Min";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            this.label9.BackColor = System.Drawing.Color.SteelBlue;
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label9.ColorBottom = System.Drawing.Color.Empty;
+            this.label9.ColorTop = System.Drawing.Color.Empty;
+            this.label9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.label9.Location = new System.Drawing.Point(233, 78);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(108, 26);
+            this.label9.TabIndex = 40;
+            this.label9.Text = "Height Max";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBoxHeightSizeMax
             // 
@@ -318,6 +536,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Threshold Condition ";
             // 
+            // gradientLabel6
+            // 
+            this.gradientLabel6.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel6.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel6.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel6.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel6.Location = new System.Drawing.Point(220, 22);
+            this.gradientLabel6.Name = "gradientLabel6";
+            this.gradientLabel6.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel6.TabIndex = 54;
+            this.gradientLabel6.Text = "Foreground";
+            this.gradientLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // rbForegroundWhite
             // 
             this.rbForegroundWhite.Appearance = System.Windows.Forms.Appearance.Button;
@@ -346,6 +578,20 @@
             this.rbForegroundBlack.UseVisualStyleBackColor = true;
             this.rbForegroundBlack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbForeground_MouseUp);
             // 
+            // gradientLabel1
+            // 
+            this.gradientLabel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel1.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel1.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel1.Location = new System.Drawing.Point(11, 22);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel1.TabIndex = 0;
+            this.gradientLabel1.Text = "Range Mode";
+            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // rbRangeUpper
             // 
             this.rbRangeUpper.Appearance = System.Windows.Forms.Appearance.Button;
@@ -368,6 +614,49 @@
             this.hScrollBarThreshold.TabIndex = 18;
             this.hScrollBarThreshold.Value = 128;
             this.hScrollBarThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBarThreshold_Scroll);
+            // 
+            // gradientLabel2
+            // 
+            this.gradientLabel2.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel2.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel2.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel2.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel2.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel2.Location = new System.Drawing.Point(11, 52);
+            this.gradientLabel2.Name = "gradientLabel2";
+            this.gradientLabel2.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel2.TabIndex = 17;
+            this.gradientLabel2.Text = "Threshold";
+            this.gradientLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // graLabelThresholdValue
+            // 
+            this.graLabelThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelThresholdValue.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelThresholdValue.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelThresholdValue.ForeColor = System.Drawing.Color.White;
+            this.graLabelThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelThresholdValue.Location = new System.Drawing.Point(429, 52);
+            this.graLabelThresholdValue.Name = "graLabelThresholdValue";
+            this.graLabelThresholdValue.Size = new System.Drawing.Size(33, 26);
+            this.graLabelThresholdValue.TabIndex = 19;
+            this.graLabelThresholdValue.Text = "128";
+            this.graLabelThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // graLabelForeground
+            // 
+            this.graLabelForeground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.graLabelForeground.ColorBottom = System.Drawing.Color.Empty;
+            this.graLabelForeground.ColorTop = System.Drawing.Color.Empty;
+            this.graLabelForeground.ForeColor = System.Drawing.Color.White;
+            this.graLabelForeground.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.graLabelForeground.Location = new System.Drawing.Point(429, 23);
+            this.graLabelForeground.Name = "graLabelForeground";
+            this.graLabelForeground.Size = new System.Drawing.Size(33, 26);
+            this.graLabelForeground.TabIndex = 55;
+            this.graLabelForeground.Text = "0";
+            this.graLabelForeground.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.graLabelForeground.Visible = false;
             // 
             // tabPage2
             // 
@@ -443,6 +732,22 @@
             this.ckBodyHeight.TabIndex = 91;
             this.ckBodyHeight.UseVisualStyleBackColor = false;
             // 
+            // gradientLabel9
+            // 
+            this.gradientLabel9.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel9.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel9.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel9.Location = new System.Drawing.Point(10, 86);
+            this.gradientLabel9.Name = "gradientLabel9";
+            this.gradientLabel9.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel9.TabIndex = 92;
+            this.gradientLabel9.Text = "Body Height";
+            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ckBodyWidth
             // 
             this.ckBodyWidth.AutoSize = true;
@@ -452,6 +757,22 @@
             this.ckBodyWidth.Size = new System.Drawing.Size(15, 14);
             this.ckBodyWidth.TabIndex = 89;
             this.ckBodyWidth.UseVisualStyleBackColor = false;
+            // 
+            // gradientLabel8
+            // 
+            this.gradientLabel8.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel8.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel8.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel8.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel8.Location = new System.Drawing.Point(10, 52);
+            this.gradientLabel8.Name = "gradientLabel8";
+            this.gradientLabel8.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel8.TabIndex = 90;
+            this.gradientLabel8.Text = "Body Width";
+            this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ckBodyArea
             // 
@@ -495,6 +816,112 @@
             this.textBoxBodyArea.Text = "0";
             this.textBoxBodyArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxBodyArea.TextChanged += new System.EventHandler(this.textBoxBodyArea_TextChanged);
+            // 
+            // gradientLabel5
+            // 
+            this.gradientLabel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel5.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel5.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel5.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel5.Location = new System.Drawing.Point(242, 86);
+            this.gradientLabel5.Name = "gradientLabel5";
+            this.gradientLabel5.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel5.TabIndex = 85;
+            this.gradientLabel5.Text = "Body Height";
+            this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel4
+            // 
+            this.gradientLabel4.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel4.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel4.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel4.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel4.Location = new System.Drawing.Point(242, 52);
+            this.gradientLabel4.Name = "gradientLabel4";
+            this.gradientLabel4.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel4.TabIndex = 84;
+            this.gradientLabel4.Text = "Body Width";
+            this.gradientLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel7
+            // 
+            this.gradientLabel7.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel7.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel7.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel7.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel7.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel7.Location = new System.Drawing.Point(10, 18);
+            this.gradientLabel7.Name = "gradientLabel7";
+            this.gradientLabel7.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel7.TabIndex = 83;
+            this.gradientLabel7.Text = "Body Area";
+            this.gradientLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel3
+            // 
+            this.gradientLabel3.BackColor = System.Drawing.Color.SteelBlue;
+            this.gradientLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientLabel3.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel3.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel3.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel3.Location = new System.Drawing.Point(242, 18);
+            this.gradientLabel3.Name = "gradientLabel3";
+            this.gradientLabel3.Size = new System.Drawing.Size(108, 26);
+            this.gradientLabel3.TabIndex = 82;
+            this.gradientLabel3.Text = "Body Area";
+            this.gradientLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientLabel12
+            // 
+            this.gradientLabel12.AutoSize = true;
+            this.gradientLabel12.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel12.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel12.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel12.Location = new System.Drawing.Point(223, 93);
+            this.gradientLabel12.Name = "gradientLabel12";
+            this.gradientLabel12.Size = new System.Drawing.Size(18, 14);
+            this.gradientLabel12.TabIndex = 80;
+            this.gradientLabel12.Text = "%";
+            // 
+            // gradientLabel11
+            // 
+            this.gradientLabel11.AutoSize = true;
+            this.gradientLabel11.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel11.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel11.Location = new System.Drawing.Point(222, 57);
+            this.gradientLabel11.Name = "gradientLabel11";
+            this.gradientLabel11.Size = new System.Drawing.Size(18, 14);
+            this.gradientLabel11.TabIndex = 81;
+            this.gradientLabel11.Text = "%";
+            // 
+            // gradientLabel10
+            // 
+            this.gradientLabel10.AutoSize = true;
+            this.gradientLabel10.ColorBottom = System.Drawing.Color.Empty;
+            this.gradientLabel10.ColorTop = System.Drawing.Color.Empty;
+            this.gradientLabel10.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel10.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel10.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel10.Location = new System.Drawing.Point(222, 26);
+            this.gradientLabel10.Name = "gradientLabel10";
+            this.gradientLabel10.Size = new System.Drawing.Size(18, 14);
+            this.gradientLabel10.TabIndex = 79;
+            this.gradientLabel10.Text = "%";
             // 
             // groupBox4
             // 
@@ -679,433 +1106,6 @@
             this.rbBenchMarkTopLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.rbBenchMarkTopLeft.UseVisualStyleBackColor = true;
             this.rbBenchMarkTopLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbBenchMarkPosition_MouseUp);
-            // 
-            // gradientLabel15
-            // 
-            this.gradientLabel15.AutoSize = true;
-            this.gradientLabel15.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel15.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel15.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel15.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel15.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel15.Location = new System.Drawing.Point(123, 49);
-            this.gradientLabel15.Name = "gradientLabel15";
-            this.gradientLabel15.Size = new System.Drawing.Size(0, 14);
-            this.gradientLabel15.TabIndex = 49;
-            this.gradientLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel14
-            // 
-            this.gradientLabel14.AutoSize = true;
-            this.gradientLabel14.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel14.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel14.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel14.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel14.Location = new System.Drawing.Point(301, 24);
-            this.gradientLabel14.Name = "gradientLabel14";
-            this.gradientLabel14.Size = new System.Drawing.Size(147, 14);
-            this.gradientLabel14.TabIndex = 49;
-            this.gradientLabel14.Text = "(Dummy 샘플을 놓고 측정)";
-            // 
-            // gradientLabel13
-            // 
-            this.gradientLabel13.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel13.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel13.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel13.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel13.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel13.Location = new System.Drawing.Point(11, 18);
-            this.gradientLabel13.Name = "gradientLabel13";
-            this.gradientLabel13.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel13.TabIndex = 95;
-            this.gradientLabel13.Text = "Dummy Level ";
-            this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.ColorBottom = System.Drawing.Color.Empty;
-            this.label19.ColorTop = System.Drawing.Color.Empty;
-            this.label19.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label19.Location = new System.Drawing.Point(432, 83);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(29, 14);
-            this.label19.TabIndex = 49;
-            this.label19.Text = "mm";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.ColorBottom = System.Drawing.Color.Empty;
-            this.label20.ColorTop = System.Drawing.Color.Empty;
-            this.label20.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label20.Location = new System.Drawing.Point(432, 53);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(29, 14);
-            this.label20.TabIndex = 48;
-            this.label20.Text = "mm";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.ColorBottom = System.Drawing.Color.Empty;
-            this.label21.ColorTop = System.Drawing.Color.Empty;
-            this.label21.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label21.Location = new System.Drawing.Point(432, 23);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(29, 14);
-            this.label21.TabIndex = 47;
-            this.label21.Text = "mm";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ColorBottom = System.Drawing.Color.Empty;
-            this.label14.ColorTop = System.Drawing.Color.Empty;
-            this.label14.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label14.Location = new System.Drawing.Point(217, 85);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(15, 14);
-            this.label14.TabIndex = 43;
-            this.label14.Text = "~";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.ColorBottom = System.Drawing.Color.Empty;
-            this.label13.ColorTop = System.Drawing.Color.Empty;
-            this.label13.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label13.Location = new System.Drawing.Point(217, 53);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(15, 14);
-            this.label13.TabIndex = 41;
-            this.label13.Text = "~";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ColorBottom = System.Drawing.Color.Empty;
-            this.label11.ColorTop = System.Drawing.Color.Empty;
-            this.label11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label11.Location = new System.Drawing.Point(217, 23);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(15, 14);
-            this.label11.TabIndex = 42;
-            this.label11.Text = "~";
-            // 
-            // label4
-            // 
-            this.label4.BackColor = System.Drawing.Color.SteelBlue;
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.ColorBottom = System.Drawing.Color.Empty;
-            this.label4.ColorTop = System.Drawing.Color.Empty;
-            this.label4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label4.Location = new System.Drawing.Point(11, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 26);
-            this.label4.TabIndex = 33;
-            this.label4.Text = "Blob Area Min";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label5
-            // 
-            this.label5.BackColor = System.Drawing.Color.SteelBlue;
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label5.ColorBottom = System.Drawing.Color.Empty;
-            this.label5.ColorTop = System.Drawing.Color.Empty;
-            this.label5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label5.Location = new System.Drawing.Point(233, 17);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(108, 26);
-            this.label5.TabIndex = 35;
-            this.label5.Text = "Blob Area Max";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.SteelBlue;
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.ColorBottom = System.Drawing.Color.Empty;
-            this.label6.ColorTop = System.Drawing.Color.Empty;
-            this.label6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label6.Location = new System.Drawing.Point(11, 48);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(108, 26);
-            this.label6.TabIndex = 36;
-            this.label6.Text = "Width Min";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label7
-            // 
-            this.label7.BackColor = System.Drawing.Color.SteelBlue;
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.ColorBottom = System.Drawing.Color.Empty;
-            this.label7.ColorTop = System.Drawing.Color.Empty;
-            this.label7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label7.Location = new System.Drawing.Point(233, 48);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(108, 26);
-            this.label7.TabIndex = 38;
-            this.label7.Text = "Width Max";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.Color.SteelBlue;
-            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.ColorBottom = System.Drawing.Color.Empty;
-            this.label8.ColorTop = System.Drawing.Color.Empty;
-            this.label8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label8.Location = new System.Drawing.Point(11, 78);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(108, 26);
-            this.label8.TabIndex = 39;
-            this.label8.Text = "Height Min";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label9
-            // 
-            this.label9.BackColor = System.Drawing.Color.SteelBlue;
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.ColorBottom = System.Drawing.Color.Empty;
-            this.label9.ColorTop = System.Drawing.Color.Empty;
-            this.label9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.label9.Location = new System.Drawing.Point(233, 78);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(108, 26);
-            this.label9.TabIndex = 40;
-            this.label9.Text = "Height Max";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel6
-            // 
-            this.gradientLabel6.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel6.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel6.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel6.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel6.Location = new System.Drawing.Point(220, 22);
-            this.gradientLabel6.Name = "gradientLabel6";
-            this.gradientLabel6.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel6.TabIndex = 54;
-            this.gradientLabel6.Text = "Foreground";
-            this.gradientLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel1
-            // 
-            this.gradientLabel1.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel1.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel1.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel1.Location = new System.Drawing.Point(11, 22);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel1.TabIndex = 0;
-            this.gradientLabel1.Text = "Range Mode";
-            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel2
-            // 
-            this.gradientLabel2.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel2.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel2.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel2.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel2.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel2.Location = new System.Drawing.Point(11, 52);
-            this.gradientLabel2.Name = "gradientLabel2";
-            this.gradientLabel2.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel2.TabIndex = 17;
-            this.gradientLabel2.Text = "Threshold";
-            this.gradientLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // graLabelThresholdValue
-            // 
-            this.graLabelThresholdValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.graLabelThresholdValue.ColorBottom = System.Drawing.Color.Empty;
-            this.graLabelThresholdValue.ColorTop = System.Drawing.Color.Empty;
-            this.graLabelThresholdValue.ForeColor = System.Drawing.Color.White;
-            this.graLabelThresholdValue.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelThresholdValue.Location = new System.Drawing.Point(429, 52);
-            this.graLabelThresholdValue.Name = "graLabelThresholdValue";
-            this.graLabelThresholdValue.Size = new System.Drawing.Size(33, 26);
-            this.graLabelThresholdValue.TabIndex = 19;
-            this.graLabelThresholdValue.Text = "128";
-            this.graLabelThresholdValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // graLabelForeground
-            // 
-            this.graLabelForeground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.graLabelForeground.ColorBottom = System.Drawing.Color.Empty;
-            this.graLabelForeground.ColorTop = System.Drawing.Color.Empty;
-            this.graLabelForeground.ForeColor = System.Drawing.Color.White;
-            this.graLabelForeground.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.graLabelForeground.Location = new System.Drawing.Point(429, 23);
-            this.graLabelForeground.Name = "graLabelForeground";
-            this.graLabelForeground.Size = new System.Drawing.Size(33, 26);
-            this.graLabelForeground.TabIndex = 55;
-            this.graLabelForeground.Text = "0";
-            this.graLabelForeground.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.graLabelForeground.Visible = false;
-            // 
-            // gradientLabel9
-            // 
-            this.gradientLabel9.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel9.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel9.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel9.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel9.Location = new System.Drawing.Point(10, 86);
-            this.gradientLabel9.Name = "gradientLabel9";
-            this.gradientLabel9.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel9.TabIndex = 92;
-            this.gradientLabel9.Text = "Body Height";
-            this.gradientLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel8
-            // 
-            this.gradientLabel8.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel8.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel8.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel8.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel8.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel8.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel8.Location = new System.Drawing.Point(10, 52);
-            this.gradientLabel8.Name = "gradientLabel8";
-            this.gradientLabel8.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel8.TabIndex = 90;
-            this.gradientLabel8.Text = "Body Width";
-            this.gradientLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel5
-            // 
-            this.gradientLabel5.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel5.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel5.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel5.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel5.Location = new System.Drawing.Point(242, 86);
-            this.gradientLabel5.Name = "gradientLabel5";
-            this.gradientLabel5.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel5.TabIndex = 85;
-            this.gradientLabel5.Text = "Body Height";
-            this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel4
-            // 
-            this.gradientLabel4.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel4.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel4.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel4.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel4.Location = new System.Drawing.Point(242, 52);
-            this.gradientLabel4.Name = "gradientLabel4";
-            this.gradientLabel4.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel4.TabIndex = 84;
-            this.gradientLabel4.Text = "Body Width";
-            this.gradientLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel7
-            // 
-            this.gradientLabel7.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel7.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel7.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel7.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel7.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel7.Location = new System.Drawing.Point(10, 18);
-            this.gradientLabel7.Name = "gradientLabel7";
-            this.gradientLabel7.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel7.TabIndex = 83;
-            this.gradientLabel7.Text = "Body Area";
-            this.gradientLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel3
-            // 
-            this.gradientLabel3.BackColor = System.Drawing.Color.SteelBlue;
-            this.gradientLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientLabel3.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel3.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel3.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel3.Location = new System.Drawing.Point(242, 18);
-            this.gradientLabel3.Name = "gradientLabel3";
-            this.gradientLabel3.Size = new System.Drawing.Size(108, 26);
-            this.gradientLabel3.TabIndex = 82;
-            this.gradientLabel3.Text = "Body Area";
-            this.gradientLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gradientLabel12
-            // 
-            this.gradientLabel12.AutoSize = true;
-            this.gradientLabel12.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel12.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel12.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel12.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel12.Location = new System.Drawing.Point(223, 93);
-            this.gradientLabel12.Name = "gradientLabel12";
-            this.gradientLabel12.Size = new System.Drawing.Size(18, 14);
-            this.gradientLabel12.TabIndex = 80;
-            this.gradientLabel12.Text = "%";
-            // 
-            // gradientLabel11
-            // 
-            this.gradientLabel11.AutoSize = true;
-            this.gradientLabel11.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel11.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel11.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel11.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel11.Location = new System.Drawing.Point(222, 57);
-            this.gradientLabel11.Name = "gradientLabel11";
-            this.gradientLabel11.Size = new System.Drawing.Size(18, 14);
-            this.gradientLabel11.TabIndex = 81;
-            this.gradientLabel11.Text = "%";
-            // 
-            // gradientLabel10
-            // 
-            this.gradientLabel10.AutoSize = true;
-            this.gradientLabel10.ColorBottom = System.Drawing.Color.Empty;
-            this.gradientLabel10.ColorTop = System.Drawing.Color.Empty;
-            this.gradientLabel10.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel10.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel10.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel10.Location = new System.Drawing.Point(222, 26);
-            this.gradientLabel10.Name = "gradientLabel10";
-            this.gradientLabel10.Size = new System.Drawing.Size(18, 14);
-            this.gradientLabel10.TabIndex = 79;
-            this.gradientLabel10.Text = "%";
             // 
             // labelTitle
             // 

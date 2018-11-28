@@ -115,6 +115,8 @@ namespace InspectionSystemManager
 
                 if (false == AngleInspection(_SrcImage, _InspRegion, StartPoint, EndPoint, ref _CogMultiPatternResult.TwoPointAngle)) _Result = false;
 
+                //LJH 2018.11.28 기존값을 기준으로 틀어준다.
+                _CogMultiPatternResult.TwoPointAngle = _CogMultiPatternResult.TwoPointAngle - _CogMultiPatternAlgo.TwoPointAngle;
                 _CogMultiPatternResult.IsGood = true;
             }
 

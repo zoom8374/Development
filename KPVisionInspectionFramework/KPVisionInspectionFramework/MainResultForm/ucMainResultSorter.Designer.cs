@@ -43,7 +43,7 @@
             this.gradientLabel4.Name = "gradientLabel4";
             this.gradientLabel4.Size = new System.Drawing.Size(376, 28);
             this.gradientLabel4.TabIndex = 30;
-            this.gradientLabel4.Text = " Data Matrix Data";
+            this.gradientLabel4.Text = " Result Data";
             this.gradientLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ucMainResultSorter

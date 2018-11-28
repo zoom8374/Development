@@ -76,13 +76,14 @@ namespace KPVisionInspectionFramework
         private void btnSearchDataPath_Click(object sender, EventArgs e)
         {  
             FolderBrowserDialog FolderDialog = new FolderBrowserDialog();
-            FolderDialog.ShowDialog();
-
-            Button btnSearch = (Button)sender;
-            switch(Convert.ToInt32(btnSearch.Tag))
+            if (DialogResult.OK == FolderDialog.ShowDialog())
             {
-                case 0: textBoxInDataPath.Text = FolderDialog.SelectedPath; break;
-                case 1: textBoxOutDataPath.Text = FolderDialog.SelectedPath; break;
+                Button btnSearch = (Button)sender;
+                switch (Convert.ToInt32(btnSearch.Tag))
+                {
+                    case 0: textBoxInDataPath.Text = FolderDialog.SelectedPath; break;
+                    case 1: textBoxOutDataPath.Text = FolderDialog.SelectedPath; break;
+                }
             }
         }
 

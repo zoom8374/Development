@@ -19,11 +19,6 @@ namespace KPVisionInspectionFramework
 {
     public partial class ucMainResultID : UserControl
     {
-        //private uint TotalCount = 0;
-        //private uint GoodCount = 0;
-        //private uint NgCount = 0;
-        //private double Yield = 0;
-
         private uint CodeErrCount = 0;
         private uint BlankErrCount = 0;
         private uint MixErrCount = 0;
@@ -52,6 +47,8 @@ namespace KPVisionInspectionFramework
             set { SegmentValueInvoke(SevenSegYield, value.ToString()); }
             get { return Convert.ToDouble(SevenSegYield.Value); }
         }
+
+        private string NowLotSeparateNum;
         #endregion Count & Yield Variable
 
         #region Count & Yield Registry Variable
@@ -59,11 +56,13 @@ namespace KPVisionInspectionFramework
         private RegistryKey RegGoodCount;
         private RegistryKey RegNgCount;
         private RegistryKey RegYield;
+        private RegistryKey RegNowLotSeparateNum;
 
         private string RegTotalCountPath = String.Format(@"KPVision\ResultCount\TotalCount");
         private string RegGoodCountPath = String.Format(@"KPVision\ResultCount\GoodCount");
         private string RegNgCountPath = String.Format(@"KPVision\ResultCount\NgCount");
         private string RegYieldPath = String.Format(@"KPVision\ResultCount\Yield");
+        private string RegNowLotSeparateNumPath = String.Format(@"KPVision\LOTNum\NowLotSeparateNum");
         #endregion Count & Yield Registry Variable
 
         bool AutoModeFlag = false;
@@ -83,7 +82,7 @@ namespace KPVisionInspectionFramework
         int InDataLimitCount = 0;
         string LOTType;
         string NowLotNum;
-        string NowLotSeparateNum;
+        //string NowLotSeparateNum;
         string OperatorName;
         string MCNum;
         string NowInspectionID;
@@ -110,6 +109,7 @@ namespace KPVisionInspectionFramework
             RegGoodCount = Registry.CurrentUser.CreateSubKey(RegGoodCountPath);
             RegNgCount = Registry.CurrentUser.CreateSubKey(RegNgCountPath);
             RegYield = Registry.CurrentUser.CreateSubKey(RegYieldPath);
+            RegNowLotSeparateNum = Registry.CurrentUser.CreateSubKey(RegNowLotSeparateNumPath);
         }
 
         public void DeInitialize()
@@ -124,6 +124,7 @@ namespace KPVisionInspectionFramework
             GoodCount = Convert.ToUInt32(RegGoodCount.GetValue("Value"));
             NgCount = Convert.ToUInt32(RegNgCount.GetValue("Value"));
             Yield = Convert.ToDouble(RegYield.GetValue("Value"));
+            NowLotSeparateNum = Convert.ToString(RegNowLotSeparateNum.GetValue("Value"));
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Load Result Count");
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}", TotalCount, GoodCount, NgCount, Yield));
@@ -135,9 +136,10 @@ namespace KPVisionInspectionFramework
             RegGoodCount.SetValue("Value", GoodCount, RegistryValueKind.String);
             RegNgCount.SetValue("Value", NgCount, RegistryValueKind.String);
             RegYield.SetValue("Value", Yield, RegistryValueKind.String);
+            RegNowLotSeparateNum.SetValue("Value", NowLotSeparateNum, RegistryValueKind.String);
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Save Result Count");
-            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}", TotalCount, GoodCount, NgCount, Yield));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("TotalCount : {0}, GoodCount : {1}, NgCount : {2}, Yield : {3:F3}, SepNum : {4}", TotalCount, GoodCount, NgCount, Yield, NowLotSeparateNum));
         }
         #endregion Initialize & DeInitialize
 
@@ -554,11 +556,15 @@ namespace KPVisionInspectionFramework
                 WriteOutData(String.Format(@"{0}BakcupLog\Output_Backup.txt", BackupFolderPath), true);
             }
 
-            if (ErrorCode != "OK") Result = "Indata NG";
+            if (ErrorCode != "OK")
+            {
+                if (ErrorCode == "1") Result = "Xout NG";
+                else Result = "Indata NG";
+            }
 
             return Result;
         }
-
+        
         private bool FindText(string Text)
         {
             if (Text.Contains(NowInspectionID))

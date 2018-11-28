@@ -88,7 +88,8 @@ namespace InspectionSystemManager
             numericUpDownFindScore.Value = Convert.ToDecimal(CogMultiPatternAlgoRcp.MatchingScore);
             numericUpDownFindCount.Value = Convert.ToDecimal(CogMultiPatternAlgoRcp.MatchingCount);
             numericUpDownAngleLimit.Value = Convert.ToDecimal(CogMultiPatternAlgoRcp.MatchingAngle);
-            txtBoxAngle.Text = "0.0";
+            txtBoxAngle.Text = CogMultiPatternAlgoRcp.TwoPointAngle.ToString("F2");
+            //txtBoxAngle.Text = "0.0";
 
             if (CogMultiPatternAlgoRcp.ReferenceInfoList.Count > 0)
             {
@@ -184,7 +185,7 @@ namespace InspectionSystemManager
             CogMultiPatternAlgoRcp.MatchingCount = Convert.ToInt32(numericUpDownFindCount.Value);
             CogMultiPatternAlgoRcp.MatchingAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
             CogMultiPatternAlgoRcp.PatternCount = CogMultiPatternAlgoRcp.ReferenceInfoList.Count;
-            CogMultiPatternAlgoRcp.TwoPointAngle = Convert.ToDouble(numericUpDownAngleLimit.Value);
+            CogMultiPatternAlgoRcp.TwoPointAngle = Convert.ToDouble(txtBoxAngle.Text);
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogPattern SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }

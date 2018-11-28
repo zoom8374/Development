@@ -83,8 +83,11 @@ namespace DIOControlManager
             ALIVE_SIGNAL_TIME = 50;
             ALIVE_CHECK_TIME = 500;
 
-            if (ProjectType == eProjectType.DISPENSER)   DioBaseCmd = new DispenserCmd(IOCnt);
-            else if (ProjectType == eProjectType.BLOWER) DioBaseCmd = new AirBlowCmd(IOCnt);
+            if (ProjectType == eProjectType.NONE)           DioBaseCmd = new DefaultCmd(IOCnt);
+            else if (ProjectType == eProjectType.DISPENSER) DioBaseCmd = new DispenserCmd(IOCnt);
+            else if (ProjectType == eProjectType.BLOWER)    DioBaseCmd = new AirBlowCmd(IOCnt);
+            else if (ProjectType == eProjectType.SORTER)    DioBaseCmd = new SorterCmd();
+            
         }
 
         public void InitializeControl()
@@ -383,7 +386,7 @@ namespace DIOControlManager
         private void btnTrigger_Click(object sender, EventArgs e)
         {
             //int _BitCommand = AirBlowCmd.BitCheck(5);
-            int _BitCommand = DioBaseCmd.InputBitCheck(DispenserCmd.IN_TRIGGER_3);
+            int _BitCommand = DioBaseCmd.InputBitCheck(DefaultCmd.IN_TRIGGER);
             if (_BitCommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;
@@ -392,7 +395,7 @@ namespace DIOControlManager
 
         private void btnRequest_Click(object sender, EventArgs e)
         {
-            int _Bitcommand = DioBaseCmd.InputBitCheck(DispenserCmd.IN_REQUEST);
+            int _Bitcommand = DioBaseCmd.InputBitCheck(DefaultCmd.IN_RESET);
             if (_Bitcommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;

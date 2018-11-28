@@ -59,7 +59,7 @@ namespace InspectionSystemManager
             return _HistoDeviation;
         }
 
-        public bool Run(CogImage8Grey _SrcImage, CogRectangle _InspRegion, CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult, int _NgNumber = 0)
+        public bool Run(CogImage8Grey _SrcImage, CogRectangleAffine _InspRegion, CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult, int _NgNumber = 0)
         {
             bool _Result = true;
             double _X = 0, _Y = 0;
@@ -219,7 +219,7 @@ namespace InspectionSystemManager
                 else
                 {
                     _CogBlobReferResult.BlobMinX = new double[1];
-                    _CogBlobReferResult.BlobMaxY = new double[1];
+                    _CogBlobReferResult.BlobMinY = new double[1];
                     _CogBlobReferResult.BlobCenterX = new double[1];
                     _CogBlobReferResult.BlobCenterY = new double[1];
                     _CogBlobReferResult.Width = new double[1];
@@ -227,12 +227,12 @@ namespace InspectionSystemManager
                     _CogBlobReferResult.OriginX = new double[1];
                     _CogBlobReferResult.OriginY = new double[1];
                     _CogBlobReferResult.IsGoods = new bool[1];
-                    _CogBlobReferResult.BlobMinX[0] = _InspRegion.X;
-                    _CogBlobReferResult.BlobMaxY[0] = _InspRegion.Y + _InspRegion.Height;
+                    _CogBlobReferResult.BlobMinX[0] = _InspRegion.CenterX - (_InspRegion.SideXLength / 2);
+                    _CogBlobReferResult.BlobMinY[0] = _InspRegion.CenterY - (_InspRegion.SideYLength / 2);
                     _CogBlobReferResult.BlobCenterX[0] = _InspRegion.CenterX;
                     _CogBlobReferResult.BlobCenterY[0] = _InspRegion.CenterY;
-                    _CogBlobReferResult.Width[0] = _InspRegion.Width;
-                    _CogBlobReferResult.Height[0] = _InspRegion.Height;
+                    _CogBlobReferResult.Width[0] = _InspRegion.SideXLength;
+                    _CogBlobReferResult.Height[0] = _InspRegion.SideXLength;
                     _CogBlobReferResult.OriginX[0] = _InspRegion.CenterX;
                     _CogBlobReferResult.OriginY[0] = _InspRegion.CenterY;
 
@@ -245,7 +245,7 @@ namespace InspectionSystemManager
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Blob not found!!", CLogManager.LOG_LEVEL.MID);
 
                 _CogBlobReferResult.BlobMinX = new double[1];
-                _CogBlobReferResult.BlobMaxY = new double[1];
+                _CogBlobReferResult.BlobMinY = new double[1];
                 _CogBlobReferResult.BlobCenterX = new double[1];
                 _CogBlobReferResult.BlobCenterY = new double[1];
                 _CogBlobReferResult.Width = new double[1];
@@ -253,12 +253,12 @@ namespace InspectionSystemManager
                 _CogBlobReferResult.OriginX = new double[1];
                 _CogBlobReferResult.OriginY = new double[1];
                 _CogBlobReferResult.IsGoods = new bool[1];
-                _CogBlobReferResult.BlobMinX[0] = _InspRegion.X;
-                _CogBlobReferResult.BlobMaxY[0] = _InspRegion.Y + _InspRegion.Height;
+                _CogBlobReferResult.BlobMinX[0] = _InspRegion.CenterX - (_InspRegion.SideXLength / 2);
+                _CogBlobReferResult.BlobMinY[0] = _InspRegion.CenterX - (_InspRegion.SideYLength / 2);
                 _CogBlobReferResult.BlobCenterX[0] = _InspRegion.CenterX;
                 _CogBlobReferResult.BlobCenterY[0] = _InspRegion.CenterY;
-                _CogBlobReferResult.Width[0] = _InspRegion.Width;
-                _CogBlobReferResult.Height[0] = _InspRegion.Height;
+                _CogBlobReferResult.Width[0] = _InspRegion.SideXLength;
+                _CogBlobReferResult.Height[0] = _InspRegion.SideXLength;
                 _CogBlobReferResult.OriginX[0] = _InspRegion.CenterX;
                 _CogBlobReferResult.OriginY[0] = _InspRegion.CenterY;
 
@@ -269,7 +269,7 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private bool Inspection(CogImage8Grey _SrcImage, CogRectangle _InspArea)
+        private bool Inspection(CogImage8Grey _SrcImage, CogRectangleAffine _InspArea)
         {
             bool _Result = true;
 

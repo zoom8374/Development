@@ -12,11 +12,13 @@ namespace ParameterManager
     {
         public double OffsetX;
         public double OffsetY;
+        public double OffsetT;
 
         public AreaResultParameter()
         {
             OffsetX = 0;
             OffsetY = 0;
+            OffsetT = 0;
         }
     }
 

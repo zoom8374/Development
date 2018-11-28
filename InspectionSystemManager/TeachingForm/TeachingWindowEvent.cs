@@ -372,7 +372,9 @@ namespace InspectionSystemManager
             if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
             AlgorithmAreaDisplayRefresh();
 
-            bool _Result = InspBlobReferProcess.Run(InspectionImage, AlgoRegionRectangle, _CogBlobReferAlgo, ref _CogBlobReferResult);
+            CogRectangleAffine _AlgoRegionAffine = new CogRectangleAffine();
+            _AlgoRegionAffine.SetCenterLengthsRotationSkew(AlgoRegionRectangle.CenterX, AlgoRegionRectangle.CenterY, AlgoRegionRectangle.Width, AlgoRegionRectangle.Height, 0, 0);
+            bool _Result = InspBlobReferProcess.Run(InspectionImage, _AlgoRegionAffine, _CogBlobReferAlgo, ref _CogBlobReferResult);
 
             for (int iLoopCount = 0; iLoopCount < _CogBlobReferResult.BlobCount; ++iLoopCount)
             {

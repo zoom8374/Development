@@ -129,7 +129,7 @@ namespace ParameterManager
 
             //if (GetRecipeName.Count == 1 && GetRecipeName[0] == _RecipeName) return GetRecipeName[0];
             //if (GetRecipeName.Count == 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
-            if (GetRecipeName.Count > 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            if (GetRecipeName.Count >= 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
             else return "NULL";
         }
 
@@ -686,7 +686,7 @@ namespace ParameterManager
                 else if (_NodeChild.Name == "MatchingScore") _CogMultiPattern.MatchingScore = Convert.ToDouble(_NodeChild.InnerText);
                 else if (_NodeChild.Name == "MatchingAngle") _CogMultiPattern.MatchingAngle = Convert.ToDouble(_NodeChild.InnerText);
                 else if (_NodeChild.Name == "MatchingCount") _CogMultiPattern.MatchingCount = Convert.ToInt32(_NodeChild.InnerText);
-                else if (_NodeChild.Name == "TwoPointAngle") _CogMultiPattern.TwoPointAngle = Convert.ToInt32(_NodeChild.InnerText);
+                else if (_NodeChild.Name == "TwoPointAngle") _CogMultiPattern.TwoPointAngle = Convert.ToDouble(_NodeChild.InnerText);
 
                 //Reference
                 ReferenceInformation _ReferInfo = new ReferenceInformation();
@@ -1383,9 +1383,8 @@ namespace ParameterManager
                         for (int zLoopCount = 0; zLoopCount < _ReferCount; ++zLoopCount)
                         {
                             ReferenceInformation _ReferInfo = new ReferenceInformation();
-                            _ReferInfo.ReferencePath = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].ReferencePath;
-                            _ReferInfo.Reference         = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].Reference;
                             _ReferInfo.ReferencePath     = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].ReferencePath;
+                            _ReferInfo.Reference         = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].Reference;
                             _ReferInfo.InterActiveStartX = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].InterActiveStartX;
                             _ReferInfo.InterActiveStartY = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].InterActiveStartY;
                             _ReferInfo.StaticStartX      = ((CogPatternAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ReferenceInfoList[zLoopCount].StaticStartX;

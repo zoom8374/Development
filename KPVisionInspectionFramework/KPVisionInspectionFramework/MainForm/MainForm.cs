@@ -358,6 +358,10 @@ namespace KPVisionInspectionFramework
                 ResultBaseWnd.Show();
                 CLoadingManager.Hide();
             }
+
+            //FormTopMostInvoke(this, true);
+            if (false == ParamManager.SystemParam.IsSimulationMode)
+                this.WindowState = FormWindowState.Maximized;   
         }
 
         protected override void WndProc(ref Message message)
@@ -543,6 +547,29 @@ namespace KPVisionInspectionFramework
                 Environment.Exit(0);
             }
         }
+
+        #region Form TopMost Invoke
+        /// <summary>
+        /// Label Update
+        /// </summary>
+        public void FormTopMostInvoke(object _object, bool _Flag)
+        {
+            Form _Form = (MainForm)_object;
+            if (_Form.InvokeRequired)
+            {
+                _Form.Invoke(new MethodInvoker(delegate ()
+                {
+                    _Form.TopMost = _Flag;
+                }
+                ));
+            }
+
+            else
+            {
+                _Form.TopMost = _Flag;
+            }
+        }
+        #endregion Label Invoke
         #endregion Riboon Button Event
 
         #region Event : Inspection System Manager Event & Function

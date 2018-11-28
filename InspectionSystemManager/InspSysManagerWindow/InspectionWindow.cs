@@ -63,8 +63,10 @@ namespace InspectionSystemManager
         //검사 시 Area 별 Offset 값을 적용할 변수
         private double AreaBenchMarkOffsetX;
         private double AreaBenchMarkOffsetY;
+        private double AreaBenchMarkOffsetT;
         private double BenchMarkOffsetX = 0;
         private double BenchMarkOffsetY = 0;
+        private double BenchMarkOffsetT = 0;
         private int AreaAlgoCount;
 
         private string CameraType;
@@ -73,6 +75,7 @@ namespace InspectionSystemManager
         private bool IsCamLiveFlag = false;
         private bool IsCrossLine = false;
         private bool IsMenuHide = false;
+        private bool IsResultDisplay = true;
 
         private double DisplayZoomValue = 1;
         private double DisplayPanXValue = 0;
@@ -187,6 +190,12 @@ namespace InspectionSystemManager
             {
                 CameraManager.ImageGrabEvent += new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
                 CameraManager.Initialize(ID, _CamType, "");
+            }
+
+            else if (_CamType == eCameraType.BaslerGE.ToString())
+            {
+                CameraManager.ImageGrabEvent += new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
+                CameraManager.Initialize(ID, _CamType, _CamInfo);
             }
 
             else
@@ -420,6 +429,7 @@ namespace InspectionSystemManager
         {
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
             CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
+            ContinuesGrabStop();
             Inspection();
         }
 
@@ -430,11 +440,13 @@ namespace InspectionSystemManager
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("ISM{0} Single One-Shot Inspection Run", ID + 1), CLogManager.LOG_LEVEL.LOW);
 
             CParameterManager.SystemMode = eSysMode.ONESHOT_MODE;
+            ContinuesGrabStop();
             GrabAndInspection();
         }
 
         private void btnRecipe_Click(object sender, EventArgs e)
         {
+            ContinuesGrabStop();
             InspectionWindowEvent(eIWCMD.TEACHING, true);
             Teaching();
             InspectionWindowEvent(eIWCMD.TEACHING, false);
@@ -461,6 +473,7 @@ namespace InspectionSystemManager
 
         private void btnImageLoad_Click(object sender, EventArgs e)
         {
+            ContinuesGrabStop();
             LoadCogImage();
             kpCogDisplayMain.SetDisplayZoom(DisplayZoomValue);
             kpCogDisplayMain.SetDisplayPanX(DisplayPanXValue);
@@ -789,7 +802,7 @@ namespace InspectionSystemManager
             for (int iLoopCount = 0; iLoopCount < _InspAreaParam.InspAlgoParam.Count; ++iLoopCount)
             {
                 int _BenchMark = _InspAreaParam.AreaBenchMark - 1;
-                AreaBenchMarkOffsetX = AreaBenchMarkOffsetY = 0;
+                AreaBenchMarkOffsetX = AreaBenchMarkOffsetY = AreaBenchMarkOffsetT = 0;
 
                 //한 Area 에서 Algorithm NG가 발생했을 시 Algorithm Pass를 하면 비어있는 Result를 채워 준다
                 if (false == _InspectionResult && true == InspectionPassFlag)
@@ -804,25 +817,29 @@ namespace InspectionSystemManager
                 {
                     AreaBenchMarkOffsetX = AreaResultParamList[_BenchMark].OffsetX;
                     AreaBenchMarkOffsetY = AreaResultParamList[_BenchMark].OffsetY;
+                    AreaBenchMarkOffsetT = AreaResultParamList[_BenchMark].OffsetT;
                 }
 
                 //Algorithm 단위로 검사. Return은 Algorithm 단위의 결과
-                double _StartX = _InspAreaParam.AreaRegionCenterX - (_InspAreaParam.AreaRegionWidth / 2) + AreaBenchMarkOffsetX;
-                double _StartY = _InspAreaParam.AreaRegionCenterY - (_InspAreaParam.AreaRegionHeight / 2) + AreaBenchMarkOffsetY;
-                double _Width = _InspAreaParam.AreaRegionWidth;
-                double _Height = _InspAreaParam.AreaRegionHeight;
+                //double _StartX = _InspAreaParam.AreaRegionCenterX - (_InspAreaParam.AreaRegionWidth / 2) + AreaBenchMarkOffsetX;
+                //double _StartY = _InspAreaParam.AreaRegionCenterY - (_InspAreaParam.AreaRegionHeight / 2) + AreaBenchMarkOffsetY;
+                //double _Width = _InspAreaParam.AreaRegionWidth;
+                //double _Height = _InspAreaParam.AreaRegionHeight;
+                //double _Theta = AreaBenchMarkOffsetT;
 
-                _InspectionResult = AlgorithmStepInspection(_InspAreaParam.InspAlgoParam[iLoopCount], _StartX, _StartY, _Width, _Height, _InspAreaParam.NgAreaNumber);
+                //_InspectionResult = AlgorithmStepInspection(_InspAreaParam.InspAlgoParam[iLoopCount], _StartX, _StartY, _Width, _Height, _Theta, _InspAreaParam.NgAreaNumber);
+                _InspectionResult = AlgorithmStepInspection(_InspAreaParam.InspAlgoParam[iLoopCount], _InspAreaParam.NgAreaNumber);
 
                 //각 Area의 첫번째 알고리즘의 Offset 값이 Area 검사 Offset에 적용 됨
                 if (iLoopCount == 0)
                 {
                     AreaResultParameter _AreaResParam = new AreaResultParameter();
                     int _Index = AlgoResultParamList.Count - 1;
-                    if (AlgoResultParamList.Count < _Index)
+                    if (AlgoResultParamList.Count > _Index)
                     {
                         _AreaResParam.OffsetX = AlgoResultParamList[_Index].OffsetX;
                         _AreaResParam.OffsetY = AlgoResultParamList[_Index].OffsetY;
+                        _AreaResParam.OffsetT = AlgoResultParamList[_Index].OffsetT;
                         AreaResultParamList.Add(_AreaResParam);
                     }
 
@@ -830,6 +847,7 @@ namespace InspectionSystemManager
                     {
                         _AreaResParam.OffsetX = 0;
                         _AreaResParam.OffsetY = 0;
+                        _AreaResParam.OffsetT = 0;
                         AreaResultParamList.Add(_AreaResParam);
                     }
                 }
@@ -837,13 +855,15 @@ namespace InspectionSystemManager
          }
 
         #region Algorithm 별 Inspection Step
-        private bool AlgorithmStepInspection(InspectionAlgorithmParameter _InspAlgoParam, double _AreaStartX, double _AreaStartY, double _AreaWidth, double _AreaHeight, int _NgAreaNumber)
+        //private bool AlgorithmStepInspection(InspectionAlgorithmParameter _InspAlgoParam, double _AreaStartX, double _AreaStartY, double _AreaWidth, double _AreaHeight, double _Theta, int _NgAreaNumber)
+        private bool AlgorithmStepInspection(InspectionAlgorithmParameter _InspAlgoParam, int _NgAreaNumber)
         {
             bool _Result = true;
 
             if (false == _InspAlgoParam.AlgoEnable) return true;
             BenchMarkOffsetX = 0;
             BenchMarkOffsetY = 0;
+            BenchMarkOffsetT = 0;
             //double _BenchMarkOffsetX = 0, _BenchMarkOffsetY = 0;
 
             #region Buffer Area Calculate
@@ -854,6 +874,7 @@ namespace InspectionSystemManager
                 {
                     BenchMarkOffsetX = AlgoResultParamList[_BenchMark].OffsetX - AreaBenchMarkOffsetX;
                     BenchMarkOffsetY = AlgoResultParamList[_BenchMark].OffsetY - AreaBenchMarkOffsetY;
+                    //BenchMarkOffsetT = AlgoResultParamList[_BenchMark].OffsetT;
                 }
             }
 
@@ -861,15 +882,20 @@ namespace InspectionSystemManager
             double _CenterY = _InspAlgoParam .AlgoRegionCenterY + BenchMarkOffsetY;
             double _Width = _InspAlgoParam.AlgoRegionWidth;
             double _Height = _InspAlgoParam.AlgoRegionHeight;
+            double _Theta = AreaBenchMarkOffsetT;
+
             CogRectangle _InspRegion = new CogRectangle();
             _InspRegion.SetCenterWidthHeight(_CenterX, _CenterY, _Width, _Height);
+
+            CogRectangleAffine _InspRegionAffine = new CogRectangleAffine();
+            _InspRegionAffine.SetCenterLengthsRotationSkew(_CenterX, _CenterY, _Width, _Height, _Theta, 0);
             #endregion Buffer Area Calculate
 
             eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
             if (eAlgoType.C_PATTERN == _AlgoType)           _Result = CogPatternAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_BLOB == _AlgoType)         _Result = CogBlobAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_LEAD == _AlgoType)         _Result = CogLeadAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
-            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
+            else if (eAlgoType.C_BLOB_REFER == _AlgoType)   _Result = CogBlobReferenceAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegionAffine, _NgAreaNumber);
             else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)  _Result = CogNeedleCircleFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_ID == _AlgoType)           _Result = CogBarCodeIDAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
             else if (eAlgoType.C_LINE_FIND == _AlgoType)    _Result = CogLineFindAlgorithmStep(_InspAlgoParam.Algorithm, _InspRegion, _NgAreaNumber);
@@ -960,7 +986,8 @@ namespace InspectionSystemManager
             return true;
         }
 
-        private bool CogBlobReferenceAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        //private bool CogBlobReferenceAlgorithmStep(Object _Algorithm, CogRectangle _InspRegion, int _NgAreaNumber)
+        private bool CogBlobReferenceAlgorithmStep(Object _Algorithm, CogRectangleAffine _InspRegion, int _NgAreaNumber)
         {
             //CogBlobReferenceAlgo    _CogBlobReferAlgo = (CogBlobReferenceAlgo)_Algorithm;
             var _CogBlobReferAlgo = _Algorithm as CogBlobReferenceAlgo;
@@ -1118,19 +1145,22 @@ namespace InspectionSystemManager
             CogPointMarker _Point = new CogPointMarker();
             for (int iLoopCount = 0; iLoopCount < _PatternResult.FindCount; ++iLoopCount)
             {
-                //_PatternRect.SetCenterWidthHeight(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount]);
-                //_Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
-                //ResultDisplay(_PatternRect, _Point, "Pattern_" + iLoopCount, _PatternResult.IsGood);
-
+                if (false == IsResultDisplay) continue;
                 _PatternAffine.SetCenterLengthsRotationSkew(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount], _PatternResult.Angle[iLoopCount], 0);
                 _Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
-                ResultDisplay(_PatternAffine, _Point, "Pattern_" + iLoopCount, _PatternResult.IsGood);
+                ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_{1}", _Index, iLoopCount), _PatternResult.IsGood);
 
-                string _MatchingName = string.Format($"Rate = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
+                string _MatchingName = string.Format($"Rate{_Index} = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
                 ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
 
-            if (_PatternResult.FindCount <= 0) _IsGood = false;
+            if (_PatternResult.FindCount <= 0)
+            {
+                _PatternAffine.SetCenterLengthsRotationSkew(_PatternResult.CenterX[0], _PatternResult.CenterY[0], _PatternResult.Width[0], _PatternResult.Height[0], _PatternResult.Angle[0], 0);
+                _Point.SetCenterRotationSize(_PatternResult.OriginPointX[0], _PatternResult.OriginPointY[0], 0, 2);
+                ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_0", _Index), _PatternResult.IsGood);
+                _IsGood = false;
+            }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultPatternMatching Complete", CLogManager.LOG_LEVEL.MID);
 

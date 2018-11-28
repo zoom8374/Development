@@ -11,6 +11,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.PMAlign.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\KPDisplay.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\LogMessageManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\ParameterManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro3D.Core.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.FGGigE.dll
@@ -32,6 +33,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.ImageFile.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.ImageProcessing.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.PMAlign.xml
+C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\LogMessageManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro3D.Core.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.FGGigE.xml
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Release\Cognex.VisionPro.CorePlus.xml
