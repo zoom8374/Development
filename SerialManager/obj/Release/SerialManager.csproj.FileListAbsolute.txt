@@ -15,3 +15,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\SerialManager\obj\Release\SerialManager.csprojResolveAssemblyReference.cache

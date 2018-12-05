@@ -108,10 +108,10 @@ namespace InspectionSystemManager
                 double[] StartPoint = new double[2];
                 double[] EndPoint = new double[2];
 
-                StartPoint[0] = _CogMultiPatternResult.CenterX[0];
-                StartPoint[1] = _CogMultiPatternResult.CenterY[0];
-                EndPoint[0] = _CogMultiPatternResult.CenterX[1];
-                EndPoint[1] = _CogMultiPatternResult.CenterY[1];
+                StartPoint[0] = _CogMultiPatternResult.OriginPointX[0];
+                StartPoint[1] = _CogMultiPatternResult.OriginPointY[0];
+                EndPoint[0] = _CogMultiPatternResult.OriginPointX[1];
+                EndPoint[1] = _CogMultiPatternResult.OriginPointY[1];
 
                 if (false == AngleInspection(_SrcImage, _InspRegion, StartPoint, EndPoint, ref _CogMultiPatternResult.TwoPointAngle)) _Result = false;
 
@@ -176,11 +176,5 @@ namespace InspectionSystemManager
             PatternResults = PatternProc.Results;
         }
 
-        public CogPMAlignPattern GetPatternReference(CogImage8Grey _SrcImage)
-        {
-            CogPMAlignPattern _Pattern = new CogPMAlignPattern();
-            
-            return _Pattern;
-        }
     }
 }

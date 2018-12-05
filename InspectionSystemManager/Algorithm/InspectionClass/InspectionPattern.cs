@@ -142,10 +142,11 @@ namespace InspectionSystemManager
             PatternResults = PatternProc.Results;
         }
 
-        public CogPMAlignPattern GetPatternReference(CogImage8Grey _SrcImage, CogRectangle _Region, double _OriginX, double _OriginY)
+        public bool GetPatternReference(CogImage8Grey _SrcImage, CogRectangle _Region, double _OriginX, double _OriginY, ref CogPMAlignPattern _Pattern)
         {
-            CogPMAlignPattern _Pattern = new CogPMAlignPattern();
+            //CogPMAlignPattern _Pattern = new CogPMAlignPattern();
 
+            _Pattern = new CogPMAlignPattern();
             CogRectangleAffine _ReferRegionAffine = new CogRectangleAffine();
             _ReferRegionAffine.SetCenterLengthsRotationSkew(_Region.CenterX, _Region.CenterY, _Region.Width, _Region.Height, 0, 0);
 
@@ -158,9 +159,18 @@ namespace InspectionSystemManager
             _Pattern.TrainRegion = _ReferRegionAffine;
             _Pattern.Origin.TranslationX = _OriginX;
             _Pattern.Origin.TranslationY = _OriginY;
-            _Pattern.Train();
 
-            return _Pattern;
+            try
+            {
+                _Pattern.Train();
+            }
+
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

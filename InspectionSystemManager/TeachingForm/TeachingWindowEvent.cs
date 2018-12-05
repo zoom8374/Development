@@ -154,10 +154,14 @@ namespace InspectionSystemManager
                 _PatternInfo.Height = _ReferRegion.Height;
                 _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
                 _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
-                _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
+                bool PatternResult = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY, ref _PatternInfo.Reference);
 
-                if(!_MultiFlag) ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
-                else            ((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+                if (PatternResult)
+                {
+                    if (!_MultiFlag) ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+                    else ((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList.Add(_PatternInfo);
+                }
+                else MessageBox.Show("패턴을 등록할 수 없습니다.");
             }
 
             else if (_ReferAction == eReferAction.MODIFY)
@@ -188,10 +192,14 @@ namespace InspectionSystemManager
                 _PatternInfo.Height = _ReferRegion.Height;
                 _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
                 _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
-                _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
+                bool PatternResult = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY, ref _PatternInfo.Reference);
 
-                if (!_MultiFlag) ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
-                else             ((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+                if (PatternResult)
+                {
+                    if (!_MultiFlag) ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+                    else ((CogMultiPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+                }
+                else MessageBox.Show("패턴을 등록할 수 없습니다.");
             }
 
             else if (_ReferAction == eReferAction.DEL)
@@ -328,8 +336,13 @@ namespace InspectionSystemManager
                 _PatternInfo.Height = _ReferRegion.Height;
                 _PatternInfo.OriginPointOffsetX = _OriginPointOffsetX;
                 _PatternInfo.OriginPointOffsetY = _OriginPointOffsetY;
-                _PatternInfo.Reference = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY);
-                ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+                bool PatternResult = InspPatternProcess.GetPatternReference(InspectionImage, _ReferRegion, _PointCenterX, _PointCenterY, ref _PatternInfo.Reference);
+
+
+                if (PatternResult)
+                {
+                    ((CogPatternAlgo)InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].Algorithm).ReferenceInfoList[_Index] = _PatternInfo;
+                }
             }
 
             //else if (_ReferAction == eReferAction.DEL)

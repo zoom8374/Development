@@ -91,7 +91,8 @@ namespace KPVisionInspectionFramework
         {
             if (txtBoxLOTNum.Text == "") { MessageBox.Show("LOTNum을 입력하세요."); return; }
 
-            LOTChangeEvent("@N,B84060800," + txtBoxLOTNum.Text + ",AAA,AAA,BBB,25");
+            LOTChangeEvent("@L,B84060800," + txtBoxLOTNum.Text + ",AAA,AAA,BBB,25");
+
         }
 
         private void btnLOTEnd_Click(object sender, EventArgs e)

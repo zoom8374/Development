@@ -83,10 +83,16 @@ namespace InspectionSystemManager
 
         private void btnPatternAdd_Click(object sender, EventArgs e)
         {
+            if (CogPatternAlgoRcp.ReferenceInfoList.Count == 1) { MessageBox.Show("이미 추가된 패턴이 있습니다"); return; }
+
+            //LDH, 2018.11.28, CurrentPattern 숫자 에러 방지용
+            int PattenrCnt = CogPatternAlgoRcp.ReferenceInfoList.Count;
+
             var _ReferenceActionEvent = ReferenceActionEvent;
             _ReferenceActionEvent?.Invoke(eReferAction.ADD);
 
-            CurrentPattern++;
+            if(CogPatternAlgoRcp.ReferenceInfoList.Count > PattenrCnt) CurrentPattern++;
+
             ShowPatternImage(CurrentPattern);
             ShowPatternImageArea(CurrentPattern);
             UpdatePatternCount();
@@ -94,6 +100,8 @@ namespace InspectionSystemManager
 
         private void btnPatternDel_Click(object sender, EventArgs e)
         {
+            if (CogPatternAlgoRcp.ReferenceInfoList.Count < 1) { MessageBox.Show("삭제할 패턴이 없습니다."); return; }
+
             var _ReferenceActionEvent = ReferenceActionEvent;
             _ReferenceActionEvent?.Invoke(eReferAction.DEL, CurrentPattern - 1);
 
@@ -106,6 +114,8 @@ namespace InspectionSystemManager
 
         private void btnPatternModify_Click(object sender, EventArgs e)
         {
+            if (CogPatternAlgoRcp.ReferenceInfoList.Count < 1) { MessageBox.Show("먼저 패턴을 추가하세요."); return; }
+
             var _ReferenceActionEvent = ReferenceActionEvent;
             _ReferenceActionEvent?.Invoke(eReferAction.MODIFY, CurrentPattern - 1);
 
