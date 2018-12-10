@@ -40,9 +40,10 @@ namespace InspectionSystemManager
             bool _Result = false;
 
             PatternProc.RunParams.AcceptThreshold = _CogPatternAlgo.MatchingScore / 100;
+            PatternProc.RunParams.ApproximateNumberToFind = _CogPatternAlgo.MatchingCount;
             PatternProc.RunParams.ZoneAngle.Configuration = CogPMAlignZoneConstants.LowHigh;
-            PatternProc.RunParams.ZoneAngle.Low = _CogPatternAlgo.MatchingAngle * -1;
-            PatternProc.RunParams.ZoneAngle.High = _CogPatternAlgo.MatchingAngle * 1;
+            PatternProc.RunParams.ZoneAngle.Low = _CogPatternAlgo.MatchingAngle * -1 * Math.PI / 180;
+            PatternProc.RunParams.ZoneAngle.High = _CogPatternAlgo.MatchingAngle * 1 * Math.PI / 180;
 
 
             for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)

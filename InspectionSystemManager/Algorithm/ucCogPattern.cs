@@ -151,6 +151,7 @@ namespace InspectionSystemManager
         public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
         {
             if (null == _Algorithm) return;
+            CurrentPattern = 0;
 
             CogPatternAlgoRcp = _Algorithm as CogPatternAlgo;
             ReferenceBackup.Clear();

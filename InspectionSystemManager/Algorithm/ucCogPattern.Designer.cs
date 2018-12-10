@@ -95,7 +95,6 @@
             // 
             // btnNext
             // 
-            this.btnNext.Enabled = false;
             this.btnNext.Font = new System.Drawing.Font("나눔바른고딕", 10F, System.Drawing.FontStyle.Bold);
             this.btnNext.ForeColor = System.Drawing.Color.Black;
             this.btnNext.Location = new System.Drawing.Point(149, 314);
