@@ -110,7 +110,6 @@
             this.btnTrigger.TabIndex = 0;
             this.btnTrigger.Text = "Trigger";
             this.btnTrigger.UseVisualStyleBackColor = true;
-            this.btnTrigger.Visible = false;
             this.btnTrigger.Click += new System.EventHandler(this.btnTrigger_Click);
             // 
             // labelTitle

@@ -520,6 +520,9 @@ namespace ParameterManager
                 //GetInspectionMapDataParameter(_Node, ref _MapDataParamTemp);
                 GetInspectionParameterRegion(_Node, ref _InspAreaParamTemp);
                 GetInspectionParameterAlgorithm(_Node, ref _InspAreaParamTemp);
+
+                if (-1 == _InspAreaParamTemp.BaseIndexNumber)
+                    _InspAreaParamTemp.BaseIndexNumber = InspParam[_ID].InspAreaParam.Count;
                 InspParam[_ID].InspAreaParam.Add(_InspAreaParamTemp);
             }
 
@@ -547,14 +550,19 @@ namespace ParameterManager
             {
                 switch (_NodeChild.Name)
                 {
-                    case "Enable":            _InspAreaParam.Enable = Convert.ToBoolean(_NodeChild.InnerText); break;
-                    case "BenchMark":         _InspAreaParam.AreaBenchMark = Convert.ToInt32(_NodeChild.InnerText); break;
-                    case "NgNumber":          _InspAreaParam.NgAreaNumber = Convert.ToInt32(_NodeChild.InnerText); break;
-                    case "AreaRegionCenterX": _InspAreaParam.AreaRegionCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "AreaRegionCenterY": _InspAreaParam.AreaRegionCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "AreaRegionWidth":   _InspAreaParam.AreaRegionWidth = Convert.ToDouble(_NodeChild.InnerText); break;
-                    case "AreaRegionHeight":  _InspAreaParam.AreaRegionHeight = Convert.ToDouble(_NodeChild.InnerText); break;
-                    default:                  _Result = false; break;
+                    case "Enable":                  _InspAreaParam.Enable = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "BenchMark":               _InspAreaParam.AreaBenchMark = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "NgNumber":                _InspAreaParam.NgAreaNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "AreaRegionCenterX":       _InspAreaParam.AreaRegionCenterX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AreaRegionCenterY":       _InspAreaParam.AreaRegionCenterY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AreaRegionWidth":         _InspAreaParam.AreaRegionWidth = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "AreaRegionHeight":        _InspAreaParam.AreaRegionHeight = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "BaseIndexNumber":         _InspAreaParam.BaseIndexNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "IsUseMapData":            _InspAreaParam.IsUseMapData = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "MapDataUnitTotalCount":   _InspAreaParam.MapDataUnitTotalCount = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "MapDataStartNumber":      _InspAreaParam.MapDataStartNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    case "MapDataEndNumber":        _InspAreaParam.MapDataEndNumber = Convert.ToInt32(_NodeChild.InnerText); break;
+                    default:                        _Result = false; break;
                 }
             }
             return _Result;
@@ -935,6 +943,11 @@ namespace ParameterManager
                         _XmlWriter.WriteElementString("AreaRegionCenterY", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionCenterY.ToString());
                         _XmlWriter.WriteElementString("AreaRegionWidth", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionWidth.ToString());
                         _XmlWriter.WriteElementString("AreaRegionHeight", InspParam[_ID].InspAreaParam[iLoopCount].AreaRegionHeight.ToString());
+                        _XmlWriter.WriteElementString("BaseIndexNumber", InspParam[_ID].InspAreaParam[iLoopCount].BaseIndexNumber.ToString());
+                        _XmlWriter.WriteElementString("IsUseMapData", InspParam[_ID].InspAreaParam[iLoopCount].IsUseMapData.ToString());
+                        _XmlWriter.WriteElementString("MapDataUnitTotalCount", InspParam[_ID].InspAreaParam[iLoopCount].MapDataUnitTotalCount.ToString());
+                        _XmlWriter.WriteElementString("MapDataStartNumber", InspParam[_ID].InspAreaParam[iLoopCount].MapDataStartNumber.ToString());
+                        _XmlWriter.WriteElementString("MapDataEndNumber", InspParam[_ID].InspAreaParam[iLoopCount].MapDataEndNumber.ToString());
 
                         for (int jLoopCount = 0; jLoopCount < InspParam[_ID].InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
                         {
@@ -1206,6 +1219,7 @@ namespace ParameterManager
                 else if (_Nodes.Name == "UnitColumnCount")           InspMapDataParam[_ID].UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "SectionRowCount")           InspMapDataParam[_ID].SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "SectionColumnCount")        InspMapDataParam[_ID].SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchType")                 InspMapDataParam[_ID].SearchType = Convert.ToInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "MapDataTeachingMode")       InspMapDataParam[_ID].MapDataTeachingMode = Convert.ToInt32(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitSearchAreaCenterX")     InspMapDataParam[_ID].UnitSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitSearchAreaCenterY")     InspMapDataParam[_ID].UnitSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
@@ -1286,6 +1300,7 @@ namespace ParameterManager
                 _XmlWriter.WriteElementString("UnitRowCount", InspMapDataParam[_ID].UnitRowCount.ToString());
                 _XmlWriter.WriteElementString("UnitColumnCount", InspMapDataParam[_ID].UnitColumnCount.ToString());
                 _XmlWriter.WriteElementString("SectionRowCount", InspMapDataParam[_ID].SectionRowCount.ToString());
+                _XmlWriter.WriteElementString("SearchType", InspMapDataParam[_ID].SearchType.ToString());
                 _XmlWriter.WriteElementString("SectionColumnCount", InspMapDataParam[_ID].SectionColumnCount.ToString());
                 _XmlWriter.WriteElementString("MapDataTeachingMode", InspMapDataParam[_ID].MapDataTeachingMode.ToString());
                 _XmlWriter.WriteElementString("UnitSearchAreaCenterX", InspMapDataParam[_ID].UnitSearchAreaCenterX.ToString());
@@ -1346,13 +1361,18 @@ namespace ParameterManager
             for (int iLoopCount = 0; iLoopCount < _SrcParam.InspAreaParam.Count; ++iLoopCount)
             {
                 InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
-                _InspAreaParam.Enable               = _SrcParam.InspAreaParam[iLoopCount].Enable;
-                _InspAreaParam.NgAreaNumber         = _SrcParam.InspAreaParam[iLoopCount].NgAreaNumber;
-                _InspAreaParam.AreaBenchMark        = _SrcParam.InspAreaParam[iLoopCount] .AreaBenchMark;
-                _InspAreaParam.AreaRegionCenterX    = _SrcParam.InspAreaParam[iLoopCount].AreaRegionCenterX;
-                _InspAreaParam.AreaRegionCenterY    = _SrcParam.InspAreaParam[iLoopCount].AreaRegionCenterY;
-                _InspAreaParam.AreaRegionWidth      = _SrcParam.InspAreaParam[iLoopCount].AreaRegionWidth;
-                _InspAreaParam.AreaRegionHeight     = _SrcParam.InspAreaParam[iLoopCount].AreaRegionHeight;
+                _InspAreaParam.Enable                = _SrcParam.InspAreaParam[iLoopCount].Enable;
+                _InspAreaParam.NgAreaNumber          = _SrcParam.InspAreaParam[iLoopCount].NgAreaNumber;
+                _InspAreaParam.AreaBenchMark         = _SrcParam.InspAreaParam[iLoopCount] .AreaBenchMark;
+                _InspAreaParam.AreaRegionCenterX     = _SrcParam.InspAreaParam[iLoopCount].AreaRegionCenterX;
+                _InspAreaParam.AreaRegionCenterY     = _SrcParam.InspAreaParam[iLoopCount].AreaRegionCenterY;
+                _InspAreaParam.AreaRegionWidth       = _SrcParam.InspAreaParam[iLoopCount].AreaRegionWidth;
+                _InspAreaParam.AreaRegionHeight      = _SrcParam.InspAreaParam[iLoopCount].AreaRegionHeight;
+                _InspAreaParam.BaseIndexNumber       = _SrcParam.InspAreaParam[iLoopCount].BaseIndexNumber;
+                _InspAreaParam.IsUseMapData          = _SrcParam.InspAreaParam[iLoopCount].IsUseMapData;
+                _InspAreaParam.MapDataUnitTotalCount = _SrcParam.InspAreaParam[iLoopCount].MapDataUnitTotalCount;
+                _InspAreaParam.MapDataStartNumber    = _SrcParam.InspAreaParam[iLoopCount].MapDataStartNumber;
+                _InspAreaParam.MapDataEndNumber      = _SrcParam.InspAreaParam[iLoopCount].MapDataEndNumber;
 
                 for (int jLoopCount = 0; jLoopCount < _SrcParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
                 {
@@ -1586,6 +1606,121 @@ namespace ParameterManager
             }
         }
 
+
+        public static void RecipeCopy(InspectionAlgorithmParameter _SrcParam, ref InspectionAlgorithmParameter _DestParam, double _OffsetX = 0, double _OffsetY = 0)
+        {
+            _DestParam.AlgoEnable        = _SrcParam.AlgoEnable;
+            _DestParam.AlgoBenchMark     = _SrcParam.AlgoBenchMark;
+            _DestParam.AlgoType          = _SrcParam.AlgoType;
+            _DestParam.AlgoRegionCenterX = _SrcParam.AlgoRegionCenterX;
+            _DestParam.AlgoRegionCenterY = _SrcParam.AlgoRegionCenterY;
+            _DestParam.AlgoRegionWidth   = _SrcParam.AlgoRegionWidth;
+            _DestParam.AlgoRegionHeight  = _SrcParam.AlgoRegionHeight;
+
+            eAlgoType _AlgoType = (eAlgoType)_DestParam.AlgoType;
+            if (eAlgoType.C_PATTERN == _AlgoType)
+            {
+                #region Pattern Algorithm Copy
+                _DestParam.Algorithm = new CogPatternAlgo();
+                ((CogPatternAlgo)_DestParam.Algorithm).PatternCount  = ((CogPatternAlgo)_SrcParam.Algorithm).PatternCount;
+                ((CogPatternAlgo)_DestParam.Algorithm).MatchingScore = ((CogPatternAlgo)_SrcParam.Algorithm).MatchingScore;
+                ((CogPatternAlgo)_DestParam.Algorithm).MatchingAngle = ((CogPatternAlgo)_SrcParam.Algorithm).MatchingAngle;
+                ((CogPatternAlgo)_DestParam.Algorithm).MatchingCount = ((CogPatternAlgo)_SrcParam.Algorithm).MatchingCount;
+                ((CogPatternAlgo)_DestParam.Algorithm).IsShift       = ((CogPatternAlgo)_SrcParam.Algorithm).IsShift;
+                ((CogPatternAlgo)_DestParam.Algorithm).AllowedShiftX = ((CogPatternAlgo)_SrcParam.Algorithm).AllowedShiftX;
+                ((CogPatternAlgo)_DestParam.Algorithm).AllowedShiftY = ((CogPatternAlgo)_SrcParam.Algorithm).AllowedShiftY;
+
+                int _ReferCount = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList.Count;
+                for (int iLoopCount = 0; iLoopCount < _ReferCount; ++iLoopCount)
+                {
+                    ReferenceInformation _ReferInfo = new ReferenceInformation();
+                    _ReferInfo.ReferencePath = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].ReferencePath;
+                    _ReferInfo.Reference = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].Reference;
+
+                    _ReferInfo.InterActiveStartX    = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].InterActiveStartX;
+                    _ReferInfo.InterActiveStartY    = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].InterActiveStartY;
+                    _ReferInfo.StaticStartX         = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].StaticStartX + _OffsetX;
+                    _ReferInfo.StaticStartY         = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].StaticStartY + _OffsetY;
+                    _ReferInfo.CenterX              = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].CenterX + _OffsetX;
+                    _ReferInfo.CenterY              = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].CenterY + _OffsetY;
+                    _ReferInfo.OriginPointOffsetX   = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].OriginPointOffsetX;
+                    _ReferInfo.OriginPointOffsetY   = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].OriginPointOffsetY;
+                    _ReferInfo.Width                = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].Width;
+                    _ReferInfo.Height               = ((CogPatternAlgo)_SrcParam.Algorithm).ReferenceInfoList[iLoopCount].Height;
+
+                    ((CogPatternAlgo)_DestParam.Algorithm).ReferenceInfoList.Add(_ReferInfo);
+                }
+                #endregion Pattern Algorithm Copy
+            }
+        }
+
+        /// <summary>
+        /// Map Data 적용 용 InspectionAlgorithmParameter (Recipe) 복사
+        /// </summary>
+        /// <param name="_SrcParam">원본 Recipe</param>
+        /// <param name="_DestParam">저장 할 Recipe</param>
+        public static void RecipeCopy(List<InspectionAlgorithmParameter> _SrcParam, ref List<InspectionAlgorithmParameter> _DestParam, double _AreaCenterX, double _AreaCenterY)
+        {
+            _DestParam = new List<InspectionAlgorithmParameter>();
+
+            for (int iLoopCount = 0; iLoopCount < _SrcParam.Count; ++iLoopCount)
+            {
+                InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter();
+                double _OffsetX = _SrcParam[iLoopCount].AlgoRegionCenterX - _AreaCenterX;
+                double _OffsetY = _SrcParam[iLoopCount].AlgoRegionCenterY - _AreaCenterY;
+
+                _InspAlgoParam.AlgoEnable        = _SrcParam[iLoopCount].AlgoEnable;
+                _InspAlgoParam.AlgoBenchMark     = _SrcParam[iLoopCount].AlgoBenchMark;
+                _InspAlgoParam.AlgoType          = _SrcParam[iLoopCount].AlgoType;
+                _InspAlgoParam.AlgoRegionCenterX = _SrcParam[iLoopCount].AlgoRegionCenterX + _OffsetX;
+                _InspAlgoParam.AlgoRegionCenterY = _SrcParam[iLoopCount].AlgoRegionCenterY + _OffsetY;
+                _InspAlgoParam.AlgoRegionWidth   = _SrcParam[iLoopCount].AlgoRegionWidth;
+                _InspAlgoParam.AlgoRegionHeight  = _SrcParam[iLoopCount].AlgoRegionHeight;
+
+                eAlgoType _AlgoType = (eAlgoType)_InspAlgoParam.AlgoType;
+                if (eAlgoType.C_PATTERN == _AlgoType)
+                {
+                    #region Pattern Algorithm Copy
+                    _InspAlgoParam.Algorithm = new CogPatternAlgo();
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).PatternCount  = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).PatternCount;
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingScore = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).MatchingScore;
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingAngle = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).MatchingAngle;
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).MatchingCount = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).MatchingCount;
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).IsShift = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).IsShift;
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).AllowedShiftX = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).AllowedShiftX;
+                    ((CogPatternAlgo)_InspAlgoParam.Algorithm).AllowedShiftY = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).AllowedShiftY;
+
+                    int _ReferCount = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList.Count;
+                    for (int jLoopCount = 0; jLoopCount < _ReferCount; ++jLoopCount)
+                    {
+                        ReferenceInformation _ReferInfo = new ReferenceInformation();
+                        _ReferInfo.ReferencePath = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].ReferencePath;
+                        _ReferInfo.Reference = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].Reference;
+                        _ReferInfo.InterActiveStartX = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].InterActiveStartX;
+                        _ReferInfo.InterActiveStartY = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].InterActiveStartY;
+                        _ReferInfo.StaticStartX = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].StaticStartX + _OffsetX;
+                        _ReferInfo.StaticStartY = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].StaticStartY + _OffsetY;
+                        _ReferInfo.CenterX = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].CenterX + _OffsetX;
+                        _ReferInfo.CenterY = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].CenterY + _OffsetY;
+                        _ReferInfo.OriginPointOffsetX = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].OriginPointOffsetX;
+                        _ReferInfo.OriginPointOffsetY = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].OriginPointOffsetY;
+                        _ReferInfo.Width = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].Width;
+                        _ReferInfo.Height = ((CogPatternAlgo)_SrcParam[iLoopCount].Algorithm).ReferenceInfoList[jLoopCount].Height;
+
+                        ((CogPatternAlgo)_InspAlgoParam.Algorithm).ReferenceInfoList.Add(_ReferInfo);
+                    }
+                    #endregion Pattern Algorithm Copy
+                }
+
+                _DestParam.Add(_InspAlgoParam);
+            }
+        }
+
+        /// <summary>
+        /// Map Data Parameter (Recipe) 복사
+        /// </summary>
+        /// <param name="_SrcParam">원본 Recipe</param>
+        /// <param name="_DestParam">저장 할 Recipe</param>
         public static void RecipeCopy(MapDataParameter _SrcParam, ref MapDataParameter _DestParam)
         {
             if (null == _SrcParam) return;
@@ -1602,6 +1737,7 @@ namespace ParameterManager
             _DestParam.UnitColumnCount        = _SrcParam.UnitColumnCount;
             _DestParam.SectionRowCount        = _SrcParam.SectionRowCount;
             _DestParam.SectionColumnCount     = _SrcParam.SectionColumnCount;
+            _DestParam.SearchType             = _SrcParam.SearchType;
             _DestParam.MapDataTeachingMode    = _SrcParam.MapDataTeachingMode;
             _DestParam.UnitSearchAreaCenterX  = _SrcParam.UnitSearchAreaCenterX;
             _DestParam.UnitSearchAreaCenterY  = _SrcParam.UnitSearchAreaCenterY;

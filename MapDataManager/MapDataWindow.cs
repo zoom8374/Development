@@ -15,10 +15,20 @@ using ParameterManager;
 
 namespace MapDataManager
 {
+    
     public partial class MapDataWindow : Form
     {
+        public struct CenterPoint
+        {
+            public double X;
+            public double Y;
+        }
+
+        private enum eSearchType { NORMAL = 0, NORMAL_REV, ZIGZAG, ZIGZAG_REV };
+
         private MapDataParameter MapDataParam;
         private MapDataParameter MapDataParamBackup;
+        private int SearchDirectionType;
 
         private CogImage8Grey OriginImage;
         private InspectionPattern InspPattern;
@@ -71,6 +81,8 @@ namespace MapDataManager
             chAreaAutoSearch.Checked    = Convert.ToBoolean(MapDataParam.MapDataTeachingMode);
             chAreaManualSearch.Checked  = !Convert.ToBoolean(MapDataParam.MapDataTeachingMode);
 
+            SetSearchType(MapDataParam.SearchType);
+
             if (MapDataParam.UnitPattern != null && MapDataParam.UnitPattern.Trained == true)
                 kpPatternDisplay.SetDisplayImage((CogImage8Grey)MapDataParam.UnitPattern.GetTrainedPatternImage());
         }
@@ -120,11 +132,11 @@ namespace MapDataManager
         private void btnUnitPatternAreaShow_Click(object sender, EventArgs e)
         {
             #region Button Status
-            btnUnitPatternSearchAreaShow.Enabled = false;
-            btnUnitPatternSearchAreaSet.Enabled = false;
-            btnUnitPatternOriginCenterSet.Enabled = true;
-            btnUnitPatternAreaShow.Enabled = false;
-            btnUnitPatternAreaSet.Enabled = true;
+            btnUnitPatternSearchAreaShow.Enabled = false;   btnUnitPatternSearchAreaShow.BackColor = Color.Gray;
+            btnUnitPatternSearchAreaSet.Enabled = false;    btnUnitPatternSearchAreaSet.BackColor = Color.Gray;
+            btnUnitPatternOriginCenterSet.Enabled = true;   btnUnitPatternOriginCenterSet.BackColor = Color.PaleGreen;
+            btnUnitPatternAreaShow.Enabled = false;         btnUnitPatternAreaShow.BackColor = Color.Gray;
+            btnUnitPatternAreaSet.Enabled = true;           btnUnitPatternAreaSet.BackColor = Color.PaleGreen;
             //btnUnitPatternAreaCancel.Enabled = true;
             #endregion Button Status
 
@@ -141,11 +153,11 @@ namespace MapDataManager
         private void btnUnitPatternAreaSet_Click(object sender, EventArgs e)
         {
             #region Button Status
-            btnUnitPatternSearchAreaShow.Enabled = true;
-            btnUnitPatternSearchAreaSet.Enabled = false;
-            btnUnitPatternOriginCenterSet.Enabled = false;
-            btnUnitPatternAreaShow.Enabled = true;
-            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaShow.Enabled = true;        btnUnitPatternSearchAreaShow.BackColor = Color.SandyBrown;
+            btnUnitPatternSearchAreaSet.Enabled = false;        btnUnitPatternSearchAreaSet.BackColor = Color.Gray;
+            btnUnitPatternOriginCenterSet.Enabled = false;      btnUnitPatternOriginCenterSet.BackColor = Color.Gray;
+            btnUnitPatternAreaShow.Enabled = true;              btnUnitPatternAreaShow.BackColor = Color.PaleGreen;
+            btnUnitPatternAreaSet.Enabled = false;              btnUnitPatternAreaSet.BackColor = Color.Gray;
             //btnUnitPatternAreaCancel.Enabled = false;
             #endregion Button Status
 
@@ -187,11 +199,11 @@ namespace MapDataManager
         private void btnUnitPatternSearchAreaShow_Click(object sender, EventArgs e)
         {
             #region Button Status
-            btnUnitPatternSearchAreaShow.Enabled = false;
-            btnUnitPatternSearchAreaSet.Enabled = true;
-            btnUnitPatternOriginCenterSet.Enabled = false;
-            btnUnitPatternAreaShow.Enabled = false;
-            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaShow.Enabled = false;       btnUnitPatternSearchAreaShow.BackColor = Color.Gray;
+            btnUnitPatternSearchAreaSet.Enabled = true;         btnUnitPatternSearchAreaSet.BackColor = Color.SandyBrown;
+            btnUnitPatternOriginCenterSet.Enabled = false;      btnUnitPatternOriginCenterSet.BackColor = Color.Gray;
+            btnUnitPatternAreaShow.Enabled = false;             btnUnitPatternAreaShow.BackColor = Color.Gray;
+            btnUnitPatternAreaSet.Enabled = false;              btnUnitPatternAreaSet.BackColor = Color.Gray;
             //btnUnitPatternAreaCancel.Enabled = false;
             #endregion Button Status
 
@@ -208,11 +220,11 @@ namespace MapDataManager
         private void btnUnitPatternSearchAreaSet_Click(object sender, EventArgs e)
         {
             #region Button Status
-            btnUnitPatternSearchAreaShow.Enabled = true;
-            btnUnitPatternSearchAreaSet.Enabled = false;
-            btnUnitPatternOriginCenterSet.Enabled = false;
-            btnUnitPatternAreaShow.Enabled = true;
-            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaShow.Enabled = true;        btnUnitPatternSearchAreaShow.BackColor = Color.SandyBrown;
+            btnUnitPatternSearchAreaSet.Enabled = false;        btnUnitPatternSearchAreaSet.BackColor = Color.Gray;
+            btnUnitPatternOriginCenterSet.Enabled = false;      btnUnitPatternOriginCenterSet.BackColor = Color.Gray;
+            btnUnitPatternAreaShow.Enabled = true;              btnUnitPatternAreaShow.BackColor = Color.PaleGreen;
+            btnUnitPatternAreaSet.Enabled = false;              btnUnitPatternAreaSet.BackColor = Color.Gray;
             //btnUnitPatternAreaCancel.Enabled = false;
             #endregion Button Status
 
@@ -231,11 +243,11 @@ namespace MapDataManager
         private void btnUnitPatternAreaCancel_Click(object sender, EventArgs e)
         {
             #region Button Status
-            btnUnitPatternSearchAreaShow.Enabled = true;
-            btnUnitPatternSearchAreaSet.Enabled = false;
-            btnUnitPatternOriginCenterSet.Enabled = false;
-            btnUnitPatternAreaShow.Enabled = true;
-            btnUnitPatternAreaSet.Enabled = false;
+            btnUnitPatternSearchAreaShow.Enabled = true;         btnUnitPatternSearchAreaShow.BackColor = Color.SandyBrown;
+            btnUnitPatternSearchAreaSet.Enabled = false;         btnUnitPatternSearchAreaSet.BackColor = Color.Gray;
+            btnUnitPatternOriginCenterSet.Enabled = false;       btnUnitPatternOriginCenterSet.BackColor = Color.Gray;
+            btnUnitPatternAreaShow.Enabled = true;               btnUnitPatternAreaShow.BackColor = Color.PaleGreen;
+            btnUnitPatternAreaSet.Enabled = false;               btnUnitPatternAreaSet.BackColor = Color.Gray;
             //btnUnitPatternAreaCancel.Enabled = false;
             #endregion Button Status
 
@@ -269,6 +281,9 @@ namespace MapDataManager
                 _Width   = new double[_PatternResult.Count];
                 _Height  = new double[_PatternResult.Count];
 
+                uint _RowCount = Convert.ToUInt32(numUpDownUnitRowCount.Value);
+                uint _ColCount = Convert.ToUInt32(numUpDownUnitColumnCount.Value);
+                CenterPoint[] _CenterPointArray = new CenterPoint[_RowCount * _ColCount];
                 for (int iLoopCount = 0; iLoopCount < _PatternResult.Count; ++iLoopCount)
                 {
                     _OriginX[iLoopCount] = _PatternResult[iLoopCount].GetPose().TranslationX;
@@ -290,6 +305,23 @@ namespace MapDataManager
                     MapDataParam.UnitListCenterY.Add(_CenterY[iLoopCount]);
                     MapDataParam.UnitListWidth.Add(_Width[iLoopCount]);
                     MapDataParam.UnitListHeight.Add(_Height[iLoopCount]);
+
+                    _CenterPointArray[iLoopCount] = new CenterPoint();
+                    _CenterPointArray[iLoopCount].X = _CenterX[iLoopCount];
+                    _CenterPointArray[iLoopCount].Y = _CenterY[iLoopCount];
+                }
+
+                CenterPoint[,] _SortedCenterPoint = CenterPointSort(_RowCount, _ColCount, _CenterPointArray);
+
+                MapDataParam.UnitListCenterX.Clear();
+                MapDataParam.UnitListCenterY.Clear();
+                for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
+                {
+                    for (int jLoopCount = 0; jLoopCount < _ColCount; ++jLoopCount)
+                    {
+                        MapDataParam.UnitListCenterX.Add(_SortedCenterPoint[iLoopCount, jLoopCount].X);
+                        MapDataParam.UnitListCenterY.Add(_SortedCenterPoint[iLoopCount, jLoopCount].Y);
+                    }
                 }
             }
 
@@ -315,6 +347,8 @@ namespace MapDataManager
                 CogPointMarker _OriginPoint = new CogPointMarker();
                 _OriginPoint.SetCenterRotationSize(MapDataParam.UnitListCenterX[iLoopCount], MapDataParam.UnitListCenterY[iLoopCount], 0, 2);
                 kpTeachDisplay.DrawStaticShape(_OriginPoint, "PatternOrigin" + (iLoopCount + 1), CogColorConstants.Green, 12);
+
+                kpTeachDisplay.DrawText((iLoopCount + 1).ToString(), MapDataParam.UnitListCenterX[iLoopCount], MapDataParam.UnitListCenterY[iLoopCount] - 15, CogColorConstants.Green, 10);
             }
 
             SelectingRectName = SelectedRectName = "";
@@ -329,6 +363,7 @@ namespace MapDataManager
             MapDataParam.UnitColumnCount = Convert.ToUInt32(numUpDownUnitColumnCount.Value);
             MapDataParam.SectionRowCount = Convert.ToUInt32(numUpDownSectionRowCount.Value);
             MapDataParam.SectionColumnCount = Convert.ToUInt32(numUpDownSectionColumnCount.Value);
+            MapDataParam.SearchType = SearchDirectionType;
             MapDataParam.FindCount = Convert.ToUInt32(numericUpDownFindCount.Value);
             MapDataParam.FindScore = Convert.ToDouble(numericUpDownFindScore.Value);
             MapDataParam.AngleLimit = Convert.ToDouble(numericUpDownAngleLimit.Value);
@@ -383,6 +418,8 @@ namespace MapDataManager
             MapDataParam.UnitListWidth.Clear();
             MapDataParam.UnitListHeight.Clear();
             CogRectangle[,] _PatternRegions = new CogRectangle[_RowCount, _ColCount];
+            CenterPoint[] _CenterPointArray = new CenterPoint[_RowCount * _ColCount];
+            int _Index = 0;
             for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
             {
                 _CenterPointY = _StartCenterPointY + (_Height * iLoopCount);
@@ -398,7 +435,22 @@ namespace MapDataManager
                     MapDataParam.UnitListWidth.Add(_PatternRegions[iLoopCount, jLoopCount].Width);
                     MapDataParam.UnitListHeight.Add(_PatternRegions[iLoopCount, jLoopCount].Height);
 
-                    //kpTeachDisplay.DrawStaticShape(_PatternRegions[iLoopCount, jLoopCount], "SearchArea" + (iLoopCount + 1) + (jLoopCount + 1));
+                    _CenterPointArray[_Index] = new CenterPoint();
+                    _CenterPointArray[_Index].X = _PatternRegions[iLoopCount, jLoopCount].CenterX;
+                    _CenterPointArray[_Index].Y = _PatternRegions[iLoopCount, jLoopCount].CenterY;
+                    _Index++;
+                }
+            }
+
+            CenterPoint[,] _SortedCenterPoint = CenterPointSort(_RowCount, _ColCount, _CenterPointArray);
+            MapDataParam.UnitListCenterX.Clear();
+            MapDataParam.UnitListCenterY.Clear();
+            for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
+            {
+                for (int jLoopCount = 0; jLoopCount < _ColCount; ++jLoopCount)
+                {
+                    MapDataParam.UnitListCenterX.Add(_SortedCenterPoint[iLoopCount, jLoopCount].X);
+                    MapDataParam.UnitListCenterY.Add(_SortedCenterPoint[iLoopCount, jLoopCount].Y);
                 }
             }
 
@@ -453,6 +505,55 @@ namespace MapDataManager
         }
         #endregion Control Event
 
+        private CenterPoint[,] CenterPointSort(uint _RowCount, uint _ColCount, CenterPoint[] _CenterPointArray)
+        {
+            int _Index = 0;
+            CenterPoint[,] _SortedCenterPoint = new CenterPoint[_RowCount, _ColCount];
+
+            //Y 축 방향으로 오름차순 정렬
+            Array.Sort(_CenterPointArray, delegate (CenterPoint _First, CenterPoint _Second) { return _First.Y.CompareTo(_Second.Y); });
+            
+            for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
+            {
+                var _CenterPointReferY = new CenterPoint[_ColCount];
+                for (int jLoopCount = 0; jLoopCount < _ColCount; ++jLoopCount)
+                    _CenterPointReferY[jLoopCount] = _CenterPointArray[_Index++];
+
+                //if (iLoopCount % 2 == 1)    Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _Second.X.CompareTo(_First.X); }); //지그재그
+                //else                        Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _First.X.CompareTo(_Second.X); }); //노멀
+
+                if (eSearchType.NORMAL == (eSearchType)MapDataParam.SearchType)
+                {
+                    Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _First.X.CompareTo(_Second.X); }); //노멀
+                }
+
+                else if (eSearchType.NORMAL_REV == (eSearchType)MapDataParam.SearchType)
+                {
+                    Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _Second.X.CompareTo(_First.X); }); //노멀
+                }
+
+                else if (eSearchType.ZIGZAG == (eSearchType)MapDataParam.SearchType)
+                {
+                    if (iLoopCount % 2 == 1)    Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _Second.X.CompareTo(_First.X); });
+                    else                        Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _First.X.CompareTo(_Second.X); });
+                }
+
+                else if (eSearchType.ZIGZAG_REV == (eSearchType)MapDataParam.SearchType)
+                {
+                    if (iLoopCount % 2 == 0)    Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _Second.X.CompareTo(_First.X); }); //지그재그
+                    else                        Array.Sort(_CenterPointReferY, delegate (CenterPoint _First, CenterPoint _Second) { return _First.X.CompareTo(_Second.X); }); //노멀
+                }
+
+                for (int jLoopCount = 0; jLoopCount < _ColCount; ++jLoopCount)
+                {
+                    _SortedCenterPoint[iLoopCount, jLoopCount] = new CenterPoint();
+                    _SortedCenterPoint[iLoopCount, jLoopCount] = _CenterPointReferY[jLoopCount];
+                }
+            }
+
+            return _SortedCenterPoint;
+        }
+
         private void TeachDisplayDownEventFunction(Point _MousePoint)
         {
             if (false == IsDrawPatterns) return;
@@ -484,6 +585,39 @@ namespace MapDataManager
                     }
                 }
             }
+        }
+
+        private void rbSearchType_MouseUp(object sender, MouseEventArgs e)
+        {
+            RadioButton _RadioSearchType = (RadioButton)sender;
+            int _SearchType = Convert.ToInt32(_RadioSearchType.Tag);
+            SetSearchType(_SearchType);
+        }
+
+        private void picSearchTypeChange_Click(object sender, EventArgs e)
+        {
+            PictureBox _PicSearchType = (PictureBox)sender;
+            int _SearchType = Convert.ToInt32(_PicSearchType.Tag);
+            SetSearchType(_SearchType);
+        }
+
+        private void SetSearchType(int _SearchType)
+        {
+            rbNormalSearch.Checked = false;
+            rbNormalReverseSearch.Checked = false;
+            rbZigzagSearch.Checked = false;
+            rbZigzagReverseSearch.Checked = false;
+
+            switch ((eSearchType)_SearchType)
+            {
+                case eSearchType.NORMAL:        rbNormalSearch.Checked = true;        break;
+                case eSearchType.NORMAL_REV:    rbNormalReverseSearch.Checked = true; break;
+                case eSearchType.ZIGZAG:        rbZigzagSearch.Checked = true;        break;
+                case eSearchType.ZIGZAG_REV:    rbZigzagReverseSearch.Checked = true; break;
+            }
+
+            SearchDirectionType = _SearchType;
+            MapDataParam.SearchType = _SearchType;
         }
     }
 }

@@ -323,6 +323,30 @@
   <ItemGroup>
     <None Include="Resources\TrainDisable.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Result.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultDisable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultStop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultStopDisable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultStopDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResultStopOver.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -397,6 +397,7 @@ namespace ParameterManager
         public double AreaRegionHeight = 200;
         public bool Enable = true;
         public int NgAreaNumber = 1;
+        public int BaseIndexNumber = -1;
 
         //MapData 관련 변수
         public bool IsUseMapData = false;

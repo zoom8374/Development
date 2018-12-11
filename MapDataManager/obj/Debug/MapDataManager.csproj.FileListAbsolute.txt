@@ -1,5 +1,3 @@
-C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\MapDataManager.exe.config
-C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\MapDataManager.exe
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\MapDataManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\Cognex.VisionPro.Caliper.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\Cognex.VisionPro.Controls.dll
@@ -45,5 +43,7 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\M
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\MapDataManager.MapDataWindow.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\MapDataManager.Properties.Resources.resources
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\MapDataManager.csproj.GenerateResource.Cache
-C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\MapDataManager.exe
 C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\MapDataManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\MapDataManager.dll.config
+C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\bin\Debug\MapDataManager.dll
+C:\Zoom\Source management\Project\CIPOSLeadInspection\MapDataManager\obj\Debug\MapDataManager.dll

@@ -21,6 +21,8 @@ namespace ParameterManager
             set { value = UnitRowCount * UnitColumnCount; }
         }
 
+        public int SearchType;
+
         /// <summary>
         /// 0 : ManualMode / 1 : Auto MOde
         /// </summary>
@@ -60,6 +62,7 @@ namespace ParameterManager
             UnitColumnCount = 1;
             SectionRowCount = 1;
             SectionColumnCount = 1;
+            SearchType = 0;
 
             MapDataTeachingMode = 0;
 

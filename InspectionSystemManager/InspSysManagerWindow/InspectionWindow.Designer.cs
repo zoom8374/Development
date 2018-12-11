@@ -31,6 +31,7 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.kpCogDisplayMain = new KPDisplay.KPCogDisplayControl();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnImageResultDisplay = new CustomControl.ImageButton();
             this.btnCrossBar = new CustomControl.ImageButton();
             this.btnImageAutoSave = new CustomControl.ImageButton();
             this.btnAutoDelete = new CustomControl.ImageButton();
@@ -43,8 +44,8 @@
             this.btnInspection = new CustomControl.ImageButton();
             this.btnLive = new CustomControl.ImageButton();
             this.labelTitle = new System.Windows.Forms.Label();
-            this.panelMenuHide = new System.Windows.Forms.Panel();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.panelMenuHide = new System.Windows.Forms.Panel();
             this.panelMain.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.SuspendLayout();
@@ -75,6 +76,7 @@
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.panelMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenu.Controls.Add(this.btnImageResultDisplay);
             this.panelMenu.Controls.Add(this.btnCrossBar);
             this.panelMenu.Controls.Add(this.btnImageAutoSave);
             this.panelMenu.Controls.Add(this.btnAutoDelete);
@@ -90,6 +92,28 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(616, 38);
             this.panelMenu.TabIndex = 0;
+            // 
+            // btnImageResultDisplay
+            // 
+            this.btnImageResultDisplay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageResultDisplay.BackgroundImage = global::InspectionSystemManager.Properties.Resources.ResultStop;
+            this.btnImageResultDisplay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnImageResultDisplay.ButtonImage = global::InspectionSystemManager.Properties.Resources.ResultStop;
+            this.btnImageResultDisplay.ButtonImageDiable = null;
+            this.btnImageResultDisplay.ButtonImageDown = global::InspectionSystemManager.Properties.Resources.ResultStopDown;
+            this.btnImageResultDisplay.ButtonImageOver = global::InspectionSystemManager.Properties.Resources.ResultStopOver;
+            this.btnImageResultDisplay.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageResultDisplay.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageResultDisplay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageResultDisplay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.btnImageResultDisplay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImageResultDisplay.ForeColor = System.Drawing.Color.White;
+            this.btnImageResultDisplay.Location = new System.Drawing.Point(420, 1);
+            this.btnImageResultDisplay.Name = "btnImageResultDisplay";
+            this.btnImageResultDisplay.Size = new System.Drawing.Size(34, 34);
+            this.btnImageResultDisplay.TabIndex = 17;
+            this.btnImageResultDisplay.UseVisualStyleBackColor = false;
+            this.btnImageResultDisplay.Click += new System.EventHandler(this.btnImageResultDisplay_Click);
             // 
             // btnCrossBar
             // 
@@ -423,5 +447,6 @@
 		private CustomControl.ImageButton btnAutoDelete;
         private System.Windows.Forms.Panel panelMenuHide;
         private System.Windows.Forms.Label labelStatus;
+        private CustomControl.ImageButton btnImageResultDisplay;
     }
 }

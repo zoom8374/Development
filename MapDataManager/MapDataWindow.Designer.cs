@@ -30,11 +30,22 @@
         {
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.rbZigzagReverseSearch = new System.Windows.Forms.RadioButton();
+            this.rbNormalReverseSearch = new System.Windows.Forms.RadioButton();
+            this.rbZigzagSearch = new System.Windows.Forms.RadioButton();
+            this.rbNormalSearch = new System.Windows.Forms.RadioButton();
+            this.picZigzagReverseSearch = new System.Windows.Forms.PictureBox();
+            this.picNormalSearch = new System.Windows.Forms.PictureBox();
+            this.picZigzagSearch = new System.Windows.Forms.PictureBox();
+            this.picNormalReverseSearch = new System.Windows.Forms.PictureBox();
+            this.chAreaManualSearch = new System.Windows.Forms.CheckBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnManualSearchAreaSet = new System.Windows.Forms.Button();
+            this.btnManualSearchArea = new System.Windows.Forms.Button();
+            this.chAreaAutoSearch = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnManualSearchAreaSet = new System.Windows.Forms.Button();
-            this.btnManualSearchArea = new System.Windows.Forms.Button();
             this.btnShowSearchArea = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnUnitPatternSearchAreaShow = new System.Windows.Forms.Button();
@@ -55,7 +66,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.kpPatternDisplay = new KPDisplay.KPCogDisplayControl();
             this.btnUnitPatternAreaCancel = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.txtUnitTotalCount = new System.Windows.Forms.TextBox();
             this.gradientLabel6 = new CustomControl.GradientLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -73,24 +83,29 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.kpTeachDisplay = new KPDisplay.KPCogDisplayControl();
             this.labelInputTitle = new CustomControl.GradientLabel();
-            this.chAreaAutoSearch = new System.Windows.Forms.CheckBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.chAreaManualSearch = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picZigzagReverseSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picNormalSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picZigzagSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picNormalReverseSearch)).BeginInit();
+            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAngleLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindScore)).BeginInit();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionColumnCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionRowCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitColumnCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitRowCount)).BeginInit();
-            this.panel3.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -111,13 +126,15 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.groupBox5);
+            this.panelMain.Controls.Add(this.groupBox4);
+            this.panelMain.Controls.Add(this.groupBox3);
             this.panelMain.Controls.Add(this.chAreaManualSearch);
             this.panelMain.Controls.Add(this.panel3);
             this.panelMain.Controls.Add(this.chAreaAutoSearch);
             this.panelMain.Controls.Add(this.btnCancel);
             this.panelMain.Controls.Add(this.btnSave);
             this.panelMain.Controls.Add(this.panel2);
-            this.panelMain.Controls.Add(this.panel1);
             this.panelMain.Controls.Add(this.gradientLabel2);
             this.panelMain.Controls.Add(this.gradientLabel1);
             this.panelMain.Controls.Add(this.btnOk);
@@ -128,6 +145,170 @@
             this.panelMain.Size = new System.Drawing.Size(1262, 838);
             this.panelMain.TabIndex = 46;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
+            // 
+            // rbZigzagReverseSearch
+            // 
+            this.rbZigzagReverseSearch.AutoSize = true;
+            this.rbZigzagReverseSearch.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbZigzagReverseSearch.ForeColor = System.Drawing.Color.White;
+            this.rbZigzagReverseSearch.Location = new System.Drawing.Point(175, 69);
+            this.rbZigzagReverseSearch.Name = "rbZigzagReverseSearch";
+            this.rbZigzagReverseSearch.Size = new System.Drawing.Size(14, 13);
+            this.rbZigzagReverseSearch.TabIndex = 327;
+            this.rbZigzagReverseSearch.TabStop = true;
+            this.rbZigzagReverseSearch.Tag = "3";
+            this.rbZigzagReverseSearch.UseVisualStyleBackColor = true;
+            this.rbZigzagReverseSearch.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbSearchType_MouseUp);
+            // 
+            // rbNormalReverseSearch
+            // 
+            this.rbNormalReverseSearch.AutoSize = true;
+            this.rbNormalReverseSearch.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbNormalReverseSearch.ForeColor = System.Drawing.Color.White;
+            this.rbNormalReverseSearch.Location = new System.Drawing.Point(77, 69);
+            this.rbNormalReverseSearch.Name = "rbNormalReverseSearch";
+            this.rbNormalReverseSearch.Size = new System.Drawing.Size(14, 13);
+            this.rbNormalReverseSearch.TabIndex = 328;
+            this.rbNormalReverseSearch.TabStop = true;
+            this.rbNormalReverseSearch.Tag = "1";
+            this.rbNormalReverseSearch.UseVisualStyleBackColor = true;
+            this.rbNormalReverseSearch.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbSearchType_MouseUp);
+            // 
+            // rbZigzagSearch
+            // 
+            this.rbZigzagSearch.AutoSize = true;
+            this.rbZigzagSearch.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbZigzagSearch.ForeColor = System.Drawing.Color.White;
+            this.rbZigzagSearch.Location = new System.Drawing.Point(126, 69);
+            this.rbZigzagSearch.Name = "rbZigzagSearch";
+            this.rbZigzagSearch.Size = new System.Drawing.Size(14, 13);
+            this.rbZigzagSearch.TabIndex = 326;
+            this.rbZigzagSearch.TabStop = true;
+            this.rbZigzagSearch.Tag = "2";
+            this.rbZigzagSearch.UseVisualStyleBackColor = true;
+            this.rbZigzagSearch.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbSearchType_MouseUp);
+            // 
+            // rbNormalSearch
+            // 
+            this.rbNormalSearch.AutoSize = true;
+            this.rbNormalSearch.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbNormalSearch.ForeColor = System.Drawing.Color.White;
+            this.rbNormalSearch.Location = new System.Drawing.Point(27, 69);
+            this.rbNormalSearch.Name = "rbNormalSearch";
+            this.rbNormalSearch.Size = new System.Drawing.Size(14, 13);
+            this.rbNormalSearch.TabIndex = 326;
+            this.rbNormalSearch.TabStop = true;
+            this.rbNormalSearch.Tag = "0";
+            this.rbNormalSearch.UseVisualStyleBackColor = true;
+            this.rbNormalSearch.MouseUp += new System.Windows.Forms.MouseEventHandler(this.rbSearchType_MouseUp);
+            // 
+            // picZigzagReverseSearch
+            // 
+            this.picZigzagReverseSearch.BackgroundImage = global::MapDataManager.Properties.Resources.ZigZagReverse;
+            this.picZigzagReverseSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picZigzagReverseSearch.Location = new System.Drawing.Point(159, 20);
+            this.picZigzagReverseSearch.Name = "picZigzagReverseSearch";
+            this.picZigzagReverseSearch.Size = new System.Drawing.Size(43, 43);
+            this.picZigzagReverseSearch.TabIndex = 325;
+            this.picZigzagReverseSearch.TabStop = false;
+            this.picZigzagReverseSearch.Tag = "3";
+            this.picZigzagReverseSearch.Click += new System.EventHandler(this.picSearchTypeChange_Click);
+            // 
+            // picNormalSearch
+            // 
+            this.picNormalSearch.BackgroundImage = global::MapDataManager.Properties.Resources.Normal;
+            this.picNormalSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picNormalSearch.Location = new System.Drawing.Point(11, 20);
+            this.picNormalSearch.Name = "picNormalSearch";
+            this.picNormalSearch.Size = new System.Drawing.Size(43, 43);
+            this.picNormalSearch.TabIndex = 322;
+            this.picNormalSearch.TabStop = false;
+            this.picNormalSearch.Tag = "0";
+            this.picNormalSearch.Click += new System.EventHandler(this.picSearchTypeChange_Click);
+            // 
+            // picZigzagSearch
+            // 
+            this.picZigzagSearch.BackgroundImage = global::MapDataManager.Properties.Resources.ZigZag;
+            this.picZigzagSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picZigzagSearch.Location = new System.Drawing.Point(110, 20);
+            this.picZigzagSearch.Name = "picZigzagSearch";
+            this.picZigzagSearch.Size = new System.Drawing.Size(43, 43);
+            this.picZigzagSearch.TabIndex = 324;
+            this.picZigzagSearch.TabStop = false;
+            this.picZigzagSearch.Tag = "2";
+            this.picZigzagSearch.Click += new System.EventHandler(this.picSearchTypeChange_Click);
+            // 
+            // picNormalReverseSearch
+            // 
+            this.picNormalReverseSearch.BackgroundImage = global::MapDataManager.Properties.Resources.NormalReverse;
+            this.picNormalReverseSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picNormalReverseSearch.Location = new System.Drawing.Point(61, 20);
+            this.picNormalReverseSearch.Name = "picNormalReverseSearch";
+            this.picNormalReverseSearch.Size = new System.Drawing.Size(43, 43);
+            this.picNormalReverseSearch.TabIndex = 323;
+            this.picNormalReverseSearch.TabStop = false;
+            this.picNormalReverseSearch.Tag = "1";
+            this.picNormalReverseSearch.Click += new System.EventHandler(this.picSearchTypeChange_Click);
+            // 
+            // chAreaManualSearch
+            // 
+            this.chAreaManualSearch.AutoSize = true;
+            this.chAreaManualSearch.ForeColor = System.Drawing.Color.White;
+            this.chAreaManualSearch.Location = new System.Drawing.Point(639, 715);
+            this.chAreaManualSearch.Name = "chAreaManualSearch";
+            this.chAreaManualSearch.Size = new System.Drawing.Size(139, 18);
+            this.chAreaManualSearch.TabIndex = 317;
+            this.chAreaManualSearch.Text = "Area Manual Search";
+            this.chAreaManualSearch.UseVisualStyleBackColor = true;
+            this.chAreaManualSearch.CheckedChanged += new System.EventHandler(this.chAreaManualSearch_CheckedChanged);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.btnManualSearchAreaSet);
+            this.panel3.Controls.Add(this.btnManualSearchArea);
+            this.panel3.Location = new System.Drawing.Point(639, 737);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(620, 57);
+            this.panel3.TabIndex = 316;
+            // 
+            // btnManualSearchAreaSet
+            // 
+            this.btnManualSearchAreaSet.BackColor = System.Drawing.SystemColors.Control;
+            this.btnManualSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnManualSearchAreaSet.ForeColor = System.Drawing.Color.Black;
+            this.btnManualSearchAreaSet.Location = new System.Drawing.Point(489, 5);
+            this.btnManualSearchAreaSet.Name = "btnManualSearchAreaSet";
+            this.btnManualSearchAreaSet.Size = new System.Drawing.Size(124, 40);
+            this.btnManualSearchAreaSet.TabIndex = 318;
+            this.btnManualSearchAreaSet.Text = "Set Manual\r\nSearch Area";
+            this.btnManualSearchAreaSet.UseVisualStyleBackColor = false;
+            this.btnManualSearchAreaSet.Click += new System.EventHandler(this.btnManualSearchAreaSet_Click);
+            // 
+            // btnManualSearchArea
+            // 
+            this.btnManualSearchArea.BackColor = System.Drawing.SystemColors.Control;
+            this.btnManualSearchArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
+            this.btnManualSearchArea.ForeColor = System.Drawing.Color.Black;
+            this.btnManualSearchArea.Location = new System.Drawing.Point(356, 5);
+            this.btnManualSearchArea.Name = "btnManualSearchArea";
+            this.btnManualSearchArea.Size = new System.Drawing.Size(124, 40);
+            this.btnManualSearchArea.TabIndex = 317;
+            this.btnManualSearchArea.Text = "Show Manual\r\nSearch Area";
+            this.btnManualSearchArea.UseVisualStyleBackColor = false;
+            this.btnManualSearchArea.Click += new System.EventHandler(this.btnManualSearchArea_Click);
+            // 
+            // chAreaAutoSearch
+            // 
+            this.chAreaAutoSearch.AutoSize = true;
+            this.chAreaAutoSearch.ForeColor = System.Drawing.Color.White;
+            this.chAreaAutoSearch.Location = new System.Drawing.Point(639, 284);
+            this.chAreaAutoSearch.Name = "chAreaAutoSearch";
+            this.chAreaAutoSearch.Size = new System.Drawing.Size(124, 18);
+            this.chAreaAutoSearch.TabIndex = 315;
+            this.chAreaAutoSearch.Text = "Area Auto Search";
+            this.chAreaAutoSearch.UseVisualStyleBackColor = true;
+            this.chAreaAutoSearch.CheckedChanged += new System.EventHandler(this.chAreaAutoSearch_CheckedChanged);
             // 
             // btnCancel
             // 
@@ -166,32 +347,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(617, 394);
             this.panel2.TabIndex = 312;
-            // 
-            // btnManualSearchAreaSet
-            // 
-            this.btnManualSearchAreaSet.BackColor = System.Drawing.SystemColors.Control;
-            this.btnManualSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnManualSearchAreaSet.ForeColor = System.Drawing.Color.Black;
-            this.btnManualSearchAreaSet.Location = new System.Drawing.Point(489, 5);
-            this.btnManualSearchAreaSet.Name = "btnManualSearchAreaSet";
-            this.btnManualSearchAreaSet.Size = new System.Drawing.Size(124, 40);
-            this.btnManualSearchAreaSet.TabIndex = 318;
-            this.btnManualSearchAreaSet.Text = "Set Manual\r\nSearch Area";
-            this.btnManualSearchAreaSet.UseVisualStyleBackColor = false;
-            this.btnManualSearchAreaSet.Click += new System.EventHandler(this.btnManualSearchAreaSet_Click);
-            // 
-            // btnManualSearchArea
-            // 
-            this.btnManualSearchArea.BackColor = System.Drawing.SystemColors.Control;
-            this.btnManualSearchArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
-            this.btnManualSearchArea.ForeColor = System.Drawing.Color.Black;
-            this.btnManualSearchArea.Location = new System.Drawing.Point(356, 5);
-            this.btnManualSearchArea.Name = "btnManualSearchArea";
-            this.btnManualSearchArea.Size = new System.Drawing.Size(124, 40);
-            this.btnManualSearchArea.TabIndex = 317;
-            this.btnManualSearchArea.Text = "Show Manual\r\nSearch Area";
-            this.btnManualSearchArea.UseVisualStyleBackColor = false;
-            this.btnManualSearchArea.Click += new System.EventHandler(this.btnManualSearchArea_Click);
             // 
             // btnShowSearchArea
             // 
@@ -254,7 +409,7 @@
             // 
             // btnUnitPatternSearchAreaSet
             // 
-            this.btnUnitPatternSearchAreaSet.BackColor = System.Drawing.Color.SandyBrown;
+            this.btnUnitPatternSearchAreaSet.BackColor = System.Drawing.Color.Gray;
             this.btnUnitPatternSearchAreaSet.Enabled = false;
             this.btnUnitPatternSearchAreaSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUnitPatternSearchAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
@@ -283,7 +438,7 @@
             // 
             // btnUnitPatternAreaSet
             // 
-            this.btnUnitPatternAreaSet.BackColor = System.Drawing.Color.PaleGreen;
+            this.btnUnitPatternAreaSet.BackColor = System.Drawing.Color.Gray;
             this.btnUnitPatternAreaSet.Enabled = false;
             this.btnUnitPatternAreaSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUnitPatternAreaSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
@@ -482,7 +637,7 @@
             this.btnUnitPatternAreaCancel.BackColor = System.Drawing.SystemColors.Control;
             this.btnUnitPatternAreaCancel.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold);
             this.btnUnitPatternAreaCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnUnitPatternAreaCancel.Location = new System.Drawing.Point(226, 335);
+            this.btnUnitPatternAreaCancel.Location = new System.Drawing.Point(203, 333);
             this.btnUnitPatternAreaCancel.Name = "btnUnitPatternAreaCancel";
             this.btnUnitPatternAreaCancel.Size = new System.Drawing.Size(124, 40);
             this.btnUnitPatternAreaCancel.TabIndex = 311;
@@ -490,29 +645,9 @@
             this.btnUnitPatternAreaCancel.UseVisualStyleBackColor = false;
             this.btnUnitPatternAreaCancel.Click += new System.EventHandler(this.btnUnitPatternAreaCancel_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.txtUnitTotalCount);
-            this.panel1.Controls.Add(this.gradientLabel6);
-            this.panel1.Controls.Add(this.pictureBox2);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.numUpDownSectionColumnCount);
-            this.panel1.Controls.Add(this.numUpDownSectionRowCount);
-            this.panel1.Controls.Add(this.gradientLabel4);
-            this.panel1.Controls.Add(this.gradientLabel5);
-            this.panel1.Controls.Add(this.numUpDownUnitColumnCount);
-            this.panel1.Controls.Add(this.numUpDownUnitRowCount);
-            this.panel1.Controls.Add(this.gradientLabel3);
-            this.panel1.Controls.Add(this.gradientLabel9);
-            this.panel1.Location = new System.Drawing.Point(639, 36);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(617, 205);
-            this.panel1.TabIndex = 311;
-            // 
             // txtUnitTotalCount
             // 
-            this.txtUnitTotalCount.Location = new System.Drawing.Point(231, 68);
+            this.txtUnitTotalCount.Location = new System.Drawing.Point(238, 85);
             this.txtUnitTotalCount.Name = "txtUnitTotalCount";
             this.txtUnitTotalCount.ReadOnly = true;
             this.txtUnitTotalCount.Size = new System.Drawing.Size(86, 21);
@@ -529,7 +664,7 @@
             this.gradientLabel6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel6.ForeColor = System.Drawing.Color.White;
             this.gradientLabel6.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel6.Location = new System.Drawing.Point(61, 65);
+            this.gradientLabel6.Location = new System.Drawing.Point(68, 82);
             this.gradientLabel6.Name = "gradientLabel6";
             this.gradientLabel6.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel6.TabIndex = 320;
@@ -540,7 +675,7 @@
             // 
             this.pictureBox2.BackgroundImage = global::MapDataManager.Properties.Resources.FrameSection;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 107);
+            this.pictureBox2.Location = new System.Drawing.Point(10, 124);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(57, 57);
             this.pictureBox2.TabIndex = 319;
@@ -550,7 +685,7 @@
             // 
             this.pictureBox1.BackgroundImage = global::MapDataManager.Properties.Resources.FrameCell;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(10, 20);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(57, 57);
             this.pictureBox1.TabIndex = 318;
@@ -558,7 +693,7 @@
             // 
             // numUpDownSectionColumnCount
             // 
-            this.numUpDownSectionColumnCount.Location = new System.Drawing.Point(230, 140);
+            this.numUpDownSectionColumnCount.Location = new System.Drawing.Point(237, 157);
             this.numUpDownSectionColumnCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -581,7 +716,7 @@
             // 
             // numUpDownSectionRowCount
             // 
-            this.numUpDownSectionRowCount.Location = new System.Drawing.Point(230, 109);
+            this.numUpDownSectionRowCount.Location = new System.Drawing.Point(237, 126);
             this.numUpDownSectionRowCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -611,7 +746,7 @@
             this.gradientLabel4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel4.ForeColor = System.Drawing.Color.White;
             this.gradientLabel4.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel4.Location = new System.Drawing.Point(61, 138);
+            this.gradientLabel4.Location = new System.Drawing.Point(68, 155);
             this.gradientLabel4.Name = "gradientLabel4";
             this.gradientLabel4.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel4.TabIndex = 315;
@@ -627,7 +762,7 @@
             this.gradientLabel5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel5.ForeColor = System.Drawing.Color.White;
             this.gradientLabel5.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel5.Location = new System.Drawing.Point(61, 107);
+            this.gradientLabel5.Location = new System.Drawing.Point(68, 124);
             this.gradientLabel5.Name = "gradientLabel5";
             this.gradientLabel5.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel5.TabIndex = 314;
@@ -636,7 +771,7 @@
             // 
             // numUpDownUnitColumnCount
             // 
-            this.numUpDownUnitColumnCount.Location = new System.Drawing.Point(230, 37);
+            this.numUpDownUnitColumnCount.Location = new System.Drawing.Point(237, 54);
             this.numUpDownUnitColumnCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -660,7 +795,7 @@
             // 
             // numUpDownUnitRowCount
             // 
-            this.numUpDownUnitRowCount.Location = new System.Drawing.Point(230, 6);
+            this.numUpDownUnitRowCount.Location = new System.Drawing.Point(237, 23);
             this.numUpDownUnitRowCount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -691,7 +826,7 @@
             this.gradientLabel3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel3.ForeColor = System.Drawing.Color.White;
             this.gradientLabel3.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel3.Location = new System.Drawing.Point(61, 34);
+            this.gradientLabel3.Location = new System.Drawing.Point(68, 51);
             this.gradientLabel3.Name = "gradientLabel3";
             this.gradientLabel3.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel3.TabIndex = 311;
@@ -707,7 +842,7 @@
             this.gradientLabel9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel9.ForeColor = System.Drawing.Color.White;
             this.gradientLabel9.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel9.Location = new System.Drawing.Point(61, 3);
+            this.gradientLabel9.Location = new System.Drawing.Point(68, 20);
             this.gradientLabel9.Name = "gradientLabel9";
             this.gradientLabel9.Size = new System.Drawing.Size(163, 26);
             this.gradientLabel9.TabIndex = 310;
@@ -763,7 +898,7 @@
             this.kpTeachDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.kpTeachDisplay.Location = new System.Drawing.Point(3, 36);
             this.kpTeachDisplay.Name = "kpTeachDisplay";
-            this.kpTeachDisplay.Size = new System.Drawing.Size(630, 758);
+            this.kpTeachDisplay.Size = new System.Drawing.Size(630, 802);
             this.kpTeachDisplay.TabIndex = 302;
             this.kpTeachDisplay.UseStatusBar = true;
             // 
@@ -782,39 +917,58 @@
             this.labelInputTitle.Text = " Map Data Setting Image";
             this.labelInputTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // chAreaAutoSearch
+            // groupBox3
             // 
-            this.chAreaAutoSearch.AutoSize = true;
-            this.chAreaAutoSearch.ForeColor = System.Drawing.Color.White;
-            this.chAreaAutoSearch.Location = new System.Drawing.Point(639, 284);
-            this.chAreaAutoSearch.Name = "chAreaAutoSearch";
-            this.chAreaAutoSearch.Size = new System.Drawing.Size(124, 18);
-            this.chAreaAutoSearch.TabIndex = 315;
-            this.chAreaAutoSearch.Text = "Area Auto Search";
-            this.chAreaAutoSearch.UseVisualStyleBackColor = true;
-            this.chAreaAutoSearch.CheckedChanged += new System.EventHandler(this.chAreaAutoSearch_CheckedChanged);
+            this.groupBox3.Controls.Add(this.picZigzagReverseSearch);
+            this.groupBox3.Controls.Add(this.rbZigzagReverseSearch);
+            this.groupBox3.Controls.Add(this.picNormalReverseSearch);
+            this.groupBox3.Controls.Add(this.rbNormalReverseSearch);
+            this.groupBox3.Controls.Add(this.picZigzagSearch);
+            this.groupBox3.Controls.Add(this.rbZigzagSearch);
+            this.groupBox3.Controls.Add(this.picNormalSearch);
+            this.groupBox3.Controls.Add(this.rbNormalSearch);
+            this.groupBox3.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.ForeColor = System.Drawing.Color.White;
+            this.groupBox3.Location = new System.Drawing.Point(1042, 37);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(214, 95);
+            this.groupBox3.TabIndex = 319;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Search Direction Setting";
             // 
-            // panel3
+            // groupBox4
             // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.btnManualSearchAreaSet);
-            this.panel3.Controls.Add(this.btnManualSearchArea);
-            this.panel3.Location = new System.Drawing.Point(639, 737);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(620, 57);
-            this.panel3.TabIndex = 316;
+            this.groupBox4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.ForeColor = System.Drawing.Color.White;
+            this.groupBox4.Location = new System.Drawing.Point(1042, 138);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(214, 103);
+            this.groupBox4.TabIndex = 320;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Map ID Setting";
             // 
-            // chAreaManualSearch
+            // groupBox5
             // 
-            this.chAreaManualSearch.AutoSize = true;
-            this.chAreaManualSearch.ForeColor = System.Drawing.Color.White;
-            this.chAreaManualSearch.Location = new System.Drawing.Point(639, 715);
-            this.chAreaManualSearch.Name = "chAreaManualSearch";
-            this.chAreaManualSearch.Size = new System.Drawing.Size(139, 18);
-            this.chAreaManualSearch.TabIndex = 317;
-            this.chAreaManualSearch.Text = "Area Manual Search";
-            this.chAreaManualSearch.UseVisualStyleBackColor = true;
-            this.chAreaManualSearch.CheckedChanged += new System.EventHandler(this.chAreaManualSearch_CheckedChanged);
+            this.groupBox5.Controls.Add(this.txtUnitTotalCount);
+            this.groupBox5.Controls.Add(this.pictureBox1);
+            this.groupBox5.Controls.Add(this.gradientLabel6);
+            this.groupBox5.Controls.Add(this.gradientLabel9);
+            this.groupBox5.Controls.Add(this.pictureBox2);
+            this.groupBox5.Controls.Add(this.gradientLabel3);
+            this.groupBox5.Controls.Add(this.numUpDownUnitRowCount);
+            this.groupBox5.Controls.Add(this.numUpDownSectionColumnCount);
+            this.groupBox5.Controls.Add(this.numUpDownUnitColumnCount);
+            this.groupBox5.Controls.Add(this.numUpDownSectionRowCount);
+            this.groupBox5.Controls.Add(this.gradientLabel5);
+            this.groupBox5.Controls.Add(this.gradientLabel4);
+            this.groupBox5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.ForeColor = System.Drawing.Color.White;
+            this.groupBox5.Location = new System.Drawing.Point(639, 37);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(397, 204);
+            this.groupBox5.TabIndex = 321;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Map Unit/Section Setting";
             // 
             // MapDataWindow
             // 
@@ -835,6 +989,11 @@
             this.Text = "Map Data Window";
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picZigzagReverseSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picNormalSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picZigzagSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picNormalReverseSearch)).EndInit();
+            this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -842,15 +1001,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAngleLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFindScore)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionColumnCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownSectionRowCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitColumnCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownUnitRowCount)).EndInit();
-            this.panel3.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -868,7 +1028,6 @@
         private System.Windows.Forms.Button btnUnitPatternAreaShow;
         private CustomControl.GradientLabel gradientLabel2;
         private CustomControl.GradientLabel gradientLabel1;
-        private System.Windows.Forms.Panel panel1;
         private CustomControl.GradientLabel gradientLabel3;
         private CustomControl.GradientLabel gradientLabel9;
         private System.Windows.Forms.NumericUpDown numUpDownUnitColumnCount;
@@ -905,6 +1064,17 @@
         private System.Windows.Forms.CheckBox chAreaManualSearch;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.CheckBox chAreaAutoSearch;
+        private System.Windows.Forms.PictureBox picZigzagReverseSearch;
+        private System.Windows.Forms.PictureBox picZigzagSearch;
+        private System.Windows.Forms.PictureBox picNormalReverseSearch;
+        private System.Windows.Forms.PictureBox picNormalSearch;
+        private System.Windows.Forms.RadioButton rbZigzagReverseSearch;
+        private System.Windows.Forms.RadioButton rbNormalReverseSearch;
+        private System.Windows.Forms.RadioButton rbZigzagSearch;
+        private System.Windows.Forms.RadioButton rbNormalSearch;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
     }
 }
 

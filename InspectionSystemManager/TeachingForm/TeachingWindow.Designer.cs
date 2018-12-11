@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTitle = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.tabControlTeach = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnShowAllArea = new System.Windows.Forms.Button();
-            this.btnDataMapApplyInspectionArea = new System.Windows.Forms.Button();
+            this.btnMapDataAlgorithmSet = new System.Windows.Forms.Button();
+            this.btnMapDataApplyInspectionArea = new System.Windows.Forms.Button();
             this.btnInspectionAreaCopy = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnInspectionAreaSet = new System.Windows.Forms.Button();
@@ -69,6 +69,7 @@
             this.btnInspectionAlgoDel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnInspectionAlgoAdd = new System.Windows.Forms.Button();
+            this.btnShowAllArea = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
             this.labelStatus = new System.Windows.Forms.Label();
@@ -145,8 +146,8 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnShowAllArea);
-            this.panel2.Controls.Add(this.btnDataMapApplyInspectionArea);
+            this.panel2.Controls.Add(this.btnMapDataAlgorithmSet);
+            this.panel2.Controls.Add(this.btnMapDataApplyInspectionArea);
             this.panel2.Controls.Add(this.btnInspectionAreaCopy);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.btnInspectionAreaSet);
@@ -158,27 +159,27 @@
             this.panel2.Size = new System.Drawing.Size(575, 297);
             this.panel2.TabIndex = 11;
             // 
-            // btnShowAllArea
+            // btnMapDataAlgorithmSet
             // 
-            this.btnShowAllArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnShowAllArea.Location = new System.Drawing.Point(497, 211);
-            this.btnShowAllArea.Name = "btnShowAllArea";
-            this.btnShowAllArea.Size = new System.Drawing.Size(74, 38);
-            this.btnShowAllArea.TabIndex = 10;
-            this.btnShowAllArea.Text = "Show\r\nAll Area";
-            this.btnShowAllArea.UseVisualStyleBackColor = true;
-            this.btnShowAllArea.Click += new System.EventHandler(this.btnShowAllArea_Click);
+            this.btnMapDataAlgorithmSet.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnMapDataAlgorithmSet.Location = new System.Drawing.Point(497, 255);
+            this.btnMapDataAlgorithmSet.Name = "btnMapDataAlgorithmSet";
+            this.btnMapDataAlgorithmSet.Size = new System.Drawing.Size(74, 38);
+            this.btnMapDataAlgorithmSet.TabIndex = 10;
+            this.btnMapDataAlgorithmSet.Text = "Set\r\nMap Data";
+            this.btnMapDataAlgorithmSet.UseVisualStyleBackColor = true;
+            this.btnMapDataAlgorithmSet.Click += new System.EventHandler(this.btnMapDataAlgorithmSet_Click);
             // 
-            // btnDataMapApplyInspectionArea
+            // btnMapDataApplyInspectionArea
             // 
-            this.btnDataMapApplyInspectionArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnDataMapApplyInspectionArea.Location = new System.Drawing.Point(497, 255);
-            this.btnDataMapApplyInspectionArea.Name = "btnDataMapApplyInspectionArea";
-            this.btnDataMapApplyInspectionArea.Size = new System.Drawing.Size(74, 38);
-            this.btnDataMapApplyInspectionArea.TabIndex = 9;
-            this.btnDataMapApplyInspectionArea.Text = "Apply DataMap";
-            this.btnDataMapApplyInspectionArea.UseVisualStyleBackColor = true;
-            this.btnDataMapApplyInspectionArea.Click += new System.EventHandler(this.btnDataMapApplyInspectionArea_Click);
+            this.btnMapDataApplyInspectionArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnMapDataApplyInspectionArea.Location = new System.Drawing.Point(497, 213);
+            this.btnMapDataApplyInspectionArea.Name = "btnMapDataApplyInspectionArea";
+            this.btnMapDataApplyInspectionArea.Size = new System.Drawing.Size(74, 38);
+            this.btnMapDataApplyInspectionArea.TabIndex = 9;
+            this.btnMapDataApplyInspectionArea.Text = "Apply\r\nMap Data";
+            this.btnMapDataApplyInspectionArea.UseVisualStyleBackColor = true;
+            this.btnMapDataApplyInspectionArea.Click += new System.EventHandler(this.btnMapDataApplyInspectionArea_Click);
             // 
             // btnInspectionAreaCopy
             // 
@@ -189,6 +190,7 @@
             this.btnInspectionAreaCopy.TabIndex = 8;
             this.btnInspectionAreaCopy.Text = "Inspection Area Copy";
             this.btnInspectionAreaCopy.UseVisualStyleBackColor = true;
+            this.btnInspectionAreaCopy.Visible = false;
             this.btnInspectionAreaCopy.Click += new System.EventHandler(this.btnInspectionAreaCopy_Click);
             // 
             // label6
@@ -241,17 +243,17 @@
             this.gridViewArea.AllowUserToDeleteRows = false;
             this.gridViewArea.AllowUserToResizeColumns = false;
             this.gridViewArea.AllowUserToResizeRows = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            this.gridViewArea.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.gridViewArea.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.gridViewArea.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridViewArea.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridViewArea.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gridViewArea.ColumnHeadersHeight = 22;
             this.gridViewArea.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridAreaID,
@@ -259,27 +261,27 @@
             this.gridAreaBenchMark,
             this.gridAreaEnable,
             this.gridAreaNgNum});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridViewArea.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridViewArea.DefaultCellStyle = dataGridViewCellStyle4;
             this.gridViewArea.EnableHeadersVisualStyles = false;
             this.gridViewArea.Location = new System.Drawing.Point(2, 31);
             this.gridViewArea.MultiSelect = false;
             this.gridViewArea.Name = "gridViewArea";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridViewArea.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridViewArea.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.gridViewArea.RowHeadersVisible = false;
             this.gridViewArea.RowTemplate.Height = 23;
             this.gridViewArea.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -290,12 +292,12 @@
             // 
             // gridAreaID
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridAreaID.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridAreaID.DefaultCellStyle = dataGridViewCellStyle3;
             this.gridAreaID.HeaderText = "ID";
             this.gridAreaID.Name = "gridAreaID";
             this.gridAreaID.ReadOnly = true;
-            this.gridAreaID.Width = 30;
+            this.gridAreaID.Width = 40;
             // 
             // gridAreaName
             // 
@@ -429,14 +431,14 @@
             this.gridViewAlgo.AllowUserToResizeColumns = false;
             this.gridViewAlgo.AllowUserToResizeRows = false;
             this.gridViewAlgo.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridViewAlgo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridViewAlgo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.gridViewAlgo.ColumnHeadersHeight = 22;
             this.gridViewAlgo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.gridViewAlgo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -444,15 +446,15 @@
             this.gridAlgoName,
             this.gridAlgoBenchMark,
             this.gridAlgoEnable});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridViewAlgo.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridViewAlgo.DefaultCellStyle = dataGridViewCellStyle7;
             this.gridViewAlgo.EnableHeadersVisualStyles = false;
             this.gridViewAlgo.Location = new System.Drawing.Point(2, 31);
             this.gridViewAlgo.MultiSelect = false;
@@ -471,7 +473,7 @@
             // 
             this.gridAlgoID.HeaderText = "ID";
             this.gridAlgoID.Name = "gridAlgoID";
-            this.gridAlgoID.Width = 30;
+            this.gridAlgoID.Width = 40;
             // 
             // gridAlgoName
             // 
@@ -528,9 +530,21 @@
             this.btnInspectionAlgoAdd.UseVisualStyleBackColor = true;
             this.btnInspectionAlgoAdd.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnInspectionAlgoAdd_MouseUp);
             // 
+            // btnShowAllArea
+            // 
+            this.btnShowAllArea.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnShowAllArea.Location = new System.Drawing.Point(828, 3);
+            this.btnShowAllArea.Name = "btnShowAllArea";
+            this.btnShowAllArea.Size = new System.Drawing.Size(102, 35);
+            this.btnShowAllArea.TabIndex = 10;
+            this.btnShowAllArea.Text = "Show All Area";
+            this.btnShowAllArea.UseVisualStyleBackColor = true;
+            this.btnShowAllArea.Click += new System.EventHandler(this.btnShowAllArea_Click);
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.btnShowAllArea);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.labelStatus);
             this.panel1.Controls.Add(this.btnCancel);
@@ -563,16 +577,20 @@
             this.labelStatus.Text = "Status";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // kpTeachDisplay
+            // gradientLabel1
             // 
-            this.kpTeachDisplay.BackColor = System.Drawing.Color.White;
-            this.kpTeachDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.kpTeachDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.kpTeachDisplay.Location = new System.Drawing.Point(1, 31);
-            this.kpTeachDisplay.Name = "kpTeachDisplay";
-            this.kpTeachDisplay.Size = new System.Drawing.Size(672, 789);
-            this.kpTeachDisplay.TabIndex = 9;
-            this.kpTeachDisplay.UseStatusBar = true;
+            this.gradientLabel1.BackColor = System.Drawing.Color.White;
+            this.gradientLabel1.ColorBottom = System.Drawing.Color.White;
+            this.gradientLabel1.ColorTop = System.Drawing.Color.SteelBlue;
+            this.gradientLabel1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
+            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
+            this.gradientLabel1.Location = new System.Drawing.Point(677, 32);
+            this.gradientLabel1.Name = "gradientLabel1";
+            this.gradientLabel1.Size = new System.Drawing.Size(583, 30);
+            this.gradientLabel1.TabIndex = 18;
+            this.gradientLabel1.Text = " Inspection & Algorithm Area Setting Window";
+            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelTeaching
             // 
@@ -599,20 +617,16 @@
             this.gradientLabelTeaching.Text = " Teaching Window";
             this.gradientLabelTeaching.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // gradientLabel1
+            // kpTeachDisplay
             // 
-            this.gradientLabel1.BackColor = System.Drawing.Color.White;
-            this.gradientLabel1.ColorBottom = System.Drawing.Color.White;
-            this.gradientLabel1.ColorTop = System.Drawing.Color.SteelBlue;
-            this.gradientLabel1.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gradientLabel1.ForeColor = System.Drawing.Color.White;
-            this.gradientLabel1.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel1.Location = new System.Drawing.Point(677, 32);
-            this.gradientLabel1.Name = "gradientLabel1";
-            this.gradientLabel1.Size = new System.Drawing.Size(583, 30);
-            this.gradientLabel1.TabIndex = 18;
-            this.gradientLabel1.Text = " Inspection & Algorithm Area Setting Window";
-            this.gradientLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.kpTeachDisplay.BackColor = System.Drawing.Color.White;
+            this.kpTeachDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.kpTeachDisplay.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.kpTeachDisplay.Location = new System.Drawing.Point(1, 31);
+            this.kpTeachDisplay.Name = "kpTeachDisplay";
+            this.kpTeachDisplay.Size = new System.Drawing.Size(672, 789);
+            this.kpTeachDisplay.TabIndex = 9;
+            this.kpTeachDisplay.UseStatusBar = true;
             // 
             // TeachingWindow
             // 
@@ -679,6 +693,9 @@
         private System.Windows.Forms.Button btnSave;
         private CustomControl.GradientLabel gradientLabel1;
         private CustomControl.GradientLabel gradientLabelTeaching;
+        private CPressingButton.PressButton btnShowAlgorithmMoveButton;
+        private System.Windows.Forms.Button btnMapDataApplyInspectionArea;
+        private System.Windows.Forms.Button btnShowAllArea;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridAreaID;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridAreaName;
         private System.Windows.Forms.DataGridViewComboBoxColumn gridAreaBenchMark;
@@ -688,8 +705,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gridAlgoName;
         private System.Windows.Forms.DataGridViewComboBoxColumn gridAlgoBenchMark;
         private System.Windows.Forms.DataGridViewCheckBoxColumn gridAlgoEnable;
-        private CPressingButton.PressButton btnShowAlgorithmMoveButton;
-        private System.Windows.Forms.Button btnDataMapApplyInspectionArea;
-        private System.Windows.Forms.Button btnShowAllArea;
+        private System.Windows.Forms.Button btnMapDataAlgorithmSet;
     }
 }

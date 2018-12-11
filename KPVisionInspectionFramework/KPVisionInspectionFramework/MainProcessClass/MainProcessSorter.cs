@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 using InspectionSystemManager;
 using LogMessageManager;
 using ParameterManager;
+using DIOControlManager;
+using EthernetServerManager;
 
 namespace KPVisionInspectionFramework
 {
     public class MainProcessSorter : MainProcessBase
     {
+        private DIOControlWindow DIOWnd;
+        private EthernetWindow EthernetServWnd;
+
         public MainProcessSorter()
         {
 

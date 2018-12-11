@@ -204,14 +204,14 @@ namespace InspectionSystemManager
             else
             {
                 ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
-				ContextMenuAlgo.MenuItems.Add("Search Auto Pattern", new EventHandler(AutoPatternFindAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Lead status inspection", new EventHandler(LeadInspectionAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search a BarCode", new EventHandler(BarCodeIDAlgorithm));
+                //ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
+				//ContextMenuAlgo.MenuItems.Add("Search Auto Pattern", new EventHandler(AutoPatternFindAlgorithm));
             }
         }
 
@@ -229,7 +229,7 @@ namespace InspectionSystemManager
                     btnInspectionAreaDel.Visible = false;
                     btnInspectionAreaCopy.Visible = false;
                     btnShowAllArea.Visible = false;
-                    btnDataMapApplyInspectionArea.Visible = false;
+                    btnMapDataApplyInspectionArea.Visible = false;
                     break;
 
                 default:
@@ -345,6 +345,8 @@ namespace InspectionSystemManager
             panelTeaching.Controls.Add(gradientLabelTeaching);
 
             InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
+            //_InspAreaParam.BaseIndexNumber = InspParam.InspAreaParam.Count;
+            _InspAreaParam.BaseIndexNumber = gridViewArea.RowCount;
             InspParam.InspAreaParam.Add(_InspAreaParam);
 
             GridViewAreaAndAlgoClear();
@@ -385,55 +387,92 @@ namespace InspectionSystemManager
                 return;
             }
 
-
-
-            int _RowNextSelect = 0;
-            int _RowCount = gridViewArea.RowCount;
-            int _RowSelect = gridViewArea.CurrentCell.RowIndex;
-
-            GridViewAreaAndAlgoClear();
-
-            //Remove algorithms
-            int _EndAlgorithm = 0;
-            for (int iLoopCount = 0; iLoopCount < InspAreaSelected; ++iLoopCount)
+            //Map Data를 사용안할 시 삭제
+            if (false == InspParam.InspAreaParam[InspAreaSelected].IsUseMapData || MapDataParam.UnitTotalCount < 20)
             {
-                if (InspParam.InspAreaParam[iLoopCount].Enable == true)
+                int _RowNextSelect = 0;
+                int _RowCount = gridViewArea.RowCount;
+                int _RowSelect = gridViewArea.CurrentCell.RowIndex;
+
+                GridViewAreaAndAlgoClear();
+
+                //Remove algorithms
+                int _EndAlgorithm = 0;
+                for (int iLoopCount = 0; iLoopCount < InspAreaSelected; ++iLoopCount)
                 {
-                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    if (InspParam.InspAreaParam[iLoopCount].Enable == true)
                     {
-                        if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
-                            _EndAlgorithm++;
+                        for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                        {
+                            if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                                _EndAlgorithm++;
+                        }
                     }
                 }
-            }
 
-            int _StartAlgorithm = 0;
-            for (int iLoopCount = 0; iLoopCount <= InspAreaSelected; ++iLoopCount)
-            {
-                if (InspParam.InspAreaParam[iLoopCount].Enable == true)
+                int _StartAlgorithm = 0;
+                for (int iLoopCount = 0; iLoopCount <= InspAreaSelected; ++iLoopCount)
                 {
-                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                    if (InspParam.InspAreaParam[iLoopCount].Enable == true)
                     {
-                        if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
-                            _StartAlgorithm++;
+                        for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                        {
+                            if (InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoEnable == true)
+                                _StartAlgorithm++;
+                        }
                     }
                 }
+
+                for (int iLoopCount = _StartAlgorithm - 1; iLoopCount > _EndAlgorithm - 1; --iLoopCount)
+                {
+                    if (AlgoResParamList.Count > iLoopCount)
+                        AlgoResParamList.RemoveAt(iLoopCount);
+                }
+
+                for (int iLoopCount = _RowSelect + 1; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+                {
+                    if (InspParam.InspAreaParam[iLoopCount].BaseIndexNumber != 0)
+                        InspParam.InspAreaParam[iLoopCount].BaseIndexNumber--;
+                    if (InspParam.InspAreaParam[iLoopCount].MapDataStartNumber != 1)
+                        InspParam.InspAreaParam[iLoopCount].MapDataStartNumber--;
+                    if (InspParam.InspAreaParam[iLoopCount].MapDataEndNumber != 1)
+                        InspParam.InspAreaParam[iLoopCount].MapDataEndNumber--;
+                }
+                InspParam.InspAreaParam.RemoveAt(_RowSelect);
+
+                if (_RowSelect == 0 && _RowCount > 1) _RowNextSelect = 0;
+                if (_RowSelect > 1) _RowNextSelect = _RowSelect - 1;
+                if (_RowCount == 1) _RowSelect = -1;
+                if (_RowSelect != -1) UpdateInspectionAreaList(_RowNextSelect);
             }
 
-            for (int iLoopCount = _StartAlgorithm - 1; iLoopCount > _EndAlgorithm - 1; --iLoopCount)
+            else
             {
-                if (AlgoResParamList.Count > iLoopCount)
-                    AlgoResParamList.RemoveAt(iLoopCount);
+                int _RowNextSelect = 0;
+                int _RowCount = gridViewArea.RowCount;
+                int _RowSelect = gridViewArea.CurrentCell.RowIndex;
+
+                GridViewAreaAndAlgoClear();
+
+                int _StartIndex = InspParam.InspAreaParam[_RowSelect].MapDataStartNumber - 1;
+                int _EndIndex = InspParam.InspAreaParam[_RowSelect].MapDataEndNumber - 1;
+
+                for (int iLoopCount = _EndIndex + 1; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+                {
+                    InspParam.InspAreaParam[iLoopCount].BaseIndexNumber--;
+                    if (InspParam.InspAreaParam[iLoopCount].MapDataStartNumber != 1)
+                        InspParam.InspAreaParam[iLoopCount].MapDataStartNumber--;
+                    if (InspParam.InspAreaParam[iLoopCount].MapDataEndNumber != 1)
+                        InspParam.InspAreaParam[iLoopCount].MapDataEndNumber--;
+                }
+                for (int iLoopCount = _EndIndex; iLoopCount >= _StartIndex; --iLoopCount)
+                    InspParam.InspAreaParam.RemoveAt(iLoopCount);
+
+                if (_RowSelect == 0 && _RowCount > 1) _RowNextSelect = 0;
+                if (_RowSelect > 1) _RowNextSelect = _RowSelect - 1;
+                if (_RowCount == 1) _RowSelect = -1;
+                if (_RowSelect != -1) UpdateInspectionAreaList(_RowNextSelect);
             }
-
-            //for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam[_RowSelect].InspAlgoParam.Count; ++iLoopCount)
-                //FreeReferenceEvent(ref InspParam, _RowSelect, iLoopCount);
-            InspParam.InspAreaParam.RemoveAt(_RowSelect);
-
-            if (_RowSelect == 0 && _RowCount > 1) _RowNextSelect = 0;
-            if (_RowSelect > 1) _RowNextSelect = _RowSelect - 1;
-            if (_RowCount == 1) _RowSelect = -1;
-            if (_RowSelect != -1) UpdateInspectionAreaList(_RowNextSelect);
 
             InspAreaSelected = -1;
             UpdateTeachingStatus(eTeachStep.AREA_CLEAR);
@@ -455,18 +494,24 @@ namespace InspectionSystemManager
             if (CurrentTeachStep == eTeachStep.ALGO_SELECT) return;
             if (gridViewArea.SelectedRows.Count == 0) { MessageBox.Show("Not selected inspection area."); return; }
             int _SelectedAreaNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Cells[(int)eAreaList.ID].Value) - 1;
+            int _GridViewAreaSelectNum = Convert.ToInt32(gridViewArea.SelectedRows[0].Index);
             if (_SelectedAreaNum < 0) { MessageBox.Show("Not selected inspection area."); return; }
             if (InspectionImageWidth == 0 || InspectionImageHeight == 0) return;
+
+            //LJH 2018.11.19 수정
             InspAreaSelected = _SelectedAreaNum;
-            
+
             //BenchMark Setting
-            DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.BENCHMARK), InspAreaSelected];
+            //DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.BENCHMARK), InspAreaSelected];
+            DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.BENCHMARK), _GridViewAreaSelectNum];
             InspParam.InspAreaParam[InspAreaSelected].AreaBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
 
-            _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.NGNUMBER), InspAreaSelected];
+            //_ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.NGNUMBER), InspAreaSelected];
+            _ComboCell = (DataGridViewComboBoxCell)gridViewArea[Convert.ToInt32(eAreaList.NGNUMBER), _GridViewAreaSelectNum];
             InspParam.InspAreaParam[InspAreaSelected].NgAreaNumber = _ComboCell.Items.IndexOf(_ComboCell.Value) + 1;
 
-            DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewArea[Convert.ToInt32(eAreaList.ENABLE), InspAreaSelected];
+            //DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewArea[Convert.ToInt32(eAreaList.ENABLE), InspAreaSelected];
+            DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewArea[Convert.ToInt32(eAreaList.ENABLE), _GridViewAreaSelectNum];
             InspParam.InspAreaParam[InspAreaSelected].Enable = Convert.ToBoolean(_CheckCell.Value);
 
             CogRectangle _InspRegion = new CogRectangle();
@@ -493,7 +538,8 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].AreaRegionHeight  = _InspRegion.Height;
 
             UpdateInspectionAreaList(InspAreaSelected);
-            gridViewArea.Rows[InspAreaSelected].Selected = true;
+            gridViewArea.Rows[_GridViewAreaSelectNum].Selected = true;
+            //gridViewArea.Rows[InspAreaSelected].Selected = true;
 
             UpdateInspectionAlgoList(InspAreaSelected);
             UpdateTeachingStatus(eTeachStep.AREA_SET);
@@ -861,7 +907,7 @@ namespace InspectionSystemManager
             btnAlgorithmIndexMoveDown.Visible = !btnAlgorithmIndexMoveDown.Visible;
         }
 
-        private void btnDataMapApplyInspectionArea_Click(object sender, EventArgs e)
+        private void btnMapDataApplyInspectionArea_Click(object sender, EventArgs e)
         {
             if (MapDataParam.UnitTotalCount > 10) { MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.UnitTotalCount)); return; }
 
@@ -873,6 +919,8 @@ namespace InspectionSystemManager
                 _InspAreaParam.AreaRegionCenterY = MapDataParam.UnitListCenterY[iLoopCount];
                 _InspAreaParam.AreaRegionWidth = MapDataParam.UnitListWidth[iLoopCount];
                 _InspAreaParam.AreaRegionHeight = MapDataParam.UnitListHeight[iLoopCount];
+                _InspAreaParam.BaseIndexNumber = _StartNumber - 1;
+
                 _InspAreaParam.IsUseMapData = true;
                 _InspAreaParam.MapDataUnitTotalCount = (int)MapDataParam.UnitTotalCount;
                 _InspAreaParam.MapDataStartNumber   = _StartNumber;
@@ -881,11 +929,65 @@ namespace InspectionSystemManager
             }
 
             GridViewAreaAndAlgoClear();
-            UpdateInspectionAreaList(InspParam.InspAreaParam.Count - 1);
+
+            int _AreaListIndex = InspParam.InspAreaParam[InspParam.InspAreaParam.Count - 1].BaseIndexNumber;
+            UpdateInspectionAreaList(_AreaListIndex);
+            //UpdateInspectionAreaList(InspParam.InspAreaParam.Count - 1);
 
             UpdateTeachingStatus(eTeachStep.AREA_CLEAR);
             gridViewAlgo.ClearSelection();
             gridViewAlgo.Rows.Clear();
+        }
+
+        private void btnMapDataAlgorithmSet_Click(object sender, EventArgs e)
+        {
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                //Map Data를 사용 할 시
+                if (true == InspParam.InspAreaParam[iLoopCount].IsUseMapData)
+                {
+                    int _Base = InspParam.InspAreaParam[iLoopCount].BaseIndexNumber;
+                    if (_Base == iLoopCount) continue;
+
+                    double _AreaCenterX = InspParam.InspAreaParam[_Base].AreaRegionCenterX;
+                    double _AreaCenterY = InspParam.InspAreaParam[_Base].AreaRegionCenterY;
+                    for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[_Base].InspAlgoParam.Count; ++jLoopCount)
+                    {
+                        double _AlgoCenterX = InspParam.InspAreaParam[_Base].InspAlgoParam[jLoopCount].AlgoRegionCenterX;
+                        double _AlgoCenterY = InspParam.InspAreaParam[_Base].InspAlgoParam[jLoopCount].AlgoRegionCenterY;
+                        double _OffsetX = _AlgoCenterX - _AreaCenterX;
+                        double _OffsetY = _AlgoCenterY - _AreaCenterY;
+
+                        InspectionAlgorithmParameter _InspAlgoParamSrc  = InspParam.InspAreaParam[_Base].InspAlgoParam[jLoopCount];
+                        InspectionAlgorithmParameter _InspAlgoParamDest = new InspectionAlgorithmParameter();
+                        InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Clear();
+
+                        CParameterManager.RecipeCopy(_InspAlgoParamSrc, ref _InspAlgoParamDest, _OffsetX, _OffsetY);
+                        _InspAlgoParamDest.AlgoRegionCenterX = InspParam.InspAreaParam[iLoopCount].AreaRegionCenterX + _OffsetX;
+                        _InspAlgoParamDest.AlgoRegionCenterY = InspParam.InspAreaParam[iLoopCount].AreaRegionCenterY + _OffsetY;
+                        InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Add(_InspAlgoParamDest);
+                    }
+                }
+            }
+
+            for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
+            {
+                if (false == InspParam.InspAreaParam[iLoopCount].IsUseMapData) continue;
+
+                //임시 : Map data copy Draw
+                CogRectangle _Area = new CogRectangle();
+                _Area.SetCenterWidthHeight(InspParam.InspAreaParam[iLoopCount].AreaRegionCenterX, InspParam.InspAreaParam[iLoopCount].AreaRegionCenterY, InspParam.InspAreaParam[iLoopCount].AreaRegionWidth, InspParam.InspAreaParam[iLoopCount].AreaRegionHeight);
+                kpTeachDisplay.DrawStaticShape(_Area, string.Format("Area_{0}", iLoopCount), CogColorConstants.Green);
+
+                for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[iLoopCount].InspAlgoParam.Count; ++jLoopCount)
+                {
+                    //임시 : Map data copy Draw
+                    CogRectangle _Algo = new CogRectangle();
+                    _Algo.SetCenterWidthHeight(InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionCenterX, InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionCenterY,
+                                                InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionWidth, InspParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].AlgoRegionHeight);
+                    kpTeachDisplay.DrawStaticShape(_Algo, string.Format("Algo_{0}_{1}", iLoopCount, jLoopCount), CogColorConstants.Green);
+                }
+            }
         }
 
         private void btnShowAllArea_Click(object sender, EventArgs e)
@@ -919,37 +1021,47 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
             {
-                //if (InspParam.InspAreaParam[iLoopCount].IsUseMapData)
-                //{
-                //    int _Index = (iLoopCount + 1);
-                //    string _IndexString = _Index.ToString();
-                //    string _Name = String.Format("Area {0} ~ {1}", InspParam.InspAreaParam[iLoopCount].MapDataStartNumber, InspParam.InspAreaParam[iLoopCount].MapDataEndNumber);
-                //    if (_Index > InspParam.InspAreaParam[iLoopCount].MapDataStartNumber && _Index <= InspParam.InspAreaParam[iLoopCount].MapDataEndNumber) continue;
+                if (InspParam.InspAreaParam[iLoopCount].IsUseMapData && MapDataParam.UnitTotalCount > 10)
+                {
+                    int _Index = (iLoopCount + 1);
+                    string _IndexString = _Index.ToString();
+                    string _Name = String.Format("Area {0} ~ {1}", InspParam.InspAreaParam[iLoopCount].MapDataStartNumber, InspParam.InspAreaParam[iLoopCount].MapDataEndNumber);
+                    if (_Index > InspParam.InspAreaParam[iLoopCount].MapDataStartNumber && _Index <= InspParam.InspAreaParam[iLoopCount].MapDataEndNumber) continue;
 
-                //    bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
+                    bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
 
-                //    AddInspectionArea(_IndexString, _Name, _Enable);
-                //    gridViewArea.Rows[iLoopCount].Selected = false;
-                //}
+                    AddInspectionArea(_IndexString, _Name, _Enable);
+                    gridViewArea.Rows[iLoopCount].Selected = false;
+                }
 
-                //else
+                else
                 {
                     string _IndexString = (iLoopCount + 1).ToString();
                     string _Name = "Area" + _IndexString;
                     bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
 
                     AddInspectionArea(_IndexString, _Name, _Enable);
-                    gridViewArea.Rows[iLoopCount].Selected = false;
+
+                    int _Index = InspParam.InspAreaParam[iLoopCount].BaseIndexNumber;
+                    gridViewArea.Rows[_Index].Selected = false;
                 }
             }
 
             if (_Selected != -1)
             {
+                /*
                 //LJH 2018.06.07 CellChanged event 때문에 막아놓음
                 //gridViewArea.CurrentCell = gridViewArea.Rows[_Selected].Cells[0];
                 gridViewArea.Rows[_Selected].Selected = true;
 
                 UpdateInspectionAlgoList(_Selected, true);
+                InspAreaSelected = _Selected;
+                */
+
+                int _Index = InspParam.InspAreaParam[_Selected].BaseIndexNumber;
+
+                gridViewArea.Rows[_Index].Selected = true;
+                UpdateInspectionAlgoList(_Index, true);
                 InspAreaSelected = _Selected;
             }
         }

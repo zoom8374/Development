@@ -75,7 +75,7 @@ namespace InspectionSystemManager
         private bool IsCamLiveFlag = false;
         private bool IsCrossLine = false;
         private bool IsMenuHide = false;
-        private bool IsResultDisplay = true;
+        private bool IsResultDisplay = false;
 
         private double DisplayZoomValue = 1;
         private double DisplayPanXValue = 0;
@@ -506,6 +506,24 @@ namespace InspectionSystemManager
                 btnImageAutoSave.ButtonImage = InspectionSystemManager.Properties.Resources.AutoSaveImage;
                 btnImageAutoSave.ButtonImageOver = InspectionSystemManager.Properties.Resources.AutoSaveImageOver;
                 btnImageAutoSave.ButtonImageDown = InspectionSystemManager.Properties.Resources.AutoSaveImageDown;
+            }
+        }
+
+        private void btnImageResultDisplay_Click(object sender, EventArgs e)
+        {
+            IsResultDisplay = !IsResultDisplay;
+            if (IsResultDisplay)
+            {
+                btnImageResultDisplay.ButtonImage = InspectionSystemManager.Properties.Resources.Result;
+                btnImageResultDisplay.ButtonImageOver = InspectionSystemManager.Properties.Resources.ResultOver;
+                btnImageResultDisplay.ButtonImageDown = InspectionSystemManager.Properties.Resources.ResultDown;
+            }
+
+            else
+            {
+                btnImageResultDisplay.ButtonImage = InspectionSystemManager.Properties.Resources.ResultStop;
+                btnImageResultDisplay.ButtonImageOver = InspectionSystemManager.Properties.Resources.ResultStopOver;
+                btnImageResultDisplay.ButtonImageDown = InspectionSystemManager.Properties.Resources.ResultStopDown;
             }
         }
 

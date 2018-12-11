@@ -48,7 +48,6 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bi
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\CustomControl.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\KPDisplay.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\LogMessageManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\MapDataManager.exe
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\ParameterManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\WindowKeyPad.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\PylonC.NET.dll
@@ -105,3 +104,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\ob
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.csproj.GenerateResource.Cache
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\MapDataManager.dll

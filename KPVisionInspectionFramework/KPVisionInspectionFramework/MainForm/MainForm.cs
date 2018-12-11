@@ -228,10 +228,11 @@ namespace KPVisionInspectionFramework
             #endregion SubWindow 생성 및 Event 등록
 
             #region Project 별 MainProcess Setting
-            if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType) 			 MainProcess = new MainProcessDefault();
-            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)    MainProcess = new MainProcessDispensor();
-            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)  MainProcess = new MainProcessID();
-            else                                                                        MainProcess = new MainProcessBase();
+            if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType) 			MainProcess = new MainProcessDefault();
+            else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)   MainProcess = new MainProcessDispensor();
+            else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessID();
+            else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessSorter();
+            else                                                                            MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
             MainProcess.Initialize(@"D:\VisionInspectionData\Common\");

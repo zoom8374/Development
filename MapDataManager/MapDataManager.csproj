@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7A1B5EB3-9664-49C0-9935-F8D728DACC9F}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MapDataManager</RootNamespace>
     <AssemblyName>MapDataManager</AssemblyName>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cognex.VisionPro, Version=63.0.0.0, Culture=neutral, PublicKeyToken=ef0f902af9dee505, processorArchitecture=AMD64" />
@@ -111,6 +114,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FrameSection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NormalReverse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZigZag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZigZagReverse.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

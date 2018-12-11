@@ -45,22 +45,11 @@ namespace KPDisplay
         private  CogLineSegment InteractiveLine = new CogLineSegment();
 
         #region Color Define
-        public CogColorConstants[] ColorDefine = new CogColorConstants[56] {    CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
-                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
-                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
-                                                                                CogColorConstants.DarkGrey,     CogColorConstants.LightGrey,
-                                                                                CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
-                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
-                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
-                                                                                CogColorConstants.DarkGrey,     CogColorConstants.LightGrey,
-                                                                                CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
-                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
-                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
-                                                                                CogColorConstants.DarkGrey,     CogColorConstants.LightGrey,
-                                                                                CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
-                                                                                CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
-                                                                                CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
-                                                                        		CogColorConstants.DarkGrey,     CogColorConstants.LightGrey  };
+        public CogColorConstants[] ColorDefine = new CogColorConstants[256];
+        private CogColorConstants[] ColorDefineOneCycle = new CogColorConstants[14] {   CogColorConstants.Red,          CogColorConstants.Orange,       CogColorConstants.Yellow,       CogColorConstants.Green,
+                                                                                        CogColorConstants.Blue,         CogColorConstants.Purple,       CogColorConstants.Magenta,      CogColorConstants.DarkRed,
+                                                                                        CogColorConstants.Grey,         CogColorConstants.DarkGreen,    CogColorConstants.Cyan,         CogColorConstants.White,
+                                                                                        CogColorConstants.DarkGrey,     CogColorConstants.LightGrey };
         #endregion Color Define
 
         //public delegate void CogDisplayMouseUpHandler(CogFindCircleTool _CircleCaliperTool);
@@ -103,6 +92,9 @@ namespace KPDisplay
             cogDisplayStatusBarV2.Location = new Point(0, kCogDisplay.Height);
 
             cogDisplayStatusBarV2.Display = kCogDisplay;
+
+            for (int iLoopCount = 0; iLoopCount < ColorDefine.Length; ++iLoopCount)
+                ColorDefine[iLoopCount] = ColorDefineOneCycle[iLoopCount % ColorDefineOneCycle.Length];
         }
 
         private void KPCogDisplayControl_Resize(object sender, EventArgs e)
