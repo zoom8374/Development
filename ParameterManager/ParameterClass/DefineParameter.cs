@@ -113,4 +113,24 @@ namespace ParameterManager
         public const int OFF = 0;
         public const int ON = 1;
     }
+
+    public struct CenterPoint
+    {
+        public double X;
+        public double Y;
+    }
+
+    public class MapIDRectInfo
+    {
+        public CenterPoint CenterPt;
+        public double Width;
+        public double Height;
+
+        public MapIDRectInfo()
+        {
+            CenterPt = new CenterPoint();
+            Width = 0;
+            Height = 0;
+        }
+    }
 }

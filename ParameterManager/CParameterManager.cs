@@ -1205,39 +1205,39 @@ namespace ParameterManager
 
             int _Cnt = 0;
             InspMapDataParam[_ID] = new MapDataParameter();
-            InspMapDataParam[_ID].UnitListCenterX.Clear();
-            InspMapDataParam[_ID].UnitListCenterY.Clear();
-            InspMapDataParam[_ID].UnitListWidth.Clear();
-            InspMapDataParam[_ID].UnitListHeight.Clear();
+            InspMapDataParam[_ID].Info.UnitListCenterX.Clear();
+            InspMapDataParam[_ID].Info.UnitListCenterY.Clear();
+            InspMapDataParam[_ID].Info.UnitListWidth.Clear();
+            InspMapDataParam[_ID].Info.UnitListHeight.Clear();
             foreach (XmlNode _Nodes in _XmlNodeList)
             {
                 if (null == _Nodes) return true;
                     
-                if (_Nodes.Name == "UnitPatternPath")                InspMapDataParam[_ID].UnitPatternPath = _Nodes.InnerText;
-                else if (_Nodes.Name == "UnitTotalCount")            InspMapDataParam[_ID].UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitRowCount")              InspMapDataParam[_ID].UnitRowCount = Convert.ToUInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitColumnCount")           InspMapDataParam[_ID].UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "SectionRowCount")           InspMapDataParam[_ID].SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "SectionColumnCount")        InspMapDataParam[_ID].SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "SearchType")                 InspMapDataParam[_ID].SearchType = Convert.ToInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "MapDataTeachingMode")       InspMapDataParam[_ID].MapDataTeachingMode = Convert.ToInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitSearchAreaCenterX")     InspMapDataParam[_ID].UnitSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitSearchAreaCenterY")     InspMapDataParam[_ID].UnitSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitSearchAreaWidth")       InspMapDataParam[_ID].UnitSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitSearchAreaHeight")      InspMapDataParam[_ID].UnitSearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitPatternAreaOriginX")    InspMapDataParam[_ID].UnitPatternAreaOriginX = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitPatternAreaOriginY")    InspMapDataParam[_ID].UnitPatternAreaOriginY = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitPatternAreaCenterX")    InspMapDataParam[_ID].UnitPatternAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitPatternAreaCenterY")    InspMapDataParam[_ID].UnitPatternAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitPatternAreaWidth")      InspMapDataParam[_ID].UnitPatternAreaWidth = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "UnitPatternAreaHeight")     InspMapDataParam[_ID].UnitPatternAreaHeight = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "WholeSearchAreaCenterX")    InspMapDataParam[_ID].WholeSearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "WholeSearchAreaCenterY")    InspMapDataParam[_ID].WholeSearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "WholeSearchAreaWidth")      InspMapDataParam[_ID].WholeSearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "WholeSearchAreaHeight")     InspMapDataParam[_ID].WholeSearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "FindCount")                 InspMapDataParam[_ID].FindCount = Convert.ToUInt32(_Nodes.InnerText);
-                else if (_Nodes.Name == "FindScore")                 InspMapDataParam[_ID].FindScore = Convert.ToDouble(_Nodes.InnerText);
-                else if (_Nodes.Name == "AngleLimit")                InspMapDataParam[_ID].AngleLimit = Convert.ToDouble(_Nodes.InnerText);
+                if (_Nodes.Name == "UnitPatternPath")                InspMapDataParam[_ID].Info.UnitPatternPath = _Nodes.InnerText;
+                else if (_Nodes.Name == "UnitTotalCount")            InspMapDataParam[_ID].Info.UnitTotalCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitRowCount")              InspMapDataParam[_ID].Info.UnitRowCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitColumnCount")           InspMapDataParam[_ID].Info.UnitColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SectionRowCount")           InspMapDataParam[_ID].Info.SectionRowCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SectionColumnCount")        InspMapDataParam[_ID].Info.SectionColumnCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchType")                InspMapDataParam[_ID].Info.SearchType = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "MapDataTeachingMode")       InspMapDataParam[_ID].Info.MapDataTeachingMode = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaCenterX")     InspMapDataParam[_ID].Unit.SearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaCenterY")     InspMapDataParam[_ID].Unit.SearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaWidth")       InspMapDataParam[_ID].Unit.SearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitSearchAreaHeight")      InspMapDataParam[_ID].Unit.SearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaOriginX")    InspMapDataParam[_ID].Unit.PatternAreaOriginX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaOriginY")    InspMapDataParam[_ID].Unit.PatternAreaOriginY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaCenterX")    InspMapDataParam[_ID].Unit.PatternAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaCenterY")    InspMapDataParam[_ID].Unit.PatternAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaWidth")      InspMapDataParam[_ID].Unit.PatternAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "UnitPatternAreaHeight")     InspMapDataParam[_ID].Unit.PatternAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaCenterX")    InspMapDataParam[_ID].Whole.SearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaCenterY")    InspMapDataParam[_ID].Whole.SearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaWidth")      InspMapDataParam[_ID].Whole.SearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "WholeSearchAreaHeight")     InspMapDataParam[_ID].Whole.SearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "FindCount")                 InspMapDataParam[_ID].Info.FindCount = Convert.ToUInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "FindScore")                 InspMapDataParam[_ID].Info.FindScore = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "AngleLimit")                InspMapDataParam[_ID].Info.AngleLimit = Convert.ToDouble(_Nodes.InnerText);
                 else if (_Nodes.Name == "UnitCenterList")
                 {
                     foreach (XmlNode _Node in _Nodes)
@@ -1249,11 +1249,46 @@ namespace ParameterManager
                         {
                             foreach (XmlNode _NodeChild in _Node)
                             {
-                                if (_NodeChild.Name == "X")      InspMapDataParam[_ID].UnitListCenterX.Add(Convert.ToDouble(_NodeChild.InnerText));
-                                else if (_NodeChild.Name == "Y") InspMapDataParam[_ID].UnitListCenterY.Add(Convert.ToDouble(_NodeChild.InnerText));
-                                else if (_NodeChild.Name == "W") InspMapDataParam[_ID].UnitListWidth.Add(Convert.ToDouble(_NodeChild.InnerText));
-                                else if (_NodeChild.Name == "H") InspMapDataParam[_ID].UnitListHeight.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                if (_NodeChild.Name == "X")      InspMapDataParam[_ID].Info.UnitListCenterX.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "Y") InspMapDataParam[_ID].Info.UnitListCenterY.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "W") InspMapDataParam[_ID].Info.UnitListWidth.Add(Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "H") InspMapDataParam[_ID].Info.UnitListHeight.Add(Convert.ToDouble(_NodeChild.InnerText));
                             }
+                        }
+                        _Cnt++;
+                    }
+                }
+
+                else if (_Nodes.Name == "IsUsableMapID")        InspMapDataParam[_ID].MapID.IsUsableMapID = Convert.ToBoolean(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchAreaCenterX")    InspMapDataParam[_ID].MapID.SearchAreaCenterX = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchAreaCenterY")    InspMapDataParam[_ID].MapID.SearchAreaCenterY = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchAreaWidth")      InspMapDataParam[_ID].MapID.SearchAreaWidth = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchAreaHeight")     InspMapDataParam[_ID].MapID.SearchAreaHeight = Convert.ToDouble(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearhDirection")       InspMapDataParam[_ID].MapID.SearhDirection = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchThreshold")      InspMapDataParam[_ID].MapID.SearchThreshold = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchSizeMin")        InspMapDataParam[_ID].MapID.SearchSizeMin = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "SearchSizeMax")        InspMapDataParam[_ID].MapID.SearchSizeMax = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "BlobAreaSizeMin")      InspMapDataParam[_ID].MapID.BlobAreaSizeMin = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "BlobAreaSizeMax")      InspMapDataParam[_ID].MapID.BlobAreaSizeMax = Convert.ToInt32(_Nodes.InnerText);
+                else if (_Nodes.Name == "MapIDInfoList")
+                {
+                    _Cnt = 0;
+                    foreach (XmlNode _Node in _Nodes)
+                    {
+                        if (null == _Node) break;
+
+                        string _MapIDString = String.Format("MapIDInfo{0}", _Cnt);
+                        if (_MapIDString == _Node.Name)
+                        {
+                            MapIDRectInfo _MapIDRectInfoTemp = new MapIDRectInfo();
+                            foreach (XmlNode _NodeChild in _Node)
+                            {
+                                if (_NodeChild.Name == "X") _MapIDRectInfoTemp.CenterPt.X = (Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "Y") _MapIDRectInfoTemp.CenterPt.Y = (Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "W") _MapIDRectInfoTemp.Width = (Convert.ToDouble(_NodeChild.InnerText));
+                                else if (_NodeChild.Name == "H") _MapIDRectInfoTemp.Height = (Convert.ToDouble(_NodeChild.InnerText));
+                            }
+                            InspMapDataParam[_ID].MapID.MapIDInfoList.Add(_MapIDRectInfoTemp);
                         }
                         _Cnt++;
                     }
@@ -1262,12 +1297,12 @@ namespace ParameterManager
 
             try
             {
-                InspMapDataParam[_ID].UnitPattern = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(InspMapDataParam[_ID].UnitPatternPath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                InspMapDataParam[_ID].Info.UnitPattern = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(InspMapDataParam[_ID].Info.UnitPatternPath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
             }
             
             catch
             {
-                InspMapDataParam[_ID].UnitPattern = new CogPMAlignPattern();
+                InspMapDataParam[_ID].Info.UnitPattern = new CogPMAlignPattern();
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.ERR, "ReadInspectionMapDataParameter Err", CLogManager.LOG_LEVEL.LOW);
             }
 
@@ -1286,51 +1321,78 @@ namespace ParameterManager
             string _PatternFileName = String.Format("MapDataReference.pat");
             string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
             if (false == Directory.Exists(_PatternFilePath)) Directory.CreateDirectory(_PatternFilePath);
-            InspMapDataParam[_ID].UnitPatternPath = _PatternFilePath + _PatternFileName;
-            if (InspMapDataParam[_ID].UnitPattern != null) 
-                CogSerializer.SaveObjectToFile(InspMapDataParam[_ID].UnitPattern, InspMapDataParam[_ID].UnitPatternPath);
+            InspMapDataParam[_ID].Info.UnitPatternPath = _PatternFilePath + _PatternFileName;
+            if (InspMapDataParam[_ID].Info.UnitPattern != null) 
+                CogSerializer.SaveObjectToFile(InspMapDataParam[_ID].Info.UnitPattern, InspMapDataParam[_ID].Info.UnitPatternPath);
 
             XmlTextWriter _XmlWriter = new XmlTextWriter(_MapDataParameterFilePath, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();
             _XmlWriter.WriteStartElement("MapDataList");
             {
-                _XmlWriter.WriteElementString("UnitPatternPath", InspMapDataParam[_ID].UnitPatternPath);
-                _XmlWriter.WriteElementString("UnitTotalCount", InspMapDataParam[_ID].UnitTotalCount.ToString());
-                _XmlWriter.WriteElementString("UnitRowCount", InspMapDataParam[_ID].UnitRowCount.ToString());
-                _XmlWriter.WriteElementString("UnitColumnCount", InspMapDataParam[_ID].UnitColumnCount.ToString());
-                _XmlWriter.WriteElementString("SectionRowCount", InspMapDataParam[_ID].SectionRowCount.ToString());
-                _XmlWriter.WriteElementString("SearchType", InspMapDataParam[_ID].SearchType.ToString());
-                _XmlWriter.WriteElementString("SectionColumnCount", InspMapDataParam[_ID].SectionColumnCount.ToString());
-                _XmlWriter.WriteElementString("MapDataTeachingMode", InspMapDataParam[_ID].MapDataTeachingMode.ToString());
-                _XmlWriter.WriteElementString("UnitSearchAreaCenterX", InspMapDataParam[_ID].UnitSearchAreaCenterX.ToString());
-                _XmlWriter.WriteElementString("UnitSearchAreaCenterY", InspMapDataParam[_ID].UnitSearchAreaCenterY.ToString());
-                _XmlWriter.WriteElementString("UnitSearchAreaWidth", InspMapDataParam[_ID].UnitSearchAreaWidth.ToString());
-                _XmlWriter.WriteElementString("UnitSearchAreaHeight", InspMapDataParam[_ID].UnitSearchAreaHeight.ToString());
-                _XmlWriter.WriteElementString("UnitPatternAreaOriginX", InspMapDataParam[_ID].UnitPatternAreaOriginX.ToString());
-                _XmlWriter.WriteElementString("UnitPatternAreaOriginY", InspMapDataParam[_ID].UnitPatternAreaOriginY.ToString());
-                _XmlWriter.WriteElementString("UnitPatternAreaCenterX", InspMapDataParam[_ID].UnitPatternAreaCenterX.ToString());
-                _XmlWriter.WriteElementString("UnitPatternAreaCenterY", InspMapDataParam[_ID].UnitPatternAreaCenterY.ToString());
-                _XmlWriter.WriteElementString("UnitPatternAreaWidth", InspMapDataParam[_ID].UnitPatternAreaWidth.ToString());
-                _XmlWriter.WriteElementString("UnitPatternAreaHeight", InspMapDataParam[_ID].UnitPatternAreaHeight.ToString());
-                _XmlWriter.WriteElementString("WholeSearchAreaCenterX", InspMapDataParam[_ID].WholeSearchAreaCenterX.ToString());
-                _XmlWriter.WriteElementString("WholeSearchAreaCenterY", InspMapDataParam[_ID].WholeSearchAreaCenterY.ToString());
-                _XmlWriter.WriteElementString("WholeSearchAreaWidth", InspMapDataParam[_ID].WholeSearchAreaWidth.ToString());
-                _XmlWriter.WriteElementString("WholeSearchAreaHeight", InspMapDataParam[_ID].WholeSearchAreaHeight.ToString());
-                _XmlWriter.WriteElementString("FindCount", InspMapDataParam[_ID].FindCount.ToString());
-                _XmlWriter.WriteElementString("FindScore", InspMapDataParam[_ID].FindScore.ToString());
-                _XmlWriter.WriteElementString("AngleLimit", InspMapDataParam[_ID].AngleLimit.ToString());
-
+                _XmlWriter.WriteElementString("UnitPatternPath", InspMapDataParam[_ID].Info.UnitPatternPath);
+                _XmlWriter.WriteElementString("UnitTotalCount", InspMapDataParam[_ID].Info.UnitTotalCount.ToString());
+                _XmlWriter.WriteElementString("UnitRowCount", InspMapDataParam[_ID].Info.UnitRowCount.ToString());
+                _XmlWriter.WriteElementString("UnitColumnCount", InspMapDataParam[_ID].Info.UnitColumnCount.ToString());
+                _XmlWriter.WriteElementString("SectionRowCount", InspMapDataParam[_ID].Info.SectionRowCount.ToString());
+                _XmlWriter.WriteElementString("SearchType", InspMapDataParam[_ID].Info.SearchType.ToString());
+                _XmlWriter.WriteElementString("SectionColumnCount", InspMapDataParam[_ID].Info.SectionColumnCount.ToString());
+                _XmlWriter.WriteElementString("MapDataTeachingMode", InspMapDataParam[_ID].Info.MapDataTeachingMode.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaCenterX", InspMapDataParam[_ID].Unit.SearchAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaCenterY", InspMapDataParam[_ID].Unit.SearchAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaWidth", InspMapDataParam[_ID].Unit.SearchAreaWidth.ToString());
+                _XmlWriter.WriteElementString("UnitSearchAreaHeight", InspMapDataParam[_ID].Unit.SearchAreaHeight.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaOriginX", InspMapDataParam[_ID].Unit.PatternAreaOriginX.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaOriginY", InspMapDataParam[_ID].Unit.PatternAreaOriginY.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaCenterX", InspMapDataParam[_ID].Unit.PatternAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaCenterY", InspMapDataParam[_ID].Unit.PatternAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaWidth", InspMapDataParam[_ID].Unit.PatternAreaWidth.ToString());
+                _XmlWriter.WriteElementString("UnitPatternAreaHeight", InspMapDataParam[_ID].Unit.PatternAreaHeight.ToString());
                 _XmlWriter.WriteStartElement("UnitCenterList");
                 {
-                    for (int iLoopCount = 0; iLoopCount < InspMapDataParam[_ID].UnitListCenterX.Count; ++iLoopCount)
+                    for (int iLoopCount = 0; iLoopCount < InspMapDataParam[_ID].Info.UnitListCenterX.Count; ++iLoopCount)
                     {
                         _XmlWriter.WriteStartElement("UnitCenter" + (iLoopCount));
                         {
-                            _XmlWriter.WriteElementString("X", InspMapDataParam[_ID].UnitListCenterX[iLoopCount].ToString());
-                            _XmlWriter.WriteElementString("Y", InspMapDataParam[_ID].UnitListCenterY[iLoopCount].ToString());
-                            _XmlWriter.WriteElementString("W", InspMapDataParam[_ID].UnitListWidth[iLoopCount].ToString());
-                            _XmlWriter.WriteElementString("H", InspMapDataParam[_ID].UnitListHeight[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("X", InspMapDataParam[_ID].Info.UnitListCenterX[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("Y", InspMapDataParam[_ID].Info.UnitListCenterY[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("W", InspMapDataParam[_ID].Info.UnitListWidth[iLoopCount].ToString());
+                            _XmlWriter.WriteElementString("H", InspMapDataParam[_ID].Info.UnitListHeight[iLoopCount].ToString());
+                        }
+                        _XmlWriter.WriteEndElement();
+                    }
+                }
+                _XmlWriter.WriteEndElement();
+
+                _XmlWriter.WriteElementString("WholeSearchAreaCenterX", InspMapDataParam[_ID].Whole.SearchAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaCenterY", InspMapDataParam[_ID].Whole.SearchAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaWidth", InspMapDataParam[_ID].Whole.SearchAreaWidth.ToString());
+                _XmlWriter.WriteElementString("WholeSearchAreaHeight", InspMapDataParam[_ID].Whole.SearchAreaHeight.ToString());
+                _XmlWriter.WriteElementString("FindCount", InspMapDataParam[_ID].Info.FindCount.ToString());
+                _XmlWriter.WriteElementString("FindScore", InspMapDataParam[_ID].Info.FindScore.ToString());
+                _XmlWriter.WriteElementString("AngleLimit", InspMapDataParam[_ID].Info.AngleLimit.ToString());
+
+                _XmlWriter.WriteElementString("IsUsableMapID", InspMapDataParam[_ID].MapID.IsUsableMapID.ToString());
+                _XmlWriter.WriteElementString("SearchAreaCenterX", InspMapDataParam[_ID].MapID.SearchAreaCenterX.ToString());
+                _XmlWriter.WriteElementString("SearchAreaCenterY", InspMapDataParam[_ID].MapID.SearchAreaCenterY.ToString());
+                _XmlWriter.WriteElementString("SearchAreaWidth", InspMapDataParam[_ID].MapID.SearchAreaWidth.ToString());
+                _XmlWriter.WriteElementString("SearchAreaHeight", InspMapDataParam[_ID].MapID.SearchAreaHeight.ToString());
+                _XmlWriter.WriteElementString("SearhDirection", InspMapDataParam[_ID].MapID.SearhDirection.ToString());
+                _XmlWriter.WriteElementString("SearchThreshold", InspMapDataParam[_ID].MapID.SearchThreshold.ToString());
+                _XmlWriter.WriteElementString("SearchSizeMin", InspMapDataParam[_ID].MapID.SearchSizeMin.ToString());
+                _XmlWriter.WriteElementString("SearchSizeMax", InspMapDataParam[_ID].MapID.SearchSizeMax.ToString());
+                _XmlWriter.WriteElementString("BlobAreaSizeMin", InspMapDataParam[_ID].MapID.BlobAreaSizeMin.ToString());
+                _XmlWriter.WriteElementString("BlobAreaSizeMax", InspMapDataParam[_ID].MapID.BlobAreaSizeMax.ToString());
+                _XmlWriter.WriteStartElement("MapIDInfoList");
+                {
+                    for (int iLoopCount = 0; iLoopCount < InspMapDataParam[_ID].MapID.MapIDInfoList.Count; ++iLoopCount)
+                    {
+                        _XmlWriter.WriteStartElement("MapIDInfo" + iLoopCount);
+                        {
+                            _XmlWriter.WriteElementString("X", InspMapDataParam[_ID].MapID.MapIDInfoList[iLoopCount].CenterPt.X.ToString());
+                            _XmlWriter.WriteElementString("Y", InspMapDataParam[_ID].MapID.MapIDInfoList[iLoopCount].CenterPt.Y.ToString());
+                            _XmlWriter.WriteElementString("W", InspMapDataParam[_ID].MapID.MapIDInfoList[iLoopCount].Width.ToString());
+                            _XmlWriter.WriteElementString("H", InspMapDataParam[_ID].MapID.MapIDInfoList[iLoopCount].Height.ToString());
                         }
                         _XmlWriter.WriteEndElement();
                     }
@@ -1725,44 +1787,65 @@ namespace ParameterManager
         {
             if (null == _SrcParam) return;
             if (null == _DestParam) _DestParam = new MapDataParameter();
-            _DestParam.UnitListCenterX = new List<double>();
-            _DestParam.UnitListCenterY = new List<double>();
-            _DestParam.UnitListWidth = new List<double>();
-            _DestParam.UnitListHeight = new List<double>();
+            _DestParam.Info.UnitListCenterX = new List<double>();
+            _DestParam.Info.UnitListCenterY = new List<double>();
+            _DestParam.Info.UnitListWidth = new List<double>();
+            _DestParam.Info.UnitListHeight = new List<double>();
+            _DestParam.MapID.MapIDInfoList = new List<MapIDRectInfo>();
 
-            _DestParam.UnitPattern            = _SrcParam.UnitPattern;
-            _DestParam.UnitPatternPath        = _SrcParam.UnitPatternPath;
-            _DestParam.UnitTotalCount         = _SrcParam.UnitTotalCount;
-            _DestParam.UnitRowCount           = _SrcParam.UnitRowCount;
-            _DestParam.UnitColumnCount        = _SrcParam.UnitColumnCount;
-            _DestParam.SectionRowCount        = _SrcParam.SectionRowCount;
-            _DestParam.SectionColumnCount     = _SrcParam.SectionColumnCount;
-            _DestParam.SearchType             = _SrcParam.SearchType;
-            _DestParam.MapDataTeachingMode    = _SrcParam.MapDataTeachingMode;
-            _DestParam.UnitSearchAreaCenterX  = _SrcParam.UnitSearchAreaCenterX;
-            _DestParam.UnitSearchAreaCenterY  = _SrcParam.UnitSearchAreaCenterY;
-            _DestParam.UnitSearchAreaWidth    = _SrcParam.UnitSearchAreaWidth;
-            _DestParam.UnitSearchAreaHeight   = _SrcParam.UnitSearchAreaHeight;
-            _DestParam.UnitPatternAreaOriginX = _SrcParam.UnitPatternAreaOriginX;
-            _DestParam.UnitPatternAreaOriginY = _SrcParam.UnitPatternAreaOriginY;
-            _DestParam.UnitPatternAreaCenterX     = _SrcParam.UnitPatternAreaCenterX;
-            _DestParam.UnitPatternAreaCenterY     = _SrcParam.UnitPatternAreaCenterY;
-            _DestParam.UnitPatternAreaWidth   = _SrcParam.UnitPatternAreaWidth;
-            _DestParam.UnitPatternAreaHeight  = _SrcParam.UnitPatternAreaHeight;
-            _DestParam.WholeSearchAreaCenterX = _SrcParam.WholeSearchAreaCenterX;
-            _DestParam.WholeSearchAreaCenterY = _SrcParam.WholeSearchAreaCenterY;
-            _DestParam.WholeSearchAreaWidth   = _SrcParam.WholeSearchAreaWidth;
-            _DestParam.WholeSearchAreaHeight  = _SrcParam.WholeSearchAreaHeight;
-            _DestParam.FindCount              = _SrcParam.FindCount;
-            _DestParam.FindScore              = _SrcParam.FindScore;
-            _DestParam.AngleLimit             = _SrcParam.AngleLimit;
-            
-            for (int iLoopCount = 0; iLoopCount < _SrcParam.UnitListCenterX.Count; ++iLoopCount)
+            _DestParam.Info.UnitPattern         = _SrcParam.Info.UnitPattern;
+            _DestParam.Info.UnitPatternPath     = _SrcParam.Info.UnitPatternPath;
+            _DestParam.Info.UnitTotalCount      = _SrcParam.Info.UnitTotalCount;
+            _DestParam.Info.UnitRowCount        = _SrcParam.Info.UnitRowCount;
+            _DestParam.Info.UnitColumnCount     = _SrcParam.Info.UnitColumnCount;
+            _DestParam.Info.SectionRowCount     = _SrcParam.Info.SectionRowCount;
+            _DestParam.Info.SectionColumnCount  = _SrcParam.Info.SectionColumnCount;
+            _DestParam.Info.SearchType          = _SrcParam.Info.SearchType;
+            _DestParam.Info.MapDataTeachingMode = _SrcParam.Info.MapDataTeachingMode;
+            _DestParam.Unit.SearchAreaCenterX   = _SrcParam.Unit.SearchAreaCenterX;
+            _DestParam.Unit.SearchAreaCenterY   = _SrcParam.Unit.SearchAreaCenterY;
+            _DestParam.Unit.SearchAreaWidth     = _SrcParam.Unit.SearchAreaWidth;
+            _DestParam.Unit.SearchAreaHeight    = _SrcParam.Unit.SearchAreaHeight;
+            _DestParam.Unit.PatternAreaOriginX  = _SrcParam.Unit.PatternAreaOriginX;
+            _DestParam.Unit.PatternAreaOriginY  = _SrcParam.Unit.PatternAreaOriginY;
+            _DestParam.Unit.PatternAreaCenterX  = _SrcParam.Unit.PatternAreaCenterX;
+            _DestParam.Unit.PatternAreaCenterY  = _SrcParam.Unit.PatternAreaCenterY;
+            _DestParam.Unit.PatternAreaWidth    = _SrcParam.Unit.PatternAreaWidth;
+            _DestParam.Unit.PatternAreaHeight   = _SrcParam.Unit.PatternAreaHeight;
+            _DestParam.Whole.SearchAreaCenterX  = _SrcParam.Whole.SearchAreaCenterX;
+            _DestParam.Whole.SearchAreaCenterY  = _SrcParam.Whole.SearchAreaCenterY;
+            _DestParam.Whole.SearchAreaWidth    = _SrcParam.Whole.SearchAreaWidth;
+            _DestParam.Whole.SearchAreaHeight   = _SrcParam.Whole.SearchAreaHeight;
+            _DestParam.Info.FindCount           = _SrcParam.Info.FindCount;
+            _DestParam.Info.FindScore           = _SrcParam.Info.FindScore;
+            _DestParam.Info.AngleLimit          = _SrcParam.Info.AngleLimit;
+            _DestParam.MapID.SearchAreaCenterX  = _SrcParam.MapID.SearchAreaCenterX;
+            _DestParam.MapID.SearchAreaCenterY  = _SrcParam.MapID.SearchAreaCenterY;
+            _DestParam.MapID.SearchAreaWidth    = _SrcParam.MapID.SearchAreaWidth;
+            _DestParam.MapID.SearchAreaHeight   = _SrcParam.MapID.SearchAreaHeight;
+            _DestParam.MapID.SearhDirection     = _SrcParam.MapID.SearhDirection;
+            _DestParam.MapID.SearchThreshold    = _SrcParam.MapID.SearchThreshold;
+            _DestParam.MapID.SearchSizeMin      = _SrcParam.MapID.SearchSizeMin;
+            _DestParam.MapID.SearchSizeMax      = _SrcParam.MapID.SearchSizeMax;
+            _DestParam.MapID.BlobAreaSizeMin    = _SrcParam.MapID.BlobAreaSizeMin;
+            _DestParam.MapID.BlobAreaSizeMax    = _SrcParam.MapID.BlobAreaSizeMax;
+            _DestParam.MapID.IsUsableMapID      = _SrcParam.MapID.IsUsableMapID;
+            for (int iLoopCount = 0; iLoopCount < _SrcParam.Info.UnitListCenterX.Count; ++iLoopCount)
             {
-                _DestParam.UnitListCenterX.Add(_SrcParam.UnitListCenterX[iLoopCount]);
-                _DestParam.UnitListCenterY.Add(_SrcParam.UnitListCenterY[iLoopCount]);
-                _DestParam.UnitListWidth.Add(_SrcParam.UnitListWidth[iLoopCount]);
-                _DestParam.UnitListHeight.Add(_SrcParam.UnitListHeight[iLoopCount]);
+                _DestParam.Info.UnitListCenterX.Add(_SrcParam.Info.UnitListCenterX[iLoopCount]);
+                _DestParam.Info.UnitListCenterY.Add(_SrcParam.Info.UnitListCenterY[iLoopCount]);
+                _DestParam.Info.UnitListWidth.Add(_SrcParam.Info.UnitListWidth[iLoopCount]);
+                _DestParam.Info.UnitListHeight.Add(_SrcParam.Info.UnitListHeight[iLoopCount]);
+            }
+
+            for (int iLoopCount = 0; iLoopCount < _SrcParam.MapID.MapIDInfoList.Count; ++iLoopCount)
+            {
+                MapIDRectInfo _MapIDInfo = new MapIDRectInfo();
+                _MapIDInfo.CenterPt.X = _SrcParam.MapID.MapIDInfoList[iLoopCount].CenterPt.X;
+                _MapIDInfo.CenterPt.Y = _SrcParam.MapID.MapIDInfoList[iLoopCount].CenterPt.Y;
+                _MapIDInfo.Width = _SrcParam.MapID.MapIDInfoList[iLoopCount].Width;
+                _MapIDInfo.Height = _SrcParam.MapID.MapIDInfoList[iLoopCount].Height;
+                _DestParam.MapID.MapIDInfoList.Add(_MapIDInfo);
             }
         }
         #endregion RecipeCopy

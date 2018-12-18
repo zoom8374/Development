@@ -55,7 +55,8 @@ namespace InspectionSystemManager
         private void btnPrev_Click(object sender, EventArgs e)
         {
             CurrentPattern--;
-            if (CurrentPattern <= 0) { CurrentPattern = 1; return; }
+            //if (CurrentPattern <= 0) { CurrentPattern = 1; return; }
+            if (CurrentPattern <= 0) CurrentPattern++;
 
             ShowPatternImage(CurrentPattern);
             ShowPatternImageArea(CurrentPattern);
@@ -65,7 +66,8 @@ namespace InspectionSystemManager
         private void btnNext_Click(object sender, EventArgs e)
         {
             CurrentPattern++;
-            if (CurrentPattern > CogPatternAlgoRcp.ReferenceInfoList.Count) { CurrentPattern = CogPatternAlgoRcp.ReferenceInfoList.Count; return; }
+            //if (CurrentPattern > CogPatternAlgoRcp.ReferenceInfoList.Count) { CurrentPattern = CogPatternAlgoRcp.ReferenceInfoList.Count; return; }
+            if (CurrentPattern > CogPatternAlgoRcp.ReferenceInfoList.Count) CurrentPattern--; 
 
             ShowPatternImage(CurrentPattern);
             ShowPatternImageArea(CurrentPattern);

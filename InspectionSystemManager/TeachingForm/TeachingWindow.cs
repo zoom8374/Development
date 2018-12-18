@@ -388,7 +388,7 @@ namespace InspectionSystemManager
             }
 
             //Map Data를 사용안할 시 삭제
-            if (false == InspParam.InspAreaParam[InspAreaSelected].IsUseMapData || MapDataParam.UnitTotalCount < 20)
+            if (false == InspParam.InspAreaParam[InspAreaSelected].IsUseMapData || MapDataParam.Info.UnitTotalCount < 20)
             {
                 int _RowNextSelect = 0;
                 int _RowCount = gridViewArea.RowCount;
@@ -909,20 +909,20 @@ namespace InspectionSystemManager
 
         private void btnMapDataApplyInspectionArea_Click(object sender, EventArgs e)
         {
-            if (MapDataParam.UnitTotalCount > 10) { MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.UnitTotalCount)); return; }
+            if (MapDataParam.Info.UnitTotalCount > 10) { MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.Info.UnitTotalCount)); return; }
 
             int _StartNumber = InspParam.InspAreaParam.Count + 1;
-            for (int iLoopCount = 0; iLoopCount < MapDataParam.UnitTotalCount; ++iLoopCount)
+            for (int iLoopCount = 0; iLoopCount < MapDataParam.Info.UnitTotalCount; ++iLoopCount)
             {
                 InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
-                _InspAreaParam.AreaRegionCenterX = MapDataParam.UnitListCenterX[iLoopCount];
-                _InspAreaParam.AreaRegionCenterY = MapDataParam.UnitListCenterY[iLoopCount];
-                _InspAreaParam.AreaRegionWidth = MapDataParam.UnitListWidth[iLoopCount];
-                _InspAreaParam.AreaRegionHeight = MapDataParam.UnitListHeight[iLoopCount];
+                _InspAreaParam.AreaRegionCenterX = MapDataParam.Info.UnitListCenterX[iLoopCount];
+                _InspAreaParam.AreaRegionCenterY = MapDataParam.Info.UnitListCenterY[iLoopCount];
+                _InspAreaParam.AreaRegionWidth = MapDataParam.Info.UnitListWidth[iLoopCount];
+                _InspAreaParam.AreaRegionHeight = MapDataParam.Info.UnitListHeight[iLoopCount];
                 _InspAreaParam.BaseIndexNumber = _StartNumber - 1;
 
                 _InspAreaParam.IsUseMapData = true;
-                _InspAreaParam.MapDataUnitTotalCount = (int)MapDataParam.UnitTotalCount;
+                _InspAreaParam.MapDataUnitTotalCount = (int)MapDataParam.Info.UnitTotalCount;
                 _InspAreaParam.MapDataStartNumber   = _StartNumber;
                 _InspAreaParam.MapDataEndNumber     = _StartNumber + _InspAreaParam.MapDataUnitTotalCount - 1;
                 InspParam.InspAreaParam.Add(_InspAreaParam);
@@ -1021,7 +1021,7 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
             {
-                if (InspParam.InspAreaParam[iLoopCount].IsUseMapData && MapDataParam.UnitTotalCount > 10)
+                if (InspParam.InspAreaParam[iLoopCount].IsUseMapData && MapDataParam.Info.UnitTotalCount > 10)
                 {
                     int _Index = (iLoopCount + 1);
                     string _IndexString = _Index.ToString();

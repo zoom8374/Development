@@ -222,7 +222,7 @@
             this.gradientLabel13.Name = "gradientLabel13";
             this.gradientLabel13.Size = new System.Drawing.Size(108, 26);
             this.gradientLabel13.TabIndex = 95;
-            this.gradientLabel13.Text = "Dummy Level";
+            this.gradientLabel13.Text = "    Dummy Level";
             this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnSetting
