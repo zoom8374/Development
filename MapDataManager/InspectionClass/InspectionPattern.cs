@@ -19,6 +19,7 @@ namespace MapDataManager
         {
             PatternProc = new CogPMAlignTool();
             PatternProc.Pattern.TrainAlgorithm = CogPMAlignTrainAlgorithmConstants.PatQuick;
+            PatternProc.RunParams.ContrastThreshold = 5;
             PatternResults = new CogPMAlignResults();
         }
 
@@ -41,6 +42,10 @@ namespace MapDataManager
         {
             PatternProc.RunParams.ApproximateNumberToFind = (int)_FindCount;
             PatternProc.RunParams.AcceptThreshold = _Score / 100;
+
+            PatternProc.RunParams.ZoneAngle.Configuration = CogPMAlignZoneConstants.LowHigh;
+            PatternProc.RunParams.ZoneAngle.Low = 8 * -1 * Math.PI / 180;
+            PatternProc.RunParams.ZoneAngle.High = 8 * 1 * Math.PI / 180;
         }
 
         public CogPMAlignPattern GetPatternReference(CogImage8Grey _SrcImage, CogRectangle _Region, double _OriginX, double _OriginY)
@@ -74,10 +79,13 @@ namespace MapDataManager
 
             try
             {
+                CogSerializer.SaveObjectToFile(PatternProc, @"D:\Pattern.vpp");
                 PatternProc.InputImage = _SrcImage;
                 PatternProc.SearchRegion = _Region;
                 PatternProc.Run();
                 //GetResults();
+
+                
             }
 
             catch (System.Exception ex)

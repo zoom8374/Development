@@ -925,6 +925,35 @@ namespace InspectionSystemManager
                 _InspAreaParam.MapDataUnitTotalCount = (int)MapDataParam.Info.UnitTotalCount;
                 _InspAreaParam.MapDataStartNumber   = _StartNumber;
                 _InspAreaParam.MapDataEndNumber     = _StartNumber + _InspAreaParam.MapDataUnitTotalCount - 1;
+
+                //Map ID를 사용하는 경우 BlobReference Algo를 넣어준다.
+                if (true == MapDataParam.MapID.IsUsableMapID)
+                {
+                    InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter();
+                    _InspAlgoParam.AlgoType = (int)eAlgoType.C_BLOB_REFER;
+                    _InspAlgoParam.AlgoBenchMark = 0;
+                    _InspAlgoParam.AlgoEnable = true;
+                    _InspAlgoParam.AlgoRegionCenterX = MapDataParam.MapID.MapIDInfoList[iLoopCount].CenterPt.X;
+                    _InspAlgoParam.AlgoRegionCenterY = MapDataParam.MapID.MapIDInfoList[iLoopCount].CenterPt.Y;
+                    _InspAlgoParam.AlgoRegionWidth = MapDataParam.MapID.MapIDInfoList[iLoopCount].Width + 15;
+                    _InspAlgoParam.AlgoRegionHeight = MapDataParam.MapID.MapIDInfoList[iLoopCount].Height + 15;
+
+                    _InspAlgoParam.Algorithm = new CogBlobReferenceAlgo();
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ThresholdMin = MapDataParam.MapID.SearchThreshold;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BlobAreaMin = MapDataParam.MapID.BlobAreaSizeMin;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).BlobAreaMax = MapDataParam.MapID.BlobAreaSizeMax;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMin = MapDataParam.MapID.SearchSizeMin;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMax = MapDataParam.MapID.SearchSizeMax;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMin = MapDataParam.MapID.SearchSizeMin;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).WidthMax = MapDataParam.MapID.SearchSizeMax;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightMin = 5;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).HeightMax = 100000;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionX = 1;
+                    ((CogBlobReferenceAlgo)_InspAlgoParam.Algorithm).ResolutionY = 1;
+
+                    _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
+                }
+
                 InspParam.InspAreaParam.Add(_InspAreaParam);
             }
 

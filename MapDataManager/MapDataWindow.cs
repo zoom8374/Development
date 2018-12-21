@@ -743,7 +743,7 @@ namespace MapDataManager
             _BlobReferAlgo.BlobAreaMax = 50000;
             _BlobReferAlgo.WidthMin = Convert.ToDouble(graLabelWidthMin.Text);
             _BlobReferAlgo.WidthMax = Convert.ToDouble(graLabelWidthMax.Text);
-            _BlobReferAlgo.HeightMin = 25;
+            _BlobReferAlgo.HeightMin = 5;
             _BlobReferAlgo.HeightMax = 100000;
             _BlobReferAlgo.ForeGround = 1;
 
@@ -784,7 +784,7 @@ namespace MapDataManager
 
             if (_MapIDRectInfoList.Count != MapDataParam.Info.UnitTotalCount)
             {
-                MessageBox.Show("Unit 갯수와 Map ID 갯수가 일치하지 않습니다.");
+                //MessageBox.Show("Unit 갯수와 Map ID 갯수가 일치하지 않습니다.");
                 return;
             }
 

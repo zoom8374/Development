@@ -1830,22 +1830,25 @@ namespace ParameterManager
             _DestParam.MapID.BlobAreaSizeMin    = _SrcParam.MapID.BlobAreaSizeMin;
             _DestParam.MapID.BlobAreaSizeMax    = _SrcParam.MapID.BlobAreaSizeMax;
             _DestParam.MapID.IsUsableMapID      = _SrcParam.MapID.IsUsableMapID;
-            for (int iLoopCount = 0; iLoopCount < _SrcParam.Info.UnitListCenterX.Count; ++iLoopCount)
-            {
-                _DestParam.Info.UnitListCenterX.Add(_SrcParam.Info.UnitListCenterX[iLoopCount]);
-                _DestParam.Info.UnitListCenterY.Add(_SrcParam.Info.UnitListCenterY[iLoopCount]);
-                _DestParam.Info.UnitListWidth.Add(_SrcParam.Info.UnitListWidth[iLoopCount]);
-                _DestParam.Info.UnitListHeight.Add(_SrcParam.Info.UnitListHeight[iLoopCount]);
-            }
 
-            for (int iLoopCount = 0; iLoopCount < _SrcParam.MapID.MapIDInfoList.Count; ++iLoopCount)
+            if (_SrcParam.Info.UnitListCenterX.Count == _SrcParam.Info.UnitListWidth.Count)
             {
-                MapIDRectInfo _MapIDInfo = new MapIDRectInfo();
-                _MapIDInfo.CenterPt.X = _SrcParam.MapID.MapIDInfoList[iLoopCount].CenterPt.X;
-                _MapIDInfo.CenterPt.Y = _SrcParam.MapID.MapIDInfoList[iLoopCount].CenterPt.Y;
-                _MapIDInfo.Width = _SrcParam.MapID.MapIDInfoList[iLoopCount].Width;
-                _MapIDInfo.Height = _SrcParam.MapID.MapIDInfoList[iLoopCount].Height;
-                _DestParam.MapID.MapIDInfoList.Add(_MapIDInfo);
+                for (int iLoopCount = 0; iLoopCount < _SrcParam.Info.UnitListCenterX.Count; ++iLoopCount)
+                {
+                    _DestParam.Info.UnitListCenterX.Add(_SrcParam.Info.UnitListCenterX[iLoopCount]);
+                    _DestParam.Info.UnitListCenterY.Add(_SrcParam.Info.UnitListCenterY[iLoopCount]);
+                    _DestParam.Info.UnitListWidth.Add(_SrcParam.Info.UnitListWidth[iLoopCount]);
+                    _DestParam.Info.UnitListHeight.Add(_SrcParam.Info.UnitListHeight[iLoopCount]);
+                }
+                for (int iLoopCount = 0; iLoopCount < _SrcParam.MapID.MapIDInfoList.Count; ++iLoopCount)
+                {
+                    MapIDRectInfo _MapIDInfo = new MapIDRectInfo();
+                    _MapIDInfo.CenterPt.X = _SrcParam.MapID.MapIDInfoList[iLoopCount].CenterPt.X;
+                    _MapIDInfo.CenterPt.Y = _SrcParam.MapID.MapIDInfoList[iLoopCount].CenterPt.Y;
+                    _MapIDInfo.Width = _SrcParam.MapID.MapIDInfoList[iLoopCount].Width;
+                    _MapIDInfo.Height = _SrcParam.MapID.MapIDInfoList[iLoopCount].Height;
+                    _DestParam.MapID.MapIDInfoList.Add(_MapIDInfo);
+                }
             }
         }
         #endregion RecipeCopy

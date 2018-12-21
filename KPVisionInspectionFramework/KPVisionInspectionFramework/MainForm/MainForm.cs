@@ -248,7 +248,8 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName);
 
                 //MapData 사용 여부 Check
-                InspSysManager[iLoopCount].SetMapDataParameter(ParamManager.InspMapDataParam[iLoopCount]);
+                if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType || (int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
+                    InspSysManager[iLoopCount].SetMapDataParameter(ParamManager.InspMapDataParam[iLoopCount]);
             }
 
             TimerShowWindow.Tick += new EventHandler(TimerShowWindowTick);
