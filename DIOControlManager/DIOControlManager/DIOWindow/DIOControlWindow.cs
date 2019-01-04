@@ -37,6 +37,8 @@ namespace DIOControlManager
         private List<string> InputNameList;
         private List<string> OutputNameList;
 
+        private string IODeviceName = "DIO000";
+
         private byte[] InputMultiSignal;
         private byte[] InputMultiSignalPre;
         private bool[] OutputSignalFlag = null;
@@ -189,6 +191,7 @@ namespace DIOControlManager
                         case "IOCount":     IOCnt = Convert.ToInt16(_Node.InnerText); break;
                         case "InputInfo":   ReadInputInformation(_Node);    break;
                         case "OutputInfo":  ReadOutputInformation(_Node);   break;
+                        case "DeviceName":  IODeviceName = _Node.InnerText; break;
                     }
                 }
             }
@@ -276,6 +279,8 @@ namespace DIOControlManager
                         _XmlWriter.WriteElementString("OUT_" + iLoopCount, OutputNameList[iLoopCount]);
                 }
                 _XmlWriter.WriteEndElement();
+
+                _XmlWriter.WriteElementString("DeviceName", IODeviceName);
             }
             _XmlWriter.WriteEndElement();
             _XmlWriter.WriteEndDocument();
@@ -343,7 +348,7 @@ namespace DIOControlManager
 
         private bool InitializeIOBoard()
         {
-            if((int)CDioConst.DIO_ERR_SUCCESS != DigitalIO.Initialize())
+            if((int)CDioConst.DIO_ERR_SUCCESS != DigitalIO.Initialize(IODeviceName))
             {
                 CMsgBoxManager.Show("IO Board Initialize Error", "", 2000);
                 //MessageBox.Show("IO Board Initialize Error");

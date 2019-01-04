@@ -90,6 +90,7 @@ namespace ParameterManager
         public double[] OriginPointY;
         public double[] Width;
         public double[] Height;
+        public bool[] IsGoods;
 
         public CogPatternResult()
         {

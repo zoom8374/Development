@@ -31,12 +31,12 @@ namespace DIOControlManager
 
         }
 
-        public int Initialize()
+        public int Initialize(string _DeviceName)
         {
             int iResult = (int)CDioConst.DIO_ERR_SUCCESS;
             try
             {
-                iResult = ContecIOControl.Init("DIO000", out ID);
+                iResult = ContecIOControl.Init(_DeviceName, out ID);
                 if (iResult != (int)CDioConst.DIO_ERR_SUCCESS) InitializeDefaultMultiBit();
             }
             catch

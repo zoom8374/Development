@@ -198,7 +198,7 @@ namespace InspectionSystemManager
             ImageSizeWidth = _Width;
             ImageSizeHeight = _Height;
 
-            if (_CamType == eCameraType.Euresys.ToString())
+            if (_CamType == eCameraType.Euresys.ToString() || _CamType == eCameraType.EuresysIOTA.ToString())
             {
                 CameraManager.ImageGrabEvent += new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
                 CameraManager.Initialize(ID, _CamType, "");
@@ -1178,10 +1178,10 @@ namespace InspectionSystemManager
                 if (false == IsResultDisplay) continue;
                 _PatternAffine.SetCenterLengthsRotationSkew(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount], _PatternResult.Angle[iLoopCount], 0);
                 _Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
-                ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_{1}", _Index, iLoopCount), _PatternResult.IsGood);
+                ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_{1}", _Index, iLoopCount), _PatternResult.IsGoods[iLoopCount]);
 
                 string _MatchingName = string.Format($"Rate{_Index} = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
-                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGoods[iLoopCount], CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
 
             if (_PatternResult.FindCount <= 0)
