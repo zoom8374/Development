@@ -40,61 +40,68 @@ namespace InspectionSystemManager
         {
             bool _Result = false;
 
-            PatternProc.RunParams.AcceptThreshold = _CogPatternAlgo.MatchingScore / 100;
-            PatternProc.RunParams.ApproximateNumberToFind = _CogPatternAlgo.MatchingCount;
-            PatternProc.RunParams.ZoneAngle.Configuration = CogPMAlignZoneConstants.LowHigh;
-            PatternProc.RunParams.ZoneAngle.Low = _CogPatternAlgo.MatchingAngle * -1 * Math.PI / 180;
-            PatternProc.RunParams.ZoneAngle.High = _CogPatternAlgo.MatchingAngle * 1 * Math.PI / 180;
-
-
-            for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
+            if (_CogPatternAlgo.ReferenceInfoList.Count > 0)
             {
-                if (false == Inspection(_SrcImage, _InspRegion, _CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference)) continue;
+                PatternProc.RunParams.AcceptThreshold = _CogPatternAlgo.MatchingScore / 100;
+                PatternProc.RunParams.ApproximateNumberToFind = _CogPatternAlgo.MatchingCount;
+                PatternProc.RunParams.ZoneAngle.Configuration = CogPMAlignZoneConstants.LowHigh;
+                PatternProc.RunParams.ZoneAngle.Low = _CogPatternAlgo.MatchingAngle * -1 * Math.PI / 180;
+                PatternProc.RunParams.ZoneAngle.High = _CogPatternAlgo.MatchingAngle * 1 * Math.PI / 180;
 
-                if (PatternResults != null && PatternResults.Count > 0)
+                for (int iLoopCount = 0; iLoopCount < _CogPatternAlgo.ReferenceInfoList.Count; ++iLoopCount)
                 {
-                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Find Count : " + PatternResults.Count.ToString(), CLogManager.LOG_LEVEL.MID);
+                    if (false == Inspection(_SrcImage, _InspRegion, _CogPatternAlgo.ReferenceInfoList[iLoopCount].Reference)) continue;
 
-                    _CogPatternResult.FindCount = 0;
-                    for (int jLoopCount = 0; jLoopCount < PatternResults.Count; ++jLoopCount)
+                    if (PatternResults != null && PatternResults.Count > 0)
                     {
-                        if (PatternResults[jLoopCount].Score * 100 >= _CogPatternAlgo.MatchingScore)
-                            _CogPatternResult.FindCount++;
-                    }
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Find Count : " + PatternResults.Count.ToString(), CLogManager.LOG_LEVEL.MID);
 
-                    if (_CogPatternResult.FindCount > 0)
-                    {
-                        _CogPatternResult.Score = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.Scale = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.Angle = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.CenterX = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.CenterY = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.OriginPointX = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.OriginPointY = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.Width = new double[_CogPatternResult.FindCount];
-                        _CogPatternResult.Height = new double[_CogPatternResult.FindCount];
-
-                        int _Index = 0;
+                        _CogPatternResult.FindCount = 0;
                         for (int jLoopCount = 0; jLoopCount < PatternResults.Count; ++jLoopCount)
                         {
                             if (PatternResults[jLoopCount].Score * 100 >= _CogPatternAlgo.MatchingScore)
-                            {
-                                _CogPatternResult.Score[_Index] = PatternResults[jLoopCount].Score;
-                                _CogPatternResult.Scale[_Index] = PatternResults[jLoopCount].GetPose().Scaling;
-                                _CogPatternResult.Angle[_Index] = PatternResults[jLoopCount].GetPose().Rotation;
-                                _CogPatternResult.OriginPointX[_Index] = PatternResults[jLoopCount].GetPose().TranslationX;
-                                _CogPatternResult.OriginPointY[_Index] = PatternResults[jLoopCount].GetPose().TranslationY;
-                                _CogPatternResult.CenterX[_Index] = _CogPatternResult.OriginPointX[jLoopCount] + _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetX;
-                                _CogPatternResult.CenterY[_Index] = _CogPatternResult.OriginPointY[jLoopCount] + _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetY;
-                                _CogPatternResult.Width[_Index] = _CogPatternAlgo.ReferenceInfoList[iLoopCount].Width;
-                                _CogPatternResult.Height[_Index] = _CogPatternAlgo.ReferenceInfoList[iLoopCount].Height;
-                                _Index++;
-                                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Find Score : " + (_CogPatternResult.Score[jLoopCount] * 100).ToString("F2"), CLogManager.LOG_LEVEL.MID);
-                            }
+                                _CogPatternResult.FindCount++;
                         }
 
-                        _CogPatternResult.IsGood = true;
-                        break;
+                        if (_CogPatternResult.FindCount > 0)
+                        {
+                            _CogPatternResult.Score = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.Scale = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.Angle = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.CenterX = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.CenterY = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.OriginPointX = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.OriginPointY = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.Width = new double[_CogPatternResult.FindCount];
+                            _CogPatternResult.Height = new double[_CogPatternResult.FindCount];
+
+                            int _Index = 0;
+                            for (int jLoopCount = 0; jLoopCount < PatternResults.Count; ++jLoopCount)
+                            {
+                                if (PatternResults[jLoopCount].Score * 100 >= _CogPatternAlgo.MatchingScore)
+                                {
+                                    _CogPatternResult.Score[_Index] = PatternResults[jLoopCount].Score;
+                                    _CogPatternResult.Scale[_Index] = PatternResults[jLoopCount].GetPose().Scaling;
+                                    _CogPatternResult.Angle[_Index] = PatternResults[jLoopCount].GetPose().Rotation;
+                                    _CogPatternResult.OriginPointX[_Index] = PatternResults[jLoopCount].GetPose().TranslationX;
+                                    _CogPatternResult.OriginPointY[_Index] = PatternResults[jLoopCount].GetPose().TranslationY;
+                                    _CogPatternResult.CenterX[_Index] = _CogPatternResult.OriginPointX[jLoopCount] + _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetX;
+                                    _CogPatternResult.CenterY[_Index] = _CogPatternResult.OriginPointY[jLoopCount] + _CogPatternAlgo.ReferenceInfoList[iLoopCount].OriginPointOffsetY;
+                                    _CogPatternResult.Width[_Index] = _CogPatternAlgo.ReferenceInfoList[iLoopCount].Width;
+                                    _CogPatternResult.Height[_Index] = _CogPatternAlgo.ReferenceInfoList[iLoopCount].Height;
+                                    _Index++;
+                                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Find Score : " + (_CogPatternResult.Score[jLoopCount] * 100).ToString("F2"), CLogManager.LOG_LEVEL.MID);
+                                }
+                            }
+
+                            _CogPatternResult.IsGood = true;
+                            break;
+                        }
+
+                        else
+                        {
+                            _CogPatternResult.IsGood = false;
+                        }
                     }
 
                     else
@@ -102,11 +109,11 @@ namespace InspectionSystemManager
                         _CogPatternResult.IsGood = false;
                     }
                 }
+            }
 
-                else
-                {
-                    _CogPatternResult.IsGood = false;
-                }
+            else
+            {
+                _CogPatternResult.IsGood = false;
             }
 
             if (false == _CogPatternResult.IsGood)

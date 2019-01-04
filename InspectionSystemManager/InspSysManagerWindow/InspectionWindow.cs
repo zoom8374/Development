@@ -75,7 +75,7 @@ namespace InspectionSystemManager
         private bool IsCamLiveFlag = false;
         private bool IsCrossLine = false;
         private bool IsMenuHide = false;
-        private bool IsResultDisplay = false;
+        private bool IsResultDisplay = true;
 
         private double DisplayZoomValue = 1;
         private double DisplayPanXValue = 0;
@@ -167,6 +167,18 @@ namespace InspectionSystemManager
 			
 			//LDH, 2018.08.28, Image Delete Event
             ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
+
+            if (eProjectType.BLOWER == _ProjectType)
+            {
+                btnImageResultDisplay.Visible = false;
+                IsResultDisplay = true;
+            }
+
+            else if (eProjectType.SORTER == _ProjectType)
+            {
+                btnImageResultDisplay.Visible = true;
+                IsResultDisplay = false;
+            }
         }
 
         public void InitializeResolution(double _ResolutionX, double _ResolutionY)
@@ -934,14 +946,14 @@ namespace InspectionSystemManager
             if (_CogPatternResult.OriginPointX?.Length > 0) AnyReferenceX = _CogPatternResult.OriginPointX[0];
             if (_CogPatternResult.OriginPointY?.Length > 0) AnyReferenceY = _CogPatternResult.OriginPointY[0];
 
-            double _OriginX = _CogPatternAlgo.ReferenceInfoList[0].CenterX - _CogPatternAlgo.ReferenceInfoList[0].OriginPointOffsetX;
-            double _OriginY = _CogPatternAlgo.ReferenceInfoList[0].CenterY - _CogPatternAlgo.ReferenceInfoList[0].OriginPointOffsetY;
-
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_PATTERN, _CogPatternResult);
             _AlgoResultParam.OffsetX = 0;
             _AlgoResultParam.OffsetY = 0;
             if (_CogPatternAlgo.ReferenceInfoList.Count > 0 && _CogPatternResult.CenterX.Length > 0 && _CogPatternResult.CenterY.Length > 0)
             {
+                double _OriginX = _CogPatternAlgo.ReferenceInfoList[0].CenterX - _CogPatternAlgo.ReferenceInfoList[0].OriginPointOffsetX;
+                double _OriginY = _CogPatternAlgo.ReferenceInfoList[0].CenterY - _CogPatternAlgo.ReferenceInfoList[0].OriginPointOffsetY;
+
                 _AlgoResultParam.OffsetX = _OriginX - _CogPatternResult.CenterX[0];
                 _AlgoResultParam.OffsetY = _OriginY - _CogPatternResult.CenterY[0];
             }
@@ -1221,7 +1233,7 @@ namespace InspectionSystemManager
                 ResultDisplay(_Region, _Point, _DrawName, _IsGood);
                 
                 string _Message = String.Format("BlobReference_{0} NG", _Index);
-                ResultDisplayMessage(_BlobReferResult.BlobMinX[0], _BlobReferResult.BlobMaxY[0] + 4, _Message, _IsGood);
+                ResultDisplayMessage(_BlobReferResult.BlobMinX[0], _BlobReferResult.BlobMinY[0] + 4, _Message, _IsGood);
             }
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultBlobReference Complete", CLogManager.LOG_LEVEL.MID);

@@ -16,6 +16,7 @@ namespace CameraManager
         public event ImageGrabIntPtrHandler ImageGrabIntPtrEvent;
 
         private CEuresysManager objEuresysManager;
+        private CEuresysIOTAManager objEuresysIOTAManager;
         private CBaslerManager objBaslerManager;
 
         private string CameraType;
@@ -41,6 +42,15 @@ namespace CameraManager
                 }
             }
 
+            else if(CameraType == eCameraType.EuresysIOTA.ToString())
+            {
+                if (_ID == 0)
+                {
+                    objEuresysIOTAManager = new CEuresysIOTAManager();
+                    objEuresysIOTAManager.EuresysGrabEvent += new CEuresysIOTAManager.EuresysGrabHandler(ImageGrabEvent);
+                }
+            }
+
             else if (CameraType == eCameraType.BaslerGE.ToString())
             {
                 objBaslerManager = new CBaslerManager();
@@ -61,6 +71,12 @@ namespace CameraManager
                 objEuresysManager.DeInitialize();
             }
 
+            else if (CameraType == eCameraType.EuresysIOTA.ToString())
+            {
+                objEuresysIOTAManager.EuresysGrabEvent -= new CEuresysIOTAManager.EuresysGrabHandler(ImageGrabEvent);
+                objEuresysIOTAManager.DeInitialize();
+            }
+
             else if (CameraType == eCameraType.BaslerGE.ToString())
             {
                 objBaslerManager.BaslerGrabEvent -= new CBaslerManager.BaslerGrabHandler(ImageGrabEvent);
@@ -71,8 +87,9 @@ namespace CameraManager
         public void CamLive(bool _IsLive = false)
         {
             CamLiveFlag = !CamLiveFlag;
-            if (CameraType == eCameraType.Euresys.ToString())       objEuresysManager.SetActive(_IsLive);
-            else if (CameraType == eCameraType.BaslerGE.ToString()) objBaslerManager.Continuous(_IsLive);
+            if (CameraType == eCameraType.Euresys.ToString())           objEuresysManager.SetActive(_IsLive);
+            else if (CameraType == eCameraType.EuresysIOTA.ToString())  objEuresysIOTAManager.SetActive(_IsLive);
+            else if (CameraType == eCameraType.BaslerGE.ToString())     objBaslerManager.Continuous(_IsLive);
         }
 
         public void CameraGrab()

@@ -25,7 +25,7 @@ namespace ParameterManager
     /// <summary>
     /// Camera Model Type
     /// </summary>
-    public enum eCameraType { Dalsa, Euresys, BaslerGE }
+    public enum eCameraType { Dalsa, Euresys, EuresysIOTA, BaslerGE }
 
     /// <summary>
     /// 

@@ -74,21 +74,6 @@ namespace InspectionSystemManager
             if (GetResults().BlobCount > 0)
             {
                 CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Blob Total Count : " + GetResults().BlobCount.ToString(), CLogManager.LOG_LEVEL.MID);
-                if (_CogBlobReferAlgo.UseDummyValue)
-                {
-                    //Histogram check
-                    CogHistogramTool _CogHistoTool = new CogHistogramTool();
-                    _CogHistoTool.InputImage = _SrcImage;
-                    _CogHistoTool.Region = _InspRegion;
-                    _CogHistoTool.Run();
-                    double _HistoAvg = _CogHistoTool.Result.StandardDeviation;
-                    _CogBlobReferResult.HistogramAvg = _HistoAvg;
-                    if (_CogBlobReferAlgo.DummyHistoMeanValue + 5 > _HistoAvg)// && _CogBlobReferAlgo.DummyHistoMeanValue - 5 < _HistoAvg)
-                        _CogBlobReferResult.DummyStatus = true;
-
-                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Dummy Deviation : " + _HistoAvg.ToString("F2"), CLogManager.LOG_LEVEL.MID);
-                    CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Dummy Status : " + _CogBlobReferResult.DummyStatus.ToString(), CLogManager.LOG_LEVEL.MID);
-                }
 
                 CogBlobReferenceResult _CogBlobReferResultTemp = new CogBlobReferenceResult();
                 _CogBlobReferResultTemp = GetResults();
@@ -169,6 +154,22 @@ namespace InspectionSystemManager
 
                 if (_ResultIndexList.Count > 0)
                 {
+                    if (_CogBlobReferAlgo.UseDummyValue)
+                    {
+                        //Histogram check
+                        CogHistogramTool _CogHistoTool = new CogHistogramTool();
+                        _CogHistoTool.InputImage = _SrcImage;
+                        _CogHistoTool.Region = _InspRegion;
+                        _CogHistoTool.Run();
+                        double _HistoAvg = _CogHistoTool.Result.StandardDeviation;
+                        _CogBlobReferResult.HistogramAvg = _HistoAvg;
+                        if (_CogBlobReferAlgo.DummyHistoMeanValue + 5 > _HistoAvg)// && _CogBlobReferAlgo.DummyHistoMeanValue - 5 < _HistoAvg)
+                            _CogBlobReferResult.DummyStatus = true;
+
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Dummy Deviation : " + _HistoAvg.ToString("F2"), CLogManager.LOG_LEVEL.MID);
+                        CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Dummy Status : " + _CogBlobReferResult.DummyStatus.ToString(), CLogManager.LOG_LEVEL.MID);
+                    }
+
                     CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, " - Blob Condition Count : " + _ResultIndexList.Count.ToString(), CLogManager.LOG_LEVEL.MID);
                     #region _CogBlobReferResult 할당
                     int _Count = _ResultIndexList.Count;

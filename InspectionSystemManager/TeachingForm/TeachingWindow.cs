@@ -179,6 +179,9 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("코드 검사", new EventHandler(BarCodeIDAlgorithm));
                 //ContextMenuAlgo.MenuItems.Add("자동 패턴 검사", new EventHandler(AutoPatternFindAlgorithm));
+
+                btnInspectionAlgoAdd.Visible = false;
+                btnInspectionAlgoDel.Visible = false;
             }
 
             else if (ProjectItem == eProjectItem.LEAD_INSP)
@@ -204,7 +207,7 @@ namespace InspectionSystemManager
             else
             {
                 ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
-                //ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
+                ContextMenuAlgo.MenuItems.Add("Search a body reference", new EventHandler(BlobReferenceAlgorithm));
                 //ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
                 //ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
                 //ContextMenuAlgo.MenuItems.Add("Search a needle circle", new EventHandler(NeedleCircleFindAlgorithm));
