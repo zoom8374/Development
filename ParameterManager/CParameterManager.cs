@@ -659,7 +659,10 @@ namespace ParameterManager
 
                     try
                     {
-                        _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                        //_ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Start LoadObjectFromFile", CLogManager.LOG_LEVEL.LOW);
+                        _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath);
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "End LoadObjectFromFile", CLogManager.LOG_LEVEL.LOW);
                         _CogPattern.ReferenceInfoList.Add(_ReferInfo);
                     }
 
@@ -1319,7 +1322,7 @@ namespace ParameterManager
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
             string _PatternFileName = String.Format("MapDataReference.pat");
-            string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
+            string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\MapDataReference\", InspectionDefaultPath, _RecipeName, _ID + 1);
             if (false == Directory.Exists(_PatternFilePath)) Directory.CreateDirectory(_PatternFilePath);
             InspMapDataParam[_ID].Info.UnitPatternPath = _PatternFilePath + _PatternFileName;
             if (InspMapDataParam[_ID].Info.UnitPattern != null) 

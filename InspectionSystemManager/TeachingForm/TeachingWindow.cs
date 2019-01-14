@@ -67,6 +67,9 @@ namespace InspectionSystemManager
         private double AlgoOffsetX;
         private double AlgoOffsetY;
 
+        private double ChangeAreaCenterOffsetX = 0;
+        private double ChangeAreaCenterOffsetY = 0;
+
         private double ResolutionX;
         private double ResolutionY;
 
@@ -534,6 +537,10 @@ namespace InspectionSystemManager
             panelTeaching.Controls.Clear();
             panelTeaching.Controls.Add(gradientLabelTeaching);
 
+            //LJH ADD 2019.1.10
+            ChangeAreaCenterOffsetX = (_InspRegion.CenterX - AreaOffsetX) - InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX;
+            ChangeAreaCenterOffsetY = (_InspRegion.CenterY - AreaOffsetY) - InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterY;
+
             //Area Setting
             InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterX = _InspRegion.CenterX - AreaOffsetX;
             InspParam.InspAreaParam[InspAreaSelected].AreaRegionCenterY = _InspRegion.CenterY - AreaOffsetY;
@@ -920,9 +927,9 @@ namespace InspectionSystemManager
                 InspectionAreaParameter _InspAreaParam = new InspectionAreaParameter();
                 _InspAreaParam.AreaRegionCenterX = MapDataParam.Info.UnitListCenterX[iLoopCount];
                 _InspAreaParam.AreaRegionCenterY = MapDataParam.Info.UnitListCenterY[iLoopCount];
-                _InspAreaParam.AreaRegionWidth = MapDataParam.Info.UnitListWidth[iLoopCount];
-                _InspAreaParam.AreaRegionHeight = MapDataParam.Info.UnitListHeight[iLoopCount];
-                _InspAreaParam.BaseIndexNumber = _StartNumber - 1;
+                _InspAreaParam.AreaRegionWidth   = MapDataParam.Info.UnitListWidth[iLoopCount];
+                _InspAreaParam.AreaRegionHeight  = MapDataParam.Info.UnitListHeight[iLoopCount];
+                _InspAreaParam.BaseIndexNumber   = _StartNumber - 1;
 
                 _InspAreaParam.IsUseMapData = true;
                 _InspAreaParam.MapDataUnitTotalCount = (int)MapDataParam.Info.UnitTotalCount;
@@ -930,6 +937,7 @@ namespace InspectionSystemManager
                 _InspAreaParam.MapDataEndNumber     = _StartNumber + _InspAreaParam.MapDataUnitTotalCount - 1;
 
                 //Map ID를 사용하는 경우 BlobReference Algo를 넣어준다.
+                #region BlobReference Algo ADD
                 if (true == MapDataParam.MapID.IsUsableMapID)
                 {
                     InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter();
@@ -956,6 +964,7 @@ namespace InspectionSystemManager
 
                     _InspAreaParam.InspAlgoParam.Add(_InspAlgoParam);
                 }
+                #endregion BlobReference Algo ADD
 
                 InspParam.InspAreaParam.Add(_InspAreaParam);
             }
@@ -983,6 +992,11 @@ namespace InspectionSystemManager
 
                     double _AreaCenterX = InspParam.InspAreaParam[_Base].AreaRegionCenterX;
                     double _AreaCenterY = InspParam.InspAreaParam[_Base].AreaRegionCenterY;
+                    InspParam.InspAreaParam[iLoopCount].AreaRegionCenterX += ChangeAreaCenterOffsetX;
+                    InspParam.InspAreaParam[iLoopCount].AreaRegionCenterY += ChangeAreaCenterOffsetY;
+                    InspParam.InspAreaParam[iLoopCount].AreaRegionWidth = InspParam.InspAreaParam[_Base].AreaRegionWidth;
+                    InspParam.InspAreaParam[iLoopCount].AreaRegionHeight = InspParam.InspAreaParam[_Base].AreaRegionHeight;
+
                     for (int jLoopCount = 0; jLoopCount < InspParam.InspAreaParam[_Base].InspAlgoParam.Count; ++jLoopCount)
                     {
                         double _AlgoCenterX = InspParam.InspAreaParam[_Base].InspAlgoParam[jLoopCount].AlgoRegionCenterX;
@@ -1020,6 +1034,12 @@ namespace InspectionSystemManager
                     kpTeachDisplay.DrawStaticShape(_Algo, string.Format("Algo_{0}_{1}", iLoopCount, jLoopCount), CogColorConstants.Green);
                 }
             }
+
+            ChangeAreaCenterOffsetX = 0;
+            ChangeAreaCenterOffsetY = 0;
+
+            InspAreaSelected = -1;
+            gridViewArea.ClearSelection();
         }
 
         private void btnShowAllArea_Click(object sender, EventArgs e)
@@ -1061,9 +1081,10 @@ namespace InspectionSystemManager
                     if (_Index > InspParam.InspAreaParam[iLoopCount].MapDataStartNumber && _Index <= InspParam.InspAreaParam[iLoopCount].MapDataEndNumber) continue;
 
                     bool _Enable = InspParam.InspAreaParam[iLoopCount].Enable;
-
                     AddInspectionArea(_IndexString, _Name, _Enable);
-                    gridViewArea.Rows[iLoopCount].Selected = false;
+
+                    //LJH 2019.1.9 주석처리
+                    //gridViewArea.Rows[iLoopCount].Selected = false;
                 }
 
                 else
@@ -1092,7 +1113,9 @@ namespace InspectionSystemManager
 
                 int _Index = InspParam.InspAreaParam[_Selected].BaseIndexNumber;
 
-                gridViewArea.Rows[_Index].Selected = true;
+                //LJH 2019.1.9 주석처리
+                //gridViewArea.Rows[_Index].Selected = true;
+
                 UpdateInspectionAlgoList(_Index, true);
                 InspAreaSelected = _Selected;
             }

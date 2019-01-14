@@ -168,7 +168,7 @@ namespace InspectionSystemManager
 			//LDH, 2018.08.28, Image Delete Event
             ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
 
-            if (eProjectType.BLOWER == _ProjectType)
+            if (eProjectType.BLOWER == _ProjectType || eProjectType.DISPENSER == _ProjectType)
             {
                 btnImageResultDisplay.Visible = false;
                 IsResultDisplay = true;
@@ -863,23 +863,13 @@ namespace InspectionSystemManager
                 //각 Area의 첫번째 알고리즘의 Offset 값이 Area 검사 Offset에 적용 됨
                 if (iLoopCount == 0)
                 {
-                    AreaResultParameter _AreaResParam = new AreaResultParameter();
                     int _Index = AlgoResultParamList.Count - 1;
-                    if (AlgoResultParamList.Count > _Index)
-                    {
-                        _AreaResParam.OffsetX = AlgoResultParamList[_Index].OffsetX;
-                        _AreaResParam.OffsetY = AlgoResultParamList[_Index].OffsetY;
-                        _AreaResParam.OffsetT = AlgoResultParamList[_Index].OffsetT;
-                        AreaResultParamList.Add(_AreaResParam);
-                    }
 
-                    else
-                    {
-                        _AreaResParam.OffsetX = 0;
-                        _AreaResParam.OffsetY = 0;
-                        _AreaResParam.OffsetT = 0;
-                        AreaResultParamList.Add(_AreaResParam);
-                    }
+                    AreaResultParameter _AreaResParam = new AreaResultParameter();
+                    _AreaResParam.OffsetX = AlgoResultParamList[_Index].OffsetX;
+                    _AreaResParam.OffsetY = AlgoResultParamList[_Index].OffsetY;
+                    _AreaResParam.OffsetT = AlgoResultParamList[_Index].OffsetT;
+                    AreaResultParamList.Add(_AreaResParam);
                 }
             }
          }

@@ -34,6 +34,9 @@ namespace MapDataManager
         private string SelectedRectName;
         private bool IsDrawPatterns;
 
+        private int UnitRowTotalCountBackup = 1;
+        private int UnitColTotalCountBackup = 1;
+
         public delegate void MapDataParameterSaveHandler(MapDataParameter _MapDataParam, int _ID);
         public event MapDataParameterSaveHandler MapDataParameterSaveEvent;
 
@@ -82,7 +85,6 @@ namespace MapDataManager
             graLabelWidthMax.Text               = MapDataParam.MapID.SearchSizeMax.ToString();
 
             ckMapIDUsable.Checked               = MapDataParam.MapID.IsUsableMapID;
-
             chAreaAutoSearch.Checked            = Convert.ToBoolean(MapDataParam.Info.MapDataTeachingMode);
             chAreaManualSearch.Checked          = !Convert.ToBoolean(MapDataParam.Info.MapDataTeachingMode);
 
@@ -367,6 +369,8 @@ namespace MapDataManager
             uint _ColCount = Convert.ToUInt32(numUpDownUnitColumnCount.Value);
             int _TotalCount = MapDataParam.Info.UnitListCenterX.Count;
             CenterPoint[] _CenterPointArray = new CenterPoint[_TotalCount];
+
+            if (_RowCount * _ColCount != _CenterPointArray.Length)  {   MessageBox.Show("설정 환경이 일치하지 않음."); return; }
             for (int iLoopCount = 0; iLoopCount < _TotalCount; ++iLoopCount)
             {
                 _CenterPointArray[iLoopCount] = new CenterPoint();
@@ -523,12 +527,34 @@ namespace MapDataManager
 
         private void numUpDownUnitRowCount_ValueChanged(object sender, EventArgs e)
         {
+            int _RowCount = Convert.ToInt32(numUpDownUnitRowCount.Value);
+            int _ColCount = Convert.ToInt32(numUpDownUnitColumnCount.Value);
+
+            if ((_RowCount * _ColCount) > 20 && _RowCount < _ColCount)
+            {
+                MessageBox.Show("Row Count가 Column Count보다 작습니다.");
+                numUpDownUnitRowCount.Value = UnitRowTotalCountBackup;
+                return;
+            }
+
             txtUnitTotalCount.Text = (Convert.ToInt32(numUpDownUnitRowCount.Value) * Convert.ToInt32(numUpDownUnitColumnCount.Value)).ToString();
+            UnitRowTotalCountBackup = Convert.ToInt32(numUpDownUnitRowCount.Value);
         }
 
         private void numUpDownUnitColumnCount_ValueChanged(object sender, EventArgs e)
         {
+            int _RowCount = Convert.ToInt32(numUpDownUnitRowCount.Value);
+            int _ColCount = Convert.ToInt32(numUpDownUnitColumnCount.Value);
+
+            if ((_RowCount * _ColCount) > 20 && _RowCount < _ColCount)
+            {
+                MessageBox.Show("Column Count가 Row Count보다 큽니다.");
+                numUpDownUnitColumnCount.Value = UnitColTotalCountBackup;
+                return;
+            }
+
             txtUnitTotalCount.Text = (Convert.ToInt32(numUpDownUnitRowCount.Value) * Convert.ToInt32(numUpDownUnitColumnCount.Value)).ToString();
+            UnitColTotalCountBackup = Convert.ToInt32(numUpDownUnitColumnCount.Value);
         }
 
         private void chAreaAutoSearch_CheckedChanged(object sender, EventArgs e)
@@ -620,6 +646,7 @@ namespace MapDataManager
 
         private CenterPoint[,] CenterPointSort(uint _RowCount, uint _ColCount, CenterPoint[] _CenterPointArray)
         {
+
             int _Index = 0;
             CenterPoint[,] _SortedCenterPoint = new CenterPoint[_RowCount, _ColCount];
 
