@@ -20,6 +20,7 @@ namespace KPVisionInspectionFramework
     {
         private string RecipeFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\RecipeParameter\";
         private string ProjectName = "CIPOSLeadInspection";
+        private eProjectType ProjectType;
         private string CurrentRecipeName;
         private bool IsRecipeNew = false;
 
@@ -32,11 +33,12 @@ namespace KPVisionInspectionFramework
             InitializeComponent();
         }
 
-        public RecipeWindow(string _ProjectName, string _CurrentRecipe = "Default")
+        public RecipeWindow(eProjectType _ProjectType, string _ProjectName, string _CurrentRecipe = "Default")
         {
             InitializeComponent();
 
             ProjectName = _ProjectName;
+            ProjectType = _ProjectType;
             RecipeFolderPath = String.Format(@"D:\VisionInspectionData\{0}\RecipeParameter\", ProjectName);
 
             CurrentRecipeName = _CurrentRecipe;
@@ -96,7 +98,7 @@ namespace KPVisionInspectionFramework
         {
             IsRecipeNew = true;
 
-            RecipeNewNameWindow _RcpNewNameWnd = new RecipeNewNameWindow();
+            RecipeNewNameWindow _RcpNewNameWnd = new RecipeNewNameWindow(ProjectType);
             _RcpNewNameWnd.RecipeCopyEvent += new RecipeNewNameWindow.RecipeCopyHandler(RecipeCopyEventFunction);
 
             string[] _RecipeList = new string[listBoxRecipe.Items.Count];
@@ -122,7 +124,7 @@ namespace KPVisionInspectionFramework
 
         private void btnRecipeCopy_Click(object sender, EventArgs e)
         {
-            RecipeNewNameWindow _RcpNewNameWnd = new RecipeNewNameWindow();
+            RecipeNewNameWindow _RcpNewNameWnd = new RecipeNewNameWindow(ProjectType);
             _RcpNewNameWnd.RecipeCopyEvent += new RecipeNewNameWindow.RecipeCopyHandler(RecipeCopyEventFunction);
 
             string[] _RecipeList = new string[listBoxRecipe.Items.Count];
@@ -160,7 +162,7 @@ namespace KPVisionInspectionFramework
 
             LoadRecipeList();
         }
-
+         
         private void textBoxSearchRecipe_TextChanged(object sender, EventArgs e)
         {
             LoadRecipeList(textBoxSearchRecipe.Text);

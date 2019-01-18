@@ -168,7 +168,7 @@ namespace InspectionSystemManager
 			//LDH, 2018.08.28, Image Delete Event
             ImageDeleteWnd = new ImageDeleteWindow(this.labelTitle.Text);
 
-            if (eProjectType.BLOWER == _ProjectType)
+            if (eProjectType.BLOWER == _ProjectType || eProjectType.DISPENSER == _ProjectType)
             {
                 btnImageResultDisplay.Visible = false;
                 IsResultDisplay = true;
@@ -755,8 +755,8 @@ namespace InspectionSystemManager
                 if (false == InspectionProcess()) break;
                 if (false == InpsectionResultAnalysis()) break;
                 if (false == InspectionDataSet()) break; //send랑 순서바꾼거 확인해보기
-                //if (ProjectType != eProjectType.DISPENSER)
-                if (false == InspectionDataSend()) break;
+                if (ProjectType != eProjectType.DISPENSER)
+                    if (false == InspectionDataSend()) break;
                 if (false == InspectionResultDsiplay()) break;
                 if (false == InspectionComplete(true)) break;
 				IsThreadImageSaveTrigger = true;
@@ -1074,7 +1074,7 @@ namespace InspectionSystemManager
             _CogNeedleFindResult.OriginYReal = (_CogNeedleFindResult.OriginY - (OriginImage.Height / 2)) * ResolutionY;
             _CogNeedleFindResult.RadiusReal = _CogNeedleFindResult.Radius * ResolutionX;
 
-            if (_CogNeedleFindResult.RadiusReal + 0.1 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.1 < _CogNeedleFindAlgo.OriginRadius)
+            if (_CogNeedleFindResult.RadiusReal + 0.2 > _CogNeedleFindAlgo.OriginRadius && _CogNeedleFindResult.RadiusReal - 0.2 < _CogNeedleFindAlgo.OriginRadius)
                 _CogNeedleFindResult.IsGood = true;
             else
                 _CogNeedleFindResult.IsGood = false;
@@ -1485,7 +1485,7 @@ namespace InspectionSystemManager
         public bool InspectionDataSend()
         {
             bool _Result = true;
-            if (ProjectType == eProjectType.DISPENSER) return true;
+            //if (ProjectType == eProjectType.DISPENSER) return true;
 
             var _InspectionWindowEvent = InspectionWindowEvent;
             _InspectionWindowEvent?.Invoke(eIWCMD.SEND_DATA, SendResParam);

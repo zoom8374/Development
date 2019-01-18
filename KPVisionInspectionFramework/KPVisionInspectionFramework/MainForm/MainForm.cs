@@ -173,7 +173,7 @@ namespace KPVisionInspectionFramework
             #region SubWindow 생성 및 Event 등록
             #region Recipe Window Initialize
             //Recipe Initialize
-            RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
+            RecipeWnd = new RecipeWindow((eProjectType)ParamManager.SystemParam.ProjectType, ProjectName, ParamManager.SystemParam.LastRecipeName);
             RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
 
             //if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
