@@ -815,13 +815,16 @@ namespace InspectionSystemManager
                 InspParam.InspAreaParam[iLoopCount].Enable = Convert.ToBoolean(_CheckCell.Value);
             }
 
-            for (int iLoopCount = 0; iLoopCount < gridViewAlgo.RowCount; ++iLoopCount)
+            if (InspAreaSelected != -1)
             {
-                DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.BENCHMARK), iLoopCount];
-                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
+                for (int iLoopCount = 0; iLoopCount < gridViewAlgo.RowCount; ++iLoopCount)
+                {
+                    DataGridViewComboBoxCell _ComboCell = (DataGridViewComboBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.BENCHMARK), iLoopCount];
+                    InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoBenchMark = _ComboCell.Items.IndexOf(_ComboCell.Value);
 
-                DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.ENABLE), iLoopCount];
-                InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoEnable = Convert.ToBoolean(_CheckCell.Value);
+                    DataGridViewCheckBoxCell _CheckCell = (DataGridViewCheckBoxCell)gridViewAlgo[Convert.ToInt32(eAreaList.ENABLE), iLoopCount];
+                    InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[iLoopCount].AlgoEnable = Convert.ToBoolean(_CheckCell.Value);
+                }
             }
 
             this.DialogResult = DialogResult.OK;
@@ -919,7 +922,8 @@ namespace InspectionSystemManager
 
         private void btnMapDataApplyInspectionArea_Click(object sender, EventArgs e)
         {
-            if (MapDataParam.Info.UnitTotalCount > 10) { MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.Info.UnitTotalCount)); return; }
+            //if (MapDataParam.Info.UnitTotalCount > 20) { MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.Info.UnitTotalCount)); return; }
+            MessageBox.Show(String.Format("Area가 {0}개 입니다.", MapDataParam.Info.UnitTotalCount));
 
             int _StartNumber = InspParam.InspAreaParam.Count + 1;
             for (int iLoopCount = 0; iLoopCount < MapDataParam.Info.UnitTotalCount; ++iLoopCount)
@@ -1038,8 +1042,8 @@ namespace InspectionSystemManager
             ChangeAreaCenterOffsetX = 0;
             ChangeAreaCenterOffsetY = 0;
 
-            InspAreaSelected = -1;
-            gridViewArea.ClearSelection();
+            //InspAreaSelected = -1;
+            //gridViewArea.ClearSelection();
         }
 
         private void btnShowAllArea_Click(object sender, EventArgs e)
@@ -1073,7 +1077,7 @@ namespace InspectionSystemManager
 
             for (int iLoopCount = 0; iLoopCount < InspParam.InspAreaParam.Count; ++iLoopCount)
             {
-                if (InspParam.InspAreaParam[iLoopCount].IsUseMapData && MapDataParam.Info.UnitTotalCount > 10)
+                if (InspParam.InspAreaParam[iLoopCount].IsUseMapData && MapDataParam.Info.UnitTotalCount > 20)
                 {
                     int _Index = (iLoopCount + 1);
                     string _IndexString = _Index.ToString();

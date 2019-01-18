@@ -102,8 +102,9 @@ namespace KPVisionInspectionFramework
             LoadDefaultRibbonTheme();
 
             #region Ribbon Menu Setting
-            UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName);
-            if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
+            //LDH, 2019.01.10, 다중 RecipeName 사용으로 표시 생략
+            //UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName);
+            if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
             {
                 rbAlign.Visible = false;
                 rbSerial.Visible = false;
@@ -173,20 +174,9 @@ namespace KPVisionInspectionFramework
             #region SubWindow 생성 및 Event 등록
             #region Recipe Window Initialize
             //Recipe Initialize
-            RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
+            RecipeWnd = new RecipeWindow((eProjectType)ParamManager.SystemParam.ProjectType, ProjectName, ParamManager.SystemParam.LastRecipeName, ParamManager.SystemParam.IsTotalRecipe);
             RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-
-            //if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
-            //{
-            //    RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
-            //    RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-            //}
-            //
-            //else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
-            //{
-            //    RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
-            //    RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-            //}
+            RecipeWnd.RecipeCopyEvent += new RecipeWindow.RecipeCopyHandler(RecipeCopy);
             #endregion Recipe Window Initialize
 
             #region Result Window Initialize
@@ -245,7 +235,7 @@ namespace KPVisionInspectionFramework
             {
                 InspSysManager[iLoopCount] = new CInspectionSystemManager(iLoopCount, "Vision" + (iLoopCount + 1), ParamManager.SystemParam.IsSimulationMode);
                 InspSysManager[iLoopCount].InspSysManagerEvent += new CInspectionSystemManager.InspSysManagerHandler(InspectionSystemManagerEventFunction);
-                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName);
+                InspSysManager[iLoopCount].Initialize(this, ParamManager.SystemParam.ProjectType, ParamManager.InspSysManagerParam[iLoopCount], ParamManager.InspParam[iLoopCount], ParamManager.SystemParam.LastRecipeName[iLoopCount]);
 
                 //MapData 사용 여부 Check
                 if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType || (int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
@@ -275,6 +265,7 @@ namespace KPVisionInspectionFramework
             ResultBaseWnd.DeInitialize();
 
             RecipeWnd.RecipeChangeEvent -= new RecipeWindow.RecipeChangeHandler(RecipeChange);
+            RecipeWnd.RecipeCopyEvent -= new RecipeWindow.RecipeCopyHandler(RecipeCopy);
 
             ParamManager.DeInitialize();
 
@@ -491,7 +482,7 @@ namespace KPVisionInspectionFramework
         private void rbRecipe_Click(object sender, EventArgs e)
         {
             CParameterManager.SystemModeBackup = CParameterManager.SystemMode;
-            RecipeWnd.ShowDialog();
+            RecipeWnd.ShowDialogWindow();
             CParameterManager.SystemMode = CParameterManager.SystemModeBackup;
         }
 
@@ -644,15 +635,14 @@ namespace KPVisionInspectionFramework
         #endregion Event : I/O Event & Function
 
         #region Sub Window Events
-        private bool RecipeChange(string _RecipeName, string _SrcRecipe = "")
+        private bool RecipeChange(int _ID, string _RecipeName)
         {
             bool _Result = true;
 
-            if (true == ParamManager.RecipeReload(_RecipeName))
+            if (true == ParamManager.RecipeReload(_ID, _RecipeName))
             {
                 //LDH, 2018.07.26, Light File 따로 관리
-                LightControlManager.RecipeChange(_RecipeName, _SrcRecipe);
-                ResultBaseWnd.SetLastRecipeName((eProjectType)ParamManager.SystemParam.ProjectType, _RecipeName);
+                LightControlManager.RecipeChange(_RecipeName);
 
                 for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 {
@@ -667,6 +657,15 @@ namespace KPVisionInspectionFramework
                 MessageBox.Show(new Form { TopMost = true }, "Recipe 변경에 실패했습니다.\nRecipe를 확인하세요.");
                 _Result = false;
             }
+
+            ResultBaseWnd.SetLastRecipeName((eProjectType)ParamManager.SystemParam.ProjectType, ParamManager.SystemParam.LastRecipeName);
+
+            return _Result;
+        }
+
+        private bool RecipeCopy(string _RecipeName, string _SrcRecipeName)
+        {
+            bool _Result = true;
 
             return _Result;
         }
@@ -729,8 +728,9 @@ namespace KPVisionInspectionFramework
             bool _Result = true;
 
             string _RecipeName = _Value as string;
-
-            _Result = RecipeChange(_RecipeName);
+            
+            //LDH, 2019.01.11, ID로 Recipe 관리를 하기 위해 통신으로 변경시 ID = -1 로 고정함 
+            _Result = RecipeChange(-1, _RecipeName);
 
             if (!_Result) return false;
 

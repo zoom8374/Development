@@ -34,7 +34,7 @@ namespace LightManager
             LightWnd = new LightWindow();          
         }
 
-        public void Initialize(string RecipeName, bool _IsSimulationMode)
+        public void Initialize(string[] RecipeName, bool _IsSimulationMode)
         {
             IsSimulationMode = _IsSimulationMode;
 
@@ -127,11 +127,9 @@ namespace LightManager
             LightWnd.Show();
         }
 
-        public void RecipeChange(string _RecipeName, string _SrcRecipeName)
+        public void RecipeChange(string _RecipeName)
         {
             LightParameterFullPath = LightParameterFolderPath + "\\" + _RecipeName + ".sys";
-
-            if (_SrcRecipeName != "") CopyLightParameter(_RecipeName, _SrcRecipeName);
             ReadLightParameters();
 
             if (false == IsSimulationMode) SetLightParam();

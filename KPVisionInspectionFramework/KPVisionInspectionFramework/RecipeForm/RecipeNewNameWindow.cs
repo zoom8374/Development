@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ParameterManager;
+
 namespace KPVisionInspectionFramework
 {
     public partial class RecipeNewNameWindow : Form
@@ -18,9 +20,15 @@ namespace KPVisionInspectionFramework
 
         public string NewRecipeName;
 
-        public RecipeNewNameWindow()
+        public RecipeNewNameWindow(eProjectType _ProjectType)
         {
             InitializeComponent();
+
+            if (_ProjectType != eProjectType.BLOWER)
+            {
+                textBoxNewRecipeSub.Size = new Size(226, 26);
+                textBoxNewRecipeSub.Location = new Point(103, 77);
+            }
         }
 
         public void SetCurrentRecipe(string _CurrentRecipe, string[] _RecipeList)
@@ -29,12 +37,6 @@ namespace KPVisionInspectionFramework
 
             RecipeList = new string[_RecipeList.Count()];
             RecipeList = _RecipeList;
-
-            //if(!_CurrentRecipe.Contains("_"))
-            //{
-            //    textBoxNewRecipeSub.Size = new Size(226, 26);
-            //    textBoxNewRecipeSub.Location = new Point(103, 77);
-            //}
         }
 
         private void btnRecipeConfirm_Click(object sender, EventArgs e)

@@ -335,28 +335,41 @@ namespace MapDataManager
                     MapDataParam.Info.UnitListWidth.Add(_Width[iLoopCount]);
                     MapDataParam.Info.UnitListHeight.Add(_Height[iLoopCount]);
 
-                    _CenterPointArray[iLoopCount] = new CenterPoint();
-                    _CenterPointArray[iLoopCount].X = _CenterX[iLoopCount];
-                    _CenterPointArray[iLoopCount].Y = _CenterY[iLoopCount];
-                }
-
-                CenterPoint[,] _SortedCenterPoint = CenterPointSort(_RowCount, _ColCount, _CenterPointArray);
-
-                MapDataParam.Info.UnitListCenterX.Clear();
-                MapDataParam.Info.UnitListCenterY.Clear();
-                for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
-                {
-                    for (int jLoopCount = 0; jLoopCount < _ColCount; ++jLoopCount)
+                    if (_CenterPointArray.Length > iLoopCount)
                     {
-                        MapDataParam.Info.UnitListCenterX.Add(_SortedCenterPoint[iLoopCount, jLoopCount].X);
-                        MapDataParam.Info.UnitListCenterY.Add(_SortedCenterPoint[iLoopCount, jLoopCount].Y);
+                        _CenterPointArray[iLoopCount] = new CenterPoint();
+                        _CenterPointArray[iLoopCount].X = _CenterX[iLoopCount];
+                        _CenterPointArray[iLoopCount].Y = _CenterY[iLoopCount];
                     }
                 }
-            }
 
-            SelectingRectName = SelectedRectName = "";
-            IsDrawPatterns = true;
-            MessageBox.Show("Pattern Find Complete");
+                if ((_RowCount * _ColCount) != _PatternResult.Count)
+                {
+                    MessageBox.Show("Unit 개수와 Find Result 개수가 맞지 않습니다.");
+                    return;
+                }
+
+                else
+                {
+                    CenterPoint[,] _SortedCenterPoint = CenterPointSort(_RowCount, _ColCount, _CenterPointArray);
+
+                    MapDataParam.Info.UnitListCenterX.Clear();
+                    MapDataParam.Info.UnitListCenterY.Clear();
+                    for (int iLoopCount = 0; iLoopCount < _RowCount; ++iLoopCount)
+                    {
+                        for (int jLoopCount = 0; jLoopCount < _ColCount; ++jLoopCount)
+                        {
+                            MapDataParam.Info.UnitListCenterX.Add(_SortedCenterPoint[iLoopCount, jLoopCount].X);
+                            MapDataParam.Info.UnitListCenterY.Add(_SortedCenterPoint[iLoopCount, jLoopCount].Y);
+                        }
+
+                    }
+
+                    SelectingRectName = SelectedRectName = "";
+                    IsDrawPatterns = true;
+                    MessageBox.Show("Pattern Find Complete");
+                }
+            }
         }
 
         private void btnShowSearchArea_Click(object sender, EventArgs e)
@@ -646,7 +659,6 @@ namespace MapDataManager
 
         private CenterPoint[,] CenterPointSort(uint _RowCount, uint _ColCount, CenterPoint[] _CenterPointArray)
         {
-
             int _Index = 0;
             CenterPoint[,] _SortedCenterPoint = new CenterPoint[_RowCount, _ColCount];
 

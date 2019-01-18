@@ -59,15 +59,16 @@ namespace KPVisionInspectionFramework
 
         //LDH, 2018.08.14, History 입력용 string 
         private string[] HistoryParam;
-        private string LastRecipeName;
+        private string[] LastRecipeName;
         private string LastResult;
 
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
         public event ScreenshotHandler ScreenshotEvent;
 
         #region Initialize & DeInitialize
-        public ucMainResultLead(string _LastRecipeName)
+        public ucMainResultLead(string[] _LastRecipeName)
         {
+            LastRecipeName = new string[_LastRecipeName.Count()];
             SetLastRecipeName(_LastRecipeName);
 
             InitializeComponent();
@@ -245,9 +246,12 @@ namespace KPVisionInspectionFramework
 
         }
 
-        public void SetLastRecipeName(string _LastRecipeName)
+        public void SetLastRecipeName(string[] _LastRecipeName)
         {
-            LastRecipeName = _LastRecipeName;
+            for (int iLoopCount = 0; iLoopCount < _LastRecipeName.Count(); iLoopCount++)
+            {
+                LastRecipeName[iLoopCount] = _LastRecipeName[iLoopCount];
+            }
         }
 
         //LDH, 2018.10.01, Result clear
@@ -444,7 +448,7 @@ namespace KPVisionInspectionFramework
             ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.bmp", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
 
             //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
-            HistoryParam[0] = LastRecipeName;
+            HistoryParam[0] = LastRecipeName[0];
             HistoryParam[1] = _ID.ToString();
             HistoryParam[2] = _Result;
             HistoryParam[3] = ImageSaveFile;

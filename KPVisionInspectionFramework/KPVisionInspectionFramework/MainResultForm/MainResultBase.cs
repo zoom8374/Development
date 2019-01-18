@@ -22,7 +22,7 @@ namespace KPVisionInspectionFramework
         private ucMainResultSorter  MainResultSorterWnd;
 
         private eProjectType ProjectType;
-        private string LastRecipeName;
+        private string[] LastRecipeName;
 
         private bool ResizingFlag = false;
         private bool IsResizing = false;
@@ -32,9 +32,13 @@ namespace KPVisionInspectionFramework
         public event ReadLOTNumHandler ReadLOTNumEvent;
 
         #region Initialize & DeInitialize
-        public MainResultBase(string _LastRecipeName)
+        public MainResultBase(string[] _LastRecipeName)
         {
-            LastRecipeName = _LastRecipeName;
+            LastRecipeName = new string[_LastRecipeName.Count()];
+            for (int iLoopCount = 0; iLoopCount < _LastRecipeName.Count(); iLoopCount++)
+            {
+                LastRecipeName[iLoopCount] = _LastRecipeName[iLoopCount];
+            }
             InitializeComponent();
         }
 
@@ -253,7 +257,7 @@ namespace KPVisionInspectionFramework
             return _Result;
         }
 
-        public void SetLastRecipeName(eProjectType _ProjectType, string _LastRecipeName)
+        public void SetLastRecipeName(eProjectType _ProjectType, string[] _LastRecipeName)
         {
             if (_ProjectType == eProjectType.NONE)              MainResultNoneWnd.SetLastRecipeName(_LastRecipeName);
             else if (_ProjectType == eProjectType.BLOWER)       MainResultIDWnd.SetLastRecipeName(_LastRecipeName);
