@@ -50,10 +50,15 @@ namespace CameraManager
                 MC.SetParam(channel, "Connector", "X");
 
                 // camfile 을 불러온다
-                MC.SetParam(channel, "CamFile", "STC-A33A_P60SA");
+                //MC.SetParam(channel, "CamFile", "STC-A33A_P60SA");
+                MC.SetParam(channel, "CamFile", "CV-A1_P16RA");
 
                 // Sequence를 무제한으로 설정해야 Frame을 지속적으로 받을 수 있음.
                 MC.SetParam(channel, "SeqLength_Fr", MC.INDETERMINATE);
+                MC.SetParam(channel, "TrigMode", "HARD");
+                MC.SetParam(channel, "TrigEdge", "GOLOW");
+                //MC.SetParam(channel, "StrobeLevel", "PLSLOW");
+                MC.SetParam(channel, "StrobeMode", "AUTO");
 
                 // CallBack 함수등록
                 multiCamCallback = new MC.CALLBACK(MultiCamCallback);
@@ -169,8 +174,16 @@ namespace CameraManager
         {
             String channelState;
 
+            MC.SetParam(channel, MC.SignalEnable + MC.SIG_SURFACE_PROCESSING, "OFF");
+            MC.SetParam(channel, "ChannelState", "IDLE");
+
             if (LiveFlag)
             {
+                //MC.SetParam(channel, "ChannelState", "IDLE");
+                MC.SetParam(channel, "TrigMode", "IMMEDIATE");
+                //MC.SetParam(channel, "NextTrigMode", "REPEAT");
+                MC.SetParam(channel, "NextTrigMode", "SAME");
+
                 MC.GetParam(channel, "ChannelState", out channelState);
                 if (channelState != "ACTIVE")
                     MC.SetParam(channel, "ChannelState", "ACTIVE");
@@ -178,8 +191,19 @@ namespace CameraManager
             else
             {
                 if (channel != 0)
+                {
+                    MC.SetParam(channel, "TrigMode", "HARD");
+                    //MC.SetParam(channel, "NextTrigMode", "COMBINED");
+                    MC.SetParam(channel, "NextTrigMode", "SAME");
+                    //MC.SetParam(channel, "ForceTrig", "TRIG");
+
                     MC.SetParam(channel, "ChannelState", "IDLE");
+                    MC.SetParam(channel, "ChannelState", "ACTIVE");
+                }
             }
+
+            MC.SetParam(channel, MC.SignalEnable + MC.SIG_SURFACE_PROCESSING, "ON");
+
         }
 
         public void SetImageSize(int Width, int Height)
