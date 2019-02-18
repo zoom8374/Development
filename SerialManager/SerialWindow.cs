@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
+using System.Xml;
+using System.IO;
 
 using LogMessageManager;
 
@@ -20,14 +22,19 @@ namespace SerialManager
         private SerialPort SerialComm;
         public bool IsShowWindow;
 
-        delegate void SetTextCallback(string data);
+        private string CommonFolderPath = @"D:\VisionInspectionData\Common\";
+        private string ComPort = "COM5";
+
+        private delegate void SetTextCallback(string data);
 
         public delegate bool SerialReceiveHandler(string _SerialData);
         public event SerialReceiveHandler SerialReceiveEvent;
 
-        public SerialWindow()
+        public SerialWindow(string _CommonFolderPath = "")
         {
             InitializeComponent();
+
+            if (_CommonFolderPath != "") CommonFolderPath = _CommonFolderPath;
 
             SerialComm = new SerialPort();
             SerialComm.BaudRate = 115200;
@@ -43,6 +50,9 @@ namespace SerialManager
             bool _Result = true;
 
             SerialComm.PortName = "COM5";
+
+            ReadSerialInfoFile();
+            SerialComm.PortName = ComPort;
 
             try
             {
@@ -62,6 +72,73 @@ namespace SerialManager
         {
             SerialComm.DataReceived -= new SerialDataReceivedEventHandler(SerialDataReceived);
             SerialComm.Close();
+        }
+
+        private XmlNodeList GetNodeList(string _XmlFilePath)
+        {
+            XmlNodeList _XmlNodeList = null;
+
+            try
+            {
+                XmlDocument _XmlDocument = new XmlDocument();
+                _XmlDocument.Load(_XmlFilePath);
+                XmlElement _XmlRoot = _XmlDocument.DocumentElement;
+                _XmlNodeList = _XmlRoot.ChildNodes;
+            }
+
+            catch
+            {
+                _XmlNodeList = null;
+                CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.ERR, "DIOControlWindow GetNodeList Exception!!", CLogManager.LOG_LEVEL.LOW);
+            }
+
+            return _XmlNodeList;
+        }
+
+        private void ReadSerialInfoFile()
+        {
+            DirectoryInfo _DirInfo = new DirectoryInfo(CommonFolderPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            string _SerialInfoFileName = String.Format(@"{0}SerialInformation.xml", CommonFolderPath);
+            if (false == File.Exists(_SerialInfoFileName))
+            {
+                File.Create(_SerialInfoFileName).Close();
+                WriteSerialInfoFile();
+                System.Threading.Thread.Sleep(100);
+            }
+
+            else
+            {
+                XmlNodeList _XmlNodeList = GetNodeList(_SerialInfoFileName);
+                if (null == _XmlNodeList) return;
+                foreach (XmlNode _Node in _XmlNodeList)
+                {
+                    if (null == _Node) return;
+                    switch (_Node.Name)
+                    {
+                        case "ComPort":ComPort = _Node.InnerText; break;
+                    }
+                }
+            }
+        }
+
+        private void WriteSerialInfoFile()
+        {
+            DirectoryInfo _DirInfo = new DirectoryInfo(@CommonFolderPath);
+            if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
+
+            string _SerialInfoFileName = String.Format(@"{0}SerialInformation.xml", CommonFolderPath);
+            XmlTextWriter _XmlWriter = new XmlTextWriter(_SerialInfoFileName, Encoding.Unicode);
+            _XmlWriter.Formatting = Formatting.Indented;
+            _XmlWriter.WriteStartDocument();
+            _XmlWriter.WriteStartElement("SerialInformation");
+            {
+                _XmlWriter.WriteElementString("ComPort", ComPort);
+            }
+            _XmlWriter.WriteEndElement();
+            _XmlWriter.WriteEndDocument();
+            _XmlWriter.Close();
         }
 
         #region Control Default Event
