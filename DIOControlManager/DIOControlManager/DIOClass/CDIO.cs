@@ -26,9 +26,11 @@ namespace DIOControlManager
         private byte[] OutMultiBitDataDef = null;
         private short ID = 0;
 
-        public CDIO()
-        {
+        private int IOCount = 16;
 
+        public CDIO(int _IOCount = 16)
+        {
+            IOCount = _IOCount;
         }
 
         public int Initialize(string _DeviceName)
@@ -49,11 +51,16 @@ namespace DIOControlManager
 
         private void InitializeDefaultMultiBit()
         {
-            InBitNumberDef = new short[(int)DIOEnum.IO_CHANNEL];
-            OutBitNumberDef = new short[(int)DIOEnum.IO_CHANNEL];
-            InMultiBitDataDef = new byte[(int)DIOEnum.IO_CHANNEL];
-            OutMultiBitDataDef = new byte[(int)DIOEnum.IO_CHANNEL];
-            for(int iLoopCount = 0; iLoopCount < (int)DIOEnum.IO_CHANNEL; iLoopCount++)
+            //InBitNumberDef = new short[(int)DIOEnum.IO_CHANNEL];
+            //OutBitNumberDef = new short[(int)DIOEnum.IO_CHANNEL];
+            //InMultiBitDataDef = new byte[(int)DIOEnum.IO_CHANNEL];
+            //OutMultiBitDataDef = new byte[(int)DIOEnum.IO_CHANNEL];
+            //for(int iLoopCount = 0; iLoopCount < (int)DIOEnum.IO_CHANNEL; iLoopCount++)
+            InBitNumberDef = new short[IOCount];
+            OutBitNumberDef = new short[IOCount];
+            InMultiBitDataDef = new byte[IOCount];
+            OutMultiBitDataDef = new byte[IOCount];
+            for (int iLoopCount = 0; iLoopCount < IOCount; iLoopCount++)
             {
                 InBitNumberDef[iLoopCount] = (short)iLoopCount;
                 OutBitNumberDef[iLoopCount] = (short)iLoopCount;
