@@ -136,7 +136,13 @@ namespace DIOControlManager
 
             for (int iLoopCount = 0; iLoopCount < IOCnt; ++iLoopCount)
             {
-                btnInputSignal[iLoopCount].Text  = InputNameList[iLoopCount];
+                if (InputNameList.Count <= iLoopCount)
+                {
+                    InputNameList.Add(String.Format("DI{0}", iLoopCount));
+                    OutputNameList.Add(String.Format("DO{0}", iLoopCount));
+                }
+
+                btnInputSignal[iLoopCount].Text = InputNameList[iLoopCount];
                 btnInputSignal[iLoopCount].Tag = iLoopCount;
 
                 btnOutputSignal[iLoopCount].Text = OutputNameList[iLoopCount];
