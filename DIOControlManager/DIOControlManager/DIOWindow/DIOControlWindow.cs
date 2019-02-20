@@ -354,7 +354,8 @@ namespace DIOControlManager
 
         private bool InitializeIOBoard()
         {
-            if((int)CDioConst.DIO_ERR_SUCCESS != DigitalIO.Initialize(IODeviceName))
+            DigitalIO = new CDIO(IOCnt);
+            if ((int)CDioConst.DIO_ERR_SUCCESS != DigitalIO.Initialize(IODeviceName))
             {
                 CMsgBoxManager.Show("IO Board Initialize Error", "", 2000);
                 //MessageBox.Show("IO Board Initialize Error");
