@@ -93,7 +93,7 @@ namespace InspectionSystemManager
         private Thread ThreadImageSave;
         private bool IsThreadImageSaveExit = false;
         public bool IsThreadImageSaveTrigger = false;
-        eSaveMode ImageAutoSaveMode = eSaveMode.ALL;
+        eSaveMode ImageAutoSaveMode = eSaveMode.ONLY_NG;
 
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null, int _ID = 0);
         public event InspectionWindowHandler InspectionWindowEvent;
@@ -201,7 +201,7 @@ namespace InspectionSystemManager
             if (_CamType == eCameraType.Euresys.ToString() || _CamType == eCameraType.EuresysIOTA.ToString())
             {
                 CameraManager.ImageGrabEvent += new CCameraManager.ImageGrabHandler(SetDisplayGrabImage);
-                CameraManager.Initialize(ID, _CamType, "");
+                CameraManager.Initialize(ID, _CamType, _CamInfo);
             }
 
             else if (_CamType == eCameraType.BaslerGE.ToString())

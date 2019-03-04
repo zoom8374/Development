@@ -43,9 +43,8 @@
     <Reference Include="CPressingButton">
       <HintPath>.\CPressingButton.dll</HintPath>
     </Reference>
-    <Reference Include="CustonMsgBoxManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\KPVisionInspectionFramework\CustonMsgBoxManager.dll</HintPath>
+    <Reference Include="CustomMsgBoxManager">
+      <HintPath>..\..\KPVisionInspectionFramework\CustomMsgBoxManager.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

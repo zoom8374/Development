@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 
-using CustonMsgBoxManager;
+using CustomMsgBoxManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -28,7 +28,7 @@ namespace KPVisionInspectionFramework
             else
             {
                 CMsgBoxManager.Initialize();
-                CMsgBoxManager.Show("The program is running.", "", 1000);
+                CMsgBoxManager.Show("The program is running.", "", false, 1000);
                 //MessageBox.Show(new Form { TopMost = true }, "The program is running.");
                 Application.Exit();
             }

@@ -140,12 +140,12 @@
             // btnImageAutoSave
             // 
             this.btnImageAutoSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnImageAutoSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.AutoSaveImage;
+            this.btnImageAutoSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.AutoStop;
             this.btnImageAutoSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnImageAutoSave.ButtonImage = global::InspectionSystemManager.Properties.Resources.AutoSaveImage;
+            this.btnImageAutoSave.ButtonImage = global::InspectionSystemManager.Properties.Resources.AutoStop;
             this.btnImageAutoSave.ButtonImageDiable = null;
-            this.btnImageAutoSave.ButtonImageDown = global::InspectionSystemManager.Properties.Resources.AutoSaveImageDown;
-            this.btnImageAutoSave.ButtonImageOver = global::InspectionSystemManager.Properties.Resources.AutoSaveImageOver;
+            this.btnImageAutoSave.ButtonImageDown = global::InspectionSystemManager.Properties.Resources.AutoStopDown;
+            this.btnImageAutoSave.ButtonImageOver = global::InspectionSystemManager.Properties.Resources.AutoStopOver;
             this.btnImageAutoSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnImageAutoSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnImageAutoSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));

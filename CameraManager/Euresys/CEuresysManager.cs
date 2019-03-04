@@ -27,7 +27,7 @@ namespace CameraManager
         private int ImageSizeWidth;
         private int ImageSizeHeight;
 
-        public CEuresysManager()
+        public CEuresysManager(string _CamInfo = "VCC-G20S20_P15RA")
         {
             try
             {
@@ -47,7 +47,11 @@ namespace CameraManager
 
                 // Choose the CAM file
                 //MC.SetParam(channel, "CamFile", "XC-HR50_P60RA");
-                MC.SetParam(channel, "CamFile", "VCC-G20S20_P15RA");
+                //MC.SetParam(channel, "CamFile", "VCC-G20S20_P15RA");
+                //MC.SetParam(channel, "CamFile", "CV-A1_P16RA");
+
+                if (_CamInfo == "") _CamInfo = "VCC-G20S20_P15RA";
+                MC.SetParam(channel, "CamFile", _CamInfo);
                 // Choose the camera expose duration
                 MC.SetParam(channel, "Expose_us", 1000);
                 // Choose the pixel color format
@@ -58,7 +62,7 @@ namespace CameraManager
                 MC.SetParam(channel, "TrigMode", "HARD");
                 // Choose the triggering mode for subsequent acquisitions
                 //MC.SetParam(channel, "NextTrigMode", "REPEAT");
-                MC.SetParam(channel, "NextTrigMode", "COMBINED");
+                MC.SetParam(channel, "NextTrigMode", "SAME");
                 // Choose the number of images to acquire
 
                 //MC.SetParam(channel, "TrigLine", "NOM");
@@ -72,7 +76,9 @@ namespace CameraManager
                 MC.SetParam(channel, "TrigFilter", "ON");
 
                 MC.SetParam(channel, "StrobeCtl", "OPTO");
+                //MC.SetParam(channel, "StrobeCtl", "TTL");
                 MC.SetParam(channel, "StrobeMode", "AUTO");
+                MC.SetParam(channel, "StrobeLevel", "PLSLOW");
 
                 //MC.SetParam(channel, "SeqLength_Fr", MC.INDETERMINATE);
                 MC.SetParam(channel, "SeqLength_Fr", -1);
@@ -100,6 +106,7 @@ namespace CameraManager
         {
             if (channel != 0)
             {
+                MC.SetParam(channel, "TrigMode", "IMMEDIATE");
                 MC.SetParam(channel, "ChannelState", "IDLE");
                 MC.Delete(channel);
                 MC.CloseDriver();
