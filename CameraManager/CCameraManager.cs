@@ -37,7 +37,7 @@ namespace CameraManager
             {
                 if (_ID == 0)
                 {
-                    objEuresysManager = new CEuresysManager();
+                    objEuresysManager = new CEuresysManager(_CamInfo);
                     objEuresysManager.EuresysGrabEvent += new CEuresysManager.EuresysGrabHandler(ImageGrabEvent);
                 }
             }

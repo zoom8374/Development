@@ -126,10 +126,10 @@ namespace ParameterManager
 
                 NameCount++;
             }
-
-            //if (GetRecipeName.Count == 1 && GetRecipeName[0] == _RecipeName) return GetRecipeName[0];
+            
             //if (GetRecipeName.Count == 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
-            if (GetRecipeName.Count >= 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            //if (GetRecipeName.Count >= 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            if (GetRecipeName.Count >= 1) return GetRecipeName[0];
             else return "NULL";
         }
 

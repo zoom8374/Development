@@ -236,6 +236,7 @@ namespace InspectionSystemManager
                     btnInspectionAreaCopy.Visible = false;
                     btnShowAllArea.Visible = false;
                     btnMapDataApplyInspectionArea.Visible = false;
+                    btnMapDataAlgorithmSet.Visible = false;
                     break;
 
                 default:

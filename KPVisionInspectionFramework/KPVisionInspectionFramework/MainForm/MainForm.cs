@@ -18,7 +18,7 @@ using DIOControlManager;
 using LightManager;
 using SerialManager;
 using HistoryManager;
-using CustonMsgBoxManager;
+using CustomMsgBoxManager;
 
 namespace KPVisionInspectionFramework
 {
@@ -415,6 +415,7 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.AUTO_MODE);
 
             rbStart.Enabled = false;
+            rbLight.Enabled = false;
 
             CParameterManager.SystemMode = eSysMode.AUTO_MODE;
             MainProcess.AutoMode(true);
@@ -428,6 +429,7 @@ namespace KPVisionInspectionFramework
                 InspSysManager[iLoopCount].SetSystemMode(eSysMode.MANUAL_MODE);
 
             rbStart.Enabled = true;
+            rbLight.Enabled = true;
 
             CParameterManager.SystemMode = eSysMode.MANUAL_MODE;
             MainProcess.AutoMode(false);
@@ -650,6 +652,8 @@ namespace KPVisionInspectionFramework
 
             if (true == ParamManager.RecipeReload(_RecipeName))
             {
+                _RecipeName = ParamManager.SystemParam.LastRecipeName;
+
                 //LDH, 2018.07.26, Light File 따로 관리
                 LightControlManager.RecipeChange(_RecipeName, _SrcRecipe);
                 ResultBaseWnd.SetLastRecipeName((eProjectType)ParamManager.SystemParam.ProjectType, _RecipeName);
@@ -664,7 +668,8 @@ namespace KPVisionInspectionFramework
             }
             else
             {
-                MessageBox.Show(new Form { TopMost = true }, "Recipe 변경에 실패했습니다.\nRecipe를 확인하세요.");
+                //MessageBox.Show(new Form { TopMost = true }, "Recipe 변경에 실패했습니다.\nRecipe를 확인하세요.");
+                CMsgBoxManager.Show("Recipe 변경에 실패했습니다. \nRecipe를 확인하세요", "", true);
                 _Result = false;
             }
 

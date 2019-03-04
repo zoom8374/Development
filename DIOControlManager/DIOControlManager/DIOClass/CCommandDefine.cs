@@ -94,7 +94,8 @@ namespace DIOControlManager
         //private static readonly int NONE = -1;
         //public static readonly int IN_LIVE = 0;
         public static readonly int IN_RESET = 0;
-        
+        public static readonly int IN_RESET2 = 1;
+
         //public static readonly int OUT_LIVE = 6;
         public static readonly int OUT_AUTO = 0;
         public static readonly int OUT_RESULT1 = 2;
@@ -111,7 +112,7 @@ namespace DIOControlManager
 
             //InCmdArray[IN_LIVE]    = DIO_DEF.IN_LIVE;
             InCmdArray[IN_RESET]   = DIO_DEF.IN_RESET;
-
+            InCmdArray[IN_RESET2]  = DIO_DEF.IN_RESET_2;
 
             OutCmdArray = new int[IOCount];
             for (int iLoopCount = 0; iLoopCount < IOCount; ++iLoopCount) OutCmdArray[iLoopCount] = DIO_DEF.NONE;

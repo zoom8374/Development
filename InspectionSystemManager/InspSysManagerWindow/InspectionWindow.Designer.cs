@@ -140,12 +140,12 @@
             // btnImageAutoSave
             // 
             this.btnImageAutoSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
-            this.btnImageAutoSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.AutoSaveImage;
+            this.btnImageAutoSave.BackgroundImage = global::InspectionSystemManager.Properties.Resources.AutoStop;
             this.btnImageAutoSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnImageAutoSave.ButtonImage = global::InspectionSystemManager.Properties.Resources.AutoSaveImage;
+            this.btnImageAutoSave.ButtonImage = global::InspectionSystemManager.Properties.Resources.AutoStop;
             this.btnImageAutoSave.ButtonImageDiable = null;
-            this.btnImageAutoSave.ButtonImageDown = global::InspectionSystemManager.Properties.Resources.AutoSaveImageDown;
-            this.btnImageAutoSave.ButtonImageOver = global::InspectionSystemManager.Properties.Resources.AutoSaveImageOver;
+            this.btnImageAutoSave.ButtonImageDown = global::InspectionSystemManager.Properties.Resources.AutoStopDown;
+            this.btnImageAutoSave.ButtonImageOver = global::InspectionSystemManager.Properties.Resources.AutoStopOver;
             this.btnImageAutoSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnImageAutoSave.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
             this.btnImageAutoSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
@@ -373,18 +373,6 @@
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
-            // panelMenuHide
-            // 
-            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
-            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
-            this.panelMenuHide.Name = "panelMenuHide";
-            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
-            this.panelMenuHide.TabIndex = 3;
-            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
-            // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
@@ -396,6 +384,18 @@
             this.labelStatus.Size = new System.Drawing.Size(43, 15);
             this.labelStatus.TabIndex = 4;
             this.labelStatus.Text = "(Live)";
+            // 
+            // panelMenuHide
+            // 
+            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
+            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
+            this.panelMenuHide.Name = "panelMenuHide";
+            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
+            this.panelMenuHide.TabIndex = 3;
+            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
             // 
             // InspectionWindow
             // 

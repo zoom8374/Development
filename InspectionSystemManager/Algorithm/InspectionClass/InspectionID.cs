@@ -44,6 +44,13 @@ namespace InspectionSystemManager
 
             if (true == Inspection(_SrcImage, _InspRegion)) GetResult();
 
+            //결과가 없을 시 영상을 180 회전하여 검사한다.
+            if (IDResults.Count == 0)
+            {
+                Inspection(_SrcImage, _InspRegion, true);
+                GetResult();
+            }
+
             if (IDResults != null && IDResults.Count > 0) _CogBarcodeIDResult.IsGood = true;
             else _CogBarcodeIDResult.IsGood = false;
 
@@ -89,13 +96,20 @@ namespace InspectionSystemManager
             return _Result;
         }
 
-        private bool Inspection(CogImage8Grey _SrcImage, CogRectangle _InspArea)
+        private bool Inspection(CogImage8Grey _SrcImage, CogRectangle _InspArea, bool _IsRotate = false)
         {
             bool _Result = true;
 
             try
             {
-                IDResults = IDProc.Execute(_SrcImage, _InspArea);
+                if (true == _IsRotate)
+                {
+                    CogRectangleAffine _Area = new CogRectangleAffine();
+                    _Area.SetCenterLengthsRotationSkew(_InspArea.CenterX, _InspArea.CenterY, _InspArea.Width, _InspArea.Height, -3.14, 0);
+                    IDResults = IDProc.Execute(_SrcImage, _Area);
+                }
+                else
+                    IDResults = IDProc.Execute(_SrcImage, _InspArea);
             }
             catch (Exception ex)
             {
@@ -113,7 +127,7 @@ namespace InspectionSystemManager
 
         private void SetIDMode(CogBarCodeIDAlgo _CogBarCodeIDAlgo)
         {
-            IDProc.ProcessingMode = CogIDProcessingModeConstants.IDQuick;
+            IDProc.ProcessingMode = CogIDProcessingModeConstants.IDMax;
             IDProc.DecodedStringCodePage = CogIDCodePageConstants.ANSILatin1;
             IDProc.NumToFind = _CogBarCodeIDAlgo.FindCount;
             SetSymbologyFalse();
@@ -123,6 +137,7 @@ namespace InspectionSystemManager
                 case "DataMatrix":
                     {
                         IDProc.DataMatrix.Enabled = true;
+                        IDProc.DataMatrix.IgnorePolarity = true;
                         IDProc.DataMatrix.ProcessControlMetrics = CogIDDataMatrixProcessControlMetricsConstants.None;
                     }
                     break;

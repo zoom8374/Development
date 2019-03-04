@@ -287,7 +287,7 @@ namespace KPVisionInspectionFramework
 
                 if (LastResult != "GOOD" && LastResult != "OK" && LastResult != "DUMMY") { _ResultParam.IsGood = false; _ResultParam.NgType = eNgType.ID; }
 
-                if (AutoModeFlag)
+                if (AutoModeFlag && LastResult != "DUMMY")
                 {
                     TotalCount++;
                     if (_ResultParam.IsGood) GoodCount++;
