@@ -58,16 +58,15 @@ namespace KPVisionInspectionFramework
         #endregion Count & Yield Registry Variable
 
         private string[] HistoryParam;
-        private string[] LastRecipeName;
+        private string LastRecipeName;
         private string LastResult;
 
         public delegate void ScreenshotHandler(string ScreenshotImagePath);
         public event ScreenshotHandler ScreenshotEvent;
 
         #region Initialize & DeInitialize
-        public ucMainResultNone(string[] _LastRecipeName)
+        public ucMainResultNone(string _LastRecipeName)
         {
-            LastRecipeName = new string[_LastRecipeName.Count()];
             SetLastRecipeName(_LastRecipeName);
 
             InitializeComponent();
@@ -221,12 +220,9 @@ namespace KPVisionInspectionFramework
 
         }
 
-        public void SetLastRecipeName(string[] _LastRecipeName)
+        public void SetLastRecipeName(string _LastRecipeName)
         {
-            for (int iLoopCount = 0; iLoopCount < _LastRecipeName.Count(); iLoopCount++)
-            {
-                LastRecipeName[iLoopCount] = _LastRecipeName[iLoopCount];
-            }
+
         }
 
         public void ClearResult()

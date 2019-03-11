@@ -46,7 +46,6 @@ namespace InspectionSystemManager
         private ucCogLineFind           ucCogLineFindWnd;
         private ucCogMultiPattern       ucCogMultiPatternWnd;
         private ucCogAutoPattern        ucCogAutoPatternWnd;
-        private ucCogLeadTrimInspection ucCogLeadTrimInspWnd;
 
         private ContextMenu     ContextMenuAlgo;
         private eTeachStep      CurrentTeachStep;
@@ -111,16 +110,12 @@ namespace InspectionSystemManager
             ucCogLineFindWnd = new ucCogLineFind();
             ucCogMultiPatternWnd = new ucCogMultiPattern();
             ucCogAutoPatternWnd = new ucCogAutoPattern();
-            ucCogLeadTrimInspWnd = new ucCogLeadTrimInspection();
 
-
-            if (_ProjectItem == eProjectItem.NONE)                  ucCogBlobReferWnd.Initialize(false);
-            else if (_ProjectItem == eProjectItem.LEAD_INSP)        ucCogBlobReferWnd.Initialize(false);
-            else if (_ProjectItem == eProjectItem.NEEDLE_ALIGN)     ucCogBlobReferWnd.Initialize(false);
-            else if (_ProjectItem == eProjectItem.ID_INSP)          ucCogBlobReferWnd.Initialize(true);
-            else if (_ProjectItem == eProjectItem.SURFACE)          ucCogBlobReferWnd.Initialize(false);
-            else if (_ProjectItem == eProjectItem.LEAD_TRIM_INSP)   ucCogBlobReferWnd.Initialize(false);
-            else if (_ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  ucCogBlobReferWnd.Initialize(false);
+			if (_ProjectItem == eProjectItem.NONE)              ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.LEAD_INSP)    ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.NEEDLE_ALIGN) ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.ID_INSP)      ucCogBlobReferWnd.Initialize(true);
+            else if (_ProjectItem == eProjectItem.SURFACE)      ucCogBlobReferWnd.Initialize(false);
 
             InspPatternProcess = new InspectionPattern();
             InspAutoPatternProcess = new InspectionAutoPattern();
@@ -161,7 +156,6 @@ namespace InspectionSystemManager
             ucCogLineFindWnd.Dispose();
             ucCogMultiPatternWnd.Dispose();
             ucCogAutoPatternWnd.Dispose();
-            ucCogLeadTrimInspWnd.Dispose();
 
             InspBlobReferProcess.DeInitialize();
             InspNeedleCircleFindProcess.DeInitialize();
@@ -213,18 +207,6 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
             }
 
-            else if (ProjectItem == eProjectItem.LEAD_TRIM_INSP)
-            {
-                ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("기준 멀티 패턴 검사", new EventHandler(MultiPatternFindAlgorithm));
-                ContextMenuAlgo.MenuItems.Add("Lead Trim 검사", new EventHandler(LeadTrimInspectionAlgorithm));
-            }
-
-            else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
-            {
-                ContextMenuAlgo.MenuItems.Add("기준 패턴 검사", new EventHandler(PatternFindAlgorithm));
-            }
-
             else
             {
                 ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
@@ -251,13 +233,6 @@ namespace InspectionSystemManager
                 case eProjectType.BLOWER:
                     btnInspectionAreaAdd.Visible = false;
                     btnInspectionAreaDel.Visible = false;
-                    btnInspectionAreaCopy.Visible = false;
-                    btnShowAllArea.Visible = false;
-                    btnMapDataApplyInspectionArea.Visible = false;
-                    btnMapDataAlgorithmSet.Visible = false;
-                    break;
-
-                case eProjectType.TRIM:
                     btnInspectionAreaCopy.Visible = false;
                     btnShowAllArea.Visible = false;
                     btnMapDataApplyInspectionArea.Visible = false;
@@ -366,14 +341,6 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
             UpdateInspectionAlgoList(InspAreaSelected, true);
             UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LINE_FIND);
-        }
-
-        private void LeadTrimInspectionAlgorithm(object sender, EventArgs e)
-        {
-            InspectionAlgorithmParameter _InspAlgoParam = new InspectionAlgorithmParameter(eAlgoType.C_LEAD_TRIM, ResolutionX, ResolutionY);
-            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam.Add(_InspAlgoParam);
-            UpdateInspectionAlgoList(InspAreaSelected, true);
-            UpdateAlgoResultListAddAlgorithm(eAlgoType.C_LEAD_TRIM);
         }
         #endregion Conext Menu Function
 
@@ -889,7 +856,6 @@ namespace InspectionSystemManager
                 case eAlgoType.C_LINE_FIND:     ucCogLineFindWnd.SaveAlgoRecipe();   break;
 				case eAlgoType.C_MULTI_PATTERN: ucCogMultiPatternWnd.SaveAlgoRecipe(); break;
                 case eAlgoType.C_AUTO_PATTERN:  ucCogAutoPatternWnd.SaveAlgoRecipe();  break;
-                case eAlgoType.C_LEAD_TRIM:     ucCogLeadTrimInspWnd.SaveAlgoRecipe(); break;
             }
         }
 
@@ -1230,18 +1196,6 @@ namespace InspectionSystemManager
                     if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB) _Name = "Defect detection";        //"Blob - Defect"
                 }
 
-                else if (ProjectItem == eProjectItem.LEAD_TRIM_INSP)
-                {
-                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN)            _Name = "기준 패턴 검사";      //"Pattern - Reference"
-                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_MULTI_PATTERN) _Name = "기준 멀티패턴 검사";
-                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LEAD_TRIM)     _Name = "Lead Trim 검사";
-                }
-
-                else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)
-                {
-                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_PATTERN) _Name = "기준 패턴 검사";      //"Pattern - Reference"
-                }
-
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
             gridViewAlgo.ClearSelection();
@@ -1300,7 +1254,6 @@ namespace InspectionSystemManager
                 case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);     ucCogLineFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_MULTI_PATTERN: panelTeaching.Controls.Add(ucCogMultiPatternWnd); ucCogMultiPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
                 case eAlgoType.C_AUTO_PATTERN:  panelTeaching.Controls.Add(ucCogAutoPatternWnd);  ucCogAutoPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_LEAD_TRIM:     panelTeaching.Controls.Add(ucCogLeadTrimInspWnd); ucCogLeadTrimInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

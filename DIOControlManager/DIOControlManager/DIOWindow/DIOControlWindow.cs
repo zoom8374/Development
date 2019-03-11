@@ -89,7 +89,6 @@ namespace DIOControlManager
             else if (ProjectType == eProjectType.DISPENSER) DioBaseCmd = new DispenserCmd(IOCnt);
             else if (ProjectType == eProjectType.BLOWER)    DioBaseCmd = new AirBlowCmd(IOCnt);
             else if (ProjectType == eProjectType.SORTER)    DioBaseCmd = new SorterCmd();
-            else if (ProjectType == eProjectType.TRIM)      DioBaseCmd = new TrimFormCmd();
             
         }
 

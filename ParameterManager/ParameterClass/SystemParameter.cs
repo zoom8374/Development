@@ -10,8 +10,7 @@ namespace ParameterManager
         public int      MachineNumber;
         public bool     IsProgramUsable;
         public bool     IsSimulationMode;
-        public bool     IsTotalRecipe;
-        public string[] LastRecipeName = new string[1];
+        public string   LastRecipeName;
         public int      InspSystemManagerCount;
         public int      ProjectType;
         public string   IPAddress;
@@ -31,10 +30,7 @@ namespace ParameterManager
             MachineNumber = 1;
             IsProgramUsable = false;
             IsSimulationMode = true;
-
-            //LDH, 2019.01.09, LastRecipe 형 변경
-            IsTotalRecipe = false;
-            LastRecipeName[0] = "Default";
+            LastRecipeName = "Default";
             InspSystemManagerCount = 1;
             ProjectType = 0;
 

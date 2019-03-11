@@ -373,18 +373,6 @@
             this.labelTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseDown);
             this.labelTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.labelTitle_MouseMove);
             // 
-            // panelMenuHide
-            // 
-            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
-            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
-            this.panelMenuHide.Name = "panelMenuHide";
-            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
-            this.panelMenuHide.TabIndex = 3;
-            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
-            // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
@@ -396,6 +384,18 @@
             this.labelStatus.Size = new System.Drawing.Size(43, 15);
             this.labelStatus.TabIndex = 4;
             this.labelStatus.Text = "(Live)";
+            // 
+            // panelMenuHide
+            // 
+            this.panelMenuHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.panelMenuHide.BackgroundImage = global::InspectionSystemManager.Properties.Resources.Arrow_Up;
+            this.panelMenuHide.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelMenuHide.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMenuHide.Location = new System.Drawing.Point(164, 8);
+            this.panelMenuHide.Name = "panelMenuHide";
+            this.panelMenuHide.Size = new System.Drawing.Size(12, 14);
+            this.panelMenuHide.TabIndex = 3;
+            this.panelMenuHide.Click += new System.EventHandler(this.panelMenuHide_Click);
             // 
             // InspectionWindow
             // 

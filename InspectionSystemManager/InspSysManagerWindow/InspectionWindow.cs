@@ -174,12 +174,6 @@ namespace InspectionSystemManager
                 IsResultDisplay = true;
             }
 
-            else if (eProjectType.TRIM == _ProjectType)
-            {
-                btnImageResultDisplay.Visible = false;
-                IsResultDisplay = true;
-            }
-
             else if (eProjectType.SORTER == _ProjectType)
             {
                 btnImageResultDisplay.Visible = true;
@@ -869,13 +863,23 @@ namespace InspectionSystemManager
                 //각 Area의 첫번째 알고리즘의 Offset 값이 Area 검사 Offset에 적용 됨
                 if (iLoopCount == 0)
                 {
-                    int _Index = AlgoResultParamList.Count - 1;
-
                     AreaResultParameter _AreaResParam = new AreaResultParameter();
-                    _AreaResParam.OffsetX = AlgoResultParamList[_Index].OffsetX;
-                    _AreaResParam.OffsetY = AlgoResultParamList[_Index].OffsetY;
-                    _AreaResParam.OffsetT = AlgoResultParamList[_Index].OffsetT;
-                    AreaResultParamList.Add(_AreaResParam);
+                    int _Index = AlgoResultParamList.Count - 1;
+                    if (AlgoResultParamList.Count > _Index)
+                    {
+                        _AreaResParam.OffsetX = AlgoResultParamList[_Index].OffsetX;
+                        _AreaResParam.OffsetY = AlgoResultParamList[_Index].OffsetY;
+                        _AreaResParam.OffsetT = AlgoResultParamList[_Index].OffsetT;
+                        AreaResultParamList.Add(_AreaResParam);
+                    }
+
+                    else
+                    {
+                        _AreaResParam.OffsetX = 0;
+                        _AreaResParam.OffsetY = 0;
+                        _AreaResParam.OffsetT = 0;
+                        AreaResultParamList.Add(_AreaResParam);
+                    }
                 }
             }
          }
@@ -1172,10 +1176,8 @@ namespace InspectionSystemManager
             for (int iLoopCount = 0; iLoopCount < _PatternResult.FindCount; ++iLoopCount)
             {
                 if (false == IsResultDisplay) continue;
-                _PatternRect.SetCenterWidthHeight(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount]);
                 _PatternAffine.SetCenterLengthsRotationSkew(_PatternResult.CenterX[iLoopCount], _PatternResult.CenterY[iLoopCount], _PatternResult.Width[iLoopCount], _PatternResult.Height[iLoopCount], _PatternResult.Angle[iLoopCount], 0);
                 _Point.SetCenterRotationSize(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount], 0, 2);
-                //ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_{1}", _Index, iLoopCount), _PatternResult.IsGoods[iLoopCount]);
                 ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_{1}", _Index, iLoopCount), _PatternResult.IsGoods[iLoopCount]);
 
                 string _MatchingName = string.Format($"Rate{_Index} = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
@@ -1459,13 +1461,11 @@ namespace InspectionSystemManager
             bool _Result = true;
 
             SendResParam = new SendResultParameter();
-			if (ProjectItem == eProjectItem.NONE)	 			    SendResParam = GetDefaultInspectionResultAnalysis();
-            else if (ProjectItem == eProjectItem.LEAD_INSP)         SendResParam = GetLeadInspectionResultAnalysis();
-            else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)      SendResParam = GetNeedleFindResultAnalysis();
-            else if (ProjectItem == eProjectItem.ID_INSP)           SendResParam = GetIDReadResultAnalysis();
-            else if (ProjectItem == eProjectItem.SURFACE)           SendResParam = GetSurfaceInspectionResultAnalysis();
-            else if (ProjectItem == eProjectItem.LEAD_TRIM_INSP)    SendResParam = GetLeadTrimInspectionResultAnalysis();
-            else if (ProjectItem == eProjectItem.LEAD_FORM_ALIGN)   SendResParam = GetLeadFormAlignResultAnalysis();
+			if (ProjectItem == eProjectItem.NONE)	 			SendResParam = GetDefaultInspectionResultAnalysis();
+            else if (ProjectItem == eProjectItem.LEAD_INSP)     SendResParam = GetLeadInspectionResultAnalysis();
+            else if (ProjectItem == eProjectItem.NEEDLE_ALIGN)  SendResParam = GetNeedleFindResultAnalysis();
+            else if (ProjectItem == eProjectItem.ID_INSP)       SendResParam = GetIDReadResultAnalysis();
+            else if (ProjectItem == eProjectItem.SURFACE)       SendResParam = GetSurfaceInspectionResultAnalysis();
 
             return _Result;
         }

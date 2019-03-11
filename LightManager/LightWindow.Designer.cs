@@ -62,6 +62,11 @@
             0,
             0,
             0});
+            this.numericUpDownLightValue.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numericUpDownLightValue.Name = "numericUpDownLightValue";
             this.numericUpDownLightValue.Size = new System.Drawing.Size(179, 22);
             this.numericUpDownLightValue.TabIndex = 284;

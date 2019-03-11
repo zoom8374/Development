@@ -69,7 +69,7 @@ namespace KPVisionInspectionFramework
 
         //LDH, 2018.08.13, History 입력용 string 
         string[] HistoryParam;
-        string[] LastRecipeName;
+        string LastRecipeName;
         string LastResult;
 
         //LDH, 2018.09.28, InData용
@@ -96,11 +96,10 @@ namespace KPVisionInspectionFramework
         public event ReadLOTNumHandler ReadLOTNumEvent;
 
         #region Initialize & DeInitialize
-        public ucMainResultID(string[] _LastRecipeName)
+        public ucMainResultID(string _LastRecipeName)
         {
             BackupFolderPath = @"D:\VisionInspectionData\KPAirBlowerInspection\Log\";
 
-            LastRecipeName = new string[_LastRecipeName.Count()];
             SetLastRecipeName(_LastRecipeName);
 
             InitializeComponent();
@@ -149,12 +148,9 @@ namespace KPVisionInspectionFramework
             //ControlPaint.DrawBorder(e.Graphics, this.panelMain.ClientRectangle, Color.Green, ButtonBorderStyle.Solid);
         }
 
-        public void SetLastRecipeName(string[] _LastRecipeName)
+        public void SetLastRecipeName(string _LastRecipeName)
         {
-            for (int iLoopCount = 0; iLoopCount < _LastRecipeName.Count(); iLoopCount++)
-            {
-                LastRecipeName[iLoopCount] = _LastRecipeName[iLoopCount];
-            }
+            LastRecipeName = _LastRecipeName;
         }
 
         //LDH, 2018.10.12, AutoMode 관리
@@ -596,7 +592,7 @@ namespace KPVisionInspectionFramework
             ImageSaveFile = String.Format("{0}\\{1}.bmp", ImageSaveFolder, InspectionTime);
 
             //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
-            HistoryParam[0] = LastRecipeName[0];
+            HistoryParam[0] = LastRecipeName;
             HistoryParam[1] = LastResult;
             HistoryParam[2] = _ReadCodeData;
             HistoryParam[3] = ImageSaveFile;

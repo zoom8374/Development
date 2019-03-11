@@ -13,7 +13,6 @@ using Microsoft.VisualBasic.FileIO;
 
 using LogMessageManager;
 using ParameterManager;
-using CustomControl;
 
 namespace KPVisionInspectionFramework
 {
@@ -22,21 +21,11 @@ namespace KPVisionInspectionFramework
         private string RecipeFolderPath = @"D:\VisionInspectionData\CIPOSLeadInspection\RecipeParameter\";
         private string ProjectName = "CIPOSLeadInspection";
         private eProjectType ProjectType;
+        private string CurrentRecipeName;
         private bool IsRecipeNew = false;
 
-        //LDH, 2019.01.09, 다중 Recipe 관리를 위해 추가
-        bool IsTotalRecipe = false;
-        int UseRecipecount = 0;
-        int SelectedRecipeNum = 0;
-        GradientLabel[] labelCurrentRecipeNum;
-        TextBox[] txtboxCurrentRecipeName;
-        private string[] CurrentRecipeName;
-
-        public delegate bool RecipeChangeHandler(int _ID, string _RecipeName);
+        public delegate bool RecipeChangeHandler(string _RecipeName, string _srcRecipeName = "");
         public event RecipeChangeHandler RecipeChangeEvent;
-
-        public delegate bool RecipeCopyHandler(string _RecipeName, string _SrcRecipeName);
-        public event RecipeCopyHandler RecipeCopyEvent;
 
         #region Initialize & DeInitialize
         public RecipeWindow()
@@ -44,76 +33,16 @@ namespace KPVisionInspectionFramework
             InitializeComponent();
         }
 
-        public RecipeWindow(eProjectType _ProjectType, string _ProjectName, string[] _CurrentRecipe, bool _IsTotalRecipe)
+        public RecipeWindow(eProjectType _ProjectType, string _ProjectName, string _CurrentRecipe = "Default")
         {
             InitializeComponent();
-
-            labelCurrentRecipeNum = new GradientLabel[6] { labelRecipeNum0, labelRecipeNum1, labelRecipeNum2, labelRecipeNum3, labelRecipeNum4, labelRecipeNum5 };
-            txtboxCurrentRecipeName = new TextBox[6] { textBoxCurrentRecipe0, textBoxCurrentRecipe1, textBoxCurrentRecipe2, textBoxCurrentRecipe3, textBoxCurrentRecipe4, textBoxCurrentRecipe5 };
 
             ProjectName = _ProjectName;
             ProjectType = _ProjectType;
             RecipeFolderPath = String.Format(@"D:\VisionInspectionData\{0}\RecipeParameter\", ProjectName);
 
-            //LDH, 2019.01.17, Recipe 형태 구분
-            IsTotalRecipe = _IsTotalRecipe;
-            UseRecipecount = _CurrentRecipe.Count();
-
-            if (IsTotalRecipe) SetRecipeOption(1);
-            else                SetRecipeOption(UseRecipecount);
-
-            CurrentRecipeName = new string[UseRecipecount];
-
-            for (int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)
-            {
-                CurrentRecipeName[iLoopCount] = _CurrentRecipe[iLoopCount];
-            }
-
-            SelectedRecipeChange();
-
+            CurrentRecipeName = _CurrentRecipe;
             LoadRecipeList();
-        }
-
-        //LDH, 2019.01.14, RecipeName textbox 개수 설정
-        private void SetRecipeOption(int _RecipeCount)
-        {
-            if (_RecipeCount == 0) return;
-
-            else if (_RecipeCount > 0 && _RecipeCount <= 3)
-            {
-                panelCurrentRecipe.Size = new Size(637, 33);
-                panelMain.Size = new Size(640, 762);
-                this.Size = new Size(640, 798);
-
-                if (_RecipeCount == 1)
-                {
-                    labelCurrentRecipeNum[0].Visible = false;
-                    txtboxCurrentRecipeName[0].Size = new Size(634, 29);
-                    txtboxCurrentRecipeName[0].Location = new Point(2, 2);
-                }
-            }
-
-            for (int iLoopcount = 1; iLoopcount < _RecipeCount; iLoopcount++)
-            {
-                labelCurrentRecipeNum[iLoopcount].Visible = true;
-                txtboxCurrentRecipeName[iLoopcount].Visible = true;
-            }
-        }
-
-        //LDH, 2019.01.16, 선택된 Recipe 색상 설정
-        private void SelectedRecipeChange()
-        {
-            for(int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)
-            {
-                if (SelectedRecipeNum == iLoopCount)
-                {
-                    ControlInvoke.GradientLabelColor(labelCurrentRecipeNum[iLoopCount], Color.DarkOrange, Color.AntiqueWhite);
-                }
-                else
-                {
-                    ControlInvoke.GradientLabelColor(labelCurrentRecipeNum[iLoopCount], Color.FromArgb(64, 64, 64), Color.Gray);    
-                }
-            }
         }
         #endregion Initialize & DeInitialize
 
@@ -155,20 +84,11 @@ namespace KPVisionInspectionFramework
         private void btnRecipeChange_Click(object sender, EventArgs e)
         {
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange_Click", CLogManager.LOG_LEVEL.LOW);
-            //if (listBoxRecipe.SelectedItem == null) { MessageBox.Show(new Form { TopMost = true }, "Select the recipe you want to change."); return; }
+            if (listBoxRecipe.SelectedItem == null) { MessageBox.Show(new Form { TopMost = true }, "Select the recipe you want to change."); return; }
 
             this.Hide();
             CParameterManager.SystemMode = eSysMode.RCP_MANUAL_CANGE;
-
-            //for (int iLoopCount = 0; iLoopCount < UseRecipecount - 1; iLoopCount++)
-            //{
-            //    if (txtboxCurrentRecipeName[iLoopCount].Text == txtboxCurrentRecipeName[iLoopCount + 1].Text)
-            //    {
-            //        MessageBox.Show("중복 선택된 Recipe가 있습니다. \n레시피를 변경하세요."); return;
-            //    }
-            //}
-
-            RecipeChange();
+            RecipeChange(listBoxRecipe.SelectedItem.ToString());
 
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeChange Complete : " + listBoxRecipe.SelectedItem.ToString(), CLogManager.LOG_LEVEL.LOW);
             this.Show();
@@ -192,7 +112,7 @@ namespace KPVisionInspectionFramework
                 LoadRecipeList();
                 this.Hide();
                 CParameterManager.SystemMode = eSysMode.RCP_MANUAL_CANGE;
-                //RecipeChange(_RcpNewNameWnd.NewRecipeName, "[Default]");
+                RecipeChange(_RcpNewNameWnd.NewRecipeName, "[Default]");
                 this.Show();
             }
 
@@ -222,11 +142,7 @@ namespace KPVisionInspectionFramework
         private void btnRecipeDelete_Click(object sender, EventArgs e)
         {
             if (listBoxRecipe.SelectedItem == null) { MessageBox.Show(new Form { TopMost = true }, "Select recipe to delete."); return; }
-
-            for (int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)
-            {
-                if (CurrentRecipeName[iLoopCount] == listBoxRecipe.SelectedItem.ToString()) { MessageBox.Show("Unable to delete the recipe being used."); return; }
-            }
+            if (CurrentRecipeName == listBoxRecipe.SelectedItem.ToString()) { MessageBox.Show("Unable to delete the recipe being used."); return; }
 
             string _RecipeFilePath = RecipeFolderPath + listBoxRecipe.SelectedItem.ToString();
             DirectoryInfo _RecipeFolderInfo = new DirectoryInfo(_RecipeFilePath);
@@ -246,7 +162,7 @@ namespace KPVisionInspectionFramework
 
             LoadRecipeList();
         }
-
+         
         private void textBoxSearchRecipe_TextChanged(object sender, EventArgs e)
         {
             LoadRecipeList(textBoxSearchRecipe.Text);
@@ -257,15 +173,6 @@ namespace KPVisionInspectionFramework
             textBoxSearchRecipe.Text = "";
             textBoxSearchRecipe.Focus();
             this.Close();
-        }
-
-        public void ShowDialogWindow()
-        {
-            LoadRecipeList();
-
-            SelectedRecipeNum = 0;
-            SelectedRecipeChange();
-            this.ShowDialog();
         }
         #endregion Control Event
 
@@ -291,29 +198,15 @@ namespace KPVisionInspectionFramework
 
                 }
             }
-
-            //LDH, 2019.01.14, TextBox Recipe 이름설정 변경
-            for (int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)
-            {
-                txtboxCurrentRecipeName[iLoopCount].Clear();
-                txtboxCurrentRecipeName[iLoopCount].Text = CurrentRecipeName[iLoopCount];
-            }
+            textBoxCurrentRecipe.Text = CurrentRecipeName;
         }
 
-        //LDH, 2019.01.11, Recipe Copy할 때만 매개변수 사용
-        private void RecipeChange()
+        private void RecipeChange(string _RecipeName, string _SrcRecipeName = "")
         {
             var _RecipeChangeEvent = RecipeChangeEvent;
-            string _RecipeName = "";
-
-            for (int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)
-            {
-                _RecipeName = txtboxCurrentRecipeName[iLoopCount].Text;
-                if (false == _RecipeChangeEvent?.Invoke(iLoopCount, _RecipeName)) { MessageBox.Show(new Form { TopMost = true }, "Failed to load recipe."); return; }
-
-                CurrentRecipeName[iLoopCount] = _RecipeName;
-                txtboxCurrentRecipeName[iLoopCount].Text = _RecipeName;
-            }
+            if (false == _RecipeChangeEvent?.Invoke(_RecipeName, _SrcRecipeName)) { MessageBox.Show(new Form { TopMost = true }, "Failed to load recipe."); return; }
+            CurrentRecipeName = _RecipeName;
+            textBoxCurrentRecipe.Text = _RecipeName;
         }
 
         private void RecipeCopyEventFunction(string _NewRecipeName)
@@ -388,9 +281,7 @@ namespace KPVisionInspectionFramework
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "RecipeWindow - RecipeCopy Complete", CLogManager.LOG_LEVEL.LOW);
 
             CParameterManager.SystemMode = eSysMode.RCP_MANUAL_CANGE;
-
-            var _RecipeCopyEvent = RecipeCopyEvent;
-            _RecipeCopyEvent(_NewRecipeName, _SrcRecipeName);
+            RecipeChange(_NewRecipeName, _SrcRecipeName);
             LoadRecipeList();
         }
 
@@ -399,46 +290,6 @@ namespace KPVisionInspectionFramework
             XmlNode node = xmlDoc.CreateElement(string.Empty, name, string.Empty);
             node.InnerXml = innerXml;
             return node;
-        }
-
-        //LDH, 2019.01.16, Recipe 번호 선택
-        private void labelRecipeNum_Click(object sender, EventArgs e)
-        {
-            SelectedRecipeNum = Convert.ToInt32(((GradientLabel)sender).Tag);
-            SelectedRecipeChange();
-        }
-
-        //LDH, 2019.01.16, Recipe 변경시 List에서 Recipe 선택
-        private void listBoxRecipe_DoubleClick(object sender, EventArgs e)
-        {
-            DialogResult _MsgBoxResult = MessageBox.Show(string.Format("{0}번 Recipe를 변경하시겠습니까?", SelectedRecipeNum + 1), "Recipe 변경", MessageBoxButtons.YesNo);
-
-            if (_MsgBoxResult == DialogResult.Yes)
-            {
-
-                bool _UseCheckFlag = false;
-
-                for (int iLoopCount = 0; iLoopCount < UseRecipecount; iLoopCount++)
-                {
-                    if (txtboxCurrentRecipeName[iLoopCount].Text == listBoxRecipe.SelectedItem.ToString())
-                    {
-                        MessageBox.Show("중복되는 Recipe가 있습니다. Recipe를 변경하세요.");
-                        _UseCheckFlag = true; break;
-                    }
-                }
-
-                if (!_UseCheckFlag)
-                {
-                    if (IsTotalRecipe)
-                    {
-                        for (int jLoopCount = 0; jLoopCount < UseRecipecount; jLoopCount++)
-                        {
-                            txtboxCurrentRecipeName[jLoopCount].Text = listBoxRecipe.SelectedItem.ToString();
-                        }
-                    }
-                    else txtboxCurrentRecipeName[SelectedRecipeNum].Text = listBoxRecipe.SelectedItem.ToString();
-                }
-            }
         }
     }
 }

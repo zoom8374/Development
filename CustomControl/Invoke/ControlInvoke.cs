@@ -53,18 +53,5 @@ namespace CustomControl
                 _Control.Text = _Text; _Control.ForeColor = _FontColor;
             }
         }
-
-        public static void GradientLabelColor(GradientLabel _Control, Color _ColorTop, Color _ColorBottom)
-        {
-            if (_Control.InvokeRequired)
-            {
-                _Control.Invoke(new MethodInvoker(delegate () { _Control.ColorTop = _ColorTop; _Control.ColorBottom = _ColorBottom; }));
-            }
-            else
-            {
-                _Control.ColorTop = _ColorTop; _Control.ColorBottom = _ColorBottom;
-            }
-            _Control.Refresh();
-        }
     }
 }

@@ -74,10 +74,8 @@ namespace ParameterManager
             return _Result;
         }
 
-        public bool RecipeReload(int _ID, string _RecipeName)
+        public bool RecipeReload(string _RecipeName)
         {
-            bool _Result = true;
-
             //LDH, 2018.08.24, Air Blower용 Recipe명 받아오기
             if (eProjectType.BLOWER == (eProjectType)SystemParam.ProjectType)
             {
@@ -89,28 +87,11 @@ namespace ParameterManager
             }
 			
             if (_RecipeName == "") return false;
+            SystemParam.LastRecipeName = _RecipeName;
 
-            //LDH, 통합(통신)으로 recipe 변경시 -1
-            if (_ID == -1)
-            {
-                for (int iLoopCount = 0; iLoopCount < SystemParam.LastRecipeName.Count(); iLoopCount++)
-                {
-                    SystemParam.LastRecipeName[iLoopCount] = _RecipeName;
-                }
-                ReadInspectionParameters();
-            }
-            else
-            {
-                SystemParam.LastRecipeName[_ID] = _RecipeName;
+            ReadInspectionParameters();
 
-                InspParam[_ID] = new InspectionParameter();
-                if (false == ReadInspectionParameter(_ID, _RecipeName)) { _Result = false; return _Result; }
-                if (false == ReadInspectionMapDataParameter(_ID, _RecipeName)) { _Result = false; return _Result; }
-            }
-
-            //ReadInspectionParameters();
-
-            return _Result;
+            return true;
         }
 
         //LDH, 2018.08.24, Air Blower는 Recipe 번호만 받기 때문에, Recipe 폴더에서 번호확인후 Recipe명 load
@@ -145,10 +126,10 @@ namespace ParameterManager
 
                 NameCount++;
             }
-
-            //if (GetRecipeName.Count == 1 && GetRecipeName[0] == _RecipeName) return GetRecipeName[0];
+            
             //if (GetRecipeName.Count == 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
-            if (GetRecipeName.Count >= 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            //if (GetRecipeName.Count >= 1 && GetRecipeName[0].Replace("_", "") == _RecipeName.Replace("_", "")) return GetRecipeName[0];
+            if (GetRecipeName.Count >= 1) return GetRecipeName[0];
             else return "NULL";
         }
 
@@ -210,8 +191,7 @@ namespace ParameterManager
                     {
                         case "MachineID":        SystemParam.MachineNumber = Convert.ToInt32(_Node.InnerText); break;
                         case "SimulationMode":   SystemParam.IsSimulationMode = Convert.ToBoolean(_Node.InnerText); break;
-                        case "TotalRecipe":      SystemParam.IsTotalRecipe = Convert.ToBoolean(_Node.InnerText); break;
-                        case "LastRecipeName":   GetLastRecipeName(_Node); break;
+                        case "LastRecipeName":   SystemParam.LastRecipeName = _Node.InnerText; break;
                         case "ISMModuleCount":   SystemParam.InspSystemManagerCount = Convert.ToInt32(_Node.InnerText); break;
                         case "ResultWndLocateX": SystemParam.ResultWindowLocationX = Convert.ToInt32(_Node.InnerText); break;
                         case "ResultWndLocateY": SystemParam.ResultWindowLocationY = Convert.ToInt32(_Node.InnerText); break;
@@ -223,8 +203,6 @@ namespace ParameterManager
                         case "InDataPath":       SystemParam.InDataFolderPath = _Node.InnerText; break;
                         case "OutDataPath":      SystemParam.OutDataFolderPath = _Node.InnerText; break;
                     }
-
-                    if (_Node.Name == "ISMModuleCount") SystemParam.LastRecipeName = new string[SystemParam.InspSystemManagerCount];
                 }
             }
 
@@ -237,18 +215,6 @@ namespace ParameterManager
             return _Result;
         }
 
-        private void GetLastRecipeName(XmlNode _Nodes)
-        {
-            if (null == _Nodes) return;
-
-            int _RecipeCount = 0;
-            foreach (XmlNode _NodeChild in _Nodes.ChildNodes)
-            {
-                SystemParam.LastRecipeName[_RecipeCount] = _NodeChild.InnerText;
-                _RecipeCount++;
-            }
-        }
-
         public void WriteSystemParameter()
         {
             DirectoryInfo _DirInfo = new DirectoryInfo(InspectionDefaultPath);
@@ -258,7 +224,7 @@ namespace ParameterManager
             XElement _SystemParameter        = new XElement("SystemParameter");
             XElement _MachineID              = new XElement("MachineID", SystemParam.MachineNumber.ToString());
             XElement _SimulationMode         = new XElement("SimulationMode", SystemParam.IsSimulationMode.ToString());
-            XElement _TotalRecipe            = new XElement("TotalRecipe", SystemParam.IsTotalRecipe.ToString());
+            XElement _LastRecipeName         = new XElement("LastRecipeName", SystemParam.LastRecipeName);
             XElement _InspSystemManagerCount = new XElement("ISMModuleCount", SystemParam.InspSystemManagerCount.ToString());
             XElement _ResultWndLocateX       = new XElement("ResultWndLocateX", SystemParam.ResultWindowLocationX.ToString());
             XElement _ResultWndLocateY       = new XElement("ResultWndLocateY", SystemParam.ResultWindowLocationY.ToString());
@@ -269,16 +235,12 @@ namespace ParameterManager
             XElement _PortNumber             = new XElement("PortNumber", SystemParam.PortNumber.ToString());
             XElement _InDataPath             = new XElement("InDataPath", SystemParam.InDataFolderPath);
             XElement _OutDataPath            = new XElement("OutDataPath", SystemParam.OutDataFolderPath);
-
-            XElement _LastRecipeName         = new XElement("LastRecipeName");
-            XElement[] _RecipeName           = new XElement[SystemParam.InspSystemManagerCount];
             #endregion XML Element Define
 
             #region XML Tree ADD
             _SystemParameter.Add(_MachineID);
             _SystemParameter.Add(_SimulationMode);
-            _SystemParameter.Add(_TotalRecipe);
-            //_SystemParameter.Add(_LastRecipeName);
+            _SystemParameter.Add(_LastRecipeName);
             _SystemParameter.Add(_InspSystemManagerCount);
             _SystemParameter.Add(_ResultWndLocateX);
             _SystemParameter.Add(_ResultWndLocateY);
@@ -294,14 +256,6 @@ namespace ParameterManager
                 _SystemParameter.Add(_OutDataPath);
             }
 
-            _SystemParameter.Add(_LastRecipeName);
-            for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; iLoopCount++)
-            {
-                _RecipeName[iLoopCount] = new XElement("LastRecipeName" + iLoopCount, SystemParam.LastRecipeName[iLoopCount]);
-                _LastRecipeName.Add(_RecipeName[iLoopCount]);
-            }
-
-            //_LastRecipeName.Save(SystemParameterFullPath);
             _SystemParameter.Save(SystemParameterFullPath);
             #endregion XML Tree ADD
         }
@@ -311,30 +265,26 @@ namespace ParameterManager
         public bool ReadISMParameters()
         {
             bool _Result = true;
-            int ISMCount = 0;
 
             InspSysManagerParam = new InspectionSystemManagerParameter[SystemParam.InspSystemManagerCount];
             for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
             {
                 InspSysManagerParam[iLoopCount] = new InspectionSystemManagerParameter();
-
-                ISMCount = iLoopCount;
-                if (SystemParam.IsTotalRecipe == false) ISMCount = 0;
-                if (false == ReadISMParameter(iLoopCount, ISMCount)) { _Result = false; break; }
+                if (false == ReadISMParameter(iLoopCount)) { _Result = false; break; }
             }
 
             return _Result;
         }
 
-        public bool ReadISMParameter(int _ID, int ISMCount)
+        public bool ReadISMParameter(int _ID)
         {   
             bool _Result = true;
 
             try
             {
-                ISMParameterFullPath = String.Format(@"{0}{1}\ISMParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName[_ID], (ISMCount + 1));
+                ISMParameterFullPath = String.Format(@"{0}{1}\ISMParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
 
-                DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath + SystemParam.LastRecipeName[_ID]);
+                DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath + SystemParam.LastRecipeName);
                 if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
                 if (false == File.Exists(ISMParameterFullPath))
                 {
@@ -384,15 +334,11 @@ namespace ParameterManager
 
         public void WriteISMParameter(int _ID, string _RecipeName = null)
         {
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
-
-            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName[_ID];
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
             DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            ISMParameterFullPath = String.Format(@"{0}{1}\ISMParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName[_ID], (ISMCount + 1));
+            ISMParameterFullPath = String.Format(@"{0}{1}\ISMParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
             XmlTextWriter _XmlWriter = new XmlTextWriter(ISMParameterFullPath, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();
@@ -441,15 +387,11 @@ namespace ParameterManager
         {
             bool _Result = true;
 
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
-
             try
             {
-                ProjectItemParameterFullPath = String.Format(@"{0}{1}\ProjectItemParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName[_ID], (ISMCount + 1));
+                ProjectItemParameterFullPath = String.Format(@"{0}{1}\ProjectItemParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
 
-                DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath + SystemParam.LastRecipeName[_ID]);
+                DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath + SystemParam.LastRecipeName);
                 if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
                 if (false == File.Exists(ProjectItemParameterFullPath))
                 {
@@ -496,15 +438,11 @@ namespace ParameterManager
 
         public void WriteProjectItemParameter(int _ID, string _RecipeName = null)
         {
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
-
-            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName[_ID];
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
             DirectoryInfo _DirInfo = new DirectoryInfo(RecipeParameterPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
-            ProjectItemParameterFullPath = String.Format(@"{0}{1}\ProjectItemParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName[_ID], (ISMCount + 1));
+            ProjectItemParameterFullPath = String.Format(@"{0}{1}\ProjectItemParameter{2}.Sys", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
             XmlTextWriter _XmlWriter = new XmlTextWriter(ProjectItemParameterFullPath, Encoding.Unicode);
             _XmlWriter.Formatting = Formatting.Indented;
             _XmlWriter.WriteStartDocument();
@@ -533,19 +471,18 @@ namespace ParameterManager
         #endregion Read & Write Project Item Parameter
 
         #region Read & Write InspectionParameter / Map Data Parameter
-        public bool ReadInspectionParameters(bool _InitializeFlag = false)
+        public bool ReadInspectionParameters()
         {
             bool _Result = true;
 
             InspParam = new InspectionParameter[SystemParam.InspSystemManagerCount];
             InspMapDataParam = new MapDataParameter[SystemParam.InspSystemManagerCount];
-
             for (int iLoopCount = 0; iLoopCount < SystemParam.InspSystemManagerCount; ++iLoopCount)
             {
                 InspParam[iLoopCount] = new InspectionParameter();
                 InspMapDataParam[iLoopCount] = new MapDataParameter();
-                if (false == ReadInspectionParameter(iLoopCount, SystemParam.LastRecipeName[iLoopCount]))           { _Result = false; break; }
-                if (false == ReadInspectionMapDataParameter(iLoopCount, SystemParam.LastRecipeName[iLoopCount]))    { _Result = false; break; }
+                if (false == ReadInspectionParameter(iLoopCount, SystemParam.LastRecipeName))           { _Result = false; break; }
+                if (false == ReadInspectionMapDataParameter(iLoopCount, SystemParam.LastRecipeName))    { _Result = false;  break; }
             }
 
             return _Result;
@@ -556,12 +493,8 @@ namespace ParameterManager
         {
             bool _Result = true;
 
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
-
-            if (null == _RecipeName) return false;
-            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (ISMCount + 1);
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
             DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
@@ -726,7 +659,10 @@ namespace ParameterManager
 
                     try
                     {
-                        _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                        //_ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath, typeof(BinaryFormatter), CogSerializationOptionsConstants.All);
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "Start LoadObjectFromFile", CLogManager.LOG_LEVEL.LOW);
+                        _ReferInfo.Reference = (CogPMAlignPattern)CogSerializer.LoadObjectFromFile(_ReferInfo.ReferencePath);
+                        CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "End LoadObjectFromFile", CLogManager.LOG_LEVEL.LOW);
                         _CogPattern.ReferenceInfoList.Add(_ReferInfo);
                     }
 
@@ -979,18 +915,14 @@ namespace ParameterManager
 
         public void WriteInspectionParameter(int _ID, string _InspParamFullPath = null)
         {
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
+            if (null == _InspParamFullPath) _InspParamFullPath = InspectionDefaultPath + @"RecipeParameter\" + SystemParam.LastRecipeName + @"\Module" + (_ID + 1) + @"\InspectionCondition.Rcp";
 
-            if (null == _InspParamFullPath) _InspParamFullPath = InspectionDefaultPath + @"RecipeParameter\" + SystemParam.LastRecipeName[_ID] + @"\Module" + (ISMCount + 1) + @"\InspectionCondition.Rcp";
-
-            string _InspParamPath = String.Format(@"{0}{1}\Module{2}", RecipeParameterPath, SystemParam.LastRecipeName[_ID], (ISMCount + 1));
+            string _InspParamPath = String.Format(@"{0}{1}\Module{2}", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
             DirectoryInfo _DirInfo = new DirectoryInfo(_InspParamPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
             //Reference folder를 지우고 다시 저장
-            string _ReferencePath = String.Format(@"{0}{1}\Module{2}\Reference", RecipeParameterPath, SystemParam.LastRecipeName[_ID], (ISMCount + 1));
+            string _ReferencePath = String.Format(@"{0}{1}\Module{2}\Reference", RecipeParameterPath, SystemParam.LastRecipeName, (_ID + 1));
             _DirInfo = new DirectoryInfo(_ReferencePath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
             Directory.Delete(_ReferencePath, true);
@@ -1036,14 +968,14 @@ namespace ParameterManager
                                 AreaNumber = iLoopCount + 1;
                                 AlgoNumber = jLoopCount + 1;
                                 eAlgoType _AlgoType = (eAlgoType)_InspAlgoParamTemp.AlgoType;
-                                if (eAlgoType.C_PATTERN == _AlgoType)            WritePatternInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_BLOB == _AlgoType)          WriteBlobInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_BLOB_REFER == _AlgoType)    WriteBlobReferInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_LEAD == _AlgoType)          WriteLeadInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)   WriteNeedleFindInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_ID == _AlgoType)            WriteBarCodeIDInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_LINE_FIND == _AlgoType)     WriteLineFindInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
-                                else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) WriteMultiPatternInspectionParameter(_ID, ISMCount, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                if (eAlgoType.C_PATTERN == _AlgoType)            WritePatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_BLOB == _AlgoType)          WriteBlobInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_BLOB_REFER == _AlgoType)    WriteBlobReferInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LEAD == _AlgoType)          WriteLeadInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_NEEDLE_FIND == _AlgoType)   WriteNeedleFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_ID == _AlgoType)            WriteBarCodeIDInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_LINE_FIND == _AlgoType)     WriteLineFindInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
+                                else if (eAlgoType.C_MULTI_PATTERN == _AlgoType) WriteMultiPatternInspectionParameter(_ID, _XmlWriter, _InspAlgoParamTemp.Algorithm);
                             }
                             _XmlWriter.WriteEndElement();
                         }
@@ -1056,7 +988,7 @@ namespace ParameterManager
             _XmlWriter.Close();
         }
 
-        private void WritePatternInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WritePatternInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             CogPatternAlgo _CogPatternAlgo = (CogPatternAlgo)_InspAlgoParam;
             _XmlWriter.WriteElementString("PatternCount", _CogPatternAlgo.PatternCount.ToString());
@@ -1072,8 +1004,8 @@ namespace ParameterManager
             {
                 string _Extention = ".pat";
                 string _FileName = String.Format("AR{0:D2}_AL{1:D2}_RF{2:D2}{3}", AreaNumber, AlgoNumber, iLoopCount + 1, _Extention);
-                string _RecipeName = SystemParam.LastRecipeName[_ID];
-                string _RecipeParameterPath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ISMCount + 1);
+                string _RecipeName = SystemParam.LastRecipeName;
+                string _RecipeParameterPath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
 
                 if (false == Directory.Exists(_RecipeParameterPath)) Directory.CreateDirectory(_RecipeParameterPath);
                 _CogPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath = _RecipeParameterPath + _FileName;
@@ -1097,7 +1029,7 @@ namespace ParameterManager
             }
         }
 
-        private void WriteMultiPatternInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteMultiPatternInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             CogMultiPatternAlgo _CogMultiPatternAlgo = (CogMultiPatternAlgo)_InspAlgoParam;
             _XmlWriter.WriteElementString("PatternCount", _CogMultiPatternAlgo.PatternCount.ToString());
@@ -1111,8 +1043,8 @@ namespace ParameterManager
             {
                 string _Extention = ".pat";
                 string _FileName = String.Format("AR{0:D2}_AL{1:D2}_RF{2:D2}{3}", AreaNumber, AlgoNumber, iLoopCount + 1, _Extention);
-                string _RecipeName = SystemParam.LastRecipeName[_ID];
-                string _RecipeParameterPath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ISMCount + 1);
+                string _RecipeName = SystemParam.LastRecipeName;
+                string _RecipeParameterPath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\Reference\", InspectionDefaultPath, _RecipeName, _ID + 1);
 
                 if (false == Directory.Exists(_RecipeParameterPath)) Directory.CreateDirectory(_RecipeParameterPath);
                 _CogMultiPatternAlgo.ReferenceInfoList[iLoopCount].ReferencePath = _RecipeParameterPath + _FileName;
@@ -1136,7 +1068,7 @@ namespace ParameterManager
             }
         }
 
-        private void WriteBlobReferInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteBlobReferInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             CogBlobReferenceAlgo _CogBlobReferAlgo = (CogBlobReferenceAlgo)_InspAlgoParam;
             _XmlWriter.WriteElementString("Foreground", _CogBlobReferAlgo.ForeGround.ToString());
@@ -1166,7 +1098,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("ResolutionY", _CogBlobReferAlgo.ResolutionY.ToString());
         }
 
-        private void WriteBlobInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteBlobInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             CogBlobAlgo _CogBlobAlgo = (CogBlobAlgo)_InspAlgoParam;
             _XmlWriter.WriteElementString("Foreground", _CogBlobAlgo.ForeGround.ToString());
@@ -1183,7 +1115,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("BenchMarkPosition", _CogBlobAlgo.BenchMarkPosition.ToString());
         }
 
-        private void WriteLeadInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteLeadInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             //CogLeadAlgo _CogLeadAlgo = (CogLeadAlgo)_InspAlgoParam
             var _CogLeadAlgo = _InspAlgoParam as CogLeadAlgo;
@@ -1210,7 +1142,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("IsLeadBentInsp", _CogLeadAlgo.IsLeadBentInspection.ToString());
         }
 
-        private void WriteNeedleFindInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteNeedleFindInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             var _CogNeedleFindAlgo = _InspAlgoParam as CogNeedleFindAlgo;
             _XmlWriter.WriteElementString("CaliperNumber", _CogNeedleFindAlgo.CaliperNumber.ToString());
@@ -1229,7 +1161,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("OriginRadius", _CogNeedleFindAlgo.OriginRadius.ToString());
         }
 
-        private void WriteBarCodeIDInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteBarCodeIDInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             var _CogBarCodeIDAlgo = _InspAlgoParam as CogBarCodeIDAlgo;
             _XmlWriter.WriteElementString("Symbology", _CogBarCodeIDAlgo.Symbology);
@@ -1239,7 +1171,7 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("FindCount", _CogBarCodeIDAlgo.FindCount.ToString());
         }
 
-        private void WriteLineFindInspectionParameter(int _ID, int _ISMCount, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
+        private void WriteLineFindInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
         {
             var _CogLineFindAlgo = _InspAlgoParam as CogLineFindAlgo;
             _XmlWriter.WriteElementString("CaliperNumber", _CogLineFindAlgo.CaliperNumber.ToString());
@@ -1262,12 +1194,8 @@ namespace ParameterManager
         {
             bool _Result = true;
 
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
-
-            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName[_ID];
-            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (ISMCount + 1);
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
             DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
@@ -1386,19 +1314,15 @@ namespace ParameterManager
         
         public void WriteInspectionMapDataparameter(int _ID, string _RecipeName = null)
         {
-            //LDH, 2019.01.15, 별도 Recipe 사용을 위해 ISMCount 따로 설정
-            int ISMCount = 0;
-            if (SystemParam.IsTotalRecipe) ISMCount = _ID;
-
             //if (InspMapDataParam[_ID].UnitListCenterX.Count == 0 || InspMapDataParam[_ID].UnitListCenterY.Count == 0) return;
-            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName[_ID];
-            string _MapDataParameterFilePath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (ISMCount + 1) + @"\InspectionMapData.Rcp";
-            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (ISMCount + 1);
+            if (null == _RecipeName) _RecipeName = SystemParam.LastRecipeName;
+            string _MapDataParameterFilePath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1) + @"\InspectionMapData.Rcp";
+            string _RecipeParameterPath = InspectionDefaultPath + @"RecipeParameter\" + _RecipeName + @"\Module" + (_ID + 1);
             DirectoryInfo _DirInfo = new DirectoryInfo(_RecipeParameterPath);
             if (false == _DirInfo.Exists) { _DirInfo.Create(); System.Threading.Thread.Sleep(100); }
 
             string _PatternFileName = String.Format("MapDataReference.pat");
-            string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\MapDataReference\", InspectionDefaultPath, _RecipeName, ISMCount + 1);
+            string _PatternFilePath = String.Format(@"{0}RecipeParameter\{1}\Module{2}\MapDataReference\", InspectionDefaultPath, _RecipeName, _ID + 1);
             if (false == Directory.Exists(_PatternFilePath)) Directory.CreateDirectory(_PatternFilePath);
             InspMapDataParam[_ID].Info.UnitPatternPath = _PatternFilePath + _PatternFileName;
             if (InspMapDataParam[_ID].Info.UnitPattern != null) 

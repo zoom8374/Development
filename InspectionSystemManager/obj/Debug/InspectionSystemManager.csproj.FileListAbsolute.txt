@@ -105,4 +105,3 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\ob
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.dll
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\bin\Debug\MapDataManager.dll
-C:\Zoom\Source management\Project\CIPOSLeadInspection\InspectionSystemManager\obj\Debug\InspectionSystemManager.ucCogLeadTrimInspection.resources

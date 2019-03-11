@@ -20,7 +20,7 @@ namespace KPVisionInspectionFramework
     public partial class ucMainResultSorter : UserControl
     {
         #region Initialize & DeInitialize
-        public ucMainResultSorter(string[] _LastRecipeName)
+        public ucMainResultSorter(string _LastRecipeName)
         {
             InitializeComponent();
             InitializeControl();
@@ -39,11 +39,6 @@ namespace KPVisionInspectionFramework
         #endregion Initialize & DeInitialize
 
         public void SetSurfaceResultData(SendResultParameter _ResultParam)
-        {
-
-        }
-
-        public void ClearResult()
         {
 
         }
