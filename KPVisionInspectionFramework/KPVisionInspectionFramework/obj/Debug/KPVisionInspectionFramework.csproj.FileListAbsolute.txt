@@ -25,3 +25,4 @@ C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramewor
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\CIPOS Lead Inspection.pdb
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.exe
 C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\CIPOS Lead Inspection.pdb
+C:\Zoom\Source management\Project\CIPOSLeadInspection\KPVisionInspectionFramework\KPVisionInspectionFramework\obj\Debug\KPVisionInspectionFramework.ucMainResultTrimForm.resources
