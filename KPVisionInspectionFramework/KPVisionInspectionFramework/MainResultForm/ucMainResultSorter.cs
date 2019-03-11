@@ -42,5 +42,10 @@ namespace KPVisionInspectionFramework
         {
 
         }
+
+        public void ClearResult()
+        {
+
+        }
     }
 }

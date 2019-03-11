@@ -119,7 +119,7 @@ namespace InspectionSystemManager
             _PointMarker.SetCenterRotationSize(_OriginX, _OriginY, 0, 1);
 
             kpTeachDisplay.DrawInterActiveShape(_ReferRegion, "ReferRegion", _Color);
-            kpTeachDisplay.DrawInterActiveShape(_PointMarker, "ReferOriginPoint", _Color, 14);
+            kpTeachDisplay.DrawInterActiveShape(_PointMarker, "ReferOriginPoint", _Color, 100);
         }
 
         private void ReferenceActionFunction(eReferAction _ReferAction, int _Index = 0, bool _MultiFlag = false)

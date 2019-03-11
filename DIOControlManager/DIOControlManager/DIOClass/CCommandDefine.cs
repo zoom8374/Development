@@ -190,4 +190,9 @@ namespace DIOControlManager
     {
 
     }
+
+    public class TrimFormCmd : DIOBaseCommand
+    {
+
+    }
 }

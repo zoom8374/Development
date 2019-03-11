@@ -16,10 +16,11 @@ namespace KPVisionInspectionFramework
 {
     public partial class MainResultBase : Form
     {
-        private ucMainResultNone    MainResultNoneWnd;
-        private ucMainResultID      MainResultIDWnd;
-        private ucMainResultLead    MainResultLeadWnd;
-        private ucMainResultSorter  MainResultSorterWnd;
+        private ucMainResultNone        MainResultNoneWnd;
+        private ucMainResultID          MainResultIDWnd;
+        private ucMainResultLead        MainResultLeadWnd;
+        private ucMainResultSorter      MainResultSorterWnd;
+        private ucMainResultTrimForm    MainResultTrimFormWnd;
 
         private eProjectType ProjectType;
         private string[] LastRecipeName;
@@ -68,10 +69,16 @@ namespace KPVisionInspectionFramework
                 panelMain.Controls.Add(MainResultLeadWnd);
             }
 
+            else if (ProjectType == eProjectType.TRIM)
+            {
+                MainResultTrimFormWnd = new ucMainResultTrimForm(LastRecipeName);
+                MainResultTrimFormWnd.ScreenshotEvent += new ucMainResultTrimForm.ScreenshotHandler(ScreenShot);
+                panelMain.Controls.Add(MainResultTrimFormWnd);
+            }
+
             else if (ProjectType == eProjectType.SORTER)
             {
                 MainResultSorterWnd = new ucMainResultSorter(LastRecipeName);
-
                 panelMain.Controls.Add(MainResultSorterWnd);
             }
 
@@ -96,9 +103,20 @@ namespace KPVisionInspectionFramework
                 MainResultIDWnd.ScreenshotEvent -= new ucMainResultID.ScreenshotHandler(ScreenShot);
                 MainResultIDWnd.ReadLOTNumEvent -= new ucMainResultID.ReadLOTNumHandler(ReadLOTNumEvent);
             }
+
             else if (ProjectType == eProjectType.DISPENSER)
             {
                 MainResultLeadWnd.ScreenshotEvent -= new ucMainResultLead.ScreenshotHandler(ScreenShot);
+            }
+
+            else if (ProjectType == eProjectType.SORTER)
+            {
+
+            }
+
+            else if (ProjectType == eProjectType.TRIM)
+            {
+                MainResultTrimFormWnd.ScreenshotEvent -= new ucMainResultTrimForm.ScreenshotHandler(ScreenShot);
             }
 
             panelMain.Controls.Clear();
@@ -226,23 +244,19 @@ namespace KPVisionInspectionFramework
             if (ProjectType == eProjectType.NONE)           MainResultNoneWnd.ClearResult();
             else if (ProjectType == eProjectType.BLOWER)    MainResultIDWnd.ClearResult(_LOTNum, _InDataPath, _OutDataPath);
             else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.ClearResult();
+            else if (ProjectType == eProjectType.SORTER)    MainResultSorterWnd.ClearResult();
+            else if (ProjectType == eProjectType.TRIM)      MainResultTrimFormWnd.ClearResult();
         }
 
         public void SetResultData(SendResultParameter _ResultParam)
         {
-            //if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN)   SetNeedleAlignResultData(_ResultParam);
-            //else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP) SetLeadInspectionResultData(_ResultParam);
-            //else if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)   SetIDInspectionResultData(_ResultParam);
-
-            //if (ProjectType == eProjectType.BLOWER)         MainResultIDWnd.SetResultData(_ResultParam);
-            //else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetResultData(_ResultParam);
-
-            if (_ResultParam.ProjectItem == eProjectItem.NONE)              MainResultNoneWnd.SetNoneResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)      MainResultIDWnd.SetResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN) MainResultLeadWnd.SetNeedleResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)    MainResultLeadWnd.SetLeadResultData(_ResultParam);
-            else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)      MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
-
+            if (_ResultParam.ProjectItem == eProjectItem.NONE)                  MainResultNoneWnd.SetNoneResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.ID_INSP)          MainResultIDWnd.SetResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN)     MainResultLeadWnd.SetNeedleResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)        MainResultLeadWnd.SetLeadResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)          MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_TRIM_INSP)   MainResultTrimFormWnd.SetTrimResultData(_ResultParam);
+            else if (_ResultParam.ProjectItem == eProjectItem.LEAD_FORM_ALIGN)  MainResultTrimFormWnd.SetFormResultData(_ResultParam);
         }
 
         //LDH, 2018.10.12, AutoMode 관리
@@ -253,6 +267,7 @@ namespace KPVisionInspectionFramework
             if (ProjectType == eProjectType.NONE)           MainResultNoneWnd.SetAutoMode(_AutoModeFlag);
             else if (ProjectType == eProjectType.BLOWER)    MainResultIDWnd.SetAutoMode(_AutoModeFlag);
             else if (ProjectType == eProjectType.DISPENSER) MainResultLeadWnd.SetAutoMode(_AutoModeFlag);
+            else if (ProjectType == eProjectType.TRIM)      MainResultTrimFormWnd.SetAutoMode(_AutoModeFlag);
 
             return _Result;
         }
@@ -262,6 +277,7 @@ namespace KPVisionInspectionFramework
             if (_ProjectType == eProjectType.NONE)              MainResultNoneWnd.SetLastRecipeName(_LastRecipeName);
             else if (_ProjectType == eProjectType.BLOWER)       MainResultIDWnd.SetLastRecipeName(_LastRecipeName);
             else if (_ProjectType == eProjectType.DISPENSER)    MainResultLeadWnd.SetLastRecipeName(_LastRecipeName);
+            else if (_ProjectType == eProjectType.TRIM)         MainResultTrimFormWnd.SetLastRecipeName(_LastRecipeName);
         }
 
 

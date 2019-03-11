@@ -75,6 +75,9 @@
     <Compile Include="Algorithm\InspectionClass\InspectionID.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionLineFind.cs" />
     <Compile Include="Algorithm\InspectionClass\InspectionAutoPattern.cs" />
+    <Compile Include="InspSysManagerWindow\InspectionWindowProcLeadTrimForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="InspSysManagerWindow\InspectionWindowProcDefault.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +169,12 @@
     <Compile Include="Algorithm\ucCogAutoPattern.Designer.cs">
       <DependentUpon>ucCogAutoPattern.cs</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\ucCogLeadTrimInspection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Algorithm\ucCogLeadTrimInspection.Designer.cs">
+      <DependentUpon>ucCogLeadTrimInspection.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CameraManager\CameraManager.csproj">
@@ -237,6 +246,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Algorithm\ucCogLineFind.resx">
       <DependentUpon>ucCogLineFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Algorithm\ucCogLeadTrimInspection.resx">
+      <DependentUpon>ucCogLeadTrimInspection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

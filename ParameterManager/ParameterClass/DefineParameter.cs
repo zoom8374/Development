@@ -10,17 +10,17 @@ namespace ParameterManager
     /// <summary>
     /// Project Type
     /// </summary>
-    public enum eProjectType { NONE = 0, DISPENSER, BLOWER, SORTER };
+    public enum eProjectType { NONE = 0, DISPENSER, BLOWER, SORTER, TRIM };
 
     /// <summary>
     /// Project Item
     /// </summary>
-    public enum eProjectItem { NONE = 0, SURFACE, ID_INSP, NEEDLE_ALIGN, LEAD_INSP };
+    public enum eProjectItem { NONE = 0, SURFACE, ID_INSP, NEEDLE_ALIGN, LEAD_INSP, LEAD_TRIM_INSP, LEAD_FORM_ALIGN };
 
     /// <summary>
     /// Algorithm Type
     /// </summary>
-    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND, C_MULTI_PATTERN, C_AUTO_PATTERN }
+    public enum eAlgoType   { C_NONE = -1, C_PATTERN, C_BLOB_REFER, C_BLOB, C_LEAD, C_NEEDLE_FIND, C_ID, C_LINE_FIND, C_MULTI_PATTERN, C_AUTO_PATTERN, C_LEAD_TRIM, C_LEAD_FORM }
 
     /// <summary>
     /// Camera Model Type
