@@ -103,7 +103,7 @@ namespace KPVisionInspectionFramework
 
             #region Ribbon Menu Setting
             UpdateRibbonRecipeName(ParamManager.SystemParam.LastRecipeName);
-            if((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
+            if ((int)eProjectType.NONE == ParamManager.SystemParam.ProjectType)
             {
                 rbAlign.Visible = false;
                 rbSerial.Visible = false;
@@ -125,6 +125,16 @@ namespace KPVisionInspectionFramework
             {
                 rbAlign.Visible = false;
                 rbConfig.Visible = false;
+                rbMapData.Visible = false;
+            }
+
+            else if ((int)eProjectType.VOID == ParamManager.SystemParam.ProjectType)
+            {
+                rbAlign.Visible = false;
+                rbSerial.Visible = false;
+                rbConfig.Visible = false;
+                rbLabelCode.Visible = false;
+                rbFolder.Visible = false;
                 rbMapData.Visible = false;
             }
 
@@ -168,6 +178,14 @@ namespace KPVisionInspectionFramework
                 CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\InspectionLog");
                 CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : PCB Sorter inspection program run!!");
             }
+
+            else if ((int)eProjectType.VOID == ParamManager.SystemParam.ProjectType)
+            {
+                LogWnd = new CLogManager(ProjectName);
+                CLogManager.LogSystemSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\SystemLog");
+                CLogManager.LogInspectionSetting(@"D:\VisionInspectionData\" + ProjectName + @"\Log\InspectionLog");
+                CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : CIPOS void inspection program run!!");
+            }
             #endregion Log Window Initialize
 
             #region SubWindow 생성 및 Event 등록
@@ -175,18 +193,6 @@ namespace KPVisionInspectionFramework
             //Recipe Initialize
             RecipeWnd = new RecipeWindow((eProjectType)ParamManager.SystemParam.ProjectType, ProjectName, ParamManager.SystemParam.LastRecipeName);
             RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-
-            //if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType || (int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)
-            //{
-            //    RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
-            //    RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-            //}
-            //
-            //else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
-            //{
-            //    RecipeWnd = new RecipeWindow(ProjectName, ParamManager.SystemParam.LastRecipeName);
-            //    RecipeWnd.RecipeChangeEvent += new RecipeWindow.RecipeChangeHandler(RecipeChange);
-            //}
             #endregion Recipe Window Initialize
 
             #region Result Window Initialize
@@ -232,6 +238,7 @@ namespace KPVisionInspectionFramework
             else if ((int)eProjectType.DISPENSER == ParamManager.SystemParam.ProjectType)   MainProcess = new MainProcessDispensor();
             else if ((int)eProjectType.BLOWER == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessID();
             else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)      MainProcess = new MainProcessSorter();
+            else if ((int)eProjectType.VOID == ParamManager.SystemParam.ProjectType)        MainProcess = new MainProcessVoid();
             else                                                                            MainProcess = new MainProcessBase();
 
             MainProcess.MainProcessCommandEvent += new MainProcessBase.MainProcessCommandHandler(MainProcessCommandEventFunction);
@@ -781,15 +788,6 @@ namespace KPVisionInspectionFramework
             CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Data Request{0} Event", _ID + 1));
             InspSysManager[_ID].DataSend();
         }
-
-        //private void EventInspectionTriggerOn(object _Value)
-        //{
-        //    if (false == Convert.ToBoolean(_Value)) return;
-        //    int _ID = 2;
-        //    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, String.Format("Main : Trigger{0} On Event", _ID + 1));
-        //
-        //    InspSysManager[_ID].TriggerOn();
-        //}
 
         private void SendResultData(object _Result)
         {

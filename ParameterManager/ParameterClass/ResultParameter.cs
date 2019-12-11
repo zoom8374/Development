@@ -146,6 +146,30 @@ namespace ParameterManager
         }
     }
 
+    public class CogBlobDefectResult : Result
+    {
+        public int BlobCount;
+        public double[] BlobMessCenterX;
+        public double[] BlobMessCenterY;
+        public double[] BlobCenterX;
+        public double[] BlobCenterY;
+        public double[] BlobMinX;
+        public double[] BlobMinY;
+        public double[] BlobMaxX;
+        public double[] BlobMaxY;
+        public double[] Width;
+        public double[] Height;
+        public double[] BlobRatio;
+        public double[] Angle;
+        public double[] BlobXMinYMax;
+        public double[] BlobXMaxYMin;
+        public double[] BlobArea;
+        public double[] OriginX;
+        public double[] OriginY;
+        public bool[] IsGoods;
+        public CogCompositeShape[] ResultGraphic;
+    }
+
     public class CogBlobReferenceResult : Result
     {
         public int      BlobCount;
@@ -311,6 +335,13 @@ namespace ParameterManager
 
         public double[] LeadLengthReal;
         public double[] LeadWidthReal;
+    }
+
+    public class SendVoidResult
+    {
+        public int DefectCount;
+        public double[] Width;
+        public double[] Height;
     }
 
     public class SendSurfaceResult

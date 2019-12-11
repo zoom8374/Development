@@ -185,7 +185,10 @@ namespace ParameterManager
 
         public int BenchMarkPosition;
 
-        public CogBlobAlgo()
+        public double ResolutionX;
+        public double ResolutionY;
+
+        public CogBlobAlgo(double _ResolutionX = 0, double _ResolutionY = 0)
         {
             ForeGround = 0;
             ThresholdMin = 50;
@@ -196,6 +199,9 @@ namespace ParameterManager
             WidthMax = 200;
             HeightMin = 5;
             HeightMax = 200;
+
+            ResolutionX = _ResolutionX;
+            ResolutionY = _ResolutionY;
 
             BenchMarkPosition = 0;
         }
@@ -376,7 +382,7 @@ namespace ParameterManager
             AlgoBenchMark = 0;
             AlgoEnable = true;
             if (_AlgoType == eAlgoType.C_PATTERN)            Algorithm = new CogPatternAlgo();
-            else if (_AlgoType == eAlgoType.C_BLOB)          Algorithm = new CogBlobAlgo();
+            else if (_AlgoType == eAlgoType.C_BLOB)          Algorithm = new CogBlobAlgo(_ResolutionX, _ResolutionY);
             else if (_AlgoType == eAlgoType.C_BLOB_REFER)    Algorithm = new CogBlobReferenceAlgo(_ResolutionX, _ResolutionY);
             else if (_AlgoType == eAlgoType.C_LEAD)          Algorithm = new CogLeadAlgo();
             else if (_AlgoType == eAlgoType.C_NEEDLE_FIND)   Algorithm = new CogNeedleFindAlgo();

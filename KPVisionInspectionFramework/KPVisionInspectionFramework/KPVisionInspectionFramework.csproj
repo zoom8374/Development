@@ -108,6 +108,7 @@
     <Compile Include="MainProcessClass\MainProcessID.cs" />
     <Compile Include="MainProcessClass\MainProcessSorter.cs" />
     <Compile Include="MainProcessClass\MainProcessDefault.cs" />
+    <Compile Include="MainProcessClass\MainProcessVoid.cs" />
     <Compile Include="MainResultForm\MainResultBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +152,12 @@
     <Compile Include="MainResultForm\ucMainResultNone.Designer.cs">
       <DependentUpon>ucMainResultNone.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainResultForm\ucMainResultVoid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainResultForm\ucMainResultVoid.Designer.cs">
+      <DependentUpon>ucMainResultVoid.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm\CodeSettingWindow.resx">
       <DependentUpon>CodeSettingWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainResultForm\ucMainResultLead.resx">
       <DependentUpon>ucMainResultLead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainResultForm\ucMainResultVoid.resx">
+      <DependentUpon>ucMainResultVoid.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">

@@ -22,6 +22,7 @@ namespace InspectionSystemManager
             ucCogPatternWnd.DrawReferRegionEvent += new ucCogPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogPatternWnd.ReferenceActionEvent += new ucCogPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogPatternWnd.ApplyPatternMatchingValueEvent += new ucCogPattern.ApplyPatternMatchingValueHandler(ApplyPatternMatchingValueFunction);
+            ucCogBlobWnd.ApplyBlobValueEvent += new ucCogBlob.ApplyBlobValueHandler(ApplyBlobValueFunction);
             ucCogBlobReferWnd.ApplyBlobReferValueEvent += new ucCogBlobReference.ApplyBlobReferValueHandler(ApplyBlobReferenceValueFunction);
             ucCogBlobReferWnd.GetHistogramValueEvent += new ucCogBlobReference.GetHistogramValueHandler(GetHistogramValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent += new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
@@ -44,6 +45,7 @@ namespace InspectionSystemManager
             ucCogPatternWnd.DrawReferRegionEvent -= new ucCogPattern.DrawReferRegionHandler(DrawReferRegionFunction);
             ucCogPatternWnd.ReferenceActionEvent -= new ucCogPattern.ReferenceActionHandler(ReferenceActionFunction);
             ucCogPatternWnd.ApplyPatternMatchingValueEvent -= new ucCogPattern.ApplyPatternMatchingValueHandler(ApplyPatternMatchingValueFunction);
+            ucCogBlobWnd.ApplyBlobValueEvent -= new ucCogBlob.ApplyBlobValueHandler(ApplyBlobValueFunction);
             ucCogBlobReferWnd.ApplyBlobReferValueEvent -= new ucCogBlobReference.ApplyBlobReferValueHandler(ApplyBlobReferenceValueFunction);
             ucCogBlobReferWnd.GetHistogramValueEvent -= new ucCogBlobReference.GetHistogramValueHandler(GetHistogramValueFunction);
             ucCogNeedleFindWnd.ApplyNeedleCircleFindValueEvent -= new ucCogNeedleCircleFind.ApplyNeedleCircleFindValueHandler(ApplyNeedleCircleFindValueFunction);
@@ -378,6 +380,38 @@ namespace InspectionSystemManager
             }
         }
         #endregion Pattern Matching Window Event : ucCogPatternWindow -> TeachingWindow
+
+        #region Blob Window Event : ucCogBlobWindow -> TeachingWindow
+        private void ApplyBlobValueFunction(CogBlobAlgo _CogBlobAlgo, ref CogBlobDefectResult _CogBlobDefectResult)
+        {
+            if (eTeachStep.ALGO_SET != CurrentTeachStep) { MessageBox.Show("Not select \"Algorithm Set\" button"); return; }
+            AlgorithmAreaDisplayRefresh();
+
+            CogRectangleAffine _AlgoRegionAffine = new CogRectangleAffine();
+            _AlgoRegionAffine.SetCenterLengthsRotationSkew(AlgoRegionRectangle.CenterX, AlgoRegionRectangle.CenterY, AlgoRegionRectangle.Width, AlgoRegionRectangle.Height, 0, 0);
+            bool _Result = InspBlobProcess.Run(InspectionImage, _AlgoRegionAffine, _CogBlobAlgo, ref _CogBlobDefectResult);
+
+            for (int iLoopCount = 0; iLoopCount < _CogBlobDefectResult.BlobCount; ++iLoopCount)
+            {
+                double _Width = _CogBlobDefectResult.Width[iLoopCount] * ResolutionX;
+                double _Height = _CogBlobDefectResult.Height[iLoopCount] * ResolutionX;
+
+                CogRectangle _BlobRect = new CogRectangle();
+                _BlobRect.SetCenterWidthHeight(_CogBlobDefectResult.BlobCenterX[iLoopCount], _CogBlobDefectResult.BlobCenterY[iLoopCount], _CogBlobDefectResult.Width[iLoopCount], _CogBlobDefectResult.Height[iLoopCount]);
+                kpTeachDisplay.DrawStaticShape(_BlobRect, "BlobRect" + (iLoopCount + 1), CogColorConstants.Red);
+                kpTeachDisplay.DrawBlobResult(_CogBlobDefectResult.ResultGraphic[iLoopCount], "BlobRectGra" + (iLoopCount + 1));
+
+                CogPointMarker _Point = new CogPointMarker();
+                _Point.X = _CogBlobDefectResult.BlobCenterX[iLoopCount];
+                _Point.Y = _CogBlobDefectResult.BlobCenterY[iLoopCount];
+                kpTeachDisplay.DrawStaticShape(_Point, "BlobSearchPoint", CogColorConstants.Green, 5);
+
+                string _RectSizeName = string.Format("W : {0:F2}mm, H : {1:F2}mm, Area : {2}", _Width, _Height, _CogBlobDefectResult.BlobArea[iLoopCount]);
+                kpTeachDisplay.DrawText(_RectSizeName, _CogBlobDefectResult.BlobCenterX[iLoopCount] + _CogBlobDefectResult.Width[iLoopCount] / 2 + 100,
+                                                       _CogBlobDefectResult.BlobCenterY[iLoopCount] + _CogBlobDefectResult.Height[iLoopCount] / 2 + 100, CogColorConstants.Red, 10, CogGraphicLabelAlignmentConstants.BaselineCenter);
+            }
+        }
+        #endregion
 
         #region Blob Reference Window Event : ucCogBlobReferenceWindow -> TeachingWindow
         private void ApplyBlobReferenceValueFunction(CogBlobReferenceAlgo _CogBlobReferAlgo, ref CogBlobReferenceResult _CogBlobReferResult)

@@ -28,6 +28,7 @@ namespace InspectionSystemManager
 
         //검사 Algorithm Class
         private InspectionPattern           InspPatternProcess;
+        private InspectionBlob              InspBlobProcess;
         private InspectionBlobReference     InspBlobReferProcess;
         private InspectionNeedleCircleFind  InspNeedleCircleFindProcess;
         private InspectionLead              InspLeadProcess;
@@ -116,10 +117,12 @@ namespace InspectionSystemManager
             else if (_ProjectItem == eProjectItem.NEEDLE_ALIGN) ucCogBlobReferWnd.Initialize(false);
             else if (_ProjectItem == eProjectItem.ID_INSP)      ucCogBlobReferWnd.Initialize(true);
             else if (_ProjectItem == eProjectItem.SURFACE)      ucCogBlobReferWnd.Initialize(false);
+            else if (_ProjectItem == eProjectItem.VOID_INSP)    ucCogBlobReferWnd.Initialize(false);
 
             InspPatternProcess = new InspectionPattern();
             InspAutoPatternProcess = new InspectionAutoPattern();
             InspMultiPatternProcess = new InspectionMultiPattern();
+            InspBlobProcess = new InspectionBlob();
             InspBlobReferProcess = new InspectionBlobReference();
             InspNeedleCircleFindProcess = new InspectionNeedleCircleFind();
             InspLeadProcess = new InspectionLead();
@@ -205,6 +208,11 @@ namespace InspectionSystemManager
                 ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search a Pattern reference", new EventHandler(PatternFindAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Search Multi Pattern", new EventHandler(MultiPatternFindAlgorithm));
+            }
+
+            else if  (ProjectItem == eProjectItem.VOID_INSP)
+            {
+                ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
             }
 
             else
@@ -1196,6 +1204,11 @@ namespace InspectionSystemManager
                     if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB) _Name = "Defect detection";        //"Blob - Defect"
                 }
 
+                else if (ProjectItem == eProjectItem.VOID_INSP)
+                {
+                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB) _Name = "Defect detection";       //"Blob = Defect"
+                }
+
                 AddInspectionAlgo(_Index, _Name, _Enable);
             }
             gridViewAlgo.ClearSelection();
@@ -1245,15 +1258,15 @@ namespace InspectionSystemManager
 
             switch (_AlgoType)
             {
-                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);      ucCogPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
+                case eAlgoType.C_PATTERN:       panelTeaching.Controls.Add(ucCogPatternWnd);      ucCogPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);    break;
                 case eAlgoType.C_BLOB_REFER:    panelTeaching.Controls.Add(ucCogBlobReferWnd);    ucCogBlobReferWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);  break;
-                case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);         ucCogBlobWnd.SetAlgoRecipe();       break;
+                case eAlgoType.C_BLOB:          panelTeaching.Controls.Add(ucCogBlobWnd);         ucCogBlobWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);       break;
                 case eAlgoType.C_NEEDLE_FIND:   panelTeaching.Controls.Add(ucCogNeedleFindWnd);   ucCogNeedleFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);     ucCogLeadInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);       ucCogIDInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY); break;
-                case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);     ucCogLineFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_MULTI_PATTERN: panelTeaching.Controls.Add(ucCogMultiPatternWnd); ucCogMultiPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
-                case eAlgoType.C_AUTO_PATTERN:  panelTeaching.Controls.Add(ucCogAutoPatternWnd);  ucCogAutoPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY); break;
+                case eAlgoType.C_LEAD:          panelTeaching.Controls.Add(ucCogLeadInspWnd);     ucCogLeadInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);   break;
+                case eAlgoType.C_ID:            panelTeaching.Controls.Add(ucCogIDInspWnd);       ucCogIDInspWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY);                               break;
+                case eAlgoType.C_LINE_FIND:     panelTeaching.Controls.Add(ucCogLineFindWnd);     ucCogLineFindWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);   break;
+                case eAlgoType.C_MULTI_PATTERN: panelTeaching.Controls.Add(ucCogMultiPatternWnd); ucCogMultiPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);   break;
+                case eAlgoType.C_AUTO_PATTERN:  panelTeaching.Controls.Add(ucCogAutoPatternWnd);  ucCogAutoPatternWnd.SetAlgoRecipe(_Algorithm, _BenchMarkOffsetX, _BenchMarkOffsetY, ResolutionX, ResolutionY);    break;
             }
             if (panelTeaching.Controls.Count == 2) panelTeaching.Controls.RemoveAt(0);
             CurrentAlgoType = _AlgoType;

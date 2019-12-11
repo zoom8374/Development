@@ -799,6 +799,8 @@ namespace ParameterManager
                     case "HeightMax":       _CogBlob.HeightMax = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginX":         _CogBlob.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "OriginY":         _CogBlob.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ResolutionX":     _CogBlob.ResolutionX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "ResolutionY":     _CogBlob.ResolutionY = Convert.ToDouble(_NodeChild.InnerText); break;
                     case "BenchMarkPosition": _CogBlob.BenchMarkPosition = Convert.ToInt32(_NodeChild.InnerText); break;
                 }
             }
@@ -1113,6 +1115,8 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("OriginX", _CogBlobAlgo.OriginX.ToString());
             _XmlWriter.WriteElementString("OriginY", _CogBlobAlgo.OriginY.ToString());
             _XmlWriter.WriteElementString("BenchMarkPosition", _CogBlobAlgo.BenchMarkPosition.ToString());
+            _XmlWriter.WriteElementString("ResolutionX", _CogBlobAlgo.ResolutionX.ToString());
+            _XmlWriter.WriteElementString("ResolutionY", _CogBlobAlgo.ResolutionY.ToString());
         }
 
         private void WriteLeadInspectionParameter(int _ID, XmlTextWriter _XmlWriter, Object _InspAlgoParam)
@@ -1534,6 +1538,8 @@ namespace ParameterManager
                         ((CogBlobAlgo)_InspAlgoParam.Algorithm).HeightMax     = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).HeightMax;
                         ((CogBlobAlgo)_InspAlgoParam.Algorithm).OriginX       = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).OriginX;
                         ((CogBlobAlgo)_InspAlgoParam.Algorithm).OriginY       = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).OriginY;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).ResolutionX   = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ResolutionX;
+                        ((CogBlobAlgo)_InspAlgoParam.Algorithm).ResolutionY   = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).ResolutionY;
                         ((CogBlobAlgo)_InspAlgoParam.Algorithm).BenchMarkPosition = ((CogBlobAlgo)_SrcParam.InspAreaParam[iLoopCount].InspAlgoParam[jLoopCount].Algorithm).BenchMarkPosition;
                         #endregion Blob Algorithm Copy
                     }

@@ -20,6 +20,7 @@ namespace KPVisionInspectionFramework
         private ucMainResultID      MainResultIDWnd;
         private ucMainResultLead    MainResultLeadWnd;
         private ucMainResultSorter  MainResultSorterWnd;
+        private ucMainResultVoid    MainResultVoidWnd;
 
         private eProjectType ProjectType;
         private string LastRecipeName;
@@ -69,6 +70,13 @@ namespace KPVisionInspectionFramework
                 MainResultSorterWnd = new ucMainResultSorter(LastRecipeName);
 
                 panelMain.Controls.Add(MainResultSorterWnd);
+            }
+
+            else if (ProjectType == eProjectType.VOID)
+            {
+                MainResultVoidWnd = new ucMainResultVoid(LastRecipeName);
+
+                panelMain.Controls.Add(MainResultVoidWnd);
             }
 
             SetWindowLocation(1482, 148);
@@ -238,7 +246,7 @@ namespace KPVisionInspectionFramework
             else if (_ResultParam.ProjectItem == eProjectItem.NEEDLE_ALIGN) MainResultLeadWnd.SetNeedleResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.LEAD_INSP)    MainResultLeadWnd.SetLeadResultData(_ResultParam);
             else if (_ResultParam.ProjectItem == eProjectItem.SURFACE)      MainResultSorterWnd.SetSurfaceResultData(_ResultParam);
-
+            else if (_ResultParam.ProjectItem == eProjectItem.VOID_INSP)    MainResultVoidWnd.SetVoidResultData(_ResultParam);
         }
 
         //LDH, 2018.10.12, AutoMode 관리

@@ -89,6 +89,7 @@ namespace DIOControlManager
             else if (ProjectType == eProjectType.DISPENSER) DioBaseCmd = new DispenserCmd(IOCnt);
             else if (ProjectType == eProjectType.BLOWER)    DioBaseCmd = new AirBlowCmd(IOCnt);
             else if (ProjectType == eProjectType.SORTER)    DioBaseCmd = new SorterCmd();
+            else if (ProjectType == eProjectType.VOID)      DioBaseCmd = new VoidCmd(IOCnt);
             
         }
 
@@ -398,7 +399,7 @@ namespace DIOControlManager
         private void btnTrigger_Click(object sender, EventArgs e)
         {
             //int _BitCommand = AirBlowCmd.BitCheck(5);
-            int _BitCommand = DioBaseCmd.InputBitCheck(DefaultCmd.IN_TRIGGER);
+            int _BitCommand = DioBaseCmd.InputBitCheck(VoidCmd.IN_TRIGGER);
             if (_BitCommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;
@@ -407,7 +408,7 @@ namespace DIOControlManager
 
         private void btnRequest_Click(object sender, EventArgs e)
         {
-            int _Bitcommand = DioBaseCmd.InputBitCheck(DefaultCmd.IN_RESET);
+            int _Bitcommand = DioBaseCmd.InputBitCheck(VoidCmd.IN_REQUEST);
             if (_Bitcommand == DIO_DEF.NONE) return;
 
             var _InputChangedEvent = InputChangedEvent;

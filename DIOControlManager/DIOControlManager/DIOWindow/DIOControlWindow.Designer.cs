@@ -1245,7 +1245,6 @@
             this.btnRequest.TabIndex = 334;
             this.btnRequest.Text = "Request";
             this.btnRequest.UseVisualStyleBackColor = true;
-            this.btnRequest.Visible = false;
             this.btnRequest.Click += new System.EventHandler(this.btnRequest_Click);
             // 
             // DIOControlWindow
