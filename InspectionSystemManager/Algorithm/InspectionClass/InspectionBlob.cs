@@ -51,6 +51,7 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
             List<int> _ResultIndexList = new List<int>();
+            _CogBlobDefectResult.NgNumber = _NgNumber;
 
             SetHardFixedThreshold(_CogBlobAlgo.ThresholdMin);
             SetConnectivityMinimum((int)_CogBlobAlgo.BlobAreaMin);
@@ -70,6 +71,12 @@ namespace InspectionSystemManager
 
                 CogBlobDefectResult _CogBlobDefectResultTemp = new CogBlobDefectResult();
                 _CogBlobDefectResultTemp = GetResults();
+
+
+                //Test Code 근접 알고리즘
+
+
+
 
                 double _ResolutionX = _CogBlobAlgo.ResolutionX;
                 double _ResolutionY = _CogBlobAlgo.ResolutionY;

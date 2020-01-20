@@ -30,13 +30,18 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelMain = new System.Windows.Forms.Panel();
             this.QuickGridViewResult = new CustomControl.QuickDataGridView();
+            this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridDefectWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridDefectHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridDefectType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gradientLabel2 = new CustomControl.GradientLabel();
             this.gradientLabelTotalCount = new CustomControl.GradientLabel();
             this.gradientLabelYield = new CustomControl.GradientLabel();
@@ -52,9 +57,6 @@
             this.gradientLabel7 = new CustomControl.GradientLabel();
             this.gradientLabel4 = new CustomControl.GradientLabel();
             this.gradientLabelResult = new CustomControl.GradientLabel();
-            this.gridLeadNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadBent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridLeadWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QuickGridViewResult)).BeginInit();
             this.SuspendLayout();
@@ -104,37 +106,86 @@
             this.QuickGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.QuickGridViewResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridLeadNum,
-            this.gridLeadBent,
-            this.gridLeadWidth});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle6.NullValue = "0";
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.QuickGridViewResult.DefaultCellStyle = dataGridViewCellStyle6;
-            this.QuickGridViewResult.EnableHeadersVisualStyles = false;
-            this.QuickGridViewResult.Location = new System.Drawing.Point(-1, 251);
-            this.QuickGridViewResult.MultiSelect = false;
-            this.QuickGridViewResult.Name = "QuickGridViewResult";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            this.gridDefectWidth,
+            this.gridDefectHeight,
+            this.gridDefectType});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.PowderBlue;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle7.NullValue = "0";
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.QuickGridViewResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.QuickGridViewResult.DefaultCellStyle = dataGridViewCellStyle7;
+            this.QuickGridViewResult.EnableHeadersVisualStyles = false;
+            this.QuickGridViewResult.Location = new System.Drawing.Point(-1, 239);
+            this.QuickGridViewResult.MultiSelect = false;
+            this.QuickGridViewResult.Name = "QuickGridViewResult";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("나눔바른고딕", 8.249999F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.QuickGridViewResult.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.QuickGridViewResult.RowHeadersVisible = false;
             this.QuickGridViewResult.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.QuickGridViewResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.QuickGridViewResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.QuickGridViewResult.Size = new System.Drawing.Size(378, 576);
+            this.QuickGridViewResult.Size = new System.Drawing.Size(378, 245);
             this.QuickGridViewResult.TabIndex = 46;
             this.QuickGridViewResult.Tag = "Size : 418, 511";
+            // 
+            // gridLeadNum
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle3;
+            this.gridLeadNum.Frozen = true;
+            this.gridLeadNum.HeaderText = "Num";
+            this.gridLeadNum.Name = "gridLeadNum";
+            this.gridLeadNum.ReadOnly = true;
+            this.gridLeadNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridLeadNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridLeadNum.Width = 34;
+            // 
+            // gridDefectWidth
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridDefectWidth.DefaultCellStyle = dataGridViewCellStyle4;
+            this.gridDefectWidth.Frozen = true;
+            this.gridDefectWidth.HeaderText = "Width";
+            this.gridDefectWidth.Name = "gridDefectWidth";
+            this.gridDefectWidth.ReadOnly = true;
+            this.gridDefectWidth.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridDefectWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridDefectWidth.Width = 135;
+            // 
+            // gridDefectHeight
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridDefectHeight.DefaultCellStyle = dataGridViewCellStyle5;
+            this.gridDefectHeight.Frozen = true;
+            this.gridDefectHeight.HeaderText = "Height";
+            this.gridDefectHeight.Name = "gridDefectHeight";
+            this.gridDefectHeight.ReadOnly = true;
+            this.gridDefectHeight.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridDefectHeight.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridDefectHeight.Width = 135;
+            // 
+            // gridDefectType
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gridDefectType.DefaultCellStyle = dataGridViewCellStyle6;
+            this.gridDefectType.Frozen = true;
+            this.gridDefectType.HeaderText = "Ng Type";
+            this.gridDefectType.Name = "gridDefectType";
+            this.gridDefectType.ReadOnly = true;
+            this.gridDefectType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridDefectType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gridDefectType.Width = 70;
             // 
             // gradientLabel2
             // 
@@ -144,11 +195,11 @@
             this.gradientLabel2.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gradientLabel2.ForeColor = System.Drawing.Color.White;
             this.gradientLabel2.GradientDirection = CustomControl.GradientLabel.Direction.Vertical;
-            this.gradientLabel2.Location = new System.Drawing.Point(0, 219);
+            this.gradientLabel2.Location = new System.Drawing.Point(0, 207);
             this.gradientLabel2.Name = "gradientLabel2";
             this.gradientLabel2.Size = new System.Drawing.Size(375, 30);
             this.gradientLabel2.TabIndex = 45;
-            this.gradientLabel2.Text = " Void Defect Result";
+            this.gradientLabel2.Text = " Void Defect Result List";
             this.gradientLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gradientLabelTotalCount
@@ -356,38 +407,6 @@
             this.gradientLabelResult.Text = "-";
             this.gradientLabelResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // gridLeadNum
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadNum.DefaultCellStyle = dataGridViewCellStyle3;
-            this.gridLeadNum.HeaderText = "Num";
-            this.gridLeadNum.Name = "gridLeadNum";
-            this.gridLeadNum.ReadOnly = true;
-            this.gridLeadNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadNum.Width = 34;
-            // 
-            // gridLeadBent
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadBent.DefaultCellStyle = dataGridViewCellStyle4;
-            this.gridLeadBent.HeaderText = "Width";
-            this.gridLeadBent.Name = "gridLeadBent";
-            this.gridLeadBent.ReadOnly = true;
-            this.gridLeadBent.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridLeadBent.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadBent.Width = 170;
-            // 
-            // gridLeadWidth
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gridLeadWidth.DefaultCellStyle = dataGridViewCellStyle5;
-            this.gridLeadWidth.HeaderText = "Height";
-            this.gridLeadWidth.Name = "gridLeadWidth";
-            this.gridLeadWidth.ReadOnly = true;
-            this.gridLeadWidth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gridLeadWidth.Width = 170;
-            // 
             // ucMainResultVoid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -423,7 +442,8 @@
         private CustomControl.QuickDataGridView QuickGridViewResult;
         private CustomControl.GradientLabel gradientLabel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadBent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridLeadWidth;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridDefectWidth;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridDefectHeight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gridDefectType;
     }
 }

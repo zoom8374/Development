@@ -164,7 +164,7 @@ namespace KPVisionInspectionFramework
             if (_ResultParam.ProjectItem == eProjectItem.VOID_INSP)
             {
                 string _VisionString, _ResultString;
-                _VisionString = String.Format("V{0}", _ResultParam.ID + 1);
+                _VisionString = String.Format("V{0}", _ResultParam.ID + 4);
 
                 if (_ResultParam.IsGood) _ResultString = "OK";
                 else _ResultString = "NG";

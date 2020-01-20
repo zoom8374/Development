@@ -284,19 +284,19 @@ namespace InspectionSystemManager
         private void SendResultData(object _Value)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
-            InspSysManagerEvent?.Invoke(eISMCMD.SEND_DATA, _Value);
+            _InspSysManagerEvent?.Invoke(eISMCMD.SEND_DATA, _Value);
         }
 
         private void SetResultData(object _Value)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
-            InspSysManagerEvent?.Invoke(eISMCMD.SET_RESULT, _Value);
+            _InspSysManagerEvent?.Invoke(eISMCMD.SET_RESULT, _Value);
         }
 
         private void InspectionComplete(object _Value, int _ID)
         {
             var _InspSysManagerEvent = InspSysManagerEvent;
-            InspSysManagerEvent?.Invoke(eISMCMD.INSP_COMPLETE, _Value, _ID);
+            _InspSysManagerEvent?.Invoke(eISMCMD.INSP_COMPLETE, _Value, _ID);
         }
         #endregion Event : Inspection Window Event
 

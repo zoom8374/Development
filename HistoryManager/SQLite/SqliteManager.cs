@@ -212,7 +212,8 @@ namespace HistoryManager
                 string strSQL;
                 if (SelectDate == true)
                 {
-                    strSQL = String.Format("{0} ( Date BETWEEN '{1} 00:00:00' AND '{2} 23:59:59')", SqlDefine.DELETE_RECORD, SelectDateFrom, SelectDateTo);
+                    //strSQL = String.Format("{0} ( Date BETWEEN '{1} 00:00:00' AND '{2} 23:59:59')", SqlDefine.DELETE_RECORD, SelectDateFrom, SelectDateTo);
+                    strSQL = String.Format("{0} ( Date <= '{1} 23:59:59')", SqlDefine.DELETE_RECORD, SelectDateTo);
                     if (RecipeFlag == true) { strSQL = String.Format("{0} AND {1} ({2})", strSQL, SqlDefine.SEARCH_RECIPENAME, SetRecipeNameList()); }
                 }
                 else
@@ -238,6 +239,37 @@ namespace HistoryManager
                 SQLiteConnection.Close();
 
                 return HistoryDataSet;
+            }
+        }
+
+        public static void SqlDistinct(ref List<string> _DataList, string _SelectColumn)
+        {
+            if (CheckDirectory() == null) _DataList = null;
+
+            using (SQLiteConnection SQLiteConnection = new SQLiteConnection(CheckDirectory()))
+            {                
+                string strSQL = "SELECT distinct " + _SelectColumn + " FROM HistoryFile";
+
+                SQLiteCommand _SQLCommand = new SQLiteCommand(strSQL, SQLiteConnection);
+
+                SQLiteConnection.Open();
+
+                SQLiteDataReader _SQLReader = _SQLCommand.ExecuteReader();
+                
+                while(_SQLReader.Read())
+                {
+                    _DataList.Add(_SQLReader.GetString(0));
+                }
+
+                //_DataList.Clear();
+
+                //SQLiteDataAdapter adaqtar = new SQLiteDataAdapter(strSQL, SQLiteConnection);
+
+                //adaqtar = new SQLiteDataAdapter(strSQL, SQLiteConnection);
+
+                //adaqtar.Fill(_DataList, "DSTables");
+                _SQLReader.Close();
+                SQLiteConnection.Close();
             }
         }
 
@@ -299,7 +331,7 @@ namespace HistoryManager
 
         private static string CheckSearchOption(string _strSQL, bool multiOptionFlag = false)
         {
-            if (RecipeFlag == true)
+            if (RecipeFlag)
             {
                 if (multiOptionFlag == false) _strSQL = String.Format("{0} AND {1} ({2})", _strSQL, SqlDefine.SEARCH_RECIPENAME, SetRecipeNameList());
                 else
@@ -309,7 +341,7 @@ namespace HistoryManager
                 }
             }
 
-            if (ResultFlag == true)
+            if (ResultFlag)
             {
                 string strResultList = String.Format("'{0}'", ResultList[0]);
                 if (multiOptionFlag == false) _strSQL = String.Format("{0} AND {1} ({2})", _strSQL, SqlDefine.SEARCH_RESULTNAME, strResultList);
@@ -320,7 +352,7 @@ namespace HistoryManager
                 }
             }
 
-            if (NGTypeFlag == true)
+            if (NGTypeFlag)
             {
                 string strNGTypeList = "";
 

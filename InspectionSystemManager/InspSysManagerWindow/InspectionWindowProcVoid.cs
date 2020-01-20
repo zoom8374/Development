@@ -19,22 +19,23 @@ namespace InspectionSystemManager
             _SendResParam.IsGood = true;
             _SendResParam.ProjectItem = ProjectItem;
 
+            SendVoidResult _SendResult = new SendVoidResult();
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
             {
                 if (eAlgoType.C_BLOB == AlgoResultParamList[iLoopCount].ResultAlgoType)
                 {
                     var _AlgoResultParam = AlgoResultParamList[iLoopCount].ResultParam as CogBlobDefectResult;
-                    SendVoidResult _SendResult = new SendVoidResult();
+                    
                     for (int jLoopCount = 0; jLoopCount < _AlgoResultParam.BlobCount; ++jLoopCount)
                     {
-                        _SendResult.DefectCount = _AlgoResultParam.BlobCount;
-                        _SendResult.Width = new double[_AlgoResultParam.BlobCount];
-                        _SendResult.Height = new double[_AlgoResultParam.BlobCount];
-
-                        for (int zLoopCount = 0; zLoopCount < _AlgoResultParam.BlobCount; ++zLoopCount)
+                        _SendResult.DefectCount++;
+                        //for (int zLoopCount = 0; zLoopCount < _AlgoResultParam.BlobCount; ++zLoopCount)
                         {
-                            _SendResult.Width[zLoopCount] = _AlgoResultParam.Width[zLoopCount] * ResolutionX;
-                            _SendResult.Height[zLoopCount] = _AlgoResultParam.Height[zLoopCount] * ResolutionY;
+                            double _Width = _AlgoResultParam.Width[jLoopCount] * ResolutionX;
+                            double _Height = _AlgoResultParam.Height[jLoopCount] * ResolutionY;
+                            _SendResult.WidthList.Add(_Width);
+                            _SendResult.HeightList.Add(_Height);
+                            _SendResult.NgNumber.Add(_AlgoResultParam.NgNumber);
                         }
 
                         _SendResParam.IsGood &= _AlgoResultParam.IsGood;

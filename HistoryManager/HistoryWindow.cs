@@ -106,15 +106,16 @@ namespace HistoryManager
 
         public void ClearSearchOption()
         {
-            comboBoxResult.SelectedIndex = 0;
             ckListBoxRecipe.Items.Clear();
             ckListBoxNGType.Items.Clear();
+            comboBoxResult.Items.Clear();
             SetckListBoxRecipe();
             SetckListBoxNGType();
+            SetcomboBoxResult();
         }
 
         //LDH, 2016.12.13 Inspection ScreenShot 삭제
-        private void DeleteScreenShot()
+        private void DeleteScreenShot(bool _DeleteAll)
         {
             string ScreenShotpath;
             ScreenShotpath = SqliteManager.SqlGetScreenshotPath();
@@ -125,9 +126,16 @@ namespace HistoryManager
             string[] SplitFolderName = ScreenShotpath.Split(Character);
             int FolderLength = SplitFolderName.Length;
 
-            string RemoveFolderPath;
+            string RemoveFolderPath = "";
             string DeleteFolder;
 
+            int YearIndex = 0;
+            for(int iLoopCount = 0; iLoopCount < 5; iLoopCount++)
+            {
+                //폴더 경로내에 최근 5년 까지의 폴더이름이 있는지 체크
+                YearIndex = Array.IndexOf(SplitFolderName, (DateTime.Now.Year - iLoopCount).ToString());
+                if (YearIndex != -1) break;
+            }
             RemoveFolderPath = String.Format(@"\{0}\{1}\{2}\{3}", SplitFolderName[FolderLength - 4], SplitFolderName[FolderLength - 3], SplitFolderName[FolderLength - 2], SplitFolderName[FolderLength - 1]);
             ScreenShotpath = ScreenShotpath.Replace(RemoveFolderPath, "");
 
@@ -138,12 +146,24 @@ namespace HistoryManager
                 DirectoryInfo[] YearFolderInfo = DeleteYearFolderInfo.GetDirectories();
                 foreach (DirectoryInfo YearFolder in YearFolderInfo)
                 {
-                    if (Convert.ToInt32(YearFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 4]))
+                    if (_DeleteAll)
                     {
-                        DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, YearFolder.Name);
-                        Directory.Delete(DeleteFolder, true);
+                        if (Convert.ToInt32(YearFolder.Name) <= Convert.ToInt32(DateTime.Now.Year))
+                        {
+                            DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, YearFolder.Name);
+                            Directory.Delete(DeleteFolder, true);
+                        }
+                    }
+                    else
+                    {
+                    	if (Convert.ToInt32(YearFolder.Name) < Convert.ToInt32(SplitFolderName[FolderLength - 4]))
+                    	{
+                        	DeleteFolder = String.Format("{0}\\{1}", ScreenShotpath, YearFolder.Name);
+                        	Directory.Delete(DeleteFolder, true);
+						}
                     }
                 }
+                DeleteYearFolderInfo.Refresh();
             }
 
             //Month 폴더 삭제
@@ -160,6 +180,7 @@ namespace HistoryManager
                         Directory.Delete(DeleteFolder, true);
                     }
                 }
+                DeleteMonthFolderInfo.Refresh();
             }
 
             //Day 폴더 삭제
@@ -176,6 +197,7 @@ namespace HistoryManager
                         Directory.Delete(DeleteFolder, true);
                     }
                 }
+                DeleteDayFolderInfo.Refresh();
             }
         }
 
@@ -255,12 +277,12 @@ namespace HistoryManager
         {
             if (SelectDateCheck() == false) return;
 
-            DialogResult DeleteDialog = MessageBox.Show("Are you sure you want to delete from " + SelectDateFrom + " to " + SelectDateTo + "?", "History Delete", MessageBoxButtons.YesNo);
+            DialogResult DeleteDialog = MessageBox.Show("Are you sure you want to delete records by " + SelectDateTo + "?", "History Delete", MessageBoxButtons.YesNo);
 
             if (DeleteDialog == DialogResult.Yes)
-            {
-                DeleteScreenShot();
+            {                
                 SetDataGridViewHistory(true, "Delete", SelectDateFrom, SelectDateTo);
+                DeleteScreenShot(false);
             }
         }
 
@@ -270,7 +292,7 @@ namespace HistoryManager
 
             if (DeleteDialog == DialogResult.Yes)
             {
-                DeleteScreenShot();
+                DeleteScreenShot(true);
                 SetDataGridViewHistory(false, "Delete");
             }
         }
@@ -296,10 +318,42 @@ namespace HistoryManager
             if (e.RowIndex < 0) return;
             string ScreenshotImagePath = dataGridViewHistory.Rows[e.RowIndex].Cells[ScreenshotIndex].Value.ToString();
 
-            if (ScreenshotImagePath == "") { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
-            else if (File.Exists(ScreenshotImagePath) == false) { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
+            SelectHistoryData(ScreenshotImagePath);
+        }
 
-            pictureBoxScreenshot.Image = Bitmap.FromFile(ScreenshotImagePath);
+        private void SelectHistoryData(string _ScreenshotImagePath)
+        {
+            if (_ScreenshotImagePath == "") { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
+            else if (File.Exists(_ScreenshotImagePath) == false) { MessageBox.Show(new Form { TopMost = true }, "Image is not found"); return; }
+
+            pictureBoxScreenshot.Image = Bitmap.FromFile(_ScreenshotImagePath);
+        }
+
+        private void SetcomboBoxResult()
+        {
+            if (ProjectType == "DISPENSER")
+            {
+                comboBoxResult.Items.Add("All");
+                comboBoxResult.Items.Add("GOOD");
+                comboBoxResult.Items.Add("Not Found");
+                comboBoxResult.Items.Add("LEAD BENT");
+                comboBoxResult.Items.Add("LEAD COUNT");
+                comboBoxResult.SelectedIndex = 0;
+            }
+            else if (ProjectType == "VOID")
+            {
+                comboBoxResult.Items.Add("All");
+                comboBoxResult.Items.Add("GOOD");
+                comboBoxResult.Items.Add("NG");
+                comboBoxResult.SelectedIndex = 0;
+            }
+            else
+            {
+                comboBoxResult.Items.Add("All");
+                comboBoxResult.Items.Add("OK");
+                comboBoxResult.Items.Add("NG");
+                comboBoxResult.SelectedIndex = 0;
+            }
         }
 
         private void SetckListBoxRecipe()
@@ -309,7 +363,7 @@ namespace HistoryManager
 
             if (Recipecount < 6) { Height = 28 * Recipecount; }
             else { Height = 28 * 6; }
-            ckListBoxRecipe.Location = new System.Drawing.Point(883, 392);
+            ckListBoxRecipe.Location = new System.Drawing.Point(880, 359);
             ckListBoxRecipe.Size = new System.Drawing.Size(369, Height);
         }
 
@@ -435,7 +489,7 @@ namespace HistoryManager
 
         private void comboBoxResult_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxResult.SelectedIndex == 0) { ckbResult.Checked = false; ckbResult_CheckedChanged(sender, e); }
+            if (comboBoxResult.SelectedItem.ToString() == "All") { ckbResult.Checked = false; ckbResult_CheckedChanged(sender, e); }
         }
 
         private void dataGridViewHistory_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -454,6 +508,13 @@ namespace HistoryManager
 
                 e.Graphics.DrawString(Number, Font, Brushes.Black, StringPoint.X, StringPoint.Y);
             }
+        }
+
+        private void dataGridViewHistory_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridViewHistory.RowCount == 1 || dataGridViewHistory.SelectedRows.Count == 0) return;
+            string ScreenshotImagePath = dataGridViewHistory.SelectedCells[ScreenshotIndex].Value.ToString();
+            SelectHistoryData(ScreenshotImagePath);
         }
     }
 }

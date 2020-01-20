@@ -224,6 +224,8 @@ namespace KPVisionInspectionFramework
                 HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             else if ((int)eProjectType.SORTER == ParamManager.SystemParam.ProjectType)
                 HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
+            else if ((int)eProjectType.VOID == ParamManager.SystemParam.ProjectType)
+                HistoryManager = new CHistoryManager(ProjectName, ((eProjectType)ParamManager.SystemParam.ProjectType).ToString());
             #endregion History Window Initialize
 
             FolderPathWnd = new FolderPathWindow(ParamManager.SystemParam.IsSimulationMode);

@@ -68,7 +68,7 @@ namespace InspectionSystemManager
         private double BenchMarkOffsetX = 0;
         private double BenchMarkOffsetY = 0;
         private double BenchMarkOffsetT = 0;
-        private int AreaAlgoCount;
+        private int    AreaAlgoCount;
 
         private string CameraType;
         private int ImageSizeWidth = 0;
@@ -95,6 +95,8 @@ namespace InspectionSystemManager
         private bool IsThreadImageSaveExit = false;
         public bool IsThreadImageSaveTrigger = false;
         eSaveMode ImageAutoSaveMode = eSaveMode.ONLY_NG;
+
+        public int BlobDefectCount = 0;
 
         public delegate void InspectionWindowHandler(eIWCMD _Command, object _Value = null, int _ID = 0);
         public event InspectionWindowHandler InspectionWindowEvent;
@@ -1054,7 +1056,7 @@ namespace InspectionSystemManager
             bool _Result = InspBlobProc.Run(OriginImage, _InspRegion, _CogBlobAlgo, ref _CogBlobDefectResult, _NgAreaNumber);
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Blob Algorithm Start End", CLogManager.LOG_LEVEL.MID);
 
-            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_BLOB, _CogBlobDefectResult);
+            AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_BLOB, _CogBlobDefectResult, _NgAreaNumber);
             _AlgoResultParam.OffsetX = 0;//CogBlobAlgo.OriginX - _CogBlobDefectResult.OriginX[0];
             _AlgoResultParam.OffsetY = 0;//_CogBlobAlgo.OriginY - _CogBlobDefectResult.OriginY[0];
             AlgoResultParamList.Add(_AlgoResultParam);
@@ -1153,6 +1155,7 @@ namespace InspectionSystemManager
         private bool InspectionResultDsiplay()
         {
             bool _IsLastGood = true, _IsGood = false;
+            BlobDefectCount = 0;
 
             if (AlgoResultParamList.Count == 0) _IsLastGood = false;
             for (int iLoopCount = 0; iLoopCount < AlgoResultParamList.Count; ++iLoopCount)
@@ -1200,7 +1203,7 @@ namespace InspectionSystemManager
                 ResultDisplay(_PatternAffine, _Point, string.Format("Pattern_{0}_{1}", _Index, iLoopCount), _PatternResult.IsGoods[iLoopCount]);
 
                 string _MatchingName = string.Format($"Rate{_Index} = {_PatternResult.Score[iLoopCount]:F2}, X = {_PatternResult.OriginPointX[iLoopCount]:F2}, Y = {_PatternResult.OriginPointY[iLoopCount]:F2}");
-                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGoods[iLoopCount], CogGraphicLabelAlignmentConstants.BaselineCenter);
+                ResultDisplayMessage(_PatternResult.OriginPointX[iLoopCount], _PatternResult.OriginPointY[iLoopCount] + _PatternResult.Height[iLoopCount] / 2 + 30, _MatchingName, _PatternResult.IsGoods[iLoopCount], _Align : CogGraphicLabelAlignmentConstants.BaselineCenter);
             }
 
             if (_PatternResult.FindCount <= 0)
@@ -1273,16 +1276,21 @@ namespace InspectionSystemManager
                 {
                     _IsGood = _BlobDefectResult.IsGood;
 
+                    CogColorConstants _NgColor = CogColorConstants.Red;
+                    if (_BlobDefectResult.NgNumber == 2) _NgColor = CogColorConstants.Yellow;
+
                     string _DrawName = String.Format("BlobDefect_{0}_{1}", _Index, iLoopCount);
                     _Region.SetCenterWidthHeight(_BlobDefectResult.BlobCenterX[iLoopCount], _BlobDefectResult.BlobCenterY[iLoopCount], _BlobDefectResult.Width[iLoopCount], _BlobDefectResult.Height[iLoopCount]);
                     _Point.SetCenterRotationSize(_BlobDefectResult.BlobCenterX[iLoopCount], _BlobDefectResult.BlobCenterY[iLoopCount], 0, 10);
-                    ResultDisplay(_Region, _Point, _DrawName, _IsGood);
+                    ResultDisplay(_Region, _Point, _DrawName, _IsGood, _NgColor);
 
                     double _WidthSize = _BlobDefectResult.Width[iLoopCount] * ResolutionX;
                     double _HeightSize = _BlobDefectResult.Height[iLoopCount] * ResolutionY;
                     string _RstName = String.Format("BlobDefectResult_{0}_{1}", _Index, iLoopCount);
-                    string _Message = String.Format("{0} = W : {1:F3}, H : {2:F3}", iLoopCount + 1,  _WidthSize, _HeightSize);
-                    ResultDisplayMessage(_BlobDefectResult.BlobMinX[iLoopCount], _BlobDefectResult.BlobMaxY[iLoopCount] + 30, _Message, _IsGood);
+                    string _Message = String.Format("{0} = W : {1:F3}, H : {2:F3}", BlobDefectCount + 1,  _WidthSize, _HeightSize);
+                    ResultDisplayMessage(_BlobDefectResult.BlobMinX[iLoopCount], _BlobDefectResult.BlobMaxY[iLoopCount] + 30, _Message, _IsGood, _NgColor);
+
+                    BlobDefectCount++;
                 }
             }
 
@@ -1362,7 +1370,7 @@ namespace InspectionSystemManager
 
                     //string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterX * ResolutionX, _CogNeedleFindResult.CenterY * ResolutionY, _CogNeedleFindResult.Radius * ResolutionY);
                     string _CenterPointName = string.Format("X = {0:F2}mm, Y = {1:F2}mm, R = {2:F2}mm", _CogNeedleFindResult.CenterXReal, _CogNeedleFindResult.CenterYReal, _CogNeedleFindResult.RadiusReal);
-                    ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 150, _CenterPointName, _CogNeedleFindResult.IsGood, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    ResultDisplayMessage(_CogNeedleFindResult.CenterX, _CogNeedleFindResult.CenterY + 150, _CenterPointName, _CogNeedleFindResult.IsGood, _Align : CogGraphicLabelAlignmentConstants.BaselineCenter);
 
                     if (_CogNeedleFindResult.PointStatusInfo != null)
                     {
@@ -1405,7 +1413,7 @@ namespace InspectionSystemManager
                     ResultDisplay(_Polygon, "BarCodeID" + iLoopCount, _CogBarCodeIDResult.IsGood);
 
                     string _ResultIDName = string.Format("ID = {0}", _CogBarCodeIDResult.IDResult);
-                    ResultDisplayMessage(_CogBarCodeIDResult.IDCenterX[iLoopCount], _CogBarCodeIDResult.IDCenterY[iLoopCount] + 30, _ResultIDName, true, CogGraphicLabelAlignmentConstants.BaselineCenter);
+                    ResultDisplayMessage(_CogBarCodeIDResult.IDCenterX[iLoopCount], _CogBarCodeIDResult.IDCenterY[iLoopCount] + 30, _ResultIDName, true, _Align : CogGraphicLabelAlignmentConstants.BaselineCenter);
                 }
 
             }
@@ -1441,13 +1449,13 @@ namespace InspectionSystemManager
         }
 
         #region Display Result function
-        public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood)
+        public void ResultDisplay(CogRectangle _Region, CogPointMarker _Point, string _Name, bool _IsGood, CogColorConstants _NgColor = CogColorConstants.Red)
         {
             if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Green);
-            else                    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", CogColorConstants.Red);
+            else                    kpCogDisplayMain.DrawStaticShape(_Region, _Name + "_Rect", _NgColor);
 
             if (true == _IsGood)    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Green);
-            else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", CogColorConstants.Red);
+            else                    kpCogDisplayMain.DrawStaticShape(_Point, _Name + "_PointOrigin", _NgColor);
         }
 
         public void ResultDisplay(CogCircle _Circle, CogPointMarker _Point, string _Name, bool _IsGood)
@@ -1483,10 +1491,10 @@ namespace InspectionSystemManager
             kpCogDisplayMain.DrawStaticShape(_Point, _Name, _Color);
         }
 
-        public void ResultDisplayMessage(double _StartX, double _StartY, string _Message, bool _IsGood = true, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)
+        public void ResultDisplayMessage(double _StartX, double _StartY, string _Message, bool _IsGood = true, CogColorConstants _NgColor = CogColorConstants.Red, CogGraphicLabelAlignmentConstants _Align = CogGraphicLabelAlignmentConstants.TopLeft)
         {
             if (true == _IsGood)    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Green, 8, _Align);
-            else                    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, CogColorConstants.Red, 8, _Align);
+            else                    kpCogDisplayMain.DrawText(_Message, _StartX, _StartY, _NgColor, 8, _Align);
         }
 
         private void DisplayLastResultMessage(bool _IsGood)

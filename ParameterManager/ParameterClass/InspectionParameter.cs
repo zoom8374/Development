@@ -191,14 +191,14 @@ namespace ParameterManager
         public CogBlobAlgo(double _ResolutionX = 0, double _ResolutionY = 0)
         {
             ForeGround = 0;
-            ThresholdMin = 50;
+            ThresholdMin = 110;
             ThresholdMax = 200;
-            BlobAreaMin = 5000;
+            BlobAreaMin = 50;
             BlobAreaMax = 9000000;
-            WidthMin = 5;
-            WidthMax = 200;
-            HeightMin = 5;
-            HeightMax = 200;
+            WidthMin = 0.02;
+            WidthMax = 2;
+            HeightMin = 0.02;
+            HeightMax = 2;
 
             ResolutionX = _ResolutionX;
             ResolutionY = _ResolutionY;

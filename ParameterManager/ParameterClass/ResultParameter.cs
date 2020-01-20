@@ -52,7 +52,7 @@ namespace ParameterManager
             TeachOriginY = 0;
         }
 
-        public AlgoResultParameter(eAlgoType _AlgoType, Object _ResultParam)
+        public AlgoResultParameter(eAlgoType _AlgoType, Object _ResultParam, int _NgAreaNumber = 0)
         {
             ResultParam = _ResultParam;
             ResultAlgoType = _AlgoType;
@@ -61,6 +61,8 @@ namespace ParameterManager
             OffsetY = 0;
             TeachOriginX = 0;
             TeachOriginY = 0;
+
+            NgAreaNumber = _NgAreaNumber;
         }
     }
 
@@ -168,6 +170,7 @@ namespace ParameterManager
         public double[] OriginY;
         public bool[] IsGoods;
         public CogCompositeShape[] ResultGraphic;
+        public int NgNumber;
     }
 
     public class CogBlobReferenceResult : Result
@@ -340,8 +343,16 @@ namespace ParameterManager
     public class SendVoidResult
     {
         public int DefectCount;
-        public double[] Width;
-        public double[] Height;
+        public List<double> WidthList;
+        public List<double> HeightList;
+        public List<int> NgNumber;
+
+        public SendVoidResult()
+        {
+            WidthList = new List<double>();
+            HeightList = new List<double>();
+            NgNumber = new List<int>();
+        }
     }
 
     public class SendSurfaceResult

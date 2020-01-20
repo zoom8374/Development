@@ -57,6 +57,8 @@ namespace KPVisionInspectionFramework
         private string LastRecipeName;
         private string LastResult;
 
+        private const int DEFECT_TOTAL_CNT = 10;
+
         #region Initialize & DeInitialize
         public ucMainResultVoid(string _LastRecipeName)
         {
@@ -75,14 +77,15 @@ namespace KPVisionInspectionFramework
 
         private void InitializeControl()
         {
-            for (int iLoopCount = 0; iLoopCount < 25; ++iLoopCount)
+            for (int iLoopCount = 0; iLoopCount < DEFECT_TOTAL_CNT; ++iLoopCount)
             {
                 DataGridViewRow _GridRow = new DataGridViewRow();
-                DataGridViewCell[] _GridCell = new DataGridViewCell[3];
+                DataGridViewCell[] _GridCell = new DataGridViewCell[4];
                 _GridCell[0] = gridLeadNum.CellTemplate.Clone() as DataGridViewCell;
-                _GridCell[1] = gridLeadBent.CellTemplate.Clone() as DataGridViewCell;
-                _GridCell[2] = gridLeadWidth.CellTemplate.Clone() as DataGridViewCell;
-            
+                _GridCell[1] = gridDefectWidth.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[2] = gridDefectHeight.CellTemplate.Clone() as DataGridViewCell;
+                _GridCell[3] = gridDefectHeight.CellTemplate.Clone() as DataGridViewCell;
+
                 _GridCell[0].Value = (iLoopCount + 1);
                 _GridCell[0].Style.BackColor = Color.DarkGreen;
                 _GridCell[0].Style.ForeColor = Color.White;
@@ -272,11 +275,21 @@ namespace KPVisionInspectionFramework
                     SegmentValueInvoke(SevenSegYield, Yield.ToString("F2"));
                 }
 
-                for (int iLoopCount = 0; iLoopCount < _Result.DefectCount; ++iLoopCount)
+                int _DefectCount = _Result.DefectCount;
+                if (_DefectCount > DEFECT_TOTAL_CNT) _DefectCount = DEFECT_TOTAL_CNT;
+
+                for (int iLoopCount = 0; iLoopCount < DEFECT_TOTAL_CNT - _DefectCount; ++iLoopCount)
                 {
-                    if (iLoopCount > 25) break;
-                    QuickGridViewResult[1, iLoopCount].Value = _Result.Width[iLoopCount].ToString("F3") + " mm";
-                    QuickGridViewResult[2, iLoopCount].Value = _Result.Height[iLoopCount].ToString("F3") + " mm";
+                    QuickGridViewResult[1, iLoopCount].Value = "0";
+                    QuickGridViewResult[2, iLoopCount].Value = "0";
+                    QuickGridViewResult[3, iLoopCount].Value = "0";
+                }
+
+                for (int iLoopCount = 0; iLoopCount < _DefectCount; ++iLoopCount)
+                {   
+                    QuickGridViewResult[1, iLoopCount].Value = _Result.WidthList[iLoopCount].ToString("F3") + " mm";
+                    QuickGridViewResult[2, iLoopCount].Value = _Result.HeightList[iLoopCount].ToString("F3") + " mm";
+                    QuickGridViewResult[3, iLoopCount].Value = _Result.NgNumber[iLoopCount].ToString();
                 }
 
                 LastResult = "NG";
