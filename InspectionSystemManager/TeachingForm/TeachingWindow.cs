@@ -212,6 +212,7 @@ namespace InspectionSystemManager
 
             else if  (ProjectItem == eProjectItem.VOID_INSP)
             {
+                ContextMenuAlgo.MenuItems.Add("Search a Line", new EventHandler(LineFineAlgorithm));
                 ContextMenuAlgo.MenuItems.Add("Find a defect", new EventHandler(BlobAlgorithm));
             }
 
@@ -239,6 +240,7 @@ namespace InspectionSystemManager
             {
                 case eProjectType.DISPENSER:
                 case eProjectType.BLOWER:
+                case eProjectType.VOID:
                     btnInspectionAreaAdd.Visible = false;
                     btnInspectionAreaDel.Visible = false;
                     btnInspectionAreaCopy.Visible = false;
@@ -700,8 +702,8 @@ namespace InspectionSystemManager
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].BenchMarkOffsetX = AreaOffsetX + AlgoOffsetX;
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].BenchMarkOffsetY = AreaOffsetY + AlgoOffsetY;
 
-            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX = _AlgoRegion.CenterX + AreaOffsetX;
-            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterY = _AlgoRegion.CenterY + AreaOffsetY;
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterX = _AlgoRegion.CenterX + AreaOffsetX - AlgoOffsetX;
+            InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionCenterY = _AlgoRegion.CenterY + AreaOffsetY - AlgoOffsetY;
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionWidth = _AlgoRegion.Width;
             InspParam.InspAreaParam[InspAreaSelected].InspAlgoParam[InspAlgoSelected].AlgoRegionHeight = _AlgoRegion.Height;
 
@@ -1206,7 +1208,8 @@ namespace InspectionSystemManager
 
                 else if (ProjectItem == eProjectItem.VOID_INSP)
                 {
-                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB) _Name = "Defect detection";       //"Blob = Defect"
+                    if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_BLOB)           _Name = "Void detection";       //"Blob = Defect"
+                    else if (InspParam.InspAreaParam[_ID].InspAlgoParam[iLoopCount].AlgoType == (int)eAlgoType.C_LINE_FIND) _Name = "Search a line";
                 }
 
                 AddInspectionAlgo(_Index, _Name, _Enable);

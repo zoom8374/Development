@@ -135,7 +135,7 @@
             this.QuickGridViewResult.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.QuickGridViewResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.QuickGridViewResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.QuickGridViewResult.Size = new System.Drawing.Size(378, 245);
+            this.QuickGridViewResult.Size = new System.Drawing.Size(378, 588);
             this.QuickGridViewResult.TabIndex = 46;
             this.QuickGridViewResult.Tag = "Size : 418, 511";
             // 

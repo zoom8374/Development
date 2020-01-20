@@ -38,6 +38,12 @@ namespace HistoryManager
                 INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, LastResult, IDResult, InspImagePath) ";
                 CreateComm = string.Format("{0} (Date Datetime, RecipeName char, LastResult char, IDResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
             }
+
+            else if (_ProjectType == "VOID")
+            {
+                INSERT_string = "INSERT INTO HistoryFile (Date, RecipeName, ID, LastResult, InspImagePath) ";
+                CreateComm = string.Format("{0} (Date Datetime, RecipeName char, ID char, LastResult char, InspImagePath char);", SqlDefine.CREATE_TABLE);
+            }
         }
 
         /// <summary>

@@ -320,13 +320,13 @@ namespace DIOControlManager
             ThreadVisionAliveSignal = new Thread(ThreadVisionAliveSignalFunc);
             IsThreadVisionAliveSignalExit = false;
             ThreadOutputIOCheck.IsBackground = true;
-            if (ProjectType != eProjectType.BLOWER && ProjectType != eProjectType.DISPENSER)
+            if (ProjectType != eProjectType.BLOWER && ProjectType != eProjectType.DISPENSER && ProjectType != eProjectType.VOID)
                 ThreadVisionAliveSignal.Start();
 
             ThreadInputAliveCheck = new Thread(ThreadInputAliveCheckFunc);
             IsThreadInputAliveCheckExit = false;
             ThreadOutputIOCheck.IsBackground = true;
-            if (ProjectType != eProjectType.BLOWER && ProjectType != eProjectType.DISPENSER)
+            if (ProjectType != eProjectType.BLOWER && ProjectType != eProjectType.DISPENSER && ProjectType != eProjectType.VOID)
                 ThreadInputAliveCheck.Start();
 
             ThreadSignalToggle = new Thread(ThreadSignalToggleFunc);

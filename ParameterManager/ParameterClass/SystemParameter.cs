@@ -34,7 +34,8 @@ namespace ParameterManager
             InspSystemManagerCount = 1;
             ProjectType = 0;
 
-            ResultWindowLocationX = 1482;
+            //ResultWindowLocationX = 1482;
+            ResultWindowLocationX = 887;
             ResultWindowLocationY = 148;
             ResultWindowWidth = 421;
             ResultWindowHeight = 571;

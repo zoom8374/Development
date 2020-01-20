@@ -36,7 +36,6 @@
             this.numUpDownDummyValue = new System.Windows.Forms.NumericUpDown();
             this.ckDummyUsable = new System.Windows.Forms.CheckBox();
             this.gradientLabel13 = new CustomControl.GradientLabel();
-            this.btnSetting = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label19 = new CustomControl.GradientLabel();
             this.label20 = new CustomControl.GradientLabel();
@@ -66,6 +65,7 @@
             this.gradientLabel3 = new CustomControl.GradientLabel();
             this.graLabelThresholdValue = new CustomControl.GradientLabel();
             this.graLabelForeground = new CustomControl.GradientLabel();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.numUpDownBodyHeight = new System.Windows.Forms.NumericUpDown();
@@ -224,18 +224,6 @@
             this.gradientLabel13.TabIndex = 95;
             this.gradientLabel13.Text = "    Dummy Level";
             this.gradientLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Location = new System.Drawing.Point(439, 262);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(117, 30);
-            this.btnSetting.TabIndex = 50;
-            this.btnSetting.Text = "Setting";
-            this.btnSetting.UseVisualStyleBackColor = true;
-            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // groupBox2
             // 
@@ -639,6 +627,18 @@
             this.graLabelForeground.Text = "0";
             this.graLabelForeground.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.graLabelForeground.Visible = false;
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Font = new System.Drawing.Font("나눔바른고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSetting.ForeColor = System.Drawing.Color.Black;
+            this.btnSetting.Location = new System.Drawing.Point(439, 262);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(117, 30);
+            this.btnSetting.TabIndex = 50;
+            this.btnSetting.Text = "Setting";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // tabPage2
             // 

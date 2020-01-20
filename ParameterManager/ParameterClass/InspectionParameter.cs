@@ -191,14 +191,14 @@ namespace ParameterManager
         public CogBlobAlgo(double _ResolutionX = 0, double _ResolutionY = 0)
         {
             ForeGround = 0;
-            ThresholdMin = 110;
+            ThresholdMin = 60;
             ThresholdMax = 200;
             BlobAreaMin = 50;
             BlobAreaMax = 9000000;
-            WidthMin = 0.02;
-            WidthMax = 2;
-            HeightMin = 0.02;
-            HeightMax = 2;
+            WidthMin = 0.10;
+            WidthMax = 5;
+            HeightMin = 0.10;
+            HeightMax = 5;
 
             ResolutionX = _ResolutionX;
             ResolutionY = _ResolutionY;
@@ -336,6 +336,10 @@ namespace ParameterManager
         public int FilterHalfSizePixels;
 
         public bool UseAlignment;
+
+        //Line의 Center로 Line 기준점을 가져갈 때 사용
+        public double OriginX;
+        public double OriginY;
 
         public CogLineFindAlgo()
         {

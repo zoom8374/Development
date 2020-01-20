@@ -57,7 +57,10 @@ namespace KPVisionInspectionFramework
         private string LastRecipeName;
         private string LastResult;
 
-        private const int DEFECT_TOTAL_CNT = 10;
+        public delegate void ScreenshotHandler(string ScreenshotImagePath);
+        public event ScreenshotHandler ScreenshotEvent;
+
+        private const int DEFECT_TOTAL_CNT = 25;
 
         #region Initialize & DeInitialize
         public ucMainResultVoid(string _LastRecipeName)
@@ -99,6 +102,13 @@ namespace KPVisionInspectionFramework
                 QuickGridViewResult.Rows.Add(_GridRow);
             }
             QuickGridViewResult.ClearSelection();
+
+            //LDH, Hitory Parameter용 배열 초기화
+            HistoryParam = new string[4];
+            for (int iLoopCount = 0; iLoopCount < HistoryParam.Count(); iLoopCount++)
+            {
+                HistoryParam[iLoopCount] = "-";
+            }
         }
 
         public void DeInitialize()
@@ -259,6 +269,13 @@ namespace KPVisionInspectionFramework
                     SegmentValueInvoke(SevenSegYield, Yield.ToString("F2"));
                 }
 
+                for (int iLoopCount = 0; iLoopCount < DEFECT_TOTAL_CNT; ++iLoopCount)
+                {
+                    QuickGridViewResult[1, iLoopCount].Value = "0";
+                    QuickGridViewResult[2, iLoopCount].Value = "0";
+                    QuickGridViewResult[3, iLoopCount].Value = "0";
+                }
+
                 LastResult = "GOOD";
                 ControlInvoke.GradientLabelText(gradientLabelResult, "GOOD", Color.Lime);
             }
@@ -278,7 +295,7 @@ namespace KPVisionInspectionFramework
                 int _DefectCount = _Result.DefectCount;
                 if (_DefectCount > DEFECT_TOTAL_CNT) _DefectCount = DEFECT_TOTAL_CNT;
 
-                for (int iLoopCount = 0; iLoopCount < DEFECT_TOTAL_CNT - _DefectCount; ++iLoopCount)
+                for (int iLoopCount = 0; iLoopCount < DEFECT_TOTAL_CNT; ++iLoopCount)
                 {
                     QuickGridViewResult[1, iLoopCount].Value = "0";
                     QuickGridViewResult[2, iLoopCount].Value = "0";
@@ -286,7 +303,8 @@ namespace KPVisionInspectionFramework
                 }
 
                 for (int iLoopCount = 0; iLoopCount < _DefectCount; ++iLoopCount)
-                {   
+                {
+                    if (DEFECT_TOTAL_CNT <= iLoopCount) break;
                     QuickGridViewResult[1, iLoopCount].Value = _Result.WidthList[iLoopCount].ToString("F3") + " mm";
                     QuickGridViewResult[2, iLoopCount].Value = _Result.HeightList[iLoopCount].ToString("F3") + " mm";
                     QuickGridViewResult[3, iLoopCount].Value = _Result.NgNumber[iLoopCount].ToString();
@@ -296,8 +314,39 @@ namespace KPVisionInspectionFramework
                 ControlInvoke.GradientLabelText(gradientLabelResult, "NG", Color.Red);
             }
 
+            InspectionHistory(_ResultParam.ID, LastResult);
+
             SaveResultCount();
             QuickGridViewResult.ClearSelection();
+        }
+
+        private void InspectionHistory(int _ID, string _Result)
+        {
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory Start"), CLogManager.LOG_LEVEL.LOW);
+
+            DateTime dateTime = DateTime.Now;
+            string InspScreenshotPath = @"D:\VisionInspectionData\CIPOSVoidInspection\HistoryData\Screenshot\";
+            string ImageSaveFolder = String.Format("{0}{1:D4}\\{2:D2}\\{3:D2}", InspScreenshotPath, dateTime.Year, dateTime.Month, dateTime.Day);
+
+            if (false == Directory.Exists(ImageSaveFolder)) Directory.CreateDirectory(ImageSaveFolder);
+
+            string ImageSaveFile;
+            ImageSaveFile = String.Format("{0}\\{1:D2}{2:D2}{3:D2}{4:D3}.bmp", ImageSaveFolder, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+
+            //LDH, 2018.08.13, 프로젝트별로 DB에 해당하는 history 내역을 string 배열로 전달
+            HistoryParam[0] = LastRecipeName;
+            HistoryParam[1] = _ID.ToString();
+            HistoryParam[2] = _Result;
+            HistoryParam[3] = ImageSaveFile;
+
+            CHistoryManager.AddHistory(HistoryParam);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("InspectionHistory End"), CLogManager.LOG_LEVEL.LOW);
+
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot Start"), CLogManager.LOG_LEVEL.LOW);
+            var _ScreenshotEvent = ScreenshotEvent;
+            _ScreenshotEvent?.Invoke(ImageSaveFile);
+            //ScreenshotEvent(ImageSaveFile);
+            CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, String.Format("Screenshot End"), CLogManager.LOG_LEVEL.LOW);
         }
     }
 }

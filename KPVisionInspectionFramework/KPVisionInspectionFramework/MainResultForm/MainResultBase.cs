@@ -75,6 +75,7 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.VOID)
             {
                 MainResultVoidWnd = new ucMainResultVoid(LastRecipeName);
+                MainResultVoidWnd.ScreenshotEvent += new ucMainResultVoid.ScreenshotHandler(ScreenShot);
 
                 panelMain.Controls.Add(MainResultVoidWnd);
             }
@@ -103,6 +104,10 @@ namespace KPVisionInspectionFramework
             else if (ProjectType == eProjectType.DISPENSER)
             {
                 MainResultLeadWnd.ScreenshotEvent -= new ucMainResultLead.ScreenshotHandler(ScreenShot);
+            }
+            else if (ProjectType == eProjectType.VOID)
+            {
+                MainResultVoidWnd.ScreenshotEvent -= new ucMainResultVoid.ScreenshotHandler(ScreenShot);
             }
 
             panelMain.Controls.Clear();

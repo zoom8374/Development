@@ -22,6 +22,11 @@ namespace InspectionSystemManager
         private double BenchMarkOffsetX = 0;
         private double BenchMarkOffsetY = 0;
 
+        private double OriginX = 0;
+        private double OriginY = 0;
+        private double OriginTempX = 0;
+        private double OriginTempY = 0;
+
         private bool AlgoInitFlag = false;
 
         public delegate void ApplyLineFindHandler(CogLineFindAlgo _CogLineFindAlgo, ref CogLineFindResult _CogLineFindResult);
@@ -73,6 +78,15 @@ namespace InspectionSystemManager
             graLabelSearchDirection.Text = _Direction.ToString();
             DrawLineFindCaliper();
         }
+
+        private void btnOriginSet_Click(object sender, EventArgs e)
+        {
+            DialogResult dlgResult = MessageBox.Show(new Form { TopMost = true }, "Set Origin Value ? ", "Origin value setting", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+            if (DialogResult.Yes != dlgResult) return;
+
+            OriginX = OriginTempX;
+            OriginY = OriginTempY;
+        }
         #endregion Control Event
 
         public void SetAlgoRecipe(Object _Algorithm, double _BenchMarkOffsetX, double _BenchMarkOffsetY, double _ResolutionX, double _ResolutionY)
@@ -100,6 +114,9 @@ namespace InspectionSystemManager
                 numUpDownEndY.Value = Convert.ToDecimal(CogLineFindAlgoRcp.CaliperLineEndY);
                 ckUseAlignment.Checked = CogLineFindAlgoRcp.UseAlignment;
 
+                OriginX = CogLineFindAlgoRcp.OriginX;
+                OriginY = CogLineFindAlgoRcp.OriginY;
+
                 SetSearchDirection(CogLineFindAlgoRcp.CaliperSearchDirection);
 
                 AlgoInitFlag = true;
@@ -120,6 +137,8 @@ namespace InspectionSystemManager
             CogLineFindAlgoRcp.CaliperLineEndX = Convert.ToInt32(numUpDownEndX.Value);
             CogLineFindAlgoRcp.CaliperLineEndY = Convert.ToInt32(numUpDownEndY.Value);
             CogLineFindAlgoRcp.UseAlignment = ckUseAlignment.Checked;
+            CogLineFindAlgoRcp.OriginX = OriginX;
+            CogLineFindAlgoRcp.OriginY = OriginY;
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "Teaching CogLineFind SaveAlgoRecipe", CLogManager.LOG_LEVEL.MID);
         }
@@ -160,6 +179,10 @@ namespace InspectionSystemManager
             _CogLineFindAlgoRcp.CaliperSearchLength = Convert.ToDouble(numUpDownSearchLength.Value);
             _CogLineFindAlgoRcp.CaliperProjectionLength = Convert.ToDouble(numUpDownProjectionLength.Value);
             _CogLineFindAlgoRcp.CaliperSearchDirection = Convert.ToInt32(graLabelSearchDirection.Text);
+
+            _CogLineFindAlgoRcp.ContrastThreshold = Convert.ToInt32(numUpDownContrastThreshold.Value);
+            _CogLineFindAlgoRcp.FilterHalfSizePixels = Convert.ToInt32(numUpDownFilterHalfSizePixels.Value);
+
             _CogLineFindAlgoRcp.IgnoreNumber = Convert.ToInt32(numUpDownIgnoreNumber.Text);
             _CogLineFindAlgoRcp.CaliperLineStartX = Convert.ToDouble(numUpDownStartX.Value);
             _CogLineFindAlgoRcp.CaliperLineStartY = Convert.ToDouble(numUpDownStartY.Value);
@@ -168,6 +191,9 @@ namespace InspectionSystemManager
 
             var _ApplyLineFindEvent = ApplyLineFindEvent;
             _ApplyLineFindEvent?.Invoke(_CogLineFindAlgoRcp, ref _CogLineFindResult);
+
+            OriginTempX = _CogLineFindResult.OriginX;
+            OriginTempY = _CogLineFindResult.OriginY;
         }
 
         private void DrawLineFindCaliper()

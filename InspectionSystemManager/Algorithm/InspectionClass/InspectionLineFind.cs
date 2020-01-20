@@ -42,12 +42,13 @@ namespace InspectionSystemManager
         {
             bool _Result = true;
 
+            SetCaliperContrastAndHalfPixel(_CogLineFindAlgo.ContrastThreshold, _CogLineFindAlgo.FilterHalfSizePixels);
             SetCaliperDirection(_CogLineFindAlgo.CaliperSearchDirection);
             SetCaliper(_CogLineFindAlgo.CaliperNumber, _CogLineFindAlgo.CaliperSearchLength, _CogLineFindAlgo.CaliperProjectionLength, _CogLineFindAlgo.IgnoreNumber);
             SetCaliperLine(_CogLineFindAlgo.CaliperLineStartX, _CogLineFindAlgo.CaliperLineStartY, _CogLineFindAlgo.CaliperLineEndX, _CogLineFindAlgo.CaliperLineEndY);
 
             if (true == Inspection(_SrcImage)) GetResult();
-            if (FindLineResults != null && (_CogLineFindAlgo.CaliperNumber - _CogLineFindAlgo.IgnoreNumber) < (FindLineResults.NumPointsFound + 5))
+            if (FindLineResults != null && (_CogLineFindAlgo.CaliperNumber - _CogLineFindAlgo.IgnoreNumber) < (FindLineResults.NumPointsFound + 10))
             {
                 try
                 {
@@ -58,6 +59,8 @@ namespace InspectionSystemManager
                     _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
                     _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
                     _CogLineFindResult.PointCount = FindLineResults.Count;
+                    _CogLineFindResult.OriginX = (FindLineResults.GetLineSegment().StartX + FindLineResults.GetLineSegment().EndX) / 2;
+                    _CogLineFindResult.OriginY = (FindLineResults.GetLineSegment().StartY + FindLineResults.GetLineSegment().EndY) / 2;
 
                     if (_CogLineFindAlgo.UseAlignment)
                     {
@@ -87,6 +90,8 @@ namespace InspectionSystemManager
                             _CogLineFindResult.Length = FindLineResults.GetLineSegment().Length;
                             _CogLineFindResult.Rotation = FindLineResults.GetLineSegment().Rotation;
                             _CogLineFindResult.PointCount = FindLineResults.Count;
+                            _CogLineFindResult.OriginX = (FindLineResults.GetLineSegment().StartX + FindLineResults.GetLineSegment().EndX) / 2;
+                            _CogLineFindResult.OriginY = (FindLineResults.GetLineSegment().StartY + FindLineResults.GetLineSegment().EndY) / 2;
 
                             _CogLineFindResult.IsGood = true;
                         }
@@ -140,6 +145,12 @@ namespace InspectionSystemManager
             return _Result;
         }
 
+        private void SetCaliperContrastAndHalfPixel(int _Contrast, int _HalfSizePixel)
+        {
+            FindLineProc.RunParams.CaliperRunParams.ContrastThreshold = _Contrast;
+            FindLineProc.RunParams.CaliperRunParams.FilterHalfSizeInPixels = _HalfSizePixel;
+        }
+
         private void SetCaliperDirection(int _eSearchDir)
         {
             FindLineProc.RunParams.CaliperSearchDirection = _eSearchDir;
@@ -151,6 +162,7 @@ namespace InspectionSystemManager
             FindLineProc.RunParams.CaliperSearchLength = _SearchLength;
             FindLineProc.RunParams.CaliperProjectionLength = _ProjectionLength;
             FindLineProc.RunParams.NumToIgnore = _CaliperIgnoreNumber;
+            FindLineProc.RunParams.CaliperRunParams.Edge0Polarity = CogCaliperPolarityConstants.DarkToLight;
             //FindLineProc.RunParams.CaliperSearchDirection = _SearchDir;
         }
 

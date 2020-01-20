@@ -85,6 +85,11 @@ namespace InspectionSystemManager
             if (ThreadInspection != null) { IsThreadInspectionExit = true; Thread.Sleep(200); ThreadInspection.Abort(); ThreadInspection = null; }
         }
 
+        public void SetWindowLocation(InspectionSystemManagerParameter _InspSysManagerParam)
+        {
+            SetISMWindowLocation(_InspSysManagerParam);
+        }
+
         public void SetMapDataParameter(MapDataParameter _MapDataParam)
         {
             if (null == _MapDataParam) return;
@@ -138,6 +143,12 @@ namespace InspectionSystemManager
             InspWnd.SetWindowDisplayInfo(_InspSysManagerParam.InspWndParam.DisplayZoomValue, _InspSysManagerParam.InspWndParam.DisplayPanXValue, _InspSysManagerParam.InspWndParam.DisplayPanYValue);
 
             WndLocation = new Point(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
+        }
+
+        private void SetISMWindowLocation(InspectionSystemManagerParameter _InspSysManagerParam)
+        {
+            InspWnd.SetLocation(_InspSysManagerParam.InspWndParam.LocationX, _InspSysManagerParam.InspWndParam.LocationY);
+            InspWnd.SetWindowSize(_InspSysManagerParam.InspWndParam.Width, _InspSysManagerParam.InspWndParam.Height);
         }
 
         /// <summary>

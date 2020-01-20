@@ -910,6 +910,8 @@ namespace ParameterManager
                     case "ContrastThreshold":       _CogLineFind.ContrastThreshold = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "FilterHalfSizePixels":    _CogLineFind.FilterHalfSizePixels = Convert.ToInt32(_NodeChild.InnerText); break;
                     case "UseAlignment":            _CogLineFind.UseAlignment = Convert.ToBoolean(_NodeChild.InnerText); break;
+                    case "OriginX":                 _CogLineFind.OriginX = Convert.ToDouble(_NodeChild.InnerText); break;
+                    case "OriginY":                 _CogLineFind.OriginY = Convert.ToDouble(_NodeChild.InnerText); break;
                 }
             }
             _InspParam.Algorithm = _CogLineFind;
@@ -1190,6 +1192,8 @@ namespace ParameterManager
             _XmlWriter.WriteElementString("ContrastThreshold", _CogLineFindAlgo.ContrastThreshold.ToString());
             _XmlWriter.WriteElementString("FilterHalfSizePixels", _CogLineFindAlgo.FilterHalfSizePixels.ToString());
             _XmlWriter.WriteElementString("UseAlignment", _CogLineFindAlgo.UseAlignment.ToString());
+            _XmlWriter.WriteElementString("OriginX", _CogLineFindAlgo.OriginX.ToString());
+            _XmlWriter.WriteElementString("OriginY", _CogLineFindAlgo.OriginY.ToString());
         }
         #endregion Read & Write InspectionParameter
 
@@ -1667,6 +1671,8 @@ namespace ParameterManager
                         _Algorithm.ContrastThreshold = _SrcAlgorithm.ContrastThreshold;
                         _Algorithm.FilterHalfSizePixels = _SrcAlgorithm.FilterHalfSizePixels;
                         _Algorithm.UseAlignment = _SrcAlgorithm.UseAlignment;
+                        _Algorithm.OriginX = _SrcAlgorithm.OriginX;
+                        _Algorithm.OriginY = _SrcAlgorithm.OriginY;
 
                         _InspAlgoParam.Algorithm = _Algorithm;
                     }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using Microsoft.Win32;
 
 using InspectionSystemManager;
 using ParameterManager;
@@ -49,6 +50,8 @@ namespace KPVisionInspectionFramework
         #region Initialize & DeInitialize
         public MainForm()
         {
+            SystemEvents.DisplaySettingsChanged += new EventHandler(PowerModeChangedFunction);
+
             CMsgBoxManager.Initialize();
             ProgramLogin();
 
@@ -89,7 +92,7 @@ namespace KPVisionInspectionFramework
             }
 
             if (ProjectName == "") ProjectName = "CIPOSLeadInspection";
-            #endregion VisionInspectionData Common File
+            #endregion VisionInspectionData Common File 
 
             #region Parameter Initialize
             ParamManager = new CParameterManager();
@@ -308,6 +311,8 @@ namespace KPVisionInspectionFramework
 
             for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
                 InspSysManager[iLoopCount].DeInitialize();
+
+            SystemEvents.DisplaySettingsChanged -= new EventHandler(PowerModeChangedFunction);
         }
 
         private void LoadDefaultRibbonTheme()
@@ -372,7 +377,42 @@ namespace KPVisionInspectionFramework
 
             //FormTopMostInvoke(this, true);
             if (false == ParamManager.SystemParam.IsSimulationMode)
-                this.WindowState = FormWindowState.Maximized;   
+                this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void SetWindowLocation()
+        {
+            int count = 500;
+            //System.Threading.Thread.Sleep(1000);
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : Window Location Chainging...");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, string.Format("MainProcess : X = {0}", ParamManager.SystemParam.ResultWindowLocationX));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, string.Format("MainProcess : LX = {0}", ResultBaseWnd.Location.X));
+
+            while (true)
+            {
+                if (ParamManager.SystemParam.ResultWindowLocationX != ResultBaseWnd.Location.X)
+                {
+                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : Window Location Chainging...While");
+                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, string.Format("MainProcess : X = {0}", ParamManager.SystemParam.ResultWindowLocationX));
+                    CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, string.Format("MainProcess : LX = {0}", ResultBaseWnd.Location.X));
+
+                    for (int iLoopCount = 0; iLoopCount < ISMModuleCount; ++iLoopCount)
+                        InspSysManager[iLoopCount].SetWindowLocation(ParamManager.InspSysManagerParam[iLoopCount]);
+
+                    ResultBaseWnd.SetWindowSize(ParamManager.SystemParam.ResultWindowWidth, ParamManager.SystemParam.ResultWindowHeight);
+                    ResultBaseWnd.SetWindowLocation(ParamManager.SystemParam.ResultWindowLocationX, ParamManager.SystemParam.ResultWindowLocationY);
+                }
+
+                if (count < 0) break;
+
+                count--;
+
+                System.Threading.Thread.Sleep(10);
+                Application.DoEvents();
+            }
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, "MainProcess : Window Location Change Complete");
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, string.Format("MainProcess : X = {0}", ParamManager.SystemParam.ResultWindowLocationX));
+            CLogManager.AddSystemLog(CLogManager.LOG_TYPE.INFO, string.Format("MainProcess : LX = {0}", ResultBaseWnd.Location.X));
         }
 
         protected override void WndProc(ref Message message)
@@ -406,6 +446,11 @@ namespace KPVisionInspectionFramework
             }
 
             return _XmlNodeList;
+        }
+
+        private void PowerModeChangedFunction(object sender, EventArgs e)
+        {
+            SetWindowLocation();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

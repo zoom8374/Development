@@ -75,8 +75,9 @@ namespace ParameterManager
     #region Inspection Result Parameter
     public class Result
     {
-        public bool     IsGood;
-        public eNgType  NgType;
+        public bool         IsGood;
+        public eNgType      NgType;
+        public CogRectangle InspArea;
     }
 
     public class CogPatternResult : Result
@@ -288,6 +289,8 @@ namespace ParameterManager
         public double Length;
         public double Rotation;
         public int PointCount;
+        public double OriginX;
+        public double OriginY;
         public bool[] PointStatus;
     }
     #endregion Inspection Result Parameter

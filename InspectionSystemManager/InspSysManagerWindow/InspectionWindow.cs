@@ -1145,6 +1145,24 @@ namespace InspectionSystemManager
             }
 
             AlgoResultParameter _AlgoResultParam = new AlgoResultParameter(eAlgoType.C_LINE_FIND, _CogLineFindResult);
+
+            double _OriginX = _CogLineFindAlgo.OriginX;
+            double _OriginY = _CogLineFindAlgo.OriginY;
+
+            double _CurrentX = (_CogLineFindResult.StartX + _CogLineFindResult.EndX) / 2;
+            double _CurrentY= (_CogLineFindResult.StartY + _CogLineFindResult.EndY) / 2;
+
+            if (true == _CogLineFindResult.IsGood)
+            {
+                _AlgoResultParam.OffsetX = _CurrentX - _OriginX;
+                _AlgoResultParam.OffsetY = _CurrentY - _OriginY;
+            }
+
+            else
+            {
+                _AlgoResultParam.OffsetX = 0;
+                _AlgoResultParam.OffsetY = 0;
+            }
             AlgoResultParamList.Add(_AlgoResultParam);
 
             return _CogLineFindResult.IsGood;
@@ -1293,6 +1311,13 @@ namespace InspectionSystemManager
                     BlobDefectCount++;
                 }
             }
+
+            //Inspection Area Draw (Test)
+            //{
+            //    CogPointMarker _InspAreaPoint = new CogPointMarker();
+            //    _InspAreaPoint.SetCenterRotationSize(_BlobDefectResult.InspArea.X, _BlobDefectResult.InspArea.Y, 0, 1);
+            //    ResultDisplay(_BlobDefectResult.InspArea, _InspAreaPoint, "BlobInspArea", false, CogColorConstants.Magenta);
+            //}
 
             CLogManager.AddInspectionLog(CLogManager.LOG_TYPE.INFO, "InspectionWindow - DisplayResultBlob Complete", CLogManager.LOG_LEVEL.MID);
 
